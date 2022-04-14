@@ -67,14 +67,7 @@ export function deletion_listener(){
         let uid = document.querySelector("#main-left > div.personal_info > div.header > div.info > div.info_top > span.ranking > h2 > a").getAttribute("href").split("-")[1]
         document.querySelector(".modal-accdel .spinner-container").classList.add("show");
         await delete_user(uid);
-        if(check_deletion(uid)){
             await sendmsg();
-        }
-        else{
-            console.log("user not deleted");
-            document.querySelector(".modal-accdel .content").classList.add("errormsg");
-            document.querySelector(".modal-accdel .content textarea").classList.add("sg-textarea--invalid");
-        }
         document.querySelector(".modal-accdel .spinner-container").classList.remove("show");
     })
 }

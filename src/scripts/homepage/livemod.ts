@@ -45,21 +45,19 @@ class LiveMod {
       }
     }
     async authenticateUser() {
-      storage.local.get(async (user) => {
-        this.meUserId = user.id;
-        await this.sendData({
-          name: "auth",
-          args: [{
-            "uid": user.id,
-            "nick": user.nick,
-            "gender": user.gender,
-            "avatar": user.auth.avatar_url,
-            "version": "2.1",
-            "client": navigator.userAgent.match(/android|phone/i) ? "mobile" : "desktop",
-            "auth_hash": user.auth.hash
-          }]
-        })
-      });
+      const user = await storage.local.get("user");
+      await this.sendData({
+        name: 'auth',
+        args: [{
+          uid: user.id,
+          nick: user.nick,
+          gender: user.gender,
+          avatar: user.avatar,
+          version: "2.1",
+          client: navigator.userAgent.match(/android|phone/i) ? "mobile" : "desktop",
+          auth_hash: user.auth_hash
+        }]
+      })
     }
     async subscribeToModEvents() {
       this.sendData({
@@ -80,6 +78,18 @@ class LiveMod {
       ).then( resp => resp.text() );
     }
   }
+export function setAuth(){
+  let yourData = JSON.parse(document.querySelector("meta[name = 'user_data']").getAttribute("content"))
+  storage.local.set({
+    user: {
+      id: yourData.id,
+      nick: yourData.nick,
+      avatar: yourData.avatar,
+      auth_hash: yourData.cometAuthHash,
+      gender: yourData.gender
+    }
+  });
+}
 export const subscribe = function() {
   let modItems = document.querySelectorAll('.brn-feed-items > .brn-feed-item-wrapper > .brn-feed-item');
   let taskIds = [];

@@ -16,9 +16,13 @@
   }],
   "content_scripts": [
     {
-      "matches": ["*://znanija.com/*", "*://brainly.com/*"],
+      "matches": ["*://brainly.com/*"],
       "js": ["content-scripts/js/homepage.js"],
       "css": ["content-scripts/css/homepage.css"]
+    },
+    {
+      "matches": ["*://brainly.com/tasks/archive_mod"],
+      "css": ["content-scripts/css/mod_all.css"]
     },
     {
       "matches": ["*://brainly.com/profile/*"],

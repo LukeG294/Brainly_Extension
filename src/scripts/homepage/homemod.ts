@@ -1,10 +1,11 @@
 import {ryver_notification} from "../common/Ryver/ryver_modal"
 import {login_run} from "../common/Ryver/ryver_login"
 import {show_ticket} from "../common/mod_functions"
-import {subscribe} from "./livemod"
+import {subscribe, setAuth} from "./livemod"
 import {add_admin} from "./homepage_admin"
 
 async function HomepageButtons() {
+  setAuth()
   const questions = document.querySelectorAll(".brn-feed-items > div[data-testid = 'feed-item']");
   for (let questionBox of Array.from(questions)) {
     let qid = questionBox.querySelector("a[data-test = 'feed-item-link']").getAttribute("href").replace("/question/","").split("?")[0];
@@ -33,8 +34,8 @@ async function HomepageButtons() {
       show_ticket(qid)
     });
     //livemod call
-    //questionBox.querySelector(".brn-feed-item").setAttribute("task-id", qid);
-    //subscribe()
+    questionBox.querySelector(".brn-feed-item").setAttribute("task-id", qid);
+    subscribe()
   }
 }
   

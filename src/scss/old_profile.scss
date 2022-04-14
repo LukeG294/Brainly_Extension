@@ -84,9 +84,16 @@ span.ranking a,span.rank > h3 > span, span.rank > h3 > a{
                 display:block;
             }
         }
-        >div{
-            display:none;
-            margin-left:0px;
+        .presets{
+            display: flex;
+            margin-top: 8px;
+            flex-wrap: wrap;
+            >label{
+                margin-right:16px;
+                .sg-text{
+                    margin-left:8px;
+                }
+            }
         }
         >button{
             margin-top:16px;

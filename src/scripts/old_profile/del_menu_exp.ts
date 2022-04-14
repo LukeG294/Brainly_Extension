@@ -12,8 +12,22 @@ export function add_del_menu(){
             <h1 class="sg-text-bit--gray-secondary sg-headline sg-headline--xlarge sg-headline--extra-bold" style = "color:#323c45; margin-bottom:8px;">Delete User</h1>
             <div class="content">
                 <textarea placeholder="Add Reason Here" class="sg-textarea sg-textarea--tall del-rsn"></textarea>
-                <div class="sg-flex sg-flex--margin-top-xxs sg-flex--margin-right-s sg-flex--margin-left-s">
-                  <div class="sg-text sg-text--xsmall sg-text--peach-dark">An error occurred, Please try again</div>
+                <div class="presets">
+                    <label class="sg-radio sg-radio--xxs" for="links">
+                        <input type="radio" class="sg-radio__element" name="group1" id="links" reason = "Link Spammer">
+                        <span class="sg-radio__ghost" aria-hidden="true"></span>
+                        <span class="sg-text sg-text--small sg-text--bold sg-radio__label">Link spammer</span>
+                    </label>
+                    <label class="sg-radio sg-radio--xxs" for="alt">
+                        <input type="radio" class="sg-radio__element" name="group1" id="alt" reason = "Alternate Accounts">
+                        <span class="sg-radio__ghost" aria-hidden="true"></span>
+                        <span class="sg-text sg-text--small sg-text--bold sg-radio__label">Alt Accounts</span>
+                    </label>
+                    <label class="sg-radio sg-radio--xxs" for="username">
+                        <input type="radio" class="sg-radio__element" name="group1" id="username" reason = "Inappropriate Username">
+                        <span class="sg-radio__ghost" aria-hidden="true"></span>
+                        <span class="sg-text sg-text--small sg-text--bold sg-radio__label">Inappropriate Username</span>
+                    </label>
                 </div>
                 <button class="sg-button sg-button--m sg-button--solid-light delete-acc"><span class="sg-button__text">Delete!</span></button>
             </div>
@@ -61,6 +75,12 @@ function check_deletion(uid:string):any{
         });
     xhr.open("GET","https://brainly.com/profile/user-"+uid);
     xhr.send()
+}
+export function preset_delrsn(){
+    document.querySelector(".presets").addEventListener("change", function(){
+        let rsn = document.querySelector(".presets input:checked").getAttribute("reason");
+        (<HTMLInputElement>document.querySelector(".modal-accdel .del-rsn")).value = rsn;
+    });
 }
 export function deletion_listener(){
     document.querySelector(".modal-accdel .delete-acc").addEventListener("click", async function(){

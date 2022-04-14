@@ -1,4 +1,4 @@
-import {add_del_menu, deletion_listener} from "./del_menu_exp"
+import {add_del_menu, deletion_listener, preset_delrsn} from "./del_menu_exp"
 
 function insert_data(){
     document.querySelector(".mod-profile-panel").insertAdjacentHTML("beforeend", /*html*/`
@@ -12,6 +12,7 @@ function insert_data(){
     `)
     document.querySelector(".user-del-btn").addEventListener("click", function(){
         document.querySelector("body").insertAdjacentHTML("afterbegin", <string>add_del_menu())
+        preset_delrsn()
         deletion_listener()
         document.querySelector(".modal_close").addEventListener("click", function(){
             document.querySelector(".modal_back").remove()

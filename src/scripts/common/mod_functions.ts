@@ -64,3 +64,21 @@ export async function delete_user(uid:string){
     }
     });
 }
+export async function get_warnings(user:string){
+    const warn_arr = [];
+    let txt = await fetch("https://brainly.com/users/view_user_warns/49661198").then(data => data.text());
+    let parser = new DOMParser();
+    let warnPage = parser.parseFromString(txt, 'text/html');
+    let warns = warnPage.querySelectorAll("#content-old tr");
+    for(let i=1;i< warns.length; i++){
+        let row = warns[i];
+        var this_warn = {
+            date: row.children[0].innerHTML,
+            reason: row.children[1].innerHTML,
+            content: row.children[2].innerHTML,
+            moderator: row.children[4].children[0].innerHTML
+        }
+        warn_arr.push(this_warn);
+    }
+    return warn_arr
+}

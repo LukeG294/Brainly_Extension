@@ -4,8 +4,8 @@ import {show_ticket} from "../common/mod_functions"
 import {subscribe, setAuth} from "./livemod"
 import {add_admin} from "./homepage_admin"
 
+setAuth()
 async function HomepageButtons() {
-  setAuth()
   const questions = document.querySelectorAll(".brn-feed-items > div[data-testid = 'feed-item']");
   for (let questionBox of Array.from(questions)) {
     let qid = questionBox.querySelector("a[data-test = 'feed-item-link']").getAttribute("href").replace("/question/","").split("?")[0];
@@ -18,8 +18,8 @@ async function HomepageButtons() {
       actionlist.querySelector("a").innerHTML = '<div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-plus"></use></svg></div>'
     }catch(err){
       if(questionBox.id !== "noanswer"){
-      questionBox.id = 'noanswer'
-      questionBox.querySelector(".brn-feed-item__footer .sg-actions-list").insertAdjacentHTML("afterend", `<div class = "sg-actions-list__hole sg-actions-list__hole--to-right"><button class="mod-button sg-button--outline"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-shield"></use></svg></div></button></div>`);
+        questionBox.id = 'noanswer'
+        questionBox.querySelector(".brn-feed-item__footer .sg-actions-list").insertAdjacentHTML("afterend", `<div class = "sg-actions-list__hole sg-actions-list__hole--to-right"><button class="mod-button sg-button--outline"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-shield"></use></svg></div></button></div>`);
       }
     }
 
@@ -33,9 +33,9 @@ async function HomepageButtons() {
     questionBox.querySelector(" .mod-button").addEventListener("click", async function(){
       show_ticket(qid)
     });
-    //livemod call
-    questionBox.querySelector(".brn-feed-item").setAttribute("task-id", qid);
-    subscribe()
+
+    //livemod setup
+    questionBox.querySelector(".brn-feed-item").setAttribute("id", qid);
   }
 }
   
@@ -48,6 +48,9 @@ const addObserverIfFeedAvailable = () => {
   HomepageButtons();
 };
 addObserverIfFeedAvailable();
+setTimeout(() => {
+  subscribe()
+}, 17000);
 //if user does not have username and password in local storage
 if(!localStorage.getItem("userAuth")){
   window.addEventListener("load", function(){

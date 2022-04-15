@@ -10,8 +10,9 @@ class LiveMod {
       await this.connect();
     }
     async connect() {
+      console.log("connect()")
       let socketToken = await this.getToken();
-      if(!socketToken) return console.debug('Ошибка получения токена [WebSocket]');
+      if(!socketToken) return console.debug('Error getting token [WebSocket]');
       socketToken = socketToken.replace(/:.*/, '');
   
       let socket = new WebSocket(`wss://us-comet.z-dn.net:7879/socket.io/1/websocket/${socketToken}`);
@@ -19,7 +20,8 @@ class LiveMod {
       this.authorized = false;
   
       this.socket.onmessage = async(message) => await this.handleMessage(message);
-      this.socket.onclose = (closeEvent) => console.debug("Соединение WebSocket закрыто\n" + JSON.stringify(closeEvent));
+      console.log("beforeclose")
+      this.socket.onclose = (closeEvent) => console.debug("Websocket connection closed\n" + JSON.stringify(closeEvent));
     }
     async handleMessage(msg) {
       if(!msg?.data || !msg.data.includes(":::")) return;
@@ -78,24 +80,25 @@ class LiveMod {
       ).then( resp => resp.text() );
     }
   }
-export function setAuth(){
-  let yourData = JSON.parse(document.querySelector("meta[name = 'user_data']").getAttribute("content"))
+export async function setAuth(){
+  let medata = await fetch("https://brainly.com/api/28/api_users/me").then(data => data.json())
   storage.local.set({
     user: {
-      id: yourData.id,
-      nick: yourData.nick,
-      avatar: yourData.avatar,
-      auth_hash: yourData.cometAuthHash,
-      gender: yourData.gender
+      id: medata.data.user.id,
+      nick: medata.data.user.nick,
+      avatar: medata.data.auth.comet.avatar_url,
+      auth_hash: medata.data.auth.comet.auth_hash,
+      gender: medata.data.user.gender
     }
   });
 }
 export const subscribe = function() {
-  let modItems = document.querySelectorAll('.brn-feed-items > .brn-feed-item-wrapper > .brn-feed-item');
+  let modItems = document.querySelectorAll('.brn-feed-items .brn-feed-item');
   let taskIds = [];
   for (let k = 0; k < modItems.length; k++){
-    let taskId = +(modItems[k] as HTMLElement).dataset.task_id;
+    let taskId = parseInt(modItems[k].id);
     taskIds.push(taskId);
   }
+  console.log(taskIds)
   new LiveMod().subscribe(taskIds);
 }

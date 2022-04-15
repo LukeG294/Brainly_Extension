@@ -65,8 +65,8 @@ export async function delete_user(uid:string){
     });
 }
 export async function get_warnings(user:string){
-    const warn_arr = [];
-    let txt = await fetch("https://brainly.com/users/view_user_warns/49661198").then(data => data.text());
+    let warn_arr = [];
+    let txt = await fetch("https://brainly.com/users/view_user_warns/" + user).then(data => data.text());
     let parser = new DOMParser();
     let warnPage = parser.parseFromString(txt, 'text/html');
     let warns = warnPage.querySelectorAll("#content-old tr");

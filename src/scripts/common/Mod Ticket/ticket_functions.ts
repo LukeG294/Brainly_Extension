@@ -1,4 +1,6 @@
 import {find, runtime} from "webextension-polyfill";
+import {get_warnings} from "../mod_functions"
+
 let removedq = runtime.getURL("resources/Compositions/Ladies@Brainly.svg");
 function add_log(log){
   for(let i = 0; i < log.data.length; i++){
@@ -228,13 +230,15 @@ function add_answer(ans,res,a, basic_data){
   add_report(res,ans,this_ans);
   add_deletion(a_del_rsn, this_ans, answer_id, "response");
 }
-function add_question_data(res, d_reference){
+async function add_question_data(res, d_reference){
   let q_data = res.data.task;
   let q_elem = document.querySelector(".qdata");
   console.log(res);
   document.querySelector(".text-subj > div:nth-child(2)").innerHTML = d_reference.data.grades.find(({id}) => id === q_data.grade_id).name;
   document.querySelector(".text-subj > div:nth-child(1)").innerHTML = d_reference.data.subjects.find(({id}) => id === q_data.subject_id).name;
   let asker = res.users_data.find(({id}) => id === q_data.user.id);
+  let warnings = await get_warnings(asker.id)
+  console.log(warnings)
   add_report(res, q_data, document.querySelector(".question"));
   user_content_data(asker, q_elem, q_data);
   add_attachments(q_data, q_elem);

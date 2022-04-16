@@ -39,7 +39,7 @@ div.brn-placeholder__animation{
     background:white;
     border-radius:10px;
     max-height:90%;
-    width:600px;
+    width:900px;
     padding:24px;
     position:relative;
     display: flex;
@@ -65,7 +65,7 @@ div.brn-placeholder__animation{
     }
     .preview-content{
       display:flex;
-      flex-direction: column;
+      flex-direction: row;
       flex:1;
       position:relative;
       .removedq{
@@ -253,6 +253,10 @@ div.brn-placeholder__animation{
       .text-subj > div{
         color:#687b86;
       }
+      .question{
+        margin-right:8px;
+        max-width:50%;
+      }
       .question, [class^= "answer"]{
         flex:1;
         transition-duration:150ms;
@@ -290,7 +294,25 @@ div.brn-placeholder__animation{
     }
   }
 }
-
+.noanswer{
+  display:none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  transform: translateY(-25%);
+  top: 50%;
+  height: max-content;
+  &.show{
+    display:flex!important;
+  }
+  >img{
+    max-width:80%;
+  }
+  >h1{
+    font-size:2rem!important;
+  }
+}
 .brn-feed-item__points .brn-points-on-feed{
   display:flex;
   align-items:center;

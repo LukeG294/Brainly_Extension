@@ -1,5 +1,5 @@
 import {runtime} from "webextension-polyfill";
-let noanswer = runtime.getURL("resources/Compositions/Brainly_Plus_Jump.svg");
+let noanswer = runtime.getURL("resources/Compositions/Feature_In_Progress.svg");
 export function ticket(){
   
     return(/*html*/`
@@ -15,6 +15,7 @@ export function ticket(){
           </div>
         </div>
         <div class = "content-item question">
+        <h1 class="sg-text-bit sg-text-bit--small sg-text-bit--peach-primary" style="display: flex;justify-content: center;line-height: 1.2rem;font-size: 1rem;color: #c3d1dd;align-items: center;">question</h1>
           <div class = "report">
           <div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-report_flag"></use></svg></div>
           <div class="text-rep">
@@ -85,11 +86,15 @@ export function ticket(){
               </div>
             </div>
           </div>
+          <div class="log"></div>
         </div>
     
         <div class = "answers">
+          <div class="noanswer">
+            <img src="${noanswer}" alt="">
+            <h1 class="sg-text-bit sg-text-bit--small sg-text-bit--peach-primary">no answers... yet</h1>
+          </div>
         </div>
-        <div class="log"></div>
       </div>
     `)
   }

@@ -145,6 +145,7 @@ function add_answer(ans,res,a, basic_data){
   let answerer = res.users_data.find(({id}) => id === ans.user.id);
   let answer_elem = /*html*/`
   <div class = "content-item answer${a}">
+  <h1 class="sg-text-bit sg-text-bit--small sg-text-bit--peach-primary" style="display: flex;justify-content: center;line-height: 1.2rem;font-size: 1rem;color: #c3d1dd;align-items: center;">answer #${a+1}</h1>
     <div class = "report">
       <div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-report_flag"></use></svg></div>
       <div class="text-rep">
@@ -260,17 +261,21 @@ export async function insertdata_ticket(id){
     let res = await fetch(`https://brainly.com/api/28/moderation_new/get_content`, { method: "POST",body: (`{"model_type_id":1,"model_id":${id},"schema":"moderation.content.get"}`)}).then(data => data.json())
     let d_reference = await fetch('https://brainly.com/api/28/api_config/desktop_view', {method: "GET"}).then(data => data.json());
     let log = await fetch(`https://brainly.com/api/28/api_task_lines/big/${id}`, {method: "GET"}).then(data => data.json());
-    
-    document.querySelector(".sg-spinner-container").classList.add("remove");
 
-    add_question_data(res,d_reference);
+    await add_question_data(res,d_reference);
+
+
     if(res.data.responses.length !== 0){
       document.querySelector(".answers").innerHTML = '';
+    }
+    else{
+      document.querySelector(".noanswer").classList.add("show")
     }
     for(let a = 0; a < res.data.responses.length; a++){
       let this_ans_data = basic_data.data.responses[a];
       add_answer(res.data.responses[a],res, a, this_ans_data);
     }
-    add_log(log);
+    document.querySelector(".sg-spinner-container").classList.add("remove");
+    //add_log(log);
   }
 }

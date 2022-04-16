@@ -35,6 +35,10 @@
       "run_at": "document_start"
     },
     {
+      "matches": ["*://brainly.com/tasks/archive_mod"],
+      "js": ["content-scripts/js/mod_all.js"]
+    },
+    {
       "matches": ["*://brainly.com/question/*"],
       "js": ["content-scripts/js/question_page.js"]
     

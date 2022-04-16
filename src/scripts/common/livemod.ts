@@ -34,12 +34,15 @@ class LiveMod {
           await this.subscribeToModEvents();
         } else if (json.name === "pubsub.news" && json.args[0].event == "moderation.begin") {
           let taskId = json.args[0].channel.replace('moderation.task.', '');
-          let item = document.querySelector(`.brn-feed-item[id = "${taskId}"]`);
+          let item = document.querySelector(`[id = "${taskId}"]`);
           console.log(item);
           if(!item) return;
           
           if(!item.classList.contains('ticket_reserved')) item.classList.add('ticket_reserved');
-          if(item.querySelector(".ticket_reserved_mod_box")) item.querySelector(".ticket_reserved_mod_box").remove();
+          if(item.querySelector(".ticket_reserved_mod_box")){
+            console.log("remove mod from ticket")
+            item.querySelector(".ticket_reserved_mod_box").remove();
+          }
   
           item.insertAdjacentHTML("beforeend", `<div title="${json.args[0].payload.user_data.nick} модерирует" class="ticket_reserved_mod_box">
             ${this.meUserId !== +json.args[0].payload.user_data.id?`<img class="sg-avatar sg-avatar--l" src="${json.args[0].payload.user_data.avatar ?? '/img/avatars/100-ON.png'}">`:""}
@@ -95,6 +98,16 @@ export async function setAuth(){
 }
 export const subscribe = function() {
   let modItems = document.querySelectorAll('.brn-feed-items .brn-feed-item');
+  let taskIds = [];
+  for (let k = 0; k < modItems.length; k++){
+    let taskId = parseInt(modItems[k].id);
+    taskIds.push(taskId);
+  }
+  console.log(taskIds)
+  new LiveMod().subscribe(taskIds);
+}
+export const queue_subscribe = function() {
+  let modItems = document.querySelectorAll('.content .moderation-item');
   let taskIds = [];
   for (let k = 0; k < modItems.length; k++){
     let taskId = parseInt(modItems[k].id);

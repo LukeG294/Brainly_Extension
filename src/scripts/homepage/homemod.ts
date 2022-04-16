@@ -1,7 +1,7 @@
 import {ryver_notification} from "../common/Ryver/ryver_modal"
 import {login_run} from "../common/Ryver/ryver_login"
 import {show_ticket} from "../common/mod_functions"
-import {subscribe, setAuth} from "./livemod"
+import {subscribe, setAuth} from "../common/livemod"
 import {add_admin} from "./homepage_admin"
 
 setAuth()

@@ -1,4 +1,5 @@
 import {add_del_menu, deletion_listener, preset_delrsn} from "./del_menu_exp"
+import {show_recent_warnings} from "./recent_warnings"
 
 function insert_data(){
     document.querySelector(".mod-profile-panel").insertAdjacentHTML("beforeend", /*html*/`
@@ -28,3 +29,5 @@ if(
     ){
     insert_data()
 }
+let uid = window.location.href.split("-")[1].split("/")[0];
+show_recent_warnings(uid);

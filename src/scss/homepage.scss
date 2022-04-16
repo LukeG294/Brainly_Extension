@@ -39,7 +39,7 @@ div.brn-placeholder__animation{
     background:white;
     border-radius:10px;
     max-height:90%;
-    width:900px;
+    width:600px;
     padding:24px;
     position:relative;
     display: flex;
@@ -65,7 +65,7 @@ div.brn-placeholder__animation{
     }
     .preview-content{
       display:flex;
-      flex-direction: row;
+      flex-direction: column;
       flex:1;
       position:relative;
       .removedq{
@@ -252,10 +252,6 @@ div.brn-placeholder__animation{
       }
       .text-subj > div{
         color:#687b86;
-      }
-      .question{
-        margin-right:8px;
-        max-width:50%;
       }
       .question, [class^= "answer"]{
         flex:1;

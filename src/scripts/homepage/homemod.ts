@@ -37,6 +37,7 @@ async function HomepageButtons() {
     //livemod setup
     questionBox.querySelector(".brn-feed-item").setAttribute("id", qid);
   }
+  subscribe()
 }
   
 const observer = new MutationObserver(HomepageButtons);
@@ -48,9 +49,6 @@ const addObserverIfFeedAvailable = () => {
   HomepageButtons();
 };
 addObserverIfFeedAvailable();
-setTimeout(() => {
-  subscribe()
-}, 17000);
 //if user does not have username and password in local storage
 if(!localStorage.getItem("userAuth")){
   window.addEventListener("load", function(){

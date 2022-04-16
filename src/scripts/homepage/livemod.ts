@@ -34,7 +34,8 @@ class LiveMod {
           await this.subscribeToModEvents();
         } else if (json.name === "pubsub.news" && json.args[0].event == "moderation.begin") {
           let taskId = json.args[0].channel.replace('moderation.task.', '');
-          let item = document.querySelector(`.main .sg-box[data-task_id='${taskId}']`);
+          let item = document.querySelector(`.brn-feed-item[id = "${taskId}"]`);
+          console.log(item);
           if(!item) return;
           
           if(!item.classList.contains('ticket_reserved')) item.classList.add('ticket_reserved');
@@ -51,13 +52,13 @@ class LiveMod {
       await this.sendData({
         name: 'auth',
         args: [{
-          uid: user.id,
-          nick: user.nick,
-          gender: user.gender,
-          avatar: user.avatar,
+          uid: user.user.id,
+          nick: user.user.nick,
+          gender: user.user.gender,
+          avatar: user.user.avatar,
           version: "2.1",
           client: navigator.userAgent.match(/android|phone/i) ? "mobile" : "desktop",
-          auth_hash: user.auth_hash
+          auth_hash: user.user.auth_hash
         }]
       })
     }
@@ -81,7 +82,7 @@ class LiveMod {
     }
   }
 export async function setAuth(){
-  let medata = await fetch("https://brainly.com/api/28/api_users/me").then(data => data.json())
+  let medata = await fetch("https://brainly.com/api/28/api_users/me").then(data => data.json());
   storage.local.set({
     user: {
       id: medata.data.user.id,

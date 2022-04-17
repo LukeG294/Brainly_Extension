@@ -47,6 +47,9 @@ export function addResponseButtons(){
     document.querySelector("#approveSelected").addEventListener("click",function(){approveAnswers()})
     document.querySelector("#confirmSelectedAnswers").addEventListener("click",function(){confirmAnswers()})
     let id = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
-    document.querySelector("#fetchReported").addEventListener("click",function(){find_reported_content(id, 1, "responses")})
+    document.querySelector("#fetchReported").addEventListener("click",async function(){
+        await find_reported_content(id,"responses");
+        console.log("done")
+    })
 }
 

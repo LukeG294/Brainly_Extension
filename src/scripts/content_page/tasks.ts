@@ -53,7 +53,9 @@ export function addTaskButtons(){
     document.querySelector("#delete").addEventListener("click",function(){confirmDeletionQuestions()})
     document.querySelector("#confirmSelectedQuestions").addEventListener("click",function(){confirmQuestions()})
     let id = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
-    document.querySelector("#fetchReported").addEventListener("click",function(){find_reported_content(id, 1, "tasks")})
+    document.querySelector("#fetchReported").addEventListener("click",function(){
+        find_reported_content(id,"tasks");
+    })
     
     
 }

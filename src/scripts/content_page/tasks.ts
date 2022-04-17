@@ -4,6 +4,7 @@ import {
     copy_links,
     delete_selected_questions,
     deletion_menu,
+    get_reported_content,
     select_all,
     toggle_selected
 } from "./content_page_buttons"
@@ -14,6 +15,7 @@ import {
     showDelrsn,
     confirmDeletionQuestions,
     confirmQuestions,
+    find_reported_content,
 } from "./button_functions"
 
 
@@ -43,12 +45,18 @@ export function addTaskButtons(){
     buttonArea.insertAdjacentHTML('afterend', copy_links())
     buttonArea.insertAdjacentHTML('afterend', toggle_selected())
     buttonArea.insertAdjacentHTML('afterend', select_all())
-
+    buttonArea.insertAdjacentHTML('afterend', get_reported_content())
     document.getElementById("selectAll").addEventListener("click", function(){selectAll()})
     document.getElementById("toggleSelected").addEventListener("click", function(){toggleSelection()})
     document.getElementById("copyLinks").addEventListener("click", function(){copyLinks()})
     document.querySelector("#deleteSelected").addEventListener("click", function(){showDelrsn("questions")})
     document.querySelector("#delete").addEventListener("click",function(){confirmDeletionQuestions()})
     document.querySelector("#confirmSelectedQuestions").addEventListener("click",function(){confirmQuestions()})
+    let id = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
+    document.querySelector("#fetchReported").addEventListener("click",function(){find_reported_content(id, 1, "tasks")})
+    
     
 }
+
+
+

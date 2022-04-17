@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "watch": "concurrently -n w: npm:watch:* \"gulp manifest sass\"",
+    "watch": "concurrently -n w: npm:watch:* \"gulp watch\"",
     "watch:webpack": "webpack -w --mode=\"development\"",
     "watch:gulp": "gulp watch",
     "build": "gulp && npm run webpack:build",

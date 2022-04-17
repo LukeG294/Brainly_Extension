@@ -1,4 +1,4 @@
-import { selectAll, toggleSelection, copyLinks, showDelrsn, confirmDeletionAnswers, unverifyAnswers, approveAnswers, confirmAnswers } from "./button_functions"
+import { selectAll, toggleSelection, copyLinks, showDelrsn, confirmDeletionAnswers, unverifyAnswers, approveAnswers, confirmAnswers, find_reported_content } from "./button_functions"
 import {
     approve_selected,
     copy_links,
@@ -8,7 +8,8 @@ import {
     toggle_selected,
     unverify_selected,
     add_icons,
-    confirm_selected_answers
+    confirm_selected_answers,
+    get_reported_content
 } from "./content_page_buttons"
 
 export function addResponseButtons(){
@@ -36,6 +37,7 @@ export function addResponseButtons(){
     buttonArea.insertAdjacentHTML('afterend', copy_links())
     buttonArea.insertAdjacentHTML('afterend', toggle_selected())
     buttonArea.insertAdjacentHTML('afterend', select_all())
+    buttonArea.insertAdjacentHTML('afterend', get_reported_content())
     document.getElementById("selectAll").addEventListener("click", function(){selectAll()})
     document.getElementById("toggleSelected").addEventListener("click", function(){toggleSelection()})
     document.getElementById("copyLinks").addEventListener("click", function(){copyLinks()})
@@ -44,4 +46,7 @@ export function addResponseButtons(){
     document.querySelector("#unverify").addEventListener("click",function(){unverifyAnswers()})
     document.querySelector("#approveSelected").addEventListener("click",function(){approveAnswers()})
     document.querySelector("#confirmSelectedAnswers").addEventListener("click",function(){confirmAnswers()})
+    let id = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
+    document.querySelector("#fetchReported").addEventListener("click",function(){find_reported_content(id, 1, "responses")})
 }
+

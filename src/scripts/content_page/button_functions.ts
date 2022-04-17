@@ -619,3 +619,90 @@ export async function confirmQuestions(){
   document.querySelector("#confirmSelectedQuestions  .spinner-container").classList.remove("show");
   window.location.reload();
 }
+
+
+export function find_reported_content(id, page, type){
+  let foundReported = []
+  document.querySelector("#fetchReported  .spinner-container").classList.add("show");
+    
+  var xhr = new XMLHttpRequest();
+  xhr.withCredentials = true;
+  
+  xhr.addEventListener("readystatechange", function() {
+    if(this.readyState === 4) {
+      //@ts-ignore
+      this.responseHTML = new DOMParser().parseFromString(this.responseText, "text/html")
+         
+     
+         //@ts-ignore
+          if(this.responseHTML.querySelector(".border-error") === null){
+             
+             //@ts-ignore
+             let content =  this.responseHTML.querySelector("tbody").children
+             
+              for (let i = 0; i < content.length; i++) {
+               
+                
+               
+              let contentlink = content[i]
+              let xhr = new XMLHttpRequest();
+              
+              xhr.withCredentials = true;
+        
+              contentlink.children[1].classList.add("iconcell");
+              let qid = contentlink.querySelector("a").href.replace("https://brainly.com/question/", "");
+        
+              let boxthing = document.createElement("div");
+              contentlink.children[1].prepend(boxthing)
+              
+        
+              xhr.addEventListener("readystatechange", function() {
+                if(this.readyState === 4) {
+                  let resp = JSON.parse(this.responseText);
+        
+                  if(resp.data.task.settings.is_marked_abuse === true){
+                    foundReported.push(qid)
+                  }
+
+                     
+                   if (type === "responses"){
+                        let r = JSON.parse(this.responseText);
+                        let userId = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
+                      let response = r.data.responses.find(res => String(res.user_id) === String(userId));
+                      
+                        if(response.settings.is_marked_abuse === true){
+                          foundReported.push(qid)
+                          }
+                       
+                    }
+                 
+                  //(resp.users_data.find({names}) => names === "")
+              
+                }
+              });
+              xhr.open("POST", "https://brainly.com/api/28/api_tasks/main_view/"+qid+"?accept=application/json");
+              xhr.send();
+
+                  
+                  
+                 
+                    
+                  
+              }
+              find_reported_content(id, page+=1, type)
+          } 
+      
+    }
+  });
+   xhr.open("GET", `https://brainly.com/users/user_content/${id}/${type}/${page}/0`);
+  xhr.setRequestHeader("authority", "brainly.com");
+  xhr.setRequestHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9");
+  xhr.setRequestHeader("accept-language", "en-US,en;q=0.9");
+  xhr.send();
+ 
+
+  document.querySelector("#fetchReported  .spinner-container").classList.remove("show");
+
+  console.log(foundReported)
+
+}

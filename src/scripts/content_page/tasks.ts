@@ -18,9 +18,26 @@ import {
     find_reported_content,
 } from "./button_functions"
 
-
+export function addOnlyChecks(){
+    let content = document.querySelectorAll("#content-old > div:nth-child(2) > div:nth-child(25) > table > tbody > tr")
+    for (let i = 0; i < content.length; i++) {
+        content[i].insertAdjacentHTML('beforeend', `
+        <div class="sg-space-x-m"><label class="sg-checkbox" for="mmm41eh8ef8"><input type="checkbox" class="sg-checkbox__element contentCheckboxes" id="${i}">
+            <div class="sg-checkbox__ghost" aria-hidden="true">
+            <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg" role="img" aria-labelledby="title-check-255xyo" focusable="false"><text id="title-check-255xyo" hidden="">check</text>
+                <use xlink:href="#icon-check" aria-hidden="true"></use>
+                </svg>
+            </div>
+        </div>
+        </label></div>
+        
+    `)
+    
+    }
+   
+}
 export function addTaskButtons(){
-    add_icons()
+   
     let content = document.querySelectorAll("#content-old > div:nth-child(2) > div:nth-child(25) > table > tbody > tr")
     for (let i = 0; i < content.length; i++) {
         content[i].insertAdjacentHTML('beforeend', `
@@ -53,8 +70,9 @@ export function addTaskButtons(){
     document.querySelector("#delete").addEventListener("click",function(){confirmDeletionQuestions()})
     document.querySelector("#confirmSelectedQuestions").addEventListener("click",function(){confirmQuestions()})
     let id = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
-    document.querySelector("#fetchReported").addEventListener("click",function(){
-        find_reported_content(id,"tasks");
+    document.querySelector("#fetchReported").addEventListener("click", async function(){
+        await find_reported_content(id,"tasks");
+        add_icons()
     })
     
     

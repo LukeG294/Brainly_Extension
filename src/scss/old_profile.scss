@@ -106,3 +106,46 @@ span.ranking a,span.rank > h3 > span, span.rank > h3 > a{
         }
     }
 }
+.warnbox{
+    .heading{
+        height:2rem;
+        .sg-headline{
+            text-transform: uppercase!important;
+            color: #323c45!important;
+        }
+    }
+    .warning{
+        position:relative;
+        padding:8px 0px;
+        border-bottom: 1px solid #ebf2f7;
+        .content{
+            display: flex;
+            max-width: 20ch;
+            max-height: 1rem;
+            font-size: 1rem !important;
+            line-height: 1rem !important;
+            overflow: hidden;
+        }
+        .mod{
+            position: absolute;
+            bottom: 8px;
+            font-weight:600!important;
+            right: 0px;
+            font-size: 1rem !important;
+            color: #c98600;
+        }
+        .reason{
+            font-weight: 600;
+            color: #323c45;
+            .revoked{
+                color: #ff7968!important;
+            }
+        }
+        .time{
+            right:0;
+            top:8px;
+            font-size:14px;
+            position:absolute;
+        }
+    }
+}

@@ -76,7 +76,8 @@ export async function get_warnings(user:string){
             date: row.children[0].innerHTML,
             reason: row.children[1].innerHTML,
             content: row.children[2].innerHTML,
-            moderator: row.children[4].children[0].innerHTML
+            moderator: row.children[4].children[0].innerHTML,
+            isRevoked: row.children[5].children[0].innerHTML !== "Undo"
         }
         warn_arr.push(this_warn);
     }

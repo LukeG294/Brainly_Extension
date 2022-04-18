@@ -1,6 +1,8 @@
 import {insertdata_ticket} from "../common/Mod Ticket/ticket_functions"
 import {ticket} from "../common/Mod Ticket/ticket_exp"
 import { show_ticket } from "../common/mod_functions"
+import { add_icons } from "../content_page/content_page_buttons"
+import { addOnlyChecks } from "../content_page/tasks"
 
 export function selectAll(){
     let checkBoxes = document.getElementsByClassName("contentCheckboxes")
@@ -624,9 +626,10 @@ export async function confirmQuestions(){
 export async function find_reported_content(id,type){
   const foundReported = []
   let pagenum = document.querySelector("#content-old > div:nth-child(3) > p").children.length-2;
+  
   document.querySelector("#fetchReported  .spinner-container").classList.add("show");
   for(let p=1; p<pagenum; p++){
-    console.log("page "+p)
+
     
     let content_page = await fetch(`https://brainly.com/users/user_content/${id}/${type}/${p}/0`, {
       method:"GET",
@@ -655,7 +658,8 @@ export async function find_reported_content(id,type){
             let resp = JSON.parse(this.responseText);
   
             if(resp.data.task.settings.is_marked_abuse === true){
-              foundReported.push(qid)
+              let questionData = {"questionID": resp.data.task.id, "content":resp.data.task.content, "timeCreated":resp.data.task.created, "subject":resp.data.task.subject_id}
+              foundReported.push(questionData)
             }
 
              if (type === "responses"){
@@ -664,7 +668,8 @@ export async function find_reported_content(id,type){
                 let response = r.data.responses.find(res => String(res.user_id) === String(userId));
                 
                   if(response.settings.is_marked_abuse === true){
-                    foundReported.push(qid)
+                    let questionData = {"questionID":r.data.task.id, "content":response.content, "timeCreated":response.created, "subject":r.data.task.subject_id}
+                    foundReported.push(questionData)
                     }
               }
           }
@@ -673,7 +678,128 @@ export async function find_reported_content(id,type){
         xhr.send();
         }
     } 
-    console.log(foundReported)
+    
 }
+
+let subjects = [
+    {
+        "id": 2,
+        "name": "Mathematics"
+    },
+    {
+        "id": 5,
+        "name": "History"
+    },
+    {
+        "id": 1,
+        "name": "English"
+    },
+    {
+        "id": 8,
+        "name": "Biology"
+    },
+    {
+        "id": 18,
+        "name": "Chemistry"
+    },
+    {
+        "id": 15,
+        "name": "Physics"
+    },
+    {
+        "id": 3,
+        "name": "Social Studies"
+    },
+    {
+        "id": 31,
+        "name": "Advanced Placement (AP)"
+    },
+    {
+        "id": 32,
+        "name": "SAT"
+    },
+    {
+        "id": 7,
+        "name": "Geography"
+    },
+    {
+        "id": 6,
+        "name": "Health"
+    },
+    {
+        "id": 21,
+        "name": "Arts"
+    },
+    {
+        "id": 4,
+        "name": "Business"
+    },
+    {
+        "id": 19,
+        "name": "Computers and Technology"
+    },
+    {
+        "id": 29,
+        "name": "French"
+    },
+    {
+        "id": 30,
+        "name": "German"
+    },
+    {
+        "id": 28,
+        "name": "Spanish"
+    },
+    {
+        "id": 22,
+        "name": "World Languages"
+    },
+    {
+        "id": 33,
+        "name": "Medicine"
+    },
+    {
+        "id": 34,
+        "name": "Law"
+    },
+    {
+        "id": 35,
+        "name": "Engineering"
+    }
+]
+let table = document.querySelector("tbody")
+table.innerHTML = ``
+
+for (let i = 0; i < foundReported.length; i++) {
+  let content = foundReported[i]["content"]
+  var regex = /(<([^>]+)>)/ig
+  let result = content.replace(regex, "");
+  const found = subjects.find(element => element["id"] === foundReported[i]["subject"]);
+ 
+  let row = document.createElement("div") 
+     table.appendChild(row)
+   row.outerHTML = `<tr>
+<td>${i+1}</td>
+<td class="iconcell">
+        <div class="contenticon shield">
+          
+        </div>
+       <a href="/question/${foundReported[i]["questionID"]}" style=" display: -webkit-box;
+       -webkit-line-clamp: 1;
+       -webkit-box-orient: vertical;
+       overflow: hidden;">
+       ${String(result)}
+</a>
+</td>
+<td>${found["name"]}</td>
+<td>${foundReported[i]["timeCreated"]}</td>
+`
+   
+}
+add_icons()
+addOnlyChecks()
+addticket()
 document.querySelector("#fetchReported  .spinner-container").classList.remove("show");
 }
+
+

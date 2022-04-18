@@ -35,7 +35,7 @@ function shorten_warnrsn(warning){
     if(warning.includes("cyberbullying")){
         warning = "Bullying";
     }
-    else if(warning.includes("swear words or explicit content.")){
+    else if(warning.includes("swear words or explicit content.") || warning.includes("swearwords")){
         warning = "Inappropriate Content";
     }
     else if(warning.includes("personal information")){

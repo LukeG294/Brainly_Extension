@@ -49,7 +49,7 @@ export function addResponseButtons(){
     let id = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
     document.querySelector("#fetchReported").addEventListener("click",async function(){
         await find_reported_content(id,"responses");
-        console.log("done")
+       
     })
 }
 

@@ -14,8 +14,7 @@ const config = {
     ...MakeEntries("./src/scripts/styleguide-icons.ts", "content-scripts/js", "icons"),
     ...MakeEntries("./src/scripts/styleguide.ts", "content-scripts/js", "styleguide"),
     ...MakeEntries("./src/scripts/question_page/question_page.ts", "content-scripts/js", "question_page"),
-    ...MakeEntries("./src/scripts/content_page/index.ts", "content-scripts/js", "content_page"),
-    ...MakeEntries("./src/scripts/mod_all/index.ts", "content-scripts/js", "mod_all")
+    ...MakeEntries("./src/scripts/content_page/index.ts", "content-scripts/js", "content_page")
 
   },
   output: {

@@ -40,6 +40,7 @@ export function addTaskButtons(){
    
     let content = document.querySelectorAll("#content-old > div:nth-child(2) > div:nth-child(25) > table > tbody > tr")
     for (let i = 0; i < content.length; i++) {
+        content[i].children[1].classList.add("iconcell")
         content[i].insertAdjacentHTML('beforeend', `
         <div class="sg-space-x-m"><label class="sg-checkbox" for="mmm41eh8ef8"><input type="checkbox" class="sg-checkbox__element contentCheckboxes" id="${i}">
             <div class="sg-checkbox__ghost" aria-hidden="true">

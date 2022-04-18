@@ -17,7 +17,9 @@ const addObserverIfFeedAvailable = () => {
   observer.observe(target, { attributes: true, childList: true, characterData: true, subtree: true });
   Queuefn();
 };
+/*
 setTimeout(() => {
     addObserverIfFeedAvailable();
 }, 10000);
 
+*/

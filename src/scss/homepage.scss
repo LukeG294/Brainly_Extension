@@ -290,14 +290,30 @@ div.brn-placeholder__animation{
     }
   }
 }
+.modticket{
+  position:relative;
+  >.sg-spinner-container__overlay{
+    border-radius:100%;
+    background:rgba(255,255,255,0.5);
+    display:none;
+    &.show{
+      display:flex!important;
+    }
+
+  }
+}
+.blockint{
+  position:fixed;
+  height:100vh;
+  width:100vw;
+  z-index:999;
+}
 .noanswer{
   display:none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: sticky;
-  transform: translateY(-25%);
-  top: 50%;
   height: max-content;
   &.show{
     display:flex!important;

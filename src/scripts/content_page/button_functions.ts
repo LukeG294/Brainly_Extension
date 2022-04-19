@@ -1,6 +1,4 @@
-import {insertdata_ticket} from "../common/Mod Ticket/ticket_functions"
-import {ticket} from "../common/Mod Ticket/ticket_exp"
-import { show_ticket } from "../common/mod_functions"
+import {insert_ticket} from "../common/mod_functions"
 import { add_icons } from "../content_page/content_page_buttons"
 import { addOnlyChecks } from "../content_page/tasks"
 
@@ -104,7 +102,6 @@ export async function showDelrsn(type:string){
     });
   }
 }
-
 export async function confirmDeletionQuestions(){
   document.querySelector("#delete  .spinner-container").classList.add("show");
   let checkBoxes = document.getElementsByClassName("contentCheckboxes")
@@ -152,15 +149,20 @@ export function addticket(){
         let cell = row.children[1];
         let qid = row.querySelector("a").getAttribute("href").replace("/question/","");
         cell.insertAdjacentHTML("afterbegin",/*html*/`
+        <div class="modticket">
+        <div class="sg-spinner-container__overlay">
+          <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+        </div>
         <div class="contenticon shield">
             <svg viewBox="0 0 512 512" style="overflow: visible" id="icon-shield" xmlns="http://www.w3.org/2000/svg">
                 <title>Moderate</title>
                 <path fill-rule="evenodd" d="M256 448c-32 0-192-16-192-192V96c0-11 6-32 32-32h320c11 0 32 6 32 32v176c0 160-160 176-192 176zm128-320H256v256c102 0 128-85 128-128V128z" clip-rule="evenodd"/>
             </svg>
         </div>
+        </div>
         `); 
         row.querySelector(".contenticon.shield").addEventListener("click", function(){
-            show_ticket(qid);
+            insert_ticket(qid, row.querySelector(".modticket > .sg-spinner-container__overlay"));
         });
     } 
 }
@@ -250,7 +252,6 @@ export async function confirmDeletionAnswers(){
   
   document.querySelector("#delete  .spinner-container").classList.remove("show");
 }
-
 export async function unverifyAnswers(){
   document.querySelector("#unverify  .spinner-container").classList.add("show");
   let checkBoxes = document.getElementsByClassName("contentCheckboxes")
@@ -352,9 +353,8 @@ export async function unverifyAnswers(){
     })
   }
   document.querySelector("#unverify  .spinner-container").classList.remove("show");
-  }
-
-  export async function approveAnswers(){
+}
+export async function approveAnswers(){
     document.querySelector("#approveSelected  .spinner-container").classList.add("show");
     let checkBoxes = document.getElementsByClassName("contentCheckboxes")
     let idsToVerify = []
@@ -455,8 +455,7 @@ export async function unverifyAnswers(){
       })
     }
     document.querySelector("#approveSelected  .spinner-container").classList.remove("show");
-    }
-
+}
 export async function confirmAnswers(){
   document.querySelector("#confirmSelectedAnswers  .spinner-container").classList.add("show");
   let checkBoxes = document.getElementsByClassName("contentCheckboxes")
@@ -563,7 +562,6 @@ export async function confirmAnswers(){
   document.querySelector("#confirmSelectedAnswers  .spinner-container").classList.remove("show");
   window.location.reload()
 }
-
 export async function confirmQuestions(){
   document.querySelector("#confirmSelectedQuestions  .spinner-container").classList.add("show");
   let checkBoxes = document.getElementsByClassName("contentCheckboxes")
@@ -621,8 +619,6 @@ export async function confirmQuestions(){
   document.querySelector("#confirmSelectedQuestions  .spinner-container").classList.remove("show");
   window.location.reload();
 }
-
-
 export async function find_reported_content(id,type){
   const foundReported = []
   let pagenum = document.querySelector("#content-old > div:nth-child(3) > p").children.length-2;

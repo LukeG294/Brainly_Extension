@@ -1,6 +1,6 @@
 import {ryver_notification} from "../common/Ryver/ryver_modal"
 import {login_run} from "../common/Ryver/ryver_login"
-import {show_ticket} from "../common/mod_functions"
+import {insert_ticket} from "../common/mod_functions"
 import {subscribe, setAuth} from "../common/livemod"
 import {add_admin} from "./homepage_admin"
 
@@ -12,9 +12,21 @@ async function HomepageButtons() {
     
     //check if the answer button is available
     try{
+      let modbutton = /*html*/`
+      <div class="modticket">
+        <div class="sg-spinner-container__overlay">
+          <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+        </div>
+        <button class="mod-button sg-button--outline">
+          <div class="sg-icon sg-icon--dark sg-icon--x32">
+            <svg class="sg-icon__svg"><use xlink:href="#icon-shield"></use></svg>
+          </div>
+        </button>
+      </div>
+      `
       let actionlist = questionBox.querySelector(".sg-actions-list__hole.sg-actions-list__hole--to-right");
       if (questionBox.querySelector(".mod-button")) continue;
-      actionlist.insertAdjacentHTML("afterend", `<button class="mod-button sg-button--outline"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-shield"></use></svg></div></button>`);
+      actionlist.insertAdjacentHTML("afterend", modbutton);
       actionlist.querySelector("a").innerHTML = '<div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-plus"></use></svg></div>'
     }catch(err){
       if(questionBox.id !== "noanswer"){
@@ -30,14 +42,14 @@ async function HomepageButtons() {
     }
 
     //mod ticket event listeners
-    questionBox.querySelector(" .mod-button").addEventListener("click", async function(){
-      show_ticket(qid)
+    questionBox.querySelector(".mod-button").addEventListener("click", async function(){
+      insert_ticket(qid, questionBox.querySelector(".modticket > .sg-spinner-container__overlay"))
     });
 
     //livemod setup
-    questionBox.querySelector(".brn-feed-item").setAttribute("id", qid);
+    //questionBox.querySelector(".brn-feed-item").setAttribute("id", qid);
   }
-  subscribe()
+  //subscribe()
 }
   
 const observer = new MutationObserver(HomepageButtons);

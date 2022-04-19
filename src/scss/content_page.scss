@@ -117,6 +117,18 @@ div#content-old a{
   > div{
     display:flex;
   }
+  .modticket{
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    justify-content: center;
+    .sg-spinner-container__overlay{
+      background:#f0f2f5!important;
+    }
+    .contenticon.shield{
+      margin-right:0px!important;
+    }
+  }
 }
 #content-old > div:nth-child(1) > div:nth-child(2) > h1 > a{
   font-weight: 900;

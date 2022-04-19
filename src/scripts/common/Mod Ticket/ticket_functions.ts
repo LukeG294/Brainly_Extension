@@ -141,7 +141,7 @@ function user_content_data(user, elem, item){
   elem.querySelector(".text-user .rank").setAttribute("style", `color: ${user.ranks.color}`)
   elem.querySelector(".content").innerHTML = item.content;
 }
-function add_answer(ans,res,a, basic_data){
+export function add_answer(ans,res,a, basic_data){
   let answerer = res.users_data.find(({id}) => id === ans.user.id);
   let answer_elem = /*html*/`
   <div class = "content-item answer${a}">
@@ -231,7 +231,7 @@ function add_answer(ans,res,a, basic_data){
   add_report(res,ans,this_ans);
   add_deletion(a_del_rsn, this_ans, answer_id, "response");
 }
-async function add_question_data(res, d_reference){
+export async function add_question_data(res, d_reference){
   let q_data = res.data.task;
   let q_elem = document.querySelector(".qdata");
   console.log(res);
@@ -248,34 +248,4 @@ async function add_question_data(res, d_reference){
   let q_id = res.data.task.id;
   add_deletion(q_del_rsn, q_elem, q_id, "task");
   
-}
-export async function insertdata_ticket(id){
-  let basic_data = await fetch(`https://brainly.com/api/28/api_tasks/main_view/${id}`, {method: "GET"}).then(data => data.json());
-  if(basic_data.data.task.settings.is_deleted){
-    document.querySelector(".preview-content").innerHTML = /*html*/`
-    <div class="removedq">
-      <img src="${removedq}" alt="">
-    </div>
-    `
-  }else{
-    let res = await fetch(`https://brainly.com/api/28/moderation_new/get_content`, { method: "POST",body: (`{"model_type_id":1,"model_id":${id},"schema":"moderation.content.get"}`)}).then(data => data.json())
-    let d_reference = await fetch('https://brainly.com/api/28/api_config/desktop_view', {method: "GET"}).then(data => data.json());
-    let log = await fetch(`https://brainly.com/api/28/api_task_lines/big/${id}`, {method: "GET"}).then(data => data.json());
-
-    await add_question_data(res,d_reference);
-
-
-    if(res.data.responses.length !== 0){
-      document.querySelector(".answers").innerHTML = '';
-    }
-    else{
-      document.querySelector(".noanswer").classList.add("show")
-    }
-    for(let a = 0; a < res.data.responses.length; a++){
-      let this_ans_data = basic_data.data.responses[a];
-      add_answer(res.data.responses[a],res, a, this_ans_data);
-    }
-    document.querySelector(".sg-spinner-container").classList.add("remove");
-    //add_log(log);
-  }
 }

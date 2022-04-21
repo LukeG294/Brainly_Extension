@@ -120,6 +120,9 @@ div.brn-placeholder__animation{
               line-height:1.2rem;
             }
           }
+          .confirm{
+            display:flex!important;
+          }
           .qdata{
             border-color:#ff7968!important;
           }
@@ -134,21 +137,36 @@ div.brn-placeholder__animation{
         .actions{
           display: flex;
           justify-content: flex-end;
-          .delete{
+          .actionbut{
             width: 40px;
             cursor: pointer;
             height: 40px;
-            border: 2px solid #ff341a;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 100%;
+          }
+          .delete{
+            border: 2px solid #ff341a;
             >div{
               fill: #ff341a;
               height: 26px;
               width: 26px;
             }
           
+          }
+          .confirm{
+            border:2px solid #60d399;
+            display:none;
+            >div{
+              fill:#60d399;
+            }
+          }
+          .approve{
+            border:2px solid #60d399;
+            >div{
+              fill:#60d399;
+            }
           }
           .qdel, .adel{
             border:none;

@@ -1,5 +1,6 @@
 import {add_answer, add_question_data} from "../common/Mod Ticket/ticket_functions"
 import {ticket} from "../common/Mod Ticket/ticket_exp"
+import {showMessage} from "../common/common_functions"
 
 function noclick(){
     document.querySelector("body").insertAdjacentHTML("afterbegin",/*html*/`
@@ -51,7 +52,7 @@ export async function insert_ticket(id, butspinner){
                         //ticket reserved
                         butspinner.classList.remove("show");
                         document.querySelector(".blockint").remove();
-                        alert("ticket reserved");
+                        showMessage("Ticket Reserved by Another Moderator", "info")
                     }
                 }}
                     let body = {
@@ -65,7 +66,7 @@ export async function insert_ticket(id, butspinner){
         else{
             butspinner.classList.remove("show");
             document.querySelector(".blockint").remove();
-            alert("question has been deleted")
+            showMessage("Question has been deleted", "error")
         }
     }
 }
@@ -123,6 +124,14 @@ export function confirm_answer(answerToConfirm:string){
     xhr.setRequestHeader("referer", "https://brainly.com/tools/moderation?pageSize=60");
 
     xhr.send(data);
+}
+export function approve_answer(answerToConfirm:string){
+    var raw = JSON.stringify({
+        "model_type": 2,
+        "model_id": answerToConfirm
+      });
+      
+      fetch("https://brainly.com/api/28/api_content_quality/confirm", { method: "POST",body: raw}).then(data => data.json());
 }
 export async function delete_user(uid:string){
     await fetch("https://brainly.com/admin/users/delete/"+uid, {

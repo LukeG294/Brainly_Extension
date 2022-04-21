@@ -11,8 +11,7 @@ async function HomepageButtons() {
     let qid = questionBox.querySelector("a[data-test = 'feed-item-link']").getAttribute("href").replace("/question/","").split("?")[0];
     
     //check if the answer button is available
-    try{
-      let modbutton = /*html*/`
+    let modbutton = /*html*/`
       <div class="modticket">
         <div class="sg-spinner-container__overlay">
           <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
@@ -24,6 +23,7 @@ async function HomepageButtons() {
         </button>
       </div>
       `
+    try{
       let actionlist = questionBox.querySelector(".sg-actions-list__hole.sg-actions-list__hole--to-right");
       if (questionBox.querySelector(".mod-button")) continue;
       actionlist.insertAdjacentHTML("afterend", modbutton);
@@ -31,7 +31,7 @@ async function HomepageButtons() {
     }catch(err){
       if(questionBox.id !== "noanswer"){
         questionBox.id = 'noanswer'
-        questionBox.querySelector(".brn-feed-item__footer .sg-actions-list").insertAdjacentHTML("afterend", `<div class = "sg-actions-list__hole sg-actions-list__hole--to-right"><button class="mod-button sg-button--outline"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-shield"></use></svg></div></button></div>`);
+        questionBox.querySelector(".brn-feed-item__footer .sg-actions-list").insertAdjacentHTML("afterend", `<div class = "sg-actions-list__hole sg-actions-list__hole--to-right">${modbutton}</div>`);
       }
     }
 

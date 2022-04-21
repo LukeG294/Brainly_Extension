@@ -53,10 +53,11 @@ export function ticket(){
             </div>
             <div class="attach-list"></div>
             <div class="actions">
-              <button class="qdel one">1</button>
-              <button class="qdel two">2</button>
-              <button class="qdel three">3</button>
-              <div class="delete"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-trash"></use></svg></div></div>
+              <button class="actionbut qdel one">1</button>
+              <button class="actionbut qdel two">2</button>
+              <button class="actionbut qdel three">3</button>
+              <div class="actionbut delete"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-trash"></use></svg></div></div>
+              <div class="actionbut confirm" style="border-color: #60d399!important;"><div class="sg-icon sg-icon--dark sg-icon--x32" style="fill: #60d399;"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></div>
             </div>
             <div class="delmenu">
               <div class="primary-items"></div>

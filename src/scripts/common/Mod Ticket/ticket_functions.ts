@@ -1,5 +1,6 @@
 import {find, runtime} from "webextension-polyfill";
 import {get_warnings} from "../mod_functions"
+import {confirm_answer, approve_answer} from "../mod_functions"
 
 let removedq = runtime.getURL("resources/Compositions/Ladies@Brainly.svg");
 function add_log(log){
@@ -182,10 +183,12 @@ export function add_answer(ans,res,a, basic_data){
       </div>
       <div class="attach-list"></div>
       <div class="actions">
-        <button class="adel one">1</button>
-        <button class="adel two">2</button>
-        <button class="adel three">3</button>
-        <div class="delete"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-trash"></use></svg></div></div>
+        <button class="actionbut adel one">1</button>
+        <button class="actionbut adel two">2</button>
+        <button class="actionbut adel three">3</button>
+        <div class="actionbut delete"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-trash"></use></svg></div></div>
+        <div class="actionbut confirm"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></div>
+        <div class="actionbut approve"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-verified"></use></svg></div></div>
       </div>
       <div class="delmenu">
               <div class="primary-items"></div>
@@ -230,6 +233,15 @@ export function add_answer(ans,res,a, basic_data){
   add_attachments(ans, this_ans);
   add_report(res,ans,this_ans);
   add_deletion(a_del_rsn, this_ans, answer_id, "response");
+  this_ans.querySelector(".confirm").addEventListener("click", function(){
+    confirm_answer(answer_id);
+    this_ans.classList.remove("reported");
+  })
+  this_ans.querySelector(".approve").addEventListener("click", function(){
+    approve_answer(answer_id);
+    this_ans.classList.add("approved")
+    this_ans.classList.remove("reported")
+  })
 }
 export async function add_question_data(res, d_reference){
   let q_data = res.data.task;

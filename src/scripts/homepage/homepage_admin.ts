@@ -1,8 +1,9 @@
 
-import { delete_user } from "../common/mod_functions";
+import { delete_user, sendMessages } from "../common/mod_functions";
 
 import { showMessage } from "../common/common_functions";
 import {macc_d} from "../common/macc-d_exp"
+import {mmsg_s} from "../common/macc-d_exp"
 
 async function sendmsg(userLink){
     let token = localStorage.getItem("userAuth");
@@ -76,4 +77,43 @@ export function add_admin(){
             document.querySelector(".delete-acc .spinner-container").classList.remove("show");
         })
     })
+
+    document.querySelector(".mmsg-s").addEventListener("click", function(){
+        document.querySelector("body").insertAdjacentHTML("afterbegin", mmsg_s());
+        document.querySelector(".modal_close").addEventListener("click", function(){document.querySelector(".modal_back").remove()})
+        
+      
+        document.querySelector(".presets").addEventListener("change", function(){
+            let rsn = document.querySelector(".presets input:checked").getAttribute("reason");
+            (<HTMLInputElement>document.querySelector(".message-content")).value = rsn;
+        });
+        
+        
+        document.querySelector(".send-message").addEventListener("click", async function(){
+            document.querySelector(".send-message .spinner-container").classList.add("show");
+            //@ts-expect-error
+            let linksArray = String(document.querySelector(".profile-links").value).split("\n")
+            let error = false
+            let usersToMsg = []
+            for (let index = 0; index < linksArray.length; index++) {
+                const element = linksArray[index];
+                let regexString = new RegExp(`https:\/\/brainly\.com\/profile\/.*-.*`)
+                if (regexString.test(element)) {
+                   let uid = String(element).split("/")[4].split("-")[1]
+                   let uname = String(element).split("/")[4].split("-")[0]
+                   usersToMsg.push(uid+"-"+uname)
+                } else { error = true }
+            }
+            sendMessages(usersToMsg, (<HTMLInputElement>document.querySelector(".message-content")).value)
+            if (error){
+                document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
+            } else {
+                document.querySelector(".profile-links").classList.add("sg-textarea--valid")
+                
+            }
+            document.querySelector(".send-message .spinner-container").classList.remove("show");
+        })
+    })
+
+
 }

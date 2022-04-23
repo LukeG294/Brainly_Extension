@@ -68,3 +68,4 @@ if(!localStorage.getItem("userAuth")){
   login_run();
 })
 }
+add_admin()

@@ -34,7 +34,30 @@ div.brn-placeholder__animation{
   display:flex;
   align-items: center;
   justify-content: center;
-
+  .modal_accdel{
+    background: white;
+    padding: 18px;
+    border-radius: 10px;
+    position: relative;
+    >h1{
+      font-size:1.5rem;
+    }
+    >textarea{
+      width:100%;
+    }
+    .deletion-reason{
+      height:80px!important;
+    }
+    .presets{
+      margin:8px 0px;
+    }
+    >button{
+      width:100%;
+      margin-top:8px;
+      background-color:#ff7968!important;
+      color:white;
+    }
+  }
   .modal{
     background:white;
     border-radius:10px;

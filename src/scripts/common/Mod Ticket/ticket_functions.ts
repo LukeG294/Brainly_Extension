@@ -1,8 +1,8 @@
 import {find, runtime} from "webextension-polyfill";
 import {get_warnings} from "../mod_functions"
-import {confirm_answer, approve_answer} from "../mod_functions"
+import {ticket} from "./ticket_exp"
+import {confirm_answer, approve_answer, confirm_question} from "../mod_functions"
 
-let removedq = runtime.getURL("resources/Compositions/Ladies@Brainly.svg");
 function add_log(log){
   for(let i = 0; i < log.data.length; i++){
     let user = log.users_data.find(({id}) => id === log.data[i].user_id).nick;
@@ -142,7 +142,7 @@ function user_content_data(user, elem, item){
   elem.querySelector(".text-user .rank").setAttribute("style", `color: ${user.ranks.color}`)
   elem.querySelector(".content").innerHTML = item.content;
 }
-export function add_answer(ans,res,a, basic_data){
+function add_answer(ans,res,a, basic_data){
   let answerer = res.users_data.find(({id}) => id === ans.user.id);
   let answer_elem = /*html*/`
   <div class = "content-item answer${a}">
@@ -186,9 +186,10 @@ export function add_answer(ans,res,a, basic_data){
         <button class="actionbut adel one">1</button>
         <button class="actionbut adel two">2</button>
         <button class="actionbut adel three">3</button>
-        <div class="actionbut delete"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-trash"></use></svg></div></div>
+        
         <div class="actionbut confirm"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></div>
         <div class="actionbut approve"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-verified"></use></svg></div></div>
+        <div class="actionbut delete"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-trash"></use></svg></div></div>
       </div>
       <div class="delmenu">
               <div class="primary-items"></div>
@@ -243,15 +244,15 @@ export function add_answer(ans,res,a, basic_data){
     this_ans.classList.remove("reported")
   })
 }
-export async function add_question_data(res, d_reference){
+async function add_question_data(res, d_reference){
   let q_data = res.data.task;
   let q_elem = document.querySelector(".qdata");
   console.log(res);
   document.querySelector(".text-subj > div:nth-child(2)").innerHTML = d_reference.data.grades.find(({id}) => id === q_data.grade_id).name;
   document.querySelector(".text-subj > div:nth-child(1)").innerHTML = d_reference.data.subjects.find(({id}) => id === q_data.subject_id).name;
   let asker = res.users_data.find(({id}) => id === q_data.user.id);
-  let warnings = await get_warnings(asker.id)
-  console.log(warnings)
+  //let warnings = await get_warnings(asker.id)
+  //console.log(warnings)
   add_report(res, q_data, document.querySelector(".question"));
   user_content_data(asker, q_elem, q_data);
   add_attachments(q_data, q_elem);
@@ -259,5 +260,42 @@ export async function add_question_data(res, d_reference){
   let q_del_rsn = res.data.delete_reasons.task;
   let q_id = res.data.task.id;
   add_deletion(q_del_rsn, q_elem, q_id, "task");
+  q_elem.querySelector(".confirm").addEventListener("click", function(){
+    confirm_question(q_id);
+    document.querySelector(".question").classList.remove("reported")
+  })
   
+}
+function show_ticket(qid:string){
+    document.body.insertAdjacentHTML("beforeend", <string>ticket())
+
+      document.querySelector(".modal_close").addEventListener("click", async function(){
+        document.querySelector(".modal_back").remove()
+        await fetch(`https://brainly.com/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${qid},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
+      });
+}
+export async function ticket_data(id, res, basic_data, butspinner){
+  let d_reference = await fetch('https://brainly.com/api/28/api_config/desktop_view', {method: "GET"}).then(data => data.json());
+  //let log = fetch(`https://brainly.com/api/28/api_task_lines/big/${id}`, {method: "GET"}).then(data => data.json());
+  console.log("ticket")
+
+  show_ticket(id);
+  document.querySelector(".blockint").remove();
+  butspinner.classList.remove("show");
+  await add_question_data(res,d_reference);
+
+  if(res.data.responses.length !== 0){
+      document.querySelector(".answers").innerHTML = '';
+      for(let a = 0; a < res.data.responses.length; a++){
+          console.log(a);
+          let this_ans_data = basic_data.data.responses[a];
+          console.log(this_ans_data)
+          add_answer(res.data.responses[a],res, a, this_ans_data);
+      }
+  }
+  else{
+      document.querySelector(".noanswer").classList.add("show")
+  }
+  document.querySelector(".preview-content .sg-spinner-container").classList.add("remove");
+  //add_log(log);
 }

@@ -23,7 +23,7 @@ export function macc_d(){
                 </label>
             </div>
             <textarea placeholder="Reason" class="deletion-reason sg-textarea sg-textarea--tall"></textarea>
-            <button class="sg-button sg-button--m sg-button--solid-light delete-acc"><span class="sg-button__text">Delete!</span></button>
+            <button class="sg-button sg-button--m sg-button--solid-light delete-acc"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Delete!</span></button>
         </div>
     </div>
     `)

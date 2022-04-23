@@ -54,7 +54,6 @@ export function addTaskButtons(){
     `)
     
     }
-   
     let buttonArea = document.querySelector("#content-old > div:nth-child(3) > p")
         //if you want to add permissions for each button later, do it here (below)
     buttonArea.insertAdjacentHTML('afterend', deletion_menu())

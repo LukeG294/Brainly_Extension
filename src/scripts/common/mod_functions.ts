@@ -141,3 +141,77 @@ export async function get_warnings(user:string){
     }
     return warn_arr
 }
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+export function sendMessages(users_ids, content){
+
+    function getConvoId(userid, varContent){
+        var data = JSON.stringify({
+        "user_id": userid
+        });
+    
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    
+    xhr.addEventListener("readystatechange", function() {
+        if(this.readyState === 4) {
+        let response = JSON.parse(this.responseText)
+       
+        let convoID = response["data"]["conversation_id"]
+            var data = JSON.stringify({
+            "content": varContent,
+            "conversation_id": convoID
+        });
+    
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        
+        xhr.addEventListener("readystatechange", function() {
+            if(this.readyState === 4) {
+            console.log(this.responseText);
+            }
+        });
+       
+  
+          
+        xhr.open("POST", "https://brainly.com/api/28/api_messages/send");
+        xhr.setRequestHeader("authority", "brainly.com");
+        xhr.setRequestHeader("sec-ch-ua", "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"98\", \"Google Chrome\";v=\"98\"");
+        xhr.setRequestHeader("sec-ch-ua-mobile", "?0");
+        xhr.setRequestHeader("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36");
+        xhr.setRequestHeader("content-type", "application/json");
+        xhr.setRequestHeader("x-b-token-long", getCookie("Zadanepl_cookie[Token][Long]"));
+        xhr.setRequestHeader("accept", "text/plain, */*; q=0.01");
+        xhr.setRequestHeader("x-requested-with", "XMLHttpRequest");
+        
+        
+        xhr.send(data);
+        }
+    });
+    
+    xhr.open("POST", "https://brainly.com/api/28/api_messages/check");
+    xhr.setRequestHeader("authority", "brainly.com");
+    
+    xhr.setRequestHeader("content-type", "application/json");
+    xhr.setRequestHeader("x-b-token-long", getCookie("Zadanepl_cookie[Token][Long]"));
+    
+    
+    xhr.send(data);
+    }
+    
+
+    let convo_ids = []
+    for (let i = 0; i < users_ids.length; i++) {
+        let idForConvo = String(users_ids[i]).split("-")[0]
+        let unameForConvo = String(users_ids[i]).split("-")[1]
+        let varContent = content.replaceAll("{user}",unameForConvo)
+        
+        getConvoId(idForConvo,varContent)
+       
+    }
+}

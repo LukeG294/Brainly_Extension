@@ -34,7 +34,7 @@ div.brn-placeholder__animation{
   display:flex;
   align-items: center;
   justify-content: center;
-  .modal_accdel{
+  .modal_accdel, .modal_mmsg_s{
     background: white;
     padding: 18px;
     border-radius: 10px;
@@ -55,6 +55,12 @@ div.brn-placeholder__animation{
       width:100%;
       margin-top:8px;
       background-color:#ff7968!important;
+      color:white;
+    }
+    .send-message{
+      width:100%;
+      margin-top:8px;
+      background-color:#4FB3F6!important;
       color:white;
     }
   }
@@ -178,6 +184,7 @@ div.brn-placeholder__animation{
             }
           
           }
+          
           .confirm{
             border:2px solid #60d399;
             display:none;

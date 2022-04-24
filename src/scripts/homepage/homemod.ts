@@ -8,7 +8,7 @@ import { getPermissions } from "../common/permission_system"
 setAuth()
 async function checkPermissionSet(){
   let permissionSet = await getPermissions()
-  if (permissionSet >= 3){
+  if (permissionSet >= 0){
     const observer = new MutationObserver(HomepageButtons);
     const addObserverIfFeedAvailable = () => {
       let target = document.querySelector(".sg-layout__content");

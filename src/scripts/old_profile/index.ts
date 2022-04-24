@@ -1,5 +1,7 @@
 import {add_del_menu, deletion_listener, preset_delrsn} from "./del_menu_exp"
 import {show_recent_warnings} from "./recent_warnings"
+import { getPermissions } from "../common/permission_system"
+
 
 function insert_data(){
     document.querySelector(".mod-profile-panel").insertAdjacentHTML("beforeend", /*html*/`
@@ -27,7 +29,14 @@ if(
         && 
     document.querySelector("div.info_top > span.ranking > h2 > a").innerHTML !== "Deleted account"
     ){
-    insert_data()
+        async function checkPermissionSet(){
+            let permissionSet = await getPermissions()
+            if (permissionSet >= 6){
+                insert_data()
+            }
+          }
+          checkPermissionSet()
+    
 }
 let uid = window.location.href.split("-")[1].split("/")[0];
 show_recent_warnings(uid);

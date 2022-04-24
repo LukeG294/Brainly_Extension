@@ -2,9 +2,25 @@ import {ryver_notification} from "../common/Ryver/ryver_modal"
 import {login_run} from "../common/Ryver/ryver_login"
 import {insert_ticket} from "../common/mod_functions"
 import {subscribe, setAuth} from "../common/livemod"
-import {add_admin} from "./homepage_admin"
-let userinfo = JSON.parse(document.querySelector("meta[name = 'user_data']").getAttribute("content"))
+
+import { getPermissions } from "../common/permission_system"
+
 setAuth()
+async function checkPermissionSet(){
+  let permissionSet = await getPermissions()
+  if (permissionSet >= 4){
+    const observer = new MutationObserver(HomepageButtons);
+    const addObserverIfFeedAvailable = () => {
+      let target = document.querySelector(".sg-layout__content");
+      if(!target) return setTimeout(addObserverIfFeedAvailable, 500);
+      
+      observer.observe(target, { attributes: true, childList: true, characterData: true, subtree: true });
+      HomepageButtons();
+    };
+    addObserverIfFeedAvailable();
+  }
+}
+checkPermissionSet()
 async function HomepageButtons() {
   const questions = document.querySelectorAll(".brn-feed-items > div[data-testid = 'feed-item']");
   for (let questionBox of Array.from(questions)) {
@@ -52,15 +68,7 @@ async function HomepageButtons() {
   //subscribe()
 }
   
-const observer = new MutationObserver(HomepageButtons);
-const addObserverIfFeedAvailable = () => {
-  let target = document.querySelector(".sg-layout__content");
-  if(!target) return setTimeout(addObserverIfFeedAvailable, 500);
-  
-  observer.observe(target, { attributes: true, childList: true, characterData: true, subtree: true });
-  HomepageButtons();
-};
-addObserverIfFeedAvailable();
+
 //if user does not have username and password in local storage
 if(!localStorage.getItem("userAuth")){
   window.addEventListener("load", function(){
@@ -68,6 +76,4 @@ if(!localStorage.getItem("userAuth")){
   login_run();
 })
 }
-if(userinfo.nick === "TheSection" || userinfo.nick === "LukeG1" || userinfo.nick === "koukladina" || userinfo.nick === "cher" || userinfo.nick === "Dasetka"){
-  add_admin()
-}
+

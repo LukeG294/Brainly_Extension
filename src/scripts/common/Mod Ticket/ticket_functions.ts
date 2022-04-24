@@ -1,17 +1,38 @@
 import {find, runtime} from "webextension-polyfill";
 import {get_warnings} from "../mod_functions"
 import {ticket} from "./ticket_exp"
-import {confirm_answer, approve_answer, confirm_question} from "../mod_functions"
+import {confirm_answer, approve_answer, confirm_question, delete_content} from "../mod_functions"
 
 function add_log(log){
   for(let i = 0; i < log.data.length; i++){
-    let user = log.users_data.find(({id}) => id === log.data[i].user_id).nick;
-  document.querySelector(".log").insertAdjacentHTML("beforeend",/*html*/`
-    <div class="log-item">
-      <div class = "user">${user}</div><div class = "content">${log.data[i].text.replace('%1$s',"")}</div>
-    </div>
-  `
-  );}
+    let date = log.data[i].date;
+    let time = log.data[i].time;
+    if(log.data[i].class === "added" || log.data[i].class === "edited"){
+      let user = log.users_data.find(({id}) => id === log.data[i].user_id).nick;
+      document.querySelector(".log").insertAdjacentHTML("beforeend",/*html*/`
+      <div class="log-item">
+        <div class = "content">${log.data[i].text.replace('%1$s',"<div class = 'user'>"+user+"</div>")}</div>
+        <div class="datetime">
+          <div class="date rightdot">${date}</div>
+          <div class="time">${time}</div>
+        </div>
+      </div>
+      `)
+    }
+    if(log.data[i].class === "deleted" || log.data[i].class === "accepted" || log.data[i].class === "reported" || log.data[i].class === "best"){
+      let mod = log.users_data.find(({id}) => id === log.data[i].user_id).nick;
+      let deleted = log.users_data.find(({id}) => id === log.data[i].owner_id).nick;
+      document.querySelector(".log").insertAdjacentHTML("beforeend",/*html*/`
+      <div class="log-item">
+        <div class = "content">${log.data[i].text.replace("%1$s", "<div class = 'user'>"+mod+"</div>").replace("%3$s", "<div class = 'user'>"+ deleted+"</div>")}</div>
+        <div class="datetime">
+          <div class="date rightdot">${date}</div>
+          <div class="time">${time}</div>
+        </div>
+      </div>
+      `)
+    }
+  }
 }
 function add_deletion(del_rsn, elem, tid, type:string){
   for(let i = 0; i < del_rsn.length; i++){
@@ -69,23 +90,6 @@ function add_deletion(del_rsn, elem, tid, type:string){
       }
     });
   });
-}
-async function delete_content(type:string, id:string, reason:string, warn:boolean, take_point:boolean){
-  let model_type_id = 0;
-  if(type === "task") {model_type_id = 1;}
-  if(type === "response") {model_type_id = 2;}
-  await fetch(`https://brainly.com/api/28/moderation_new/delete_${type}_content`, {
-      method: "POST",
-      body:JSON.stringify({
-        "reason_id":2,
-        "reason":reason,
-        "give_warning":warn,
-        "take_points": take_point,
-        "schema":`moderation.${type}.delete`,
-        "model_type_id":model_type_id,
-        "model_id":id,
-      })
-    })
 }
 function add_report(data, item, elem){
   if(item.report){
@@ -276,7 +280,8 @@ function show_ticket(qid:string){
 }
 export async function ticket_data(id, res, basic_data, butspinner){
   let d_reference = await fetch('https://brainly.com/api/28/api_config/desktop_view', {method: "GET"}).then(data => data.json());
-  //let log = fetch(`https://brainly.com/api/28/api_task_lines/big/${id}`, {method: "GET"}).then(data => data.json());
+  let log = await fetch(`https://brainly.com/api/28/api_task_lines/big/${id}`, {method: "GET"}).then(data => data.json());
+  console.log(log)
   console.log("ticket")
 
   show_ticket(id);
@@ -297,5 +302,5 @@ export async function ticket_data(id, res, basic_data, butspinner){
       document.querySelector(".noanswer").classList.add("show")
   }
   document.querySelector(".preview-content .sg-spinner-container").classList.add("remove");
-  //add_log(log);
+  add_log(log);
 }

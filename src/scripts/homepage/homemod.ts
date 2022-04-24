@@ -67,8 +67,6 @@ async function HomepageButtons() {
   }
   //subscribe()
 }
-  
-
 //if user does not have username and password in local storage
 if(!localStorage.getItem("userAuth")){
   window.addEventListener("load", function(){
@@ -76,4 +74,3 @@ if(!localStorage.getItem("userAuth")){
   login_run();
 })
 }
-

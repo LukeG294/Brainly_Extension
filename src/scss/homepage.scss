@@ -1,4 +1,5 @@
-/**{
+/*
+*{
   --primary-color: #60d399;
   --primary-text: #ffffff;
 }
@@ -9,13 +10,14 @@
 #moderate-functions-panel .text, .menu-list a:before, a[data-testid = 'navigation_add_question'] > span, div[class ^= 'Header-module__subnav'] span, div[class ^= 'Header-module__subnav'] a, button[aria-label = 'notification center'] svg, .brn-footer-legal-section div, .brn-footer-legal-section p, .brn-footer__container a, .brn-footer__container span, .brn-footer__container h3{
   color: var(--primary-text)!important;
 }
+*/
+.qdel,.adel{
+  display:none!important;
+}
 div.brn-placeholder__animation{
   background:none!important;
 }
 #moderate-functions-panel .icon, div[data-testid = 'game_box_badges']{
-  display:none!important;
-}*/
-.qdel, .adel{
   display:none!important;
 }
 #html .mint,input, button, select, textarea,.mint-header-secondary, .mint-cake-heading, #html .mint #profile #main-left .personal_info .header .info .info_top .ranking h2 a, #html .mint #profile #main-left .personal_info .header .info .info_top .rank h3 span, #html .mint #profile #main-left .personal_info .header .info .info_top .points h1, #html .mint #profile h3{
@@ -123,14 +125,28 @@ div.brn-placeholder__animation{
       }
       .log{
         .log-item{
+          position:relative;
+          padding:4px 0px;
           display:flex;
+          justify-content: space-between;
+          border-top:1px solid #c3d1dd;
           .content{
             margin-top:0px;
+            display:flex;
+            flex-wrap:wrap;
+            font-size:0.9rem;
+          }
+          .datetime{
+            display:flex;
+            color:#323c45;
           }
           .user{
             color: #413bff;
-            margin-right: 4px;
+            margin:0px 4px;
             font-weight: 600;
+            &:nth-child(1){
+              margin-left:0px!important
+            }
           }
         }
       }

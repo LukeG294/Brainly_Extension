@@ -1,27 +1,12 @@
 import {addResponseButtons} from "./responses"
-import {addTaskButtons} from "./tasks"
+import {addTaskButtonsBasic, addTaskButtonsConfirmation, addTaskButtonsDeletion, addTaskButtonsReportedContent} from "./tasks"
 import {addticket} from "./button_functions"
 import { getPermissions } from "../common/permission_system"
 
 
 
 
-    //tasks page
-    if(window.location.href.includes("task") || (!window.location.href.includes("responses") && !window.location.href.includes("comments_tr"))){
-        addTaskButtons()
-        console.log("taskpage")
-    }
-
-    //responses page
-    if(window.location.href.includes("responses")){
-        addResponseButtons()
-    }
-
-    //comments page
-    if(window.location.href.includes("comments_tr")){
-
-    }
-    
+   
 
 
 //@ts-ignore
@@ -31,7 +16,7 @@ let permsArr = []
 async function checkPermissionSet(){
   let perms = await getPermissions(userData.nick, userData.id)
    permsArr = String(atob(perms)).split(",")
-     
+   addPerPage()
   if (permsArr.includes("6")){
     addticket()
   }
@@ -65,3 +50,33 @@ function checkUser(){
 checkUser()
 
 
+
+function addPerPage(){
+   //tasks page
+ if(window.location.href.includes("task") || (!window.location.href.includes("responses") && !window.location.href.includes("comments_tr"))){
+  if (permsArr.includes("12")){
+    addTaskButtonsBasic()
+  }
+  if (permsArr.includes("7")){
+    addTaskButtonsDeletion()
+  }
+  if (permsArr.includes("0")){
+    addTaskButtonsConfirmation()
+  }
+  if (permsArr.includes("2")){
+    addTaskButtonsReportedContent()
+  }
+  console.log("taskpage")
+}
+
+//responses page
+if(window.location.href.includes("responses")){
+  addResponseButtons()
+}
+
+//comments page
+if(window.location.href.includes("comments_tr")){
+
+}
+
+}

@@ -69,15 +69,17 @@ export function addTaskButtons(){
                 document.getElementById("selectAll").addEventListener("click", function(){selectAll()})
                 document.getElementById("toggleSelected").addEventListener("click", function(){toggleSelection()})
                 document.getElementById("copyLinks").addEventListener("click", function(){copyLinks()})
-
-            }
-            if (permissionSet >= 5){
                 buttonArea.insertAdjacentHTML('afterend', deletion_menu())
-                buttonArea.insertAdjacentHTML('afterend', confirm_selected_questions())
                 buttonArea.insertAdjacentHTML('afterend', delete_selected_questions())
-                buttonArea.insertAdjacentHTML('afterend', get_reported_content())
                 document.querySelector("#deleteSelected").addEventListener("click", function(){showDelrsn("questions")})
                 document.querySelector("#delete").addEventListener("click",function(){confirmDeletionQuestions()})
+            }
+            if (permissionSet >= 5){
+                
+                buttonArea.insertAdjacentHTML('afterend', confirm_selected_questions())
+                
+                buttonArea.insertAdjacentHTML('afterend', get_reported_content())
+                
                 document.querySelector("#confirmSelectedQuestions").addEventListener("click",function(){confirmQuestions()})
                 let id = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
                 document.querySelector("#fetchReported").addEventListener("click", async function(){

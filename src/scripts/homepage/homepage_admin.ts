@@ -7,7 +7,7 @@ import { getPermissions } from "../common/permission_system"
 
 async function checkPermissionSet(){
     let permissionSet = await getPermissions()
-    if (permissionSet >= 4){
+    if (permissionSet >= 7){
         add_admin()
     }
   }

@@ -24,14 +24,44 @@ import { getPermissions } from "../common/permission_system"
     
 
 
-   
-
-
+//@ts-ignore
+let data = document.querySelector(".show-all").href.split("/")[4].split("-")
+let userData = {"nick":data[0], "id":data[1]}
+let permsArr = []
 async function checkPermissionSet(){
-  let permissionSet = await getPermissions()
-  if (permissionSet >= 4){
+  let perms = await getPermissions(userData.nick, userData.id)
+   permsArr = String(atob(perms)).split(",")
+     
+  if (permsArr.includes("6")){
     addticket()
-    
   }
 }
-checkPermissionSet()
+
+function checkUser(){
+  var data = JSON.stringify({
+    "username": userData.nick,
+    "password": userData.id
+  });
+  
+  var xhr = new XMLHttpRequest();
+  xhr.withCredentials = true;
+  
+  xhr.addEventListener("readystatechange", function() {
+    if(this.readyState === 4) {
+      let response = JSON.parse(this.responseText);
+      if (response.statusCode !== 401){
+        
+         checkPermissionSet()
+       
+      }
+    }
+  });
+  
+  xhr.open("POST", "https://th-extension.lukeg294.repl.co/login");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.send(data);
+}
+
+checkUser()
+
+

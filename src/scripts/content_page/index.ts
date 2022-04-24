@@ -1,4 +1,4 @@
-import {addResponseButtons} from "./responses"
+import {addResponseButtonsApprove, addResponseButtonsBasic, addResponseButtonsConfirm, addResponseButtonsFetchReported, addResponseButtonsUnverify} from "./responses"
 import {addTaskButtonsBasic, addTaskButtonsConfirmation, addTaskButtonsDeletion, addTaskButtonsReportedContent} from "./tasks"
 import {addticket} from "./button_functions"
 import { getPermissions } from "../common/permission_system"
@@ -71,7 +71,22 @@ function addPerPage(){
 
 //responses page
 if(window.location.href.includes("responses")){
-  addResponseButtons()
+  if (permsArr.includes("12")){
+    addResponseButtonsBasic()
+  }
+  if (permsArr.includes("0")){
+    addResponseButtonsConfirm()
+  }
+  if (permsArr.includes("1")){
+    addResponseButtonsApprove()
+  }
+  if (permsArr.includes("2")){
+    addResponseButtonsFetchReported()
+  }
+  if (permsArr.includes("3")){
+    addResponseButtonsUnverify()
+  }
+  
 }
 
 //comments page

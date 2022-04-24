@@ -17,6 +17,8 @@ import {
     confirmQuestions,
     find_reported_content,
 } from "./button_functions"
+import { getPermissions } from "../common/permission_system"
+import { permissions } from "webextension-polyfill"
 
 export function addOnlyChecks(){
     let content = document.querySelectorAll("#content-old > div:nth-child(2) > div:nth-child(25) > table > tbody > tr")
@@ -54,26 +56,45 @@ export function addTaskButtons(){
     `)
     
     }
+   
     let buttonArea = document.querySelector("#content-old > div:nth-child(3) > p")
         //if you want to add permissions for each button later, do it here (below)
-    buttonArea.insertAdjacentHTML('afterend', deletion_menu())
-    buttonArea.insertAdjacentHTML('afterend', confirm_selected_questions())
-    buttonArea.insertAdjacentHTML('afterend', delete_selected_questions())
-    buttonArea.insertAdjacentHTML('afterend', copy_links())
-    buttonArea.insertAdjacentHTML('afterend', toggle_selected())
-    buttonArea.insertAdjacentHTML('afterend', select_all())
-    buttonArea.insertAdjacentHTML('afterend', get_reported_content())
-    document.getElementById("selectAll").addEventListener("click", function(){selectAll()})
-    document.getElementById("toggleSelected").addEventListener("click", function(){toggleSelection()})
-    document.getElementById("copyLinks").addEventListener("click", function(){copyLinks()})
-    document.querySelector("#deleteSelected").addEventListener("click", function(){showDelrsn("questions")})
-    document.querySelector("#delete").addEventListener("click",function(){confirmDeletionQuestions()})
-    document.querySelector("#confirmSelectedQuestions").addEventListener("click",function(){confirmQuestions()})
-    let id = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
-    document.querySelector("#fetchReported").addEventListener("click", async function(){
-        await find_reported_content(id,"tasks");
-        add_icons()
-    })
+
+        async function checkPermissionSet(){
+            let permissionSet = await getPermissions()
+            if (permissionSet >= 4){
+                buttonArea.insertAdjacentHTML('afterend', copy_links())
+                buttonArea.insertAdjacentHTML('afterend', toggle_selected())
+                buttonArea.insertAdjacentHTML('afterend', select_all())
+                document.getElementById("selectAll").addEventListener("click", function(){selectAll()})
+                document.getElementById("toggleSelected").addEventListener("click", function(){toggleSelection()})
+                document.getElementById("copyLinks").addEventListener("click", function(){copyLinks()})
+
+            }
+            if (permissionSet >= 5){
+                buttonArea.insertAdjacentHTML('afterend', deletion_menu())
+                buttonArea.insertAdjacentHTML('afterend', confirm_selected_questions())
+                buttonArea.insertAdjacentHTML('afterend', delete_selected_questions())
+                buttonArea.insertAdjacentHTML('afterend', get_reported_content())
+                document.querySelector("#deleteSelected").addEventListener("click", function(){showDelrsn("questions")})
+                document.querySelector("#delete").addEventListener("click",function(){confirmDeletionQuestions()})
+                document.querySelector("#confirmSelectedQuestions").addEventListener("click",function(){confirmQuestions()})
+                let id = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
+                document.querySelector("#fetchReported").addEventListener("click", async function(){
+                    await find_reported_content(id,"tasks");
+                    add_icons()
+                })
+
+            }
+        }
+        checkPermissionSet()
+
+
+    
+    
+    
+   
+   
     
     
 }

@@ -87,8 +87,29 @@ export function add_admin(){
             let rsn = document.querySelector(".presets input:checked").getAttribute("reason");
             (<HTMLInputElement>document.querySelector(".message-content")).value = rsn;
         });
-        
-        
+        let input = document.querySelector(".message-content");
+
+        // Init a timeout variable to be used below
+        let timeout = null;
+
+        // Listen for keystroke events
+        input.addEventListener('keyup', function (e) {
+            // Clear the timeout if it has already been set.
+            // This will prevent the previous task from executing
+            // if it has been less than <MILLISECONDS>
+            clearTimeout(timeout);
+
+            // Make a new timeout set to go off in 1000ms (1 second)
+            timeout = setTimeout(function () {
+                if (String((<HTMLInputElement>input).value).includes("{user}")){
+                    //@ts-ignore
+                    document.querySelector(".send-message").setAttribute("style","background-color:#6D83F3 !important")
+                } else {
+                    //@ts-ignore
+                    document.querySelector(".send-message").setAttribute("style","background-color:#4FB3F6 !important")
+                }
+            }, 100);
+        });
         document.querySelector(".send-message").addEventListener("click", async function(){
             document.querySelector(".send-message .spinner-container").classList.add("show");
             //@ts-expect-error

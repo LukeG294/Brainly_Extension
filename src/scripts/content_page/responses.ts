@@ -35,12 +35,11 @@ export function addResponseButtons(){
     async function checkPermissionSet(){
         let permissionSet = await getPermissions()
         if (permissionSet >= 5){
-            buttonArea.insertAdjacentHTML('afterend', deletion_menu())
+            
             buttonArea.insertAdjacentHTML('afterend', confirm_selected_answers())
             buttonArea.insertAdjacentHTML('afterend', approve_selected())
-            buttonArea.insertAdjacentHTML('afterend', delete_selected_answers())
-            document.querySelector("#deleteSelected").addEventListener("click", function(){showDelrsn("answers")})
-            document.querySelector("#delete").addEventListener("click",function(){confirmDeletionAnswers()})
+            
+            
             buttonArea.insertAdjacentHTML('afterend', get_reported_content())
             document.querySelector("#fetchReported").addEventListener("click",async function(){
                 await find_reported_content(id,"responses");
@@ -58,6 +57,10 @@ export function addResponseButtons(){
             buttonArea.insertAdjacentHTML('afterend', copy_links())
             buttonArea.insertAdjacentHTML('afterend', toggle_selected())
             buttonArea.insertAdjacentHTML('afterend', select_all())
+            buttonArea.insertAdjacentHTML('afterend', deletion_menu())
+            buttonArea.insertAdjacentHTML('afterend', delete_selected_answers())
+            document.querySelector("#deleteSelected").addEventListener("click", function(){showDelrsn("answers")})
+            document.querySelector("#delete").addEventListener("click",function(){confirmDeletionAnswers()})
             document.getElementById("selectAll").addEventListener("click", function(){selectAll()})
             document.getElementById("toggleSelected").addEventListener("click", function(){toggleSelection()})
             document.getElementById("copyLinks").addEventListener("click", function(){copyLinks()})

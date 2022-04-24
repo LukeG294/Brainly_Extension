@@ -1,9 +1,17 @@
 
 import { delete_user, sendMessages } from "../common/mod_functions";
-
 import { showMessage } from "../common/common_functions";
 import {macc_d} from "../common/macc-d_exp"
 import {mmsg_s} from "../common/macc-d_exp"
+import { getPermissions } from "../common/permission_system"
+
+async function checkPermissionSet(){
+    let permissionSet = await getPermissions()
+    if (permissionSet >= 4){
+        add_admin()
+    }
+  }
+  checkPermissionSet()
 
 async function sendmsg(userLink){
     let token = localStorage.getItem("userAuth");

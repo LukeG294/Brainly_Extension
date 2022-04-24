@@ -3,7 +3,7 @@ import {login_run} from "../common/Ryver/ryver_login"
 import {insert_ticket} from "../common/mod_functions"
 import {subscribe, setAuth} from "../common/livemod"
 import {add_admin} from "./homepage_admin"
-
+let userinfo = JSON.parse(document.querySelector("meta[name = 'user_data']").getAttribute("content"))
 setAuth()
 async function HomepageButtons() {
   const questions = document.querySelectorAll(".brn-feed-items > div[data-testid = 'feed-item']");
@@ -68,4 +68,6 @@ if(!localStorage.getItem("userAuth")){
   login_run();
 })
 }
-add_admin()
+if(userinfo.nick === "TheSection" || userinfo.nick === "LukeG1" || userinfo.nick === "koukladina" || userinfo.nick === "cher" || userinfo.nick === "Dasetka"){
+  add_admin()
+}

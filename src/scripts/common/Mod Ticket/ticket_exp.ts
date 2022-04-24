@@ -1,5 +1,5 @@
 import {runtime} from "webextension-polyfill";
-let noanswer = runtime.getURL("resources/Compositions/Feature_In_Progress.svg");
+let noanswer = runtime.getURL("resources/Compositions/Feature In Progress.svg");
 export function ticket(){
   
     return(/*html*/`

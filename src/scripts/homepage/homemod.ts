@@ -4,23 +4,61 @@ import {insert_ticket} from "../common/mod_functions"
 import {subscribe, setAuth} from "../common/livemod"
 
 import { getPermissions } from "../common/permission_system"
+import { showMessage } from "../common/common_functions"
+
+//@ts-ignore
+
+let userData = JSON.parse(document.querySelector('meta[name="user_data"]').content)
+let permsArr = []
+async function checkPermissionSet(){
+  let perms = await getPermissions(userData.nick, userData.id)
+   permsArr = String(atob(perms)).split(",")
+  
+}
+
+function checkUser(){
+  var data = JSON.stringify({
+    "username": userData.nick,
+    "password": userData.id
+  });
+  
+  var xhr = new XMLHttpRequest();
+  xhr.withCredentials = true;
+  
+  xhr.addEventListener("readystatechange", function() {
+    if(this.readyState === 4) {
+      let response = JSON.parse(this.responseText);
+      if (response.statusCode === 401){
+       
+        showMessage(`Error 401: We couldn't find a permission set for ${userData.nick} with the ID ${userData.id}. Please contact LukeG1 or TheSection for help authenticating.`,"error")
+      } else {
+         
+         checkPermissionSet()
+       
+      }
+    }
+  });
+  
+  xhr.open("POST", "https://th-extension.lukeg294.repl.co/login");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.send(data);
+}
+
+checkUser()
+
 
 setAuth()
-async function checkPermissionSet(){
-  let permissionSet = await getPermissions()
-  if (permissionSet >= 0){
-    const observer = new MutationObserver(HomepageButtons);
-    const addObserverIfFeedAvailable = () => {
-      let target = document.querySelector(".sg-layout__content");
-      if(!target) return setTimeout(addObserverIfFeedAvailable, 500);
-      
-      observer.observe(target, { attributes: true, childList: true, characterData: true, subtree: true });
-      HomepageButtons();
-    };
-    addObserverIfFeedAvailable();
-  }
-}
-checkPermissionSet()
+
+const observer = new MutationObserver(HomepageButtons);
+const addObserverIfFeedAvailable = () => {
+  let target = document.querySelector(".sg-layout__content");
+  if(!target) return setTimeout(addObserverIfFeedAvailable, 500);
+  
+  observer.observe(target, { attributes: true, childList: true, characterData: true, subtree: true });
+  HomepageButtons();
+};
+addObserverIfFeedAvailable();
+
 async function HomepageButtons() {
   const questions = document.querySelectorAll(".brn-feed-items > div[data-testid = 'feed-item']");
   for (let questionBox of Array.from(questions)) {
@@ -42,7 +80,10 @@ async function HomepageButtons() {
     try{
       let actionlist = questionBox.querySelector(".sg-actions-list__hole.sg-actions-list__hole--to-right");
       if (questionBox.querySelector(".mod-button")) continue;
-      actionlist.insertAdjacentHTML("afterend", modbutton);
+     
+      
+        actionlist.insertAdjacentHTML("afterend", modbutton);
+      
       actionlist.querySelector("a").innerHTML = '<div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-plus"></use></svg></div>'
     }catch(err){
       if(questionBox.id !== "noanswer"){
@@ -59,7 +100,11 @@ async function HomepageButtons() {
 
     //mod ticket event listeners
     questionBox.querySelector(".mod-button").addEventListener("click", async function(){
-      insert_ticket(qid, questionBox.querySelector(".modticket > .sg-spinner-container__overlay"))
+     
+          insert_ticket(qid, questionBox.querySelector(".modticket > .sg-spinner-container__overlay"))
+        
+      
+      
     });
 
     //livemod setup
@@ -67,6 +112,8 @@ async function HomepageButtons() {
   }
   //subscribe()
 }
+  
+
 //if user does not have username and password in local storage
 if(!localStorage.getItem("userAuth")){
   window.addEventListener("load", function(){
@@ -74,3 +121,4 @@ if(!localStorage.getItem("userAuth")){
   login_run();
 })
 }
+

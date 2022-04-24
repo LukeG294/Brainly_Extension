@@ -29,7 +29,7 @@ export async function getPermissions(){
                 
                 }
         
-                console.log(Math.max(...userTypes))
+                return Math.max(...userTypes)
           }
         });
         

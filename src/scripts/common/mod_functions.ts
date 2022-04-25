@@ -230,3 +230,82 @@ export function sendMessages(users_ids, content){
        
     }
 }
+
+export async function startCompanionManager(){
+    let txt = await fetch("https://th-extension.lukeg294.repl.co/all").then(data => data.json());
+    let modal = document.querySelector(".modal_mcomp_u")
+    modal.insertAdjacentHTML("beforeend",`
+    <button class="add-companion-user sg-button sg-button--solid-blue sg-button--s sg-button--icon-only">
+      <span class="sg-button__icon">
+        <div class="sg-icon sg-icon--adaptive sg-icon--x16">
+          <svg class="sg-icon__svg" role="img" focusable="false"><use xlink:href="#icon-friend_add" aria-hidden="true"></use></svg>
+        </div>
+      </span>
+    </button>
+    `)
+    for (let index = 0; index < txt.length; index++) {
+        const element = txt[index].data;
+        let databaseId = txt[index].ref["@ref"].id
+        
+        modal.insertAdjacentHTML("beforeend",`<div class="companionUserObject"><img src=${element.avatar} class="companionUserAvatar"></img> <a href=${element.profile} class="username">${element.username}</a>  <button class="sg-button sg-button--m sg-button--solid-light edit-user"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Edit Permissions</span></button><button class="sg-button sg-button--m sg-button--solid-light remove-user" id=${databaseId}><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Remove Access</span></button></div>`)
+        
+    }
+    let removeButtons = document.querySelectorAll(".remove-user")
+    for (let index = 0; index < removeButtons.length; index++) {
+        const element = removeButtons[index];
+        element.addEventListener("click",function(){
+           
+            var requestOptions = {
+            method: 'DELETE'};
+
+            fetch("https://th-extension.lukeg294.repl.co/users/"+element.id,requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+        })
+    }
+    document.querySelector(".add-companion-user").addEventListener("click", async function(){
+        let profileLink = prompt("profile link? TEMPORARY ALERT")
+        let regexString = new RegExp(`https:\/\/brainly\.com\/profile\/.*-.*`)
+        if (regexString.test(profileLink)) {
+            let user = await fetch(profileLink).then(data => data.text());
+            let parser = new DOMParser();
+            let profilePage = parser.parseFromString(user, 'text/html');
+            //@ts-ignore
+            let avatar = profilePage.querySelector("#main-left > div.personal_info > div.header > div.avatar > a > img").src
+            //@ts-ignore
+            let username = profilePage.querySelector("#main-left > div.personal_info > div.header > div.info > div.info_top > span.ranking > h2 > a").innerText
+            //@ts-ignore
+            let id = profilePage.querySelector("#main-panel > div.mint-header__container > div.mint-header__right.mint-hide-for-mobile.menu-right > ul > li.menu-element.profile.styled > div > div > div.left > a").href.split("/")[4].split("-")[1]
+            
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                "username": username,
+                "password": id,
+                "avatar": avatar,
+                "profile": profileLink,
+                "permissions": ""
+            });
+
+            var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            
+            };
+
+            fetch("https://th-extension.lukeg294.repl.co/users", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+           
+             
+           
+        } else {
+            alert("that's not a profile link TEMPORARY ALERT")
+        }
+    })
+}
+  

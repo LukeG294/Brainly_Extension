@@ -13,7 +13,7 @@ async function homeperms(){
   }
 }
 //checkUser("new", homeperms)
-AnsObserver()
+//AnsObserver()
 
 //if user does not have username and password in local storage
 if(!localStorage.getItem("userAuth")){

@@ -1,27 +1,11 @@
 import {ticket_data} from "../common/Mod Ticket/ticket_functions"
 import {showMessage} from "../common/common_functions"
 
+
 function noclick(){
     document.querySelector("body").insertAdjacentHTML("afterbegin",/*html*/`
         <div class="blockint"></div>
     `)
-}
-export async function delete_content(type:string, id:string, reason:string, warn:boolean, take_point:boolean){
-    let model_type_id = 0;
-    if(type === "task") {model_type_id = 1;}
-    if(type === "response") {model_type_id = 2;}
-    await fetch(`https://brainly.com/api/28/moderation_new/delete_${type}_content`, {
-        method: "POST",
-        body:JSON.stringify({
-          "reason_id":2,
-          "reason":reason,
-          "give_warning":warn,
-          "take_points": take_point,
-          "schema":`moderation.${type}.delete`,
-          "model_type_id":model_type_id,
-          "model_id":id,
-        })
-      })
 }
 export async function insert_ticket(id, butspinner){
     butspinner.classList.add("show");
@@ -158,11 +142,13 @@ export async function get_warnings(user:string){
     }
     return warn_arr
 }
+
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
-}
+    }
+
 export function sendMessages(users_ids, content){
 
     function getConvoId(userid, varContent){
@@ -231,6 +217,7 @@ export function sendMessages(users_ids, content){
     }
 }
 
+
 export async function startCompanionManager(){
     let txt = await fetch("https://th-extension.lukeg294.repl.co/all").then(data => data.json());
     let modal = document.querySelector(".modal_mcomp_u")
@@ -283,7 +270,7 @@ export async function startCompanionManager(){
 
             var raw = JSON.stringify({
                 "username": username,
-                "password": id,
+                "password": parseInt(id),
                 "avatar": avatar,
                 "profile": profileLink,
                 "permissions": ""

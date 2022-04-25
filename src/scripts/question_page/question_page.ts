@@ -1,8 +1,7 @@
 import {confirmButton} from "./question_exports"
 
-import { getPermissions, checkPermissionSet, checkUser} from "../common/permission_system"
+import { checkPermissionSet, checkUser} from "../common/permission_system"
 //@ts-ignore
-
 
 async function questionPage(){
   let perms = await checkPermissionSet();

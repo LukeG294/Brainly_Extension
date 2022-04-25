@@ -16,38 +16,6 @@ async function checkPermissionSet(){
    add_admin()
 }
 
-function checkUser(){
-  var data = JSON.stringify({
-    "username": userData.nick,
-    "password": userData.id
-  });
-  
-  var xhr = new XMLHttpRequest();
-  xhr.withCredentials = true;
-  
-  xhr.addEventListener("readystatechange", function() {
-    if(this.readyState === 4) {
-      let response = JSON.parse(this.responseText);
-      if (response.statusCode === 401){
-       
-        showMessage(`Error 401: We couldn't find a permission set for ${userData.nick} with the ID ${userData.id}. Please contact LukeG1 or TheSection for help authenticating.`,"error")
-      } else {
-         
-         checkPermissionSet()
-       
-      }
-    }
-  });
-  
-  xhr.open("POST", "https://th-extension.lukeg294.repl.co/login");
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.send(data);
-}
-
-checkUser()
-
-
-
 async function sendmsg(userLink){
     let token = localStorage.getItem("userAuth");
     let del_reason = (<HTMLInputElement>document.querySelector(".deletion-reason")).value;

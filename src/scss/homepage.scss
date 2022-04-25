@@ -32,7 +32,6 @@ div.brn-placeholder__animation{
 }
 .username{
   font-weight: bold;
-  padding: 20px;
     font-size: x-large;
     color:Black;
     -webkit-touch-callout: none; /* iOS Safari */
@@ -160,8 +159,18 @@ div.brn-placeholder__animation{
       .log{
         .log-item{
           display:flex;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          padding:0px 4px;
+          border-bottom:1px solid #c3d1dd;
           .content{
             margin-top:0px;
+            display:flex;
+            font-size:0.9rem;
+          }
+          .datetime{
+            display:flex;
+            font-size:0.9rem;
           }
           .user{
             color: #413bff;

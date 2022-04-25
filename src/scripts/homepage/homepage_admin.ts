@@ -1,7 +1,7 @@
 
-import { delete_user, sendMessages } from "../common/mod_functions";
+import { delete_user, sendMessages, startCompanionManager } from "../common/mod_functions";
 import { showMessage } from "../common/common_functions";
-import {macc_d} from "../common/macc-d_exp"
+import {macc_d, mcompu} from "../common/macc-d_exp"
 import {mmsg_s} from "../common/macc-d_exp"
 import { getPermissions } from "../common/permission_system"
 
@@ -185,6 +185,23 @@ export function add_admin(){
                 }
                 document.querySelector(".send-message .spinner-container").classList.remove("show");
             })
+        })
+    }
+    
+    
+    if (permsArr.includes("100")){
+        document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
+        <li class="sg-menu-list__element mcomp-u">   
+        <a class = "sg-menu-list__link">Manage Companion Users</a>
+        </li>
+        
+        `)
+
+        document.querySelector(".mcomp-u").addEventListener("click", function(){
+            document.querySelector("body").insertAdjacentHTML("afterbegin", mcompu());
+            document.querySelector(".modal_close").addEventListener("click", function(){document.querySelector(".modal_back").remove()})
+            startCompanionManager()
+          
         })
     }
     

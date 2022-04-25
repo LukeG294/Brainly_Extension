@@ -76,13 +76,13 @@ function check_deletion(uid:string):any{
     xhr.open("GET","https://brainly.com/profile/user-"+uid);
     xhr.send()
 }
-export function preset_delrsn(){
+function preset_delrsn(){
     document.querySelector(".presets").addEventListener("change", function(){
         let rsn = document.querySelector(".presets input:checked").getAttribute("reason");
         (<HTMLInputElement>document.querySelector(".modal-accdel .del-rsn")).value = rsn;
     });
 }
-export function deletion_listener(){
+function deletion_listener(){
     document.querySelector(".modal-accdel .delete-acc").addEventListener("click", async function(){
         let uid = document.querySelector("#main-left > div.personal_info > div.header > div.info > div.info_top > span.ranking > h2 > a").getAttribute("href").split("-")[1]
         document.querySelector(".modal-accdel .spinner-container").classList.add("show");
@@ -90,4 +90,23 @@ export function deletion_listener(){
             await sendmsg();
         document.querySelector(".modal-accdel .spinner-container").classList.remove("show");
     })
+}
+export function delete_user_btn(){
+    document.querySelector(".mod-profile-panel").insertAdjacentHTML("beforeend", /*html*/`
+        <button class="sg-button sg-button--m sg-button--outline sg-button--icon-only user-del-btn">
+            <span class="sg-button__icon sg-button__icon--m">
+            <div class="sg-icon sg-icon--dark sg-icon--x32" style="height: 26px;width: 26px;">
+                <svg class="sg-icon__svg"><use xlink:href="#icon-trash"></use></svg>
+            </div><div class="mint-label__text" style="font-size: 13px;color: rgb(255, 121, 104);">delete user</div>
+            </span>
+        </button>
+    `)
+    document.querySelector(".user-del-btn").addEventListener("click", function(){
+        document.querySelector("body").insertAdjacentHTML("afterbegin", <string>add_del_menu())
+        preset_delrsn()
+        deletion_listener()
+        document.querySelector(".modal_close").addEventListener("click", function(){
+            document.querySelector(".modal_back").remove()
+        });
+    });
 }

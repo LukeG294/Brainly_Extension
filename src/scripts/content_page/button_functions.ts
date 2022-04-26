@@ -478,22 +478,28 @@ export async function confirmAnswers(){
     questionIDsafety =  idsToConfirm[i]
     let res = await fetch(`https://brainly.com/api/28/moderation_new/get_content`, { method: "POST",body: (`{"model_type_id":1,"model_id":${questionID},"schema":"moderation.content.get"}`)}).then(data => data.json());
     await fetch(`https://brainly.com/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${questionID},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
-    let answers = res.data.responses
-    let times = 0
-    
-    
-    if (answers.length === 1){
-      times = 1
-    } else {
-      times = 2
-    }
-    for (let x = 0; x < times; x++) {
+   
+    if (res.success){
+      let answers = res.data.responses
+      let times = 0
       
-      let user = String(answers[x]["user_id"])
-      if (user === String(window.location.href.split("/")[5])){
-        answerIDtoConfirm.push(answers[x]["id"])
+      
+      if (answers.length === 1){
+        times = 1
+      } else {
+        times = 2
       }
+      for (let x = 0; x < times; x++) {
+        
+        let user = String(answers[x]["user_id"])
+        if (user === String(window.location.href.split("/")[5])){
+          answerIDtoConfirm.push(answers[x]["id"])
+        }
+      }
+    } else {
+      console.log("Skipped a ticket due to reservation by another mod.")
     }
+    
     
   }
 
@@ -501,22 +507,10 @@ export async function confirmAnswers(){
   let fail = 0
   for (let i = 0; i < answerIDtoConfirm.length; i++) {
     
-      let model_type_id = 2;
-      let type = "response"
-      //@ts-expect-error
-      let reason = document.querySelectorAll(".deletion-reason")[0].value
-      //@ts-expect-error
-      let warn = document.querySelector("#warn").checked
-      //@ts-expect-error
-      let take_point = document.querySelector("#pts").checked
-      var myHeaders = new Headers();
-      myHeaders.append("authority", "brainly.com");
-      myHeaders.append("accept", "application/json");
-      myHeaders.append("accept-language", "en-US,en;q=0.9");
-      myHeaders.append("content-type", "application/json");
-      myHeaders.append("origin", "https://brainly.com");
-      myHeaders.append("referer", "https://brainly.com/question/"+questionIDsafety);
-      myHeaders.append("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36");
+      
+     
+      
+     
       
       function getCookie(cname) {
         let name = cname + "=";

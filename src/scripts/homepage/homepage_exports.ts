@@ -26,10 +26,10 @@ export function ModObserver(){
 export function AnsObserver(){
     const observer = new MutationObserver(HomeAns);
     function hook(){
-        let target = document.querySelector(".sg-layout__content");
+        let target = document.querySelector(".brn-feed-items");
         if(!target){return setTimeout(hook, 500);}
     
-        observer.observe(target, { childList: true, attributes: true, subtree:true});
+        observer.observe(target, { childList: true });
         HomeAns()
     }
     hook()
@@ -45,11 +45,6 @@ async function HomeAns(){
             actionlist.querySelector("a").innerHTML = '<div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-plus"></use></svg></div>'
             actionlist.id = "altered"
         }catch(err){}
-        //check if the question has been reported + add the report flag
-        let bdata = await fetch("https://brainly.com/api/28/api_tasks/main_view/"+qid, {method: "GET"}).then(data => data.json());
-        if(bdata.data.task.settings.is_marked_abuse === true){
-            questionBox.querySelector(".brn-feed-item__points .brn-points-on-feed").insertAdjacentHTML("afterbegin",`<div class = "repflag"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-report_flag"></use></svg></div></div>`)
-        }
     }
 }
 async function HomeMod() {

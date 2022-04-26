@@ -7,7 +7,7 @@ import { getPermissions, checkUser, checkPermissionSet } from "../common/permiss
 async function oldProfile(){
     let perms = await checkPermissionSet();
     if(perms.includes("8")){
-      let uid = window.location.href.split("-")[1].split("/")[0];
+      let uid = (<string>window.location.href).split("-")[1].split("/")[0];
       show_recent_warnings(uid)
     }
     if(perms.includes("4")){

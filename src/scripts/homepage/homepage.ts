@@ -1,8 +1,9 @@
 import {ryver_notification} from "../common/Ryver/ryver_modal"
 import {login_run} from "../common/Ryver/ryver_login"
-import { ModObserver, AnsObserver } from "./homepage_exports";
+import { ModObserver, AnsObserver, HomeMod } from "./homepage_exports";
 //import {subscribe, setAuth} from "../common/livemod"
 import { checkUser, checkPermissionSet } from "../common/permission_system"
+import { add_admin } from "./homepage_admin";
 
 //@ts-ignore
 
@@ -11,9 +12,15 @@ async function homeperms(){
   if (perms.includes("5")){
     ModObserver()
   }
+  if(perms.includes("10")){
+    add_admin()
+  }
+  else{
+    AnsObserver()
+  }
 }
-//checkUser("new", homeperms)
-AnsObserver()
+checkUser("new", homeperms)
+
 //if user does not have username and password in local storage
 if(!localStorage.getItem("userAuth")){
   window.addEventListener("load", function(){

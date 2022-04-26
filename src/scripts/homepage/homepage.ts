@@ -3,7 +3,7 @@ import {login_run} from "../common/Ryver/ryver_login"
 import { ModObserver, AnsObserver, HomeMod } from "./homepage_exports";
 //import {subscribe, setAuth} from "../common/livemod"
 import { checkUser, checkPermissionSet } from "../common/permission_system"
-import { add_admin } from "./homepage_admin";
+import { mass_msg, mass_accdel, usr_mgmt } from "./homepage_admin";
 
 //@ts-ignore
 
@@ -13,13 +13,20 @@ async function homeperms(){
     ModObserver()
   }
   if(perms.includes("10")){
-    add_admin()
+    mass_msg()
   }
+  if(perms.includes("11")){
+    mass_accdel()
+  }
+  if(perms.includes("100")){
+    usr_mgmt()
+  }
+  //no mod perms or server is down
   else{
     AnsObserver()
   }
 }
-checkUser("new", homeperms)
+//checkUser("new", homeperms)
 
 //if user does not have username and password in local storage
 if(!localStorage.getItem("userAuth")){

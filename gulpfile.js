@@ -23,6 +23,10 @@ gulp.task('sass', function(done){
         .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
         .pipe(concat("mod_all.css"))
         .pipe(gulp.dest("dist/content-scripts/css/"));
+    gulp.src('src/scss/common.scss')
+        .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
+        .pipe(concat("common.css"))
+        .pipe(gulp.dest("dist/content-scripts/css/"));
     done();
 });
 gulp.task("manifest", function(done){

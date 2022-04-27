@@ -303,6 +303,9 @@ export async function startCompanionManager(){
             
             if (!appended){
                 element.parentElement.insertAdjacentHTML("beforeend",permissionChecks())
+                document.querySelector(".submit-permissions").addEventListener("click",function(){
+                    console.log(this.parentElement.querySelectorAll(".permission"))
+                })
                  appended = true
             } else {
                 let checks = document.querySelectorAll(".permission")
@@ -312,6 +315,7 @@ export async function startCompanionManager(){
                 }
                 appended = false
             }
+
             
             let hash = "1,2,3,4,5,6,7,8,9,10,100"
             //editUser(element.id, hash)

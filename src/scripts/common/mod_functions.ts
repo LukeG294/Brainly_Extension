@@ -295,7 +295,7 @@ export async function startCompanionManager(){
             
             };
 
-            fetch("https://th-extension.lukeg294.repl.co/permissions/"+element.id, requestOptions)
+            await fetch("https://th-extension.lukeg294.repl.co/permissions/"+element.id, requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));

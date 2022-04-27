@@ -51,11 +51,13 @@ div.brn-placeholder__animation{
     }
   }
   button.sg-button--outline,.newansbut{
-    background-color:black!important;
     width:36px;
     height:36px;
     padding:8px 8px 8px 8px!important;
     border-radius:100%;
+  }
+  .newansbut{
+    background-color: black;
   }
   .mod-button{
     display:flex;

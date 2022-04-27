@@ -42,7 +42,6 @@ async function HomeAns(){
         if(actionlist.id === "altered") continue;
         if(actionlist.querySelector("a") && actionlist.id !== "altered"){
             actionlist.id = "altered"
-            actionlist.querySelector("a").classList.add("newansbut")
             actionlist.querySelector("a").innerHTML = '<div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-plus"></use></svg></div>'
         }
 
@@ -75,9 +74,8 @@ export async function HomeMod() {
         let actionlist = questionBox.querySelector(".sg-actions-list__hole.sg-actions-list__hole--to-right");
         if (questionBox.querySelector(".mod-button")) continue;
         actionlist.insertAdjacentHTML("afterend", modbutton);
-        
-        actionlist.querySelector("a").innerHTML = '<div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-plus"></use></svg></div>'
         actionlist.querySelector("a").classList.add("newansbut")
+        actionlist.querySelector("a").innerHTML = '<div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-plus"></use></svg></div>'
       }catch(err){
         if(questionBox.id !== "noanswer"){
           questionBox.id = 'noanswer'
@@ -101,3 +99,122 @@ export async function HomeMod() {
     }
     //subscribe()
   }
+  export function permissionChecks(){
+    return(/*html*/`
+   
+    <label class="sg-checkbox permission" for="warn" >
+    <input type="checkbox" class="sg-checkbox__element" id="">
+    <div class="sg-checkbox__ghost" aria-hidden="true">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+    </div>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Selective Confirmation</span>
+    </label>
+
+    <label class="sg-checkbox permission" for="warn" >
+    <input type="checkbox" class="sg-checkbox__element" id="">
+    <div class="sg-checkbox__ghost" aria-hidden="true">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+    </div>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Selective Verification</span>
+    </label>
+
+    <label class="sg-checkbox permission" for="warn" >
+    <input type="checkbox" class="sg-checkbox__element" id="">
+    <div class="sg-checkbox__ghost" aria-hidden="true">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+    </div>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Fetch All Reported Content</span>
+    </label>
+
+    <label class="sg-checkbox permission" for="warn" >
+    <input type="checkbox" class="sg-checkbox__element" id="">
+    <div class="sg-checkbox__ghost" aria-hidden="true">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+    </div>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Selective Unverification</span>
+    </label>
+
+    <label class="sg-checkbox permission" for="warn" >
+    <input type="checkbox" class="sg-checkbox__element" id="">
+    <div class="sg-checkbox__ghost" aria-hidden="true">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+    </div>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Delete User</span>
+    </label>
+
+    <label class="sg-checkbox permission" for="warn" >
+    <input type="checkbox" class="sg-checkbox__element" id="">
+    <div class="sg-checkbox__ghost" aria-hidden="true">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+    </div>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Homepage Tickets</span>
+    </label>
+
+    <label class="sg-checkbox permission" for="warn" >
+    <input type="checkbox" class="sg-checkbox__element" id="">
+    <div class="sg-checkbox__ghost" aria-hidden="true">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+    </div>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Selective Ticket Modding</span>
+    </label>
+
+    <label class="sg-checkbox permission" for="warn" >
+    <input type="checkbox" class="sg-checkbox__element" id="">
+    <div class="sg-checkbox__ghost" aria-hidden="true">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+    </div>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Selective Deletion</span>
+    </label>
+
+    <label class="sg-checkbox permission" for="warn" >
+    <input type="checkbox" class="sg-checkbox__element" id="">
+    <div class="sg-checkbox__ghost" aria-hidden="true">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+    </div>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Warnings Preview</span>
+    </label>
+
+    <label class="sg-checkbox permission" for="warn" >
+    <input type="checkbox" class="sg-checkbox__element" id="">
+    <div class="sg-checkbox__ghost" aria-hidden="true">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+    </div>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Confirm Button</span>
+    </label>
+
+    <label class="sg-checkbox permission" for="warn" >
+    <input type="checkbox" class="sg-checkbox__element" id="">
+    <div class="sg-checkbox__ghost" aria-hidden="true">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+    </div>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Mass-Message Users</span>
+    </label>
+
+    <label class="sg-checkbox permission" for="warn" >
+    <input type="checkbox" class="sg-checkbox__element" id="">
+    <div class="sg-checkbox__ghost" aria-hidden="true">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+    </div>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Mass-Delete Users</span>
+    </label>
+
+    <label class="sg-checkbox permission" for="warn" >
+    <input type="checkbox" class="sg-checkbox__element" id="">
+    <div class="sg-checkbox__ghost" aria-hidden="true">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+    </div>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Basic Content Page Features</span>
+    </label>
+
+    <label class="sg-checkbox permission" for="warn" >
+    <input type="checkbox" class="sg-checkbox__element" id="">
+    <div class="sg-checkbox__ghost" aria-hidden="true">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+    </div>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">User Management</span>
+    </label>
+    
+    `)
+}
+
+

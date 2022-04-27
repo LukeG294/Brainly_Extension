@@ -1,6 +1,6 @@
 import {addResponseButtonsApprove, addResponseButtonsBasic, addResponseButtonsConfirm, addResponseButtonsFetchReported, addResponseButtonsUnverify} from "./responses"
 import {addTaskButtonsBasic, addTaskButtonsConfirmation, addTaskButtonsDeletion, addTaskButtonsReportedContent} from "./tasks"
-import { checkUser, checkPermissionSet } from "../common/permission_system"
+//import { checkUser, checkPermissionSet } from "../common/permission_system"
 import {add_icons} from "./content_page_buttons"
 import {addticket} from "./button_functions"
 
@@ -54,4 +54,6 @@ async function addPerPage(){
 
 }
 
-checkUser("old", addPerPage)
+if(localStorage.canUse){
+  addPerPage()
+}

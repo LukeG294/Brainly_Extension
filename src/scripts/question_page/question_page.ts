@@ -1,6 +1,4 @@
 import {confirmButton} from "./question_exports"
-
-import { checkUser} from "../common/permission_system"
 //@ts-ignore
 
 async function questionPage(){
@@ -10,4 +8,6 @@ async function questionPage(){
   }
 }
 
-checkUser("new", questionPage)
+if(localStorage.canUse){
+  questionPage()
+}

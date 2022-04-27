@@ -1,6 +1,6 @@
 import {ticket_data} from "../common/Mod Ticket/ticket_functions"
 import {showMessage} from "../common/common_functions"
-
+import{ removeUser, editUser} from "../common/permission_system"
 
 function noclick(){
     document.querySelector("body").insertAdjacentHTML("afterbegin",/*html*/`
@@ -235,6 +235,8 @@ export async function startCompanionManager(){
     let txt = await fetch("https://th-extension.lukeg294.repl.co/all").then(data => data.json());
     let modal = document.querySelector(".modal_mcomp_u")
     modal.querySelector(".sg-spinner-container").classList.add("remove")
+
+    //inserting the  "add user" button
     modal.querySelector(".users").insertAdjacentHTML("beforeend",/*html*/`
     <button class="add-companion-user sg-button sg-button--solid-blue sg-button--s sg-button--icon-only">
       <span class="sg-button__icon">
@@ -244,6 +246,8 @@ export async function startCompanionManager(){
       </span>
     </button>
     `)
+
+    //inserting all registered users
     for (let index = 0; index < txt.length; index++) {
         const element = txt[index].data;
         let databaseId = txt[index].ref["@ref"].id
@@ -275,19 +279,14 @@ export async function startCompanionManager(){
         </div>`)
         
     }
+
     let removeButtons = document.querySelectorAll(".remove-user")
     for (let index = 0; index < removeButtons.length; index++) {
         const element = removeButtons[index];
        
         element.addEventListener("click", async function(){
             element.querySelector(".spinner-container").classList.add("show");
-            var requestOptions = {
-            method: 'DELETE'};
-
-            await fetch("https://th-extension.lukeg294.repl.co/users/"+element.id,requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
+            await removeUser(element.id)
             element.querySelector(".spinner-container").classList.remove("show");
             element.parentElement.remove();
         })
@@ -300,26 +299,7 @@ export async function startCompanionManager(){
         element.addEventListener("click", async function(){
             element.querySelector(".spinner-container").classList.add("show");
             let hash = prompt("New perms?")
-            var myHeaders = new Headers();
-            myHeaders.append("fauna-secret", "fnEElJgAo3ACUgST2vKykApS_Vv7fmrdvkNhzuHKo3nGguNOiN4");
-            myHeaders.append("Content-Type", "application/json");
-
-            var raw = JSON.stringify({
-           
-            "permissions": btoa(hash)
-            });
-
-            var requestOptions = {
-            method: 'PATCH',
-            headers: myHeaders,
-            body: raw,
-            
-            };
-
-            await fetch("https://th-extension.lukeg294.repl.co/permissions/"+element.id, requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
+            editUser(element.id, hash)
             element.querySelector(".spinner-container").classList.remove("show");
         })
     }

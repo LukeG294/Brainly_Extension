@@ -2,13 +2,13 @@ import {ryver_notification} from "../common/Ryver/ryver_modal"
 import {login_run} from "../common/Ryver/ryver_login"
 import { ModObserver, AnsObserver, HomeMod } from "./homepage_exports";
 //import {subscribe, setAuth} from "../common/livemod"
-import { checkUser, checkPermissionSet } from "../common/permission_system"
+//import { } from "../common/permission_system"
 import { mass_msg, mass_accdel, usr_mgmt } from "./homepage_admin";
 
 //@ts-ignore
 
 async function homeperms(){
-  let perms = localStorage.userPerms;
+  let perms = localStorage.getItem("userPerms");
   if (perms.includes("5")){
     ModObserver()
   }
@@ -21,9 +21,13 @@ async function homeperms(){
   if(perms.includes("100")){
     usr_mgmt()
   }
+  else{
+    AnsObserver()
+  }
 }
-
-checkUser("new", homeperms, AnsObserver)
+if(localStorage.canUse){
+  homeperms()
+}
 
 //if user does not have username and password in local storage
 if(!localStorage.getItem("userAuth")){

@@ -74,6 +74,7 @@ export async function HomeMod() {
         let actionlist = questionBox.querySelector(".sg-actions-list__hole.sg-actions-list__hole--to-right");
         if (questionBox.querySelector(".mod-button")) continue;
         actionlist.insertAdjacentHTML("afterend", modbutton);
+        actionlist.querySelector("a").classList.add("newansbut")
         actionlist.querySelector("a").innerHTML = '<div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-plus"></use></svg></div>'
       }catch(err){
         if(questionBox.id !== "noanswer"){

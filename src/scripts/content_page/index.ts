@@ -1,12 +1,18 @@
 import {addResponseButtonsApprove, addResponseButtonsBasic, addResponseButtonsConfirm, addResponseButtonsFetchReported, addResponseButtonsUnverify} from "./responses"
 import {addTaskButtonsBasic, addTaskButtonsConfirmation, addTaskButtonsDeletion, addTaskButtonsReportedContent} from "./tasks"
 import { checkUser, checkPermissionSet } from "../common/permission_system"
+import {add_icons} from "./content_page_buttons"
+import {addticket} from "./button_functions"
 
 //@ts-ignore
 
 async function addPerPage(){
   let permsArr = sessionStorage.userPerms
    //tasks page
+  add_icons()
+  if(permsArr.includes("12")){
+    addticket()
+  }
   if(window.location.href.includes("task") || (!window.location.href.includes("responses") && !window.location.href.includes("comments_tr"))){
     if (permsArr.includes("12")){
       addTaskButtonsBasic()

@@ -299,7 +299,7 @@ export async function startCompanionManager(){
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
-          
+            element.querySelector(".spinner-container").classList.remove("show");
         })
     }
     document.querySelector(".add-companion-user").addEventListener("click", async function(){

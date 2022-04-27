@@ -8,6 +8,8 @@
   font-weight:900!important;
 }
 .modal_mcomp_u{
+  display: flex;
+  flex-direction: column;
   width:max-content;
   height:75%;
   min-width:475px!important;

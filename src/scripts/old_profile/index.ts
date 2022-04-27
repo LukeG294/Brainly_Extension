@@ -15,6 +15,6 @@ async function oldProfile(){
     }
 }
 
-if(localStorage.canUse){
+if(localStorage.canUse === "true"){
   oldProfile()
 }

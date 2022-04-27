@@ -4,6 +4,7 @@ import { ModObserver, AnsObserver, HomeMod } from "./homepage_exports";
 //import {subscribe, setAuth} from "../common/livemod"
 //import { } from "../common/permission_system"
 import { mass_msg, mass_accdel, usr_mgmt } from "./homepage_admin";
+import { showMessage } from "../common/common_functions";
 
 //@ts-ignore
 
@@ -25,8 +26,11 @@ async function homeperms(){
     AnsObserver()
   }
 }
-if(localStorage.canUse){
+if(localStorage.canUse === "true"){
   homeperms()
+}
+else{
+  showMessage("You are not Authorised to use this Extension", "error")
 }
 
 //if user does not have username and password in local storage

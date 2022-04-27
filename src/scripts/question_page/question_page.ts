@@ -8,6 +8,6 @@ async function questionPage(){
   }
 }
 
-if(localStorage.canUse){
+if(localStorage.canUse === "true"){
   questionPage()
 }

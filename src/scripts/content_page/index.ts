@@ -54,6 +54,6 @@ async function addPerPage(){
 
 }
 
-if(localStorage.canUse){
+if(localStorage.canUse === "true"){
   addPerPage()
 }

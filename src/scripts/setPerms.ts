@@ -2,5 +2,8 @@ import {checkPermissionSet} from "./common/permission_system"
 setTimeout(async () => {
     let permsArr = await checkPermissionSet();
     localStorage.setItem("userPerms", permsArr.toString())
-    permsArr?localStorage.setItem("canUse", "true"):localStorage.setItem("canUse", "false")
+    if(permsArr[0] !== "null"){
+        localStorage.setItem("canUse", "true")
+    }
+    else{localStorage.setItem("canUse", "false")}
 }, 0);

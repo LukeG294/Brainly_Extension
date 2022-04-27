@@ -10,7 +10,7 @@
 .modal_mcomp_u{
   display: flex;
   flex-direction: column;
-  width:max-content;
+  width:80%;
   height:75%;
   min-width:475px!important;
   .sg-spinner-container{
@@ -28,13 +28,15 @@
   }
   .users{
     overflow:auto;
+    display:flex;
   .add-companion-user{
-    height: 32px;
-    width: 32px;
+    width: 215px!important;
+    display: flex;
+    height: 244px!important;
+    border: 2px solid #e1eaf1;
+    align-items: center;
+    justify-content: center;
     position: relative;
-    right: 0;
-    top: 0;
-    width: 100%!important;
     background:transparent!important;
     .sg-icon{
       height:24px!important;
@@ -53,20 +55,24 @@
   .companionUserObject{
     display: flex;
     padding:18px;
+    margin-right:12px;
+    flex-direction: column;
+    border: 2px solid #e1eaf1;
+    border-radius: 10px;
     justify-content: space-between;
     .user{
       display:flex;
       align-items:center;
-      margin-right:12px;
+      flex-direction: column;
       .companionUserAvatar{
         height: 80px;
         width: 80px;
         border-radius: 50%;
-        margin-right:12px;
       }
     }
     .changedb{
       display: flex;
+      margin-top:12px;
       flex-direction: column;
       justify-content: space-around;
       >button:nth-child(1){

@@ -22,9 +22,8 @@ async function homeperms(){
     usr_mgmt()
   }
 }
-setTimeout(() => {
-  checkUser("new", homeperms, AnsObserver)
-}, 100);
+
+checkUser("new", homeperms, AnsObserver)
 
 //if user does not have username and password in local storage
 if(!localStorage.getItem("userAuth")){

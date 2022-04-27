@@ -1,6 +1,6 @@
 import {confirmButton} from "./question_exports"
 
-import { checkPermissionSet, checkUser} from "../common/permission_system"
+import { checkUser} from "../common/permission_system"
 //@ts-ignore
 
 async function questionPage(){
@@ -9,6 +9,5 @@ async function questionPage(){
     confirmButton()
   }
 }
-setTimeout(() => {
-  checkUser("new", questionPage)
-}, 100);
+
+checkUser("new", questionPage)

@@ -14,9 +14,8 @@ async function oldProfile(){
       delete_user_btn()
     }
 }
-setTimeout(() => {
-  checkUser("old",oldProfile)
-}, 100);
+
+checkUser("old",oldProfile)
 
 
 

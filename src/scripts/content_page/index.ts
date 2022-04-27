@@ -54,6 +54,4 @@ async function addPerPage(){
 
 }
 
-setTimeout(() => {
-  checkUser("old", addPerPage)
-}, 100);
+checkUser("old", addPerPage)

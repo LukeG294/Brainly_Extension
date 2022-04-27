@@ -36,28 +36,16 @@ export async function getPermissions(username,password){
 
 export async function checkPermissionSet(){
     let permsArr = []
-    let userData;
-    try{
-      userData = JSON.parse(document.querySelector('meta[name="user_data"]').getAttribute("content"))
-    }catch(err){
-      console.log("old")
-      let data = document.querySelector("li.menu-element.profile.styled > div > div > div.left > a").getAttribute("href").split("/")[4].split("-")
-      userData = {"nick":data[0], "id":data[1]}
-    }
+    let user = await fetch("https://brainly.com/api/28/api_users/me").then(data => data.json())
+    let userData = user.data.user
     let perms = await getPermissions(userData.nick, userData.id)
     permsArr = String(atob(perms)).split(",")  
     return permsArr
 }
 
-export function checkUser(pageType, checkFunction, fallbackFn = () => {}){
-    let userData;
-    if(pageType === "new"){
-        userData = JSON.parse(document.querySelector('meta[name="user_data"]').getAttribute("content"))
-    }
-    if(pageType === "old"){
-        let data = document.querySelector(".show-all").getAttribute("href").split("/")[4].split("-")
-        userData = {"nick":data[0], "id":data[1]}
-    }
+export async function checkUser(pageType, checkFunction, fallbackFn = () => {}){
+  let user = await fetch("https://brainly.com/api/28/api_users/me").then(data => data.json())
+  let userData = user.data.user
     var data = JSON.stringify({
       "username": userData.nick,
       "password": userData.id

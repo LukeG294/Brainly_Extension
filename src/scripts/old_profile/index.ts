@@ -5,7 +5,7 @@ import { getPermissions, checkUser, checkPermissionSet } from "../common/permiss
 //@ts-ignore
 
 async function oldProfile(){
-    let perms = sessionStorage.userPerms
+    let perms = localStorage.userPerms
     if(perms.includes("8")){
       let uid = (<string>window.location.href).split("-")[1].split("/")[0];
       show_recent_warnings(uid)

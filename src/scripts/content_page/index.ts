@@ -7,7 +7,7 @@ import {addticket} from "./button_functions"
 //@ts-ignore
 
 async function addPerPage(){
-  let permsArr = sessionStorage.userPerms
+  let permsArr = localStorage.userPerms
    //tasks page
   add_icons()
   if(permsArr.includes("12")){

@@ -4,7 +4,7 @@ import { checkPermissionSet, checkUser} from "../common/permission_system"
 //@ts-ignore
 
 async function questionPage(){
-  let perms = sessionStorage.userPerms
+  let perms = localStorage.userPerms
   if (perms.includes("9")){
     confirmButton()
   }

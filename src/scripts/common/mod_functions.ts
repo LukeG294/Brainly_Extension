@@ -246,26 +246,33 @@ export async function startCompanionManager(){
     for (let index = 0; index < txt.length; index++) {
         const element = txt[index].data;
         let databaseId = txt[index].ref["@ref"].id
-        
-        modal.insertAdjacentHTML("beforeend",`<div class="companionUserObject"><img src=${element.avatar} class="companionUserAvatar"></img> <a href=${element.profile} class="username">${element.username}</a>  <button class="sg-button sg-button--m sg-button--solid-light edit-user"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Edit Permissions</span></button><button class="sg-button sg-button--m sg-button--solid-light remove-user" id=${databaseId}><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Remove Access</span></button></div>`)
+       
+        if (element.avatar === "https://brainly.com/img/"){
+            element.avatar = "https://brainly.com/img/avatars/100-ON.png"
+        }
+       
+        modal.insertAdjacentHTML("beforeend",`<div class="companionUserObject"><img src=${element.avatar} class="companionUserAvatar"></img> <a href=${element.profile} class="username">${element.username}</a>  <button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue edit-user"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Edit Permissions</span></button><button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-peach remove-user" id=${databaseId}><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Remove Access</span></button></div>`)
         
     }
     let removeButtons = document.querySelectorAll(".remove-user")
     for (let index = 0; index < removeButtons.length; index++) {
         const element = removeButtons[index];
-        element.addEventListener("click",function(){
-           
+       
+        element.addEventListener("click", async function(){
+            element.querySelector(".spinner-container").classList.add("show");
             var requestOptions = {
             method: 'DELETE'};
 
-            fetch("https://th-extension.lukeg294.repl.co/users/"+element.id,requestOptions)
+            await fetch("https://th-extension.lukeg294.repl.co/users/"+element.id,requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
+            element.querySelector(".spinner-container").classList.remove("show");
+            element.parentElement.remove();
         })
     }
     document.querySelector(".add-companion-user").addEventListener("click", async function(){
-        let profileLink = prompt("profile link? TEMPORARY ALERT")
+        let profileLink = prompt("profile link?")
         let regexString = new RegExp(`https:\/\/brainly\.com\/profile\/.*-.*`)
         if (regexString.test(profileLink)) {
             let user = await fetch(profileLink).then(data => data.text());
@@ -304,7 +311,7 @@ export async function startCompanionManager(){
              
            
         } else {
-            alert("that's not a profile link TEMPORARY ALERT")
+            showMessage("That's not a valid profile link.","error")
         }
     })
 }

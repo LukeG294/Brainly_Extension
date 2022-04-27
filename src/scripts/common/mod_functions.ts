@@ -234,7 +234,8 @@ export function sendMessages(users_ids, content){
 export async function startCompanionManager(){
     let txt = await fetch("https://th-extension.lukeg294.repl.co/all").then(data => data.json());
     let modal = document.querySelector(".modal_mcomp_u")
-    modal.insertAdjacentHTML("beforeend",`
+    modal.querySelector(".sg-spinner-container").classList.add("remove")
+    modal.querySelector(".users").insertAdjacentHTML("beforeend",/*html*/`
     <button class="add-companion-user sg-button sg-button--solid-blue sg-button--s sg-button--icon-only">
       <span class="sg-button__icon">
         <div class="sg-icon sg-icon--adaptive sg-icon--x16">
@@ -251,7 +252,27 @@ export async function startCompanionManager(){
             element.avatar = "https://brainly.com/img/avatars/100-ON.png"
         }
        
-        modal.insertAdjacentHTML("beforeend",`<div class="companionUserObject"><img src=${element.avatar} class="companionUserAvatar"></img> <a href=${element.profile} class="username">${element.username}</a>  <button id=${databaseId} class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue edit-user"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Edit Permissions</span></button><button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-peach remove-user" id=${databaseId}><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Remove Access</span></button></div>`)
+        modal.querySelector(".users").insertAdjacentHTML("afterbegin",/*html*/`
+        <div class="companionUserObject">
+            <div class="user">
+                <img src=${element.avatar} class="companionUserAvatar"></img> 
+                <a href=${element.profile} class="username">${element.username}</a>  
+            </div>
+            <div class="changedb">
+                <button id=${databaseId} class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue edit-user">
+                    <div class="spinner-container">
+                        <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+                    </div>
+                    <span class="sg-button__text">Edit Permissions</span>
+                </button>
+                <button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-peach remove-user" id=${databaseId}>
+                    <div class="spinner-container">
+                        <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+                    </div>
+                    <span class="sg-button__text">Remove Access</span>
+                </button>
+            </div>
+        </div>`)
         
     }
     let removeButtons = document.querySelectorAll(".remove-user")

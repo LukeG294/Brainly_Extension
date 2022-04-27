@@ -149,7 +149,7 @@ export function mass_msg(){
 export function usr_mgmt(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
     <li class="sg-menu-list__element mcomp-u">   
-    <a class = "sg-menu-list__link">Manage Companion Users</a>
+    <a class = "sg-menu-list__link">Manage Users</a>
     </li>
     
     `)

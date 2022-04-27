@@ -11,6 +11,8 @@ async function homeperms(){
   let perms = await checkPermissionSet();
   if (perms.includes("5")){
     ModObserver()
+  }else{
+    AnsObserver()
   }
   if(perms.includes("10")){
     mass_msg()
@@ -22,9 +24,7 @@ async function homeperms(){
     usr_mgmt()
   }
   //no mod perms or server is down
-  else{
-    AnsObserver()
-  }
+  
 }
 checkUser("new", homeperms)
 

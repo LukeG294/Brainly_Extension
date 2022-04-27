@@ -283,7 +283,7 @@ export async function startCompanionManager(){
             //@ts-ignore
             let username = profilePage.querySelector("#main-left > div.personal_info > div.header > div.info > div.info_top > span.ranking > h2 > a").innerText
             //@ts-ignore
-            let id = profilePage.querySelector("#main-panel > div.mint-header__container > div.mint-header__right.mint-hide-for-mobile.menu-right > ul > li.menu-element.profile.styled > div > div > div.left > a").href.split("/")[4].split("-")[1]
+            let id = profilePage.querySelector(".avatar").children[0].href.split("/")[4].split("-")[1]
             
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");

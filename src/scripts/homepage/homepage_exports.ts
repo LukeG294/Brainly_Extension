@@ -102,7 +102,7 @@ export async function HomeMod() {
   export function permissionChecks(){
     return(/*html*/`
    
-    <label class="sg-checkbox permission" for="warn" >
+    <label class="sg-checkbox permission" for="" >
     <input type="checkbox" class="sg-checkbox__element" id="">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
@@ -110,7 +110,7 @@ export async function HomeMod() {
     <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Selective Confirmation</span>
     </label>
 
-    <label class="sg-checkbox permission" for="warn" >
+    <label class="sg-checkbox permission"  >
     <input type="checkbox" class="sg-checkbox__element" id="">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
@@ -118,7 +118,7 @@ export async function HomeMod() {
     <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Selective Verification</span>
     </label>
 
-    <label class="sg-checkbox permission" for="warn" >
+    <label class="sg-checkbox permission"  >
     <input type="checkbox" class="sg-checkbox__element" id="">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
@@ -126,7 +126,7 @@ export async function HomeMod() {
     <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Fetch All Reported Content</span>
     </label>
 
-    <label class="sg-checkbox permission" for="warn" >
+    <label class="sg-checkbox permission"  >
     <input type="checkbox" class="sg-checkbox__element" id="">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
@@ -134,7 +134,7 @@ export async function HomeMod() {
     <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Selective Unverification</span>
     </label>
 
-    <label class="sg-checkbox permission" for="warn" >
+    <label class="sg-checkbox permission"  >
     <input type="checkbox" class="sg-checkbox__element" id="">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
@@ -142,7 +142,7 @@ export async function HomeMod() {
     <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Delete User</span>
     </label>
 
-    <label class="sg-checkbox permission" for="warn" >
+    <label class="sg-checkbox permission"  >
     <input type="checkbox" class="sg-checkbox__element" id="">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
@@ -150,7 +150,7 @@ export async function HomeMod() {
     <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Homepage Tickets</span>
     </label>
 
-    <label class="sg-checkbox permission" for="warn" >
+    <label class="sg-checkbox permission"  >
     <input type="checkbox" class="sg-checkbox__element" id="">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
@@ -158,7 +158,7 @@ export async function HomeMod() {
     <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Selective Ticket Modding</span>
     </label>
 
-    <label class="sg-checkbox permission" for="warn" >
+    <label class="sg-checkbox permission"  >
     <input type="checkbox" class="sg-checkbox__element" id="">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
@@ -166,7 +166,7 @@ export async function HomeMod() {
     <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Selective Deletion</span>
     </label>
 
-    <label class="sg-checkbox permission" for="warn" >
+    <label class="sg-checkbox permission"  >
     <input type="checkbox" class="sg-checkbox__element" id="">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
@@ -174,7 +174,7 @@ export async function HomeMod() {
     <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Warnings Preview</span>
     </label>
 
-    <label class="sg-checkbox permission" for="warn" >
+    <label class="sg-checkbox permission"  >
     <input type="checkbox" class="sg-checkbox__element" id="">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
@@ -182,7 +182,7 @@ export async function HomeMod() {
     <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Confirm Button</span>
     </label>
 
-    <label class="sg-checkbox permission" for="warn" >
+    <label class="sg-checkbox permission"  >
     <input type="checkbox" class="sg-checkbox__element" id="">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
@@ -190,7 +190,7 @@ export async function HomeMod() {
     <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Mass-Message Users</span>
     </label>
 
-    <label class="sg-checkbox permission" for="warn" >
+    <label class="sg-checkbox permission"  >
     <input type="checkbox" class="sg-checkbox__element" id="">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
@@ -198,7 +198,7 @@ export async function HomeMod() {
     <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Mass-Delete Users</span>
     </label>
 
-    <label class="sg-checkbox permission" for="warn" >
+    <label class="sg-checkbox permission"  >
     <input type="checkbox" class="sg-checkbox__element" id="">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
@@ -206,14 +206,19 @@ export async function HomeMod() {
     <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Basic Content Page Features</span>
     </label>
 
-    <label class="sg-checkbox permission" for="warn" >
+    <label class="sg-checkbox permission"  >
     <input type="checkbox" class="sg-checkbox__element" id="">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
     <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">User Management</span>
     </label>
-    
+    <button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue submit-permissions">
+                    <div class="spinner-container">
+                        <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+                    </div>
+                    <span class="sg-button__text">Update</span>
+                </button>
     `)
 }
 

@@ -1,7 +1,8 @@
 import {ticket_data} from "../common/Mod Ticket/ticket_functions"
 import {showMessage} from "../common/common_functions"
 import{ removeUser, editUser} from "../common/permission_system"
-
+import{ permissionChecks } from "../homepage/homepage_exports"
+permissionChecks
 function noclick(){
     document.querySelector("body").insertAdjacentHTML("afterbegin",/*html*/`
         <div class="blockint"></div>
@@ -257,7 +258,7 @@ export async function startCompanionManager(){
         }
        
         modal.querySelector(".users").insertAdjacentHTML("afterbegin",/*html*/`
-        <div class="companionUserObject">
+        <div class="companionUserObject" style="overflow-y:scroll">
             <div class="user">
                 <img src=${element.avatar} class="companionUserAvatar"></img> 
                 <a href=${element.profile} class="username">${element.username}</a>  
@@ -288,18 +289,32 @@ export async function startCompanionManager(){
             element.querySelector(".spinner-container").classList.add("show");
             await removeUser(element.id)
             element.querySelector(".spinner-container").classList.remove("show");
-            element.parentElement.remove();
+            element.parentElement.parentElement.remove();
         })
     }
     let editButtons = document.querySelectorAll(".edit-user")
+    let appended = null
     for (let index = 0; index < editButtons.length; index++) {
        
         const element = editButtons[index];
        
         element.addEventListener("click", async function(){
             element.querySelector(".spinner-container").classList.add("show");
-            let hash = prompt("New perms?")
-            editUser(element.id, hash)
+            
+            if (!appended){
+                element.parentElement.insertAdjacentHTML("beforeend",permissionChecks())
+                 appended = true
+            } else {
+                let checks = document.querySelectorAll(".permission")
+                for (let index = 0; index < checks.length; index++) {
+                    const element = checks[index];
+                    element.remove();
+                }
+                appended = false
+            }
+            
+            let hash = "1,2,3,4,5,6,7,8,9,10,100"
+            //editUser(element.id, hash)
             element.querySelector(".spinner-container").classList.remove("show");
         })
     }
@@ -339,12 +354,41 @@ export async function startCompanionManager(){
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
+            if (avatar === "https://brainly.com/img/"){
+                avatar = "https://brainly.com/img/avatars/100-ON.png"
+            }
+            let modal = document.querySelector(".modal_mcomp_u")
+            modal.querySelector(".users").insertAdjacentHTML("afterbegin",/*html*/`
+            <div class="companionUserObject">
+                <div class="user">
+                    <img src=${avatar} class="companionUserAvatar"></img> 
+                    <a href=${profileLink} class="username">${username}</a>  
+                </div>
+                <div class="changedb">
+                    <button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue edit-user notAdded">
+                        <div class="spinner-container">
+                            <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+                        </div>
+                        <span class="sg-button__text">Edit Permissions</span>
+                    </button>
+                    <button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-peach remove-user notAdded" >
+                        <div class="spinner-container">
+                            <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+                        </div>
+                        <span class="sg-button__text">Remove Access</span>
+                    </button>
+                </div>
+            </div>`)
+            let buttons = document.querySelectorAll(".notAdded")
+            for (let index = 0; index < buttons.length; index++) {
+                const element = buttons[index];
+                element.addEventListener("click",function(){
+                    alert("Please re-open the modal, we can't fetch data for this user yet.")
+                })
+                
+            }
            
-             
-           
-        } else {
-            showMessage("That's not a valid profile link.","error")
-        }
+        } 
     })
 }
   

@@ -11,8 +11,6 @@ async function homeperms(){
   let perms = await checkPermissionSet();
   if (perms.includes("5")){
     ModObserver()
-  }else{
-    AnsObserver()
   }
   if(perms.includes("10")){
     mass_msg()
@@ -23,10 +21,8 @@ async function homeperms(){
   if(perms.includes("100")){
     usr_mgmt()
   }
-  //no mod perms or server is down
-  
 }
-checkUser("new", homeperms)
+checkUser("new", homeperms, AnsObserver)
 
 //if user does not have username and password in local storage
 if(!localStorage.getItem("userAuth")){

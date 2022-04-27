@@ -42,7 +42,7 @@ export async function checkPermissionSet(){
     return permsArr
 }
 
-export function checkUser(pageType, checkFunction){
+export function checkUser(pageType, checkFunction, fallbackFn = () => {}){
     let userData;
     if(pageType === "new"){
         userData = JSON.parse(document.querySelector('meta[name="user_data"]').getAttribute("content"))
@@ -64,8 +64,9 @@ export function checkUser(pageType, checkFunction){
         let response = JSON.parse(this.responseText);
         if (response.statusCode === 401){
           showMessage(`Error 401: We couldn't find a permission set for ${userData.nick} with the ID ${userData.id}. Please contact LukeG1 or TheSection for help authenticating.`,"error")
+          fallbackFn()
         } else {
-           checkFunction()
+          checkFunction()
         }
       }
     });

@@ -16,7 +16,7 @@ export function ModObserver(){
     const observer = new MutationObserver(HomeMod);
     function addFunctionifFeed(){
         let target = document.querySelector(".sg-layout__content");
-        if(!target){ return setTimeout(addFunctionifFeed, 500); }
+        if(!target){ return setTimeout(addFunctionifFeed, 100); }
         
         observer.observe(target, { attributes: true, childList: true, subtree: true, characterData:true });
         HomeMod()
@@ -27,7 +27,7 @@ export function AnsObserver(){
     const observer = new MutationObserver(HomeAns);
     function addFunctionifFeed(){
         let target = document.querySelector(".sg-layout__content");
-        if(!target){ return setTimeout(addFunctionifFeed, 500); }
+        if(!target){ return setTimeout(addFunctionifFeed, 100); }
         
         observer.observe(target, { attributes: true, childList: true, subtree: true, characterData:true });
         HomeAns()

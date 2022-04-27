@@ -23,7 +23,8 @@
       "matches": ["*://brainly.com/*"],
       "exclude_globs": ["*://brainly.com/question/*","://brainly.com/profile/*"],
       "js": ["content-scripts/js/homepage.js"],
-      "css": ["content-scripts/css/homepage.css"]
+      "css": ["content-scripts/css/homepage.css"],
+      "run_at":"document_start"
     },
     {
       "matches": ["*://brainly.com/tasks/archive_mod"],

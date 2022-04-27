@@ -17,14 +17,15 @@
   "content_scripts": [
     {
       "matches": ["*://brainly.com/*"],
-      "css": ["content-scripts/css/common.css"]
+      "css": ["content-scripts/css/common.css"],
+      "js": ["content-scripts/js/permissions.js"],
+      "run_at": "document_start"
     },
     {
       "matches": ["*://brainly.com/*"],
       "exclude_globs": ["*://brainly.com/question/*","://brainly.com/profile/*"],
       "js": ["content-scripts/js/homepage.js"],
-      "css": ["content-scripts/css/homepage.css"],
-      "run_at":"document_start"
+      "css": ["content-scripts/css/homepage.css"]
     },
     {
       "matches": ["*://brainly.com/tasks/archive_mod"],
@@ -43,13 +44,11 @@
     {
       "matches": ["*://brainly.com/question/*"],
       "js": ["content-scripts/js/question_page.js"]
-    
     },
     {
       "matches": ["*://brainly.com/users/user_content/*/*","*://brainly.com/users/user_content/*"],
       "js": ["content-scripts/js/content_page.js"],
       "css": ["content-scripts/css/content_page.css"]
     }
-  
 ]
 }

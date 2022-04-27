@@ -4,10 +4,11 @@ import { checkPermissionSet, checkUser} from "../common/permission_system"
 //@ts-ignore
 
 async function questionPage(){
-  let perms = await checkPermissionSet();
+  let perms = sessionStorage.userPerms
   if (perms.includes("9")){
     confirmButton()
   }
 }
-
-checkUser("new", questionPage)
+setTimeout(() => {
+  checkUser("new", questionPage)
+}, 100);

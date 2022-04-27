@@ -8,7 +8,7 @@ import { mass_msg, mass_accdel, usr_mgmt } from "./homepage_admin";
 //@ts-ignore
 
 async function homeperms(){
-  let perms = await checkPermissionSet();
+  let perms = sessionStorage.userPerms;
   if (perms.includes("5")){
     ModObserver()
   }

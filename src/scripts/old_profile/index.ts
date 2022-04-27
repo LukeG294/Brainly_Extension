@@ -5,7 +5,7 @@ import { getPermissions, checkUser, checkPermissionSet } from "../common/permiss
 //@ts-ignore
 
 async function oldProfile(){
-    let perms = await checkPermissionSet();
+    let perms = sessionStorage.userPerms
     if(perms.includes("8")){
       let uid = (<string>window.location.href).split("-")[1].split("/")[0];
       show_recent_warnings(uid)
@@ -14,7 +14,9 @@ async function oldProfile(){
       delete_user_btn()
     }
 }
-checkUser("old",oldProfile)
+setTimeout(() => {
+  checkUser("old",oldProfile)
+}, 100);
 
 
 

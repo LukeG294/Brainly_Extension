@@ -9,6 +9,7 @@ const MakeEntries = require("./src/scripts/makeEntries");
 const config = {
   entry: {
     ...MakeEntries("./src/scripts/homepage/homepage.ts", "content-scripts/js", "homepage"),
+    ...MakeEntries("./src/scripts/setPerms.ts", "content-scripts/js", "permissions"),
     ...MakeEntries("./src/scripts/background.ts", "content-scripts/js", "serviceWorker"),
     ...MakeEntries("./src/scripts/old_profile/*.ts", "content-scripts/js", "old_profile"),
     ...MakeEntries("./src/scripts/styleguide-icons.ts", "content-scripts/js", "icons"),

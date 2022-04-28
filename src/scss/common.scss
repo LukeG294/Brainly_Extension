@@ -76,12 +76,10 @@
     flex-direction: column;
     border: 2px solid #e1eaf1;
     border-radius: 10px;
-    justify-content: space-between;
     &.openelem{
       grid-row:1/100;
       height:100%!important;
       overflow-y:auto!important;
-      justify-content:space-evenly!important;
     }
     .permlist{
       margin-top:12px;

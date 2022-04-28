@@ -1,4 +1,4 @@
-import {addResponseButtonsApprove, addResponseButtonsBasic, addResponseButtonsConfirm, addResponseButtonsFetchReported, addResponseButtonsUnverify} from "./responses"
+import {addResponseButtonsApprove, addResponseButtonsBasic, addResponseButtonsConfirm, addResponseButtonsFetchReported, addResponseButtonsUnverify, addResponseButtonsDelete} from "./responses"
 import {addTaskButtonsBasic, addTaskButtonsConfirmation, addTaskButtonsDeletion, addTaskButtonsReportedContent} from "./tasks"
 //import { checkUser, checkPermissionSet } from "../common/permission_system"
 import {add_icons} from "./content_page_buttons"
@@ -35,6 +35,9 @@ async function addPerPage(){
     }
     if (permsArr.includes("0")){
       addResponseButtonsConfirm()
+    }
+    if (permsArr.includes("7")){
+      addResponseButtonsDelete()
     }
     if (permsArr.includes("1")){
       addResponseButtonsApprove()

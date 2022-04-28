@@ -7,7 +7,6 @@ import {
     select_all,
     toggle_selected,
     unverify_selected,
-    add_icons,
     confirm_selected_answers,
     get_reported_content
 } from "./content_page_buttons"
@@ -16,7 +15,6 @@ import { getPermissions } from "../common/permission_system"
 let buttonArea = document.querySelector("#content-old > div:nth-child(3) > p")
 
 export function addResponseButtonsBasic(){
-    add_icons();
     let content = document.querySelectorAll("#content-old > div:nth-child(2) > div:nth-child(25) > table > tbody > tr")
 
     for (let i = 0; i < content.length; i++) {

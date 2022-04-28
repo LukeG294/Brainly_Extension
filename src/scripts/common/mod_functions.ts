@@ -239,7 +239,7 @@ export async function startCompanionManager(){
 
     //inserting the  "add user" button
     modal.querySelector(".users").insertAdjacentHTML("beforeend",/*html*/`
-    <div>
+    <div class = "adduserbox">
     <button class="add-companion-user sg-button sg-button--solid-blue sg-button--s sg-button--icon-only">
       <span class="sg-button__icon">
         <div class="sg-icon sg-icon--adaptive sg-icon--x16">
@@ -270,15 +270,16 @@ export async function startCompanionManager(){
                     <div class="spinner-container">
                         <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
                     </div>
-                    <span class="sg-button__text">Edit Permissions</span>
+                    <span class="sg-button__text"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-pencil"></use></svg></div></span>
                 </button>
                 <button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-peach remove-user" id=${databaseId}>
                     <div class="spinner-container">
                         <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
                     </div>
-                    <span class="sg-button__text">Remove Access</span>
+                    <span class="sg-button__text"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-trash"></use></svg></div></span>
                 </button>
             </div>
+            <div class="permlist"></div>
         </div>`)
         
     }
@@ -306,7 +307,7 @@ export async function startCompanionManager(){
 
             if (!appended){
                 
-                element.parentElement.insertAdjacentHTML("beforeend",permissionChecks())
+                element.parentElement.parentElement.querySelector(".permlist").insertAdjacentHTML("beforeend",permissionChecks())
                 
                 let userToGet = element.parentElement.parentElement.querySelector(".username")
                 //@ts-ignore
@@ -357,13 +358,14 @@ export async function startCompanionManager(){
     let appendAddUser = false
     document.querySelector(".add-companion-user").addEventListener("click", async function(){
         if (!appendAddUser){
-            this.style.setProperty('height', '50%', 'important');
+            this.style.setProperty('flex', '1', 'important');
             appendAddUser = true
-            this.insertAdjacentHTML("afterend",`<input style="text-align: center;margin-top: 10%;width: 215px !important;" type="text" placeholder="Username" class="sg-input userSpace" >
-            <button class="sg-button sg-button--m sg-button--solid-mint confirm-add-user" style="text-align: center;
-            margin-top: 2%;width: 215px !important; display:flex;"><div class="spinner-container">
-            <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
-            </div><span class="sg-button__text">Add User</span></button>
+            this.insertAdjacentHTML("afterend",/*html*/`
+            <input type="text" placeholder="Username" class="sg-input userSpace" >
+            <button class="sg-button sg-button--m sg-button--solid-mint confirm-add-user">
+                <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
+                <span class="sg-button__text">Add User</span>
+            </button>
             `)
             
             let input = document.querySelector(".userSpace")
@@ -448,13 +450,13 @@ export async function startCompanionManager(){
                                                 <div class="spinner-container">
                                                     <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
                                                 </div>
-                                                <span class="sg-button__text">Edit Permissions</span>
+                                                <span class="sg-button__text"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-pencil"></use></svg></div></span>
                                             </button>
                                             <button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-peach remove-user notAdded" >
                                                 <div class="spinner-container">
                                                     <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
                                                 </div>
-                                                <span class="sg-button__text">Remove Access</span>
+                                                <span class="sg-button__text"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-trash"></use></svg></div></span>
                                             </button>
                                         </div>
                                     </div>`)

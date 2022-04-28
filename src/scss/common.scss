@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: column;
   width:80%;
-  height:75%;
+  height:95%;
   min-width:475px!important;
   .sg-spinner-container{
     position: absolute;
@@ -30,28 +30,40 @@
     overflow:auto;
     display:grid;
     grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
-  .add-companion-user{
-    width: 215px!important;
-    display: flex;
-    margin-bottom:12px;
-    height: 244px!important;
-    border: 2px solid #e1eaf1;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background:transparent!important;
-    .sg-icon{
-      height:24px!important;
-      width:24px!important;
-      max-height:24px!important;
-      max-width:24px!important;
-      svg{
-        fill: #687b86!important;
+  .adduserbox{
+    height:100%;
+    width:100%;
+    padding-right:12px;
+    padding-bottom:12px;
+    display:flex;
+    flex-direction: column;
+    .add-companion-user{
+      flex:1;
+      height:100%;
+      width:100%;
+      display: flex;
+      border: 2px solid #e1eaf1;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background:transparent!important;
+      .sg-icon{
         height:24px!important;
         width:24px!important;
         max-height:24px!important;
         max-width:24px!important;
+        svg{
+          fill: #687b86!important;
+          height:24px!important;
+          width:24px!important;
+          max-height:24px!important;
+          max-width:24px!important;
+        }
       }
+    }
+    >input{
+      width:100%;
+      margin:12px 0px;
     }
   }
   .companionUserObject{
@@ -77,10 +89,29 @@
     .changedb{
       display: flex;
       margin-top:12px;
-      flex-direction: column;
-      justify-content: space-around;
-      >button:nth-child(1){
-        margin-bottom:8px;
+      justify-content: space-evenly;
+      .remove-user,.edit-user{
+        background-color:transparent!important;
+        border:2px solid;
+        padding:0px;
+        height:40px;
+        width:40px;
+        .sg-icon{
+          height:24px!important;
+          width:24px!important;
+        }
+      }
+      .remove-user{
+        border-color:#ff7968!important;
+        .sg-icon{
+          fill:#ff7968!important;
+        }
+      }
+      .edit-user{
+        border-color:#4fc3f6!important;
+        .sg-icon{
+          fill:#4FB3F6!important;
+        }
       }
     }
   }

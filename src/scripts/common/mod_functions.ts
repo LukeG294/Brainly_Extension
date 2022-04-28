@@ -1,6 +1,6 @@
 import {ticket_data} from "../common/Mod Ticket/ticket_functions"
 import {showMessage} from "../common/common_functions"
-import{ removeUser, editUser} from "../common/permission_system"
+import{ removeUser, editUser, checkPermissionSet, getPermissions} from "../common/permission_system"
 import{ permissionChecks } from "../homepage/homepage_exports"
 permissionChecks
 function noclick(){
@@ -301,24 +301,51 @@ export async function startCompanionManager(){
         element.addEventListener("click", async function(){
             element.querySelector(".spinner-container").classList.add("show");
             
+
             if (!appended){
+                
                 element.parentElement.insertAdjacentHTML("beforeend",permissionChecks())
-                document.querySelector(".submit-permissions").addEventListener("click",function(){
-                    console.log(this.parentElement.querySelectorAll(".permission"))
+                
+                let userToGet = element.parentElement.parentElement.querySelector(".username")
+                //@ts-ignore
+                let prevPerms = await getPermissions(userToGet.innerText,userToGet.href.split("/")[4].split("-")[1])
+                let decodedPerms = atob(prevPerms).split(",")
+                for (let index = 0; index < decodedPerms.length; index++) {
+                    const permsElement = decodedPerms[index];
+                    
+                   let foundCheck = element.parentElement.parentElement.querySelector(".perm"+permsElement)
+                   //@ts-expect-error
+                   foundCheck.checked = true
+                }
+                document.querySelector(".submit-permissions").addEventListener("click", async function(){
+                    this.querySelector(".spinner-container").classList.add("show");
+                    let perms = []
+                    let userOptions = this.parentElement.querySelectorAll(".permission")
+                    for (let index = 0; index < userOptions.length; index++) {
+                        const element = userOptions[index];
+                        if (element.children[0].checked){
+                            perms.push(element.children[0].id)
+                        }
+                        
+                    }
+                    await editUser(element.id, perms)
+                    this.querySelector(".spinner-container").classList.remove("show");
                 })
+               
                  appended = true
             } else {
                 let checks = document.querySelectorAll(".permission")
                 for (let index = 0; index < checks.length; index++) {
                     const element = checks[index];
                     element.remove();
+
                 }
+                document.querySelector(".submit-permissions").remove()
                 appended = false
             }
-
+          
             
-            let hash = "1,2,3,4,5,6,7,8,9,10,100"
-            //editUser(element.id, hash)
+           
             element.querySelector(".spinner-container").classList.remove("show");
         })
     }

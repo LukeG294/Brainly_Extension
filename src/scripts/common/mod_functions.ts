@@ -314,8 +314,11 @@ export async function startCompanionManager(){
                     const permsElement = decodedPerms[index];
                     
                    let foundCheck = element.parentElement.parentElement.querySelector(".perm"+permsElement)
-                   //@ts-expect-error
-                   foundCheck.checked = true
+                
+                   if (foundCheck){
+                       //@ts-expect-error
+                    foundCheck.checked = true
+                   }
                 }
                 document.querySelector(".submit-permissions").addEventListener("click", async function(){
                     this.querySelector(".spinner-container").classList.add("show");

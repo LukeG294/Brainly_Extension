@@ -358,11 +358,12 @@ export async function startCompanionManager(){
     document.querySelector(".add-companion-user").addEventListener("click", async function(){
         if (!appendAddUser){
             this.style.setProperty('height', '50%', 'important');
+            appendAddUser = true
             this.insertAdjacentHTML("afterend",`<input style="text-align: center;margin-top: 10%;width: 215px !important;" type="text" placeholder="Username" class="sg-input userSpace" >
             <button class="sg-button sg-button--m sg-button--solid-mint confirm-add-user" style="text-align: center;
             margin-top: 2%;width: 215px !important; display:flex;"><div class="spinner-container">
             <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
-        </div><span class="sg-button__text">Add User</span></button>
+            </div><span class="sg-button__text">Add User</span></button>
             `)
             
             let input = document.querySelector(".userSpace")
@@ -394,7 +395,7 @@ export async function startCompanionManager(){
                             //@ts-expect-error
                             let profileLink = searchPage.querySelectorAll(".user-nick")[0].children[0].href
                             document.querySelector(".confirm-add-user").addEventListener("click", async function(){
-                                
+                               
                                 let regexString = new RegExp(`https:\/\/brainly\.com\/profile\/.*-.*`)
                                 if (regexString.test(profileLink)) {
                                     this.querySelector(".spinner-container").classList.add("show")
@@ -473,7 +474,7 @@ export async function startCompanionManager(){
                         
                         
                                
-                                    appendAddUser = true
+                                    
                             })
 
                             } else {
@@ -491,11 +492,12 @@ export async function startCompanionManager(){
                 }, 1000);
             });
             
-            } else {
-                document.querySelector(".userSpace").remove()
-                this.style.setProperty('height', '100%', 'important');
-                appendAddUser = false
-            }
+        } else {
+            document.querySelector(".userSpace").remove()
+            document.querySelector(".confirm-add-user").remove()
+            this.style.setProperty('height', '100%', 'important');
+            appendAddUser = false
+        }
         
         
     })

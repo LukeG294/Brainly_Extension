@@ -2,7 +2,7 @@ import {ticket_data} from "../common/Mod Ticket/ticket_functions"
 import {showMessage} from "../common/common_functions"
 import{ removeUser, editUser, checkPermissionSet, getPermissions} from "../common/permission_system"
 import{ permissionChecks } from "../homepage/homepage_exports"
-permissionChecks
+
 function noclick(){
     document.querySelector("body").insertAdjacentHTML("afterbegin",/*html*/`
         <div class="blockint"></div>
@@ -302,16 +302,17 @@ export async function startCompanionManager(){
         const element = editButtons[index];
        
         element.addEventListener("click", async function(){
+            if(document.querySelector(".users .openelem")){
+                document.querySelector(".users .openelem").classList.remove("openelem")
+            }
             element.querySelector(".spinner-container").classList.add("show");
-            
 
             if (!appended){
-                
-                element.parentElement.parentElement.querySelector(".permlist").insertAdjacentHTML("beforeend",permissionChecks())
-                
                 let userToGet = element.parentElement.parentElement.querySelector(".username")
                 //@ts-ignore
                 let prevPerms = await getPermissions(userToGet.innerText,userToGet.href.split("/")[4].split("-")[1])
+                element.parentElement.parentElement.querySelector(".permlist").insertAdjacentHTML("beforeend",permissionChecks())
+                element.parentElement.parentElement.classList.add("openelem")
                 let decodedPerms = atob(prevPerms).split(",")
                 for (let index = 0; index < decodedPerms.length; index++) {
                     const permsElement = decodedPerms[index];
@@ -337,21 +338,17 @@ export async function startCompanionManager(){
                     await editUser(element.id, perms)
                     this.querySelector(".spinner-container").classList.remove("show");
                 })
-               
                  appended = true
             } else {
                 let checks = document.querySelectorAll(".permission")
                 for (let index = 0; index < checks.length; index++) {
                     const element = checks[index];
                     element.remove();
-
                 }
                 document.querySelector(".submit-permissions").remove()
+                element.parentElement.parentElement.classList.remove("openelem")
                 appended = false
             }
-          
-            
-           
             element.querySelector(".spinner-container").classList.remove("show");
         })
     }

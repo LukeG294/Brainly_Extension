@@ -10,7 +10,6 @@ import {
     confirm_selected_answers,
     get_reported_content
 } from "./content_page_buttons"
-import { getPermissions } from "../common/permission_system"
 
 let buttonArea = document.querySelector("#content-old > div:nth-child(3) > p")
 

@@ -28,10 +28,12 @@
   }
   .users{
     overflow:auto;
-    display:flex;
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
   .add-companion-user{
     width: 215px!important;
     display: flex;
+    margin-bottom:12px;
     height: 244px!important;
     border: 2px solid #e1eaf1;
     align-items: center;
@@ -55,6 +57,8 @@
   .companionUserObject{
     display: flex;
     padding:18px;
+    margin-bottom:12px;
+    height:max-content;
     margin-right:12px;
     flex-direction: column;
     border: 2px solid #e1eaf1;

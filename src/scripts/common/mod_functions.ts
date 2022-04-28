@@ -488,7 +488,7 @@ export async function startCompanionManager(){
                         
                     
                     
-                }, 1000);
+                }, 500);
             });
             
         } else {

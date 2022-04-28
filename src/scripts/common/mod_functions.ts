@@ -239,6 +239,7 @@ export async function startCompanionManager(){
 
     //inserting the  "add user" button
     modal.querySelector(".users").insertAdjacentHTML("beforeend",/*html*/`
+    <div>
     <button class="add-companion-user sg-button sg-button--solid-blue sg-button--s sg-button--icon-only">
       <span class="sg-button__icon">
         <div class="sg-icon sg-icon--adaptive sg-icon--x16">
@@ -246,6 +247,7 @@ export async function startCompanionManager(){
         </div>
       </span>
     </button>
+    </div>
     `)
 
     //inserting all registered users
@@ -352,77 +354,150 @@ export async function startCompanionManager(){
             element.querySelector(".spinner-container").classList.remove("show");
         })
     }
+    let appendAddUser = false
     document.querySelector(".add-companion-user").addEventListener("click", async function(){
-        let profileLink = prompt("profile link?")
-        let regexString = new RegExp(`https:\/\/brainly\.com\/profile\/.*-.*`)
-        if (regexString.test(profileLink)) {
-            let user = await fetch(profileLink).then(data => data.text());
-            let parser = new DOMParser();
-            let profilePage = parser.parseFromString(user, 'text/html');
-            //@ts-ignore
-            let avatar = profilePage.querySelector("#main-left > div.personal_info > div.header > div.avatar > a > img").src
-            //@ts-ignore
-            let username = profilePage.querySelector("#main-left > div.personal_info > div.header > div.info > div.info_top > span.ranking > h2 > a").innerText
-            //@ts-ignore
-            let id = profilePage.querySelector(".avatar").children[0].href.split("/")[4].split("-")[1]
+        if (!appendAddUser){
+            this.style.setProperty('height', '50%', 'important');
+            this.insertAdjacentHTML("afterend",`<input style="text-align: center;margin-top: 10%;width: 215px !important;" type="text" placeholder="Username" class="sg-input userSpace" >
+            <button class="sg-button sg-button--m sg-button--solid-mint confirm-add-user" style="text-align: center;
+            margin-top: 2%;width: 215px !important; display:flex;"><div class="spinner-container">
+            <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+        </div><span class="sg-button__text">Add User</span></button>
+            `)
             
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
+            let input = document.querySelector(".userSpace")
 
-            var raw = JSON.stringify({
-                "username": username,
-                "password": parseInt(id),
-                "avatar": avatar,
-                "profile": profileLink,
-                "permissions": ""
+            // Init a timeout variable to be used below
+            let timeout = null;
+
+            // Listen for keystroke events
+            input.addEventListener('keyup', function (e) {
+                // Clear the timeout if it has already been set.
+                // This will prevent the previous task from executing
+                // if it has been less than <MILLISECONDS>
+                clearTimeout(timeout);
+
+                // Make a new timeout set to go off in 1000ms (1 second)
+                timeout = setTimeout( async function () {
+                    //@ts-expect-error
+                    let searchFind = await fetch("https://brainly.com/users/search/"+input.value).then(data => data.text());
+                    let DOMparse = new DOMParser();
+                    let searchPage = DOMparse.parseFromString(searchFind, 'text/html');
+                   
+                  
+                    let username = searchPage.querySelectorAll(".user-nick")[0]
+                    
+                    if (username){
+                        //@ts-expect-error
+                        if (String(username.children[0].innerText).toLowerCase === String(input.value).toLowerCase){
+                            input.classList.add("sg-textarea--valid")
+                            //@ts-expect-error
+                            let profileLink = searchPage.querySelectorAll(".user-nick")[0].children[0].href
+                            document.querySelector(".confirm-add-user").addEventListener("click", async function(){
+                                
+                                let regexString = new RegExp(`https:\/\/brainly\.com\/profile\/.*-.*`)
+                                if (regexString.test(profileLink)) {
+                                    this.querySelector(".spinner-container").classList.add("show")
+
+                                    let user = await fetch(profileLink).then(data => data.text());
+                                    let parser = new DOMParser();
+                                    let profilePage = parser.parseFromString(user, 'text/html');
+                                    //@ts-ignore
+                                    let avatar = profilePage.querySelector("#main-left > div.personal_info > div.header > div.avatar > a > img").src
+                                    //@ts-ignore
+                                    let username = profilePage.querySelector("#main-left > div.personal_info > div.header > div.info > div.info_top > span.ranking > h2 > a").innerText
+                                    //@ts-ignore
+                                    let id = profilePage.querySelector(".avatar").children[0].href.split("/")[4].split("-")[1]
+                                    
+                                    var myHeaders = new Headers();
+                                    myHeaders.append("Content-Type", "application/json");
+                        
+                                    var raw = JSON.stringify({
+                                        "username": username,
+                                        "password": parseInt(id),
+                                        "avatar": avatar,
+                                        "profile": profileLink,
+                                        "permissions": ""
+                                    });
+                        
+                                    var requestOptions = {
+                                    method: 'POST',
+                                    headers: myHeaders,
+                                    body: raw,
+                                    
+                                    };
+                        
+                                    await fetch("https://th-extension.lukeg294.repl.co/users", requestOptions)
+                                    .then(response => response.text())
+                                    .then(result => console.log(result))
+                                    .catch(error => console.log('error', error));
+                                    this.querySelector(".spinner-container").classList.remove("show")
+                                    if (avatar === "https://brainly.com/img/"){
+                                        avatar = "https://brainly.com/img/avatars/100-ON.png"
+                                    }
+                                    let modal = document.querySelector(".modal_mcomp_u")
+                                    modal.querySelector(".users").insertAdjacentHTML("afterbegin",/*html*/`
+                                    <div class="companionUserObject">
+                                        <div class="user">
+                                            <img src=${avatar} class="companionUserAvatar"></img> 
+                                            <a href=${profileLink} class="username">${username}</a>  
+                                        </div>
+                                        <div class="changedb">
+                                            <button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue edit-user notAdded">
+                                                <div class="spinner-container">
+                                                    <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+                                                </div>
+                                                <span class="sg-button__text">Edit Permissions</span>
+                                            </button>
+                                            <button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-peach remove-user notAdded" >
+                                                <div class="spinner-container">
+                                                    <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+                                                </div>
+                                                <span class="sg-button__text">Remove Access</span>
+                                            </button>
+                                        </div>
+                                    </div>`)
+                                    let buttons = document.querySelectorAll(".notAdded")
+                                    for (let index = 0; index < buttons.length; index++) {
+                                        const element = buttons[index];
+                                        element.addEventListener("click",function(){
+                                            alert("Please re-open the modal, we can't fetch data for this user yet.")
+                                        })
+                                        
+                                    }
+                                
+                                } 
+                        
+                        
+                        
+                        
+                        
+                               
+                                    appendAddUser = true
+                            })
+
+                            } else {
+                            
+                                
+                                input.classList.add("sg-textarea--invalid")
+                            }
+                        } else {
+                            input.classList.add("sg-textarea--invalid")
+                        }
+
+                        
+                    
+                    
+                }, 1000);
             });
-
-            var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
             
-            };
-
-            fetch("https://th-extension.lukeg294.repl.co/users", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
-            if (avatar === "https://brainly.com/img/"){
-                avatar = "https://brainly.com/img/avatars/100-ON.png"
+            } else {
+                document.querySelector(".userSpace").remove()
+                this.style.setProperty('height', '100%', 'important');
+                appendAddUser = false
             }
-            let modal = document.querySelector(".modal_mcomp_u")
-            modal.querySelector(".users").insertAdjacentHTML("afterbegin",/*html*/`
-            <div class="companionUserObject">
-                <div class="user">
-                    <img src=${avatar} class="companionUserAvatar"></img> 
-                    <a href=${profileLink} class="username">${username}</a>  
-                </div>
-                <div class="changedb">
-                    <button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue edit-user notAdded">
-                        <div class="spinner-container">
-                            <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
-                        </div>
-                        <span class="sg-button__text">Edit Permissions</span>
-                    </button>
-                    <button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-peach remove-user notAdded" >
-                        <div class="spinner-container">
-                            <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
-                        </div>
-                        <span class="sg-button__text">Remove Access</span>
-                    </button>
-                </div>
-            </div>`)
-            let buttons = document.querySelectorAll(".notAdded")
-            for (let index = 0; index < buttons.length; index++) {
-                const element = buttons[index];
-                element.addEventListener("click",function(){
-                    alert("Please re-open the modal, we can't fetch data for this user yet.")
-                })
-                
-            }
-           
-        } 
+        
+        
     })
 }
   

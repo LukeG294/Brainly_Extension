@@ -103,31 +103,31 @@ export async function HomeMod() {
     return(/*html*/`
    
     <label class="sg-checkbox permission" for="" >
-    <input type="checkbox" class="sg-checkbox__element" id="">
+    <input type="checkbox" class="sg-checkbox__element perm0" id="0">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Selective Confirmation</span>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Confirm Selected</span>
     </label>
 
     <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element" id="">
+    <input type="checkbox" class="sg-checkbox__element perm1" id="1">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Selective Verification</span>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Verify Selected</span>
     </label>
 
     <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element" id="">
+    <input type="checkbox" class="sg-checkbox__element perm2" id="2">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Fetch All Reported Content</span>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Fetch Reported Content</span>
     </label>
 
     <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element" id="">
+    <input type="checkbox" class="sg-checkbox__element perm3" id="3">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
@@ -135,7 +135,7 @@ export async function HomeMod() {
     </label>
 
     <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element" id="">
+    <input type="checkbox" class="sg-checkbox__element perm4" id="4">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
@@ -143,7 +143,7 @@ export async function HomeMod() {
     </label>
 
     <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element" id="">
+    <input type="checkbox" class="sg-checkbox__element perm5" id="5">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
@@ -151,7 +151,7 @@ export async function HomeMod() {
     </label>
 
     <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element" id="">
+    <input type="checkbox" class="sg-checkbox__element perm6" id="6">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
@@ -159,7 +159,7 @@ export async function HomeMod() {
     </label>
 
     <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element" id="">
+    <input type="checkbox" class="sg-checkbox__element perm7" id="7">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
@@ -167,7 +167,7 @@ export async function HomeMod() {
     </label>
 
     <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element" id="">
+    <input type="checkbox" class="sg-checkbox__element perm8" id="8">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
@@ -175,7 +175,7 @@ export async function HomeMod() {
     </label>
 
     <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element" id="">
+    <input type="checkbox" class="sg-checkbox__element perm9" id="9">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
@@ -183,7 +183,7 @@ export async function HomeMod() {
     </label>
 
     <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element" id="">
+    <input type="checkbox" class="sg-checkbox__element perm10" id="10">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
@@ -191,7 +191,7 @@ export async function HomeMod() {
     </label>
 
     <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element" id="">
+    <input type="checkbox" class="sg-checkbox__element perm11" id="11">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
@@ -199,15 +199,15 @@ export async function HomeMod() {
     </label>
 
     <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element" id="">
+    <input type="checkbox" class="sg-checkbox__element perm12" id="12">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Basic Content Page Features</span>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Select All Links</span>
     </label>
 
     <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element" id="">
+    <input type="checkbox" class="sg-checkbox__element perm100" id="100">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>

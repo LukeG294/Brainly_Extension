@@ -131,7 +131,7 @@ export async function HomeMod() {
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Selective Unverification</span>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Unverify Selected</span>
     </label>
 
     <label class="sg-checkbox permission"  >
@@ -155,7 +155,7 @@ export async function HomeMod() {
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Selective Ticket Modding</span>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Cont. Pg Tickets</span>
     </label>
 
     <label class="sg-checkbox permission"  >
@@ -163,7 +163,7 @@ export async function HomeMod() {
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Selective Deletion</span>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Delete Selected</span>
     </label>
 
     <label class="sg-checkbox permission"  >
@@ -171,7 +171,7 @@ export async function HomeMod() {
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Warnings Preview</span>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Warnings Prev.</span>
     </label>
 
     <label class="sg-checkbox permission"  >

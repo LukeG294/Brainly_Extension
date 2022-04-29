@@ -207,6 +207,22 @@ export async function HomeMod() {
     </label>
 
     <label class="sg-checkbox permission"  >
+    <input type="checkbox" class="sg-checkbox__element perm13" id="13">
+    <div class="sg-checkbox__ghost" aria-hidden="true">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+    </div>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Request Verification</span>
+    </label>
+
+    <label class="sg-checkbox permission"  >
+    <input type="checkbox" class="sg-checkbox__element perm14" id="14">
+    <div class="sg-checkbox__ghost" aria-hidden="true">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+    </div>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">View Verify Queue</span>
+    </label>
+
+    <label class="sg-checkbox permission"  >
     <input type="checkbox" class="sg-checkbox__element perm100" id="100">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>

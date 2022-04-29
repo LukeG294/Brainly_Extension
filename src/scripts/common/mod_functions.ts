@@ -1,6 +1,6 @@
 import {ticket_data} from "../common/Mod Ticket/ticket_functions"
 import {showMessage} from "../common/common_functions"
-import{ removeUser, editUser, checkPermissionSet, getPermissions, removeAnswer} from "../common/permission_system"
+import{ removeUser, editUser, checkPermissionSet, getPermissions, removeAnswer} from "../permissions/permission_system"
 import{ permissionChecks } from "../homepage/homepage_exports"
 
 function noclick(){

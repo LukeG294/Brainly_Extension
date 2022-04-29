@@ -17,12 +17,6 @@ import {
     confirmQuestions,
     find_reported_content,
 } from "./button_functions"
-import { getPermissions } from "../common/permission_system"
-import { permissions } from "webextension-polyfill"
-
-
-
-
 
 export function addOnlyChecks(){
     let content = document.querySelectorAll("#content-old > div:nth-child(2) > div:nth-child(25) > table > tbody > tr")

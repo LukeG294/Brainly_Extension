@@ -1,4 +1,4 @@
-const { GetFiles, ExtractFolder } = require("./files");
+const { GetFiles, ExtractFolder } = require("../files");
 
 function MakeEntries(
   pattern, 

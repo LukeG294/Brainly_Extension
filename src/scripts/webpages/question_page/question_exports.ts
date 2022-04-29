@@ -1,5 +1,5 @@
-import {confirm_answer} from "../common/mod_functions"
-import { showMessage } from "../common/common_functions"
+import {confirm_answer} from "../../common/mod_functions"
+import { showMessage } from "../../common/common_functions"
 
 export function confirm_button(){
   return(/*html*/`

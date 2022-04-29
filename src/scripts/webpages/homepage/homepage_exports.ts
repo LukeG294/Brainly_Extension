@@ -1,4 +1,4 @@
-import {insert_ticket} from "../common/mod_functions"
+import {insert_ticket} from "../../common/mod_functions"
 
 let modbutton = /*html*/`
         <div class="modticket">

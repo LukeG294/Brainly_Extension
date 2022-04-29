@@ -1,4 +1,4 @@
-import {get_warnings} from "../common/mod_functions"
+import {get_warnings} from "../../common/mod_functions"
 
 let warn_area = /*html*/`
 <div class="warnbox">

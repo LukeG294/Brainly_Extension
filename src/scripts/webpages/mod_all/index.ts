@@ -1,4 +1,4 @@
-import {queue_subscribe} from "../common/livemod"
+import {queue_subscribe} from "../../common/livemod"
 function Queuefn(){
     console.log("mutation")
     const mod_items = document.querySelectorAll(".content .moderation-item");

@@ -1,6 +1,6 @@
-import {insert_ticket} from "../common/mod_functions"
-import { add_icons } from "../content_page/content_page_buttons"
-import { addOnlyChecks } from "../content_page/tasks"
+import {insert_ticket} from "../../common/mod_functions"
+import { add_icons } from "./content_page_buttons"
+import { addOnlyChecks } from "./tasks"
 
 export function selectAll(){
     let checkBoxes = document.getElementsByClassName("contentCheckboxes")

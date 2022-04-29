@@ -1,4 +1,4 @@
-import { delete_user } from "../common/mod_functions";
+import { delete_user } from "../../common/mod_functions";
 export function add_del_menu(){
     return /*html*/`
         <div class="modal_back">

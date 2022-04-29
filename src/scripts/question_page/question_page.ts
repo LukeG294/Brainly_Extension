@@ -1,10 +1,15 @@
-import {confirmButton} from "./question_exports"
+import {confirmButton, requestApproval} from "./question_exports"
 //@ts-ignore
 
 async function questionPage(){
   let perms = localStorage.userPerms
   if (perms.includes("9")){
     confirmButton()
+  }
+  if (perms.includes("13")){
+    window.onload = function(){
+      requestApproval()
+    }
   }
 }
 

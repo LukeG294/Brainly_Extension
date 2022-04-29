@@ -9,7 +9,7 @@
   "host_permissions": [
     "*://brainly.com/*"
   ],
-  "permissions": ["storage", "scripting"],
+  "permissions": ["storage"],
   "web_accessible_resources": [{
     "matches": ["https://brainly.com/*"],
     "resources": ["resources/*/*.svg"]

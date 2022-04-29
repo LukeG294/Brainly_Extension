@@ -230,11 +230,11 @@ export async function HomeMod() {
     <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">User Management</span>
     </label>
     <button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue submit-permissions">
-                    <div class="spinner-container">
-                        <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
-                    </div>
-                    <span class="sg-button__text">Update</span>
-                </button>
+      <div class="spinner-container">
+          <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+      </div>
+      <span class="sg-button__text">Update</span>
+    </button>
     `)
 }
 

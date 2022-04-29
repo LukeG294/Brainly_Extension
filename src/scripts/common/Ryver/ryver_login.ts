@@ -1,5 +1,5 @@
 import {login_form} from "./ryver_modal"
-import chrome from "webextension-polyfill"
+
 function encodeUser(username:string, password:string){    
     let userString = `${username}:${password}`
     var encodedStringBtoA = btoa(userString);

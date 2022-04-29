@@ -2,7 +2,6 @@ import {ryver_notification} from "../common/Ryver/ryver_modal"
 import {login_run} from "../common/Ryver/ryver_login"
 import { ModObserver, AnsObserver, HomeMod } from "./homepage_exports";
 //import {subscribe, setAuth} from "../common/livemod"
-//import { } from "../common/permission_system"
 import { mass_msg, mass_accdel, usr_mgmt } from "./homepage_admin";
 import { showMessage } from "../common/common_functions";
 

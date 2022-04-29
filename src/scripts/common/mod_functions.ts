@@ -1,6 +1,6 @@
 import {ticket_data} from "../common/Mod Ticket/ticket_functions"
 import {showMessage} from "../common/common_functions"
-import{ removeUser, editUser, checkPermissionSet, getPermissions} from "../common/permission_system"
+import{ removeUser, editUser, checkPermissionSet, getPermissions, removeAnswer} from "../common/permission_system"
 import{ permissionChecks } from "../homepage/homepage_exports"
 
 function noclick(){
@@ -502,3 +502,90 @@ export async function startCompanionManager(){
     })
 }
   
+
+export async function startVerificationQueue(){
+    let txt = await fetch("https://th-extension.lukeg294.repl.co/get-all-verification-requests").then(data => data.json());
+    let modal = document.querySelector(".modal_mcomp_u")
+    modal.querySelector(".sg-spinner-container").classList.add("remove")
+
+    //inserting the  "add user" button
+    
+
+    //inserting all registered users
+    for (let index = 0; index < txt.length; index++) {
+        const element = txt[index].data;
+        let databaseId = txt[index].ref["@ref"].id
+        let fetchData = await fetch("https://brainly.com/profile/user-"+element.userRequester).then(data => data.text());
+        let parser = new DOMParser();
+        let profilePage = parser.parseFromString(fetchData, 'text/html');
+        //@ts-ignore
+        let requesterAvatar = profilePage.querySelector("#main-left > div.personal_info > div.header > div.avatar > a > img").src
+        //@ts-ignore
+        let requesterUsername = profilePage.querySelector("#main-left > div.personal_info > div.header > div.avatar > a > img").title
+        //@ts-ignore
+        let requesterRank = profilePage.querySelector("#main-left > div.personal_info > div.header > div.info > div.info_top > span.rank > h3 > span").innerText
+        
+        modal.querySelector(".answers").insertAdjacentHTML("afterbegin",/*html*/`
+        <div class="verificationObject" style="overflow-y:scroll">
+            <div class="user">
+            <img src=${requesterAvatar} class="companionUserAvatar"></img> 
+            <a href='https://brainly.com/profile/${requesterUsername}-${element.userRequester}' class="username">${requesterUsername}</a>  
+        </div>
+            <div class="answer">
+            ${element.answerPreview}
+            </div>
+            <div class="changedb">
+                <button id="${element.answerDBid}" faunaId = '${databaseId}' class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue verify-content">
+                    <div class="spinner-container">
+                        <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+                    </div>
+                    <span class="sg-button__text"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></span>
+                </button>
+               
+            <button id="${element.answerDBid}" faunaId = '${databaseId}' class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue ignore-request">
+                    <div class="spinner-container">
+                        <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+                    </div>
+                    <span class="sg-button__text"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-friend_remove"></use></svg></div></span>
+                </button></div>
+            <div class="permlist"></div>
+        </div>`)
+        
+    }
+
+    let verifyButtons = document.querySelectorAll(".verify-content")
+    for (let index = 0; index < verifyButtons.length; index++) {
+        const element = verifyButtons[index];
+       
+        element.addEventListener("click", async function(){
+            element.querySelector(".spinner-container").classList.add("show");
+            await approve_answer(this.id)
+            
+            element.querySelector(".spinner-container").classList.remove("show");
+            let faunaDatabaseId = this.getAttribute("faunaId")
+            await removeAnswer(faunaDatabaseId)
+            element.parentElement.parentElement.remove();
+        })
+    }
+    let removeButtons = document.querySelectorAll(".ignore-request")
+    for (let index = 0; index < removeButtons.length; index++) {
+        const element = removeButtons[index];
+       
+        element.addEventListener("click", async function(){
+            element.querySelector(".spinner-container").classList.add("show");
+           
+           
+            element.querySelector(".spinner-container").classList.remove("show");
+            let faunaDatabaseId = this.getAttribute("faunaId")
+            await removeAnswer(faunaDatabaseId)
+            element.parentElement.parentElement.remove();
+        })
+    }
+    
+    
+   
+   
+        
+        
+    
+}

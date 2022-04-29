@@ -558,12 +558,14 @@ export async function startVerificationQueue(){
         const element = verifyButtons[index];
        
         element.addEventListener("click", async function(){
+            element.parentElement.parentElement.style.backgroundColor = "#9CE8C2"
             element.querySelector(".spinner-container").classList.add("show");
             await approve_answer(this.id)
             
             element.querySelector(".spinner-container").classList.remove("show");
             let faunaDatabaseId = this.getAttribute("faunaId")
             await removeAnswer(faunaDatabaseId)
+
             element.parentElement.parentElement.remove();
         })
     }

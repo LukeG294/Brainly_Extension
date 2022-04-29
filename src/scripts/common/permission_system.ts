@@ -75,6 +75,12 @@ export async function removeUser(id){
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
 }
+export async function removeAnswer(id){
+  await fetch("https://th-extension.lukeg294.repl.co/answers/"+id,{method: "DELETE"})
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+}
 export async function editUser(id, perms){
   var myHeaders = new Headers();
   myHeaders.append("fauna-secret", "fnEElJgAo3ACUgST2vKykApS_Vv7fmrdvkNhzuHKo3nGguNOiN4");

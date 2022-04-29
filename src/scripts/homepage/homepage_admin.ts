@@ -179,4 +179,4 @@ export function verification_queue(){
         
     })
 }
-verification_queue()
+

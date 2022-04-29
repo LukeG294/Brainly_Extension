@@ -1,8 +1,8 @@
 
-import { delete_user, sendMessages, startCompanionManager } from "../common/mod_functions";
+import { delete_user, sendMessages, startCompanionManager, startVerificationQueue } from "../common/mod_functions";
 import { showMessage } from "../common/common_functions";
-import {macc_d, mcompu} from "../common/macc-d_exp"
-import {mmsg_s} from "../common/macc-d_exp"
+import {macc_d, mcompu, verificationQueue, mmsg_s} from "../common/macc-d_exp"
+
 import { getPermissions } from "../common/permission_system"
 
 //@ts-ignore
@@ -161,3 +161,22 @@ export function usr_mgmt(){
         
     })
 }
+
+
+export function verification_queue(){
+    document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
+    <li class="sg-menu-list__element verification-queue">   
+    <a class = "sg-menu-list__link">Verification Queue</a>
+    </li>
+    
+    `)
+
+    document.querySelector(".verification-queue").addEventListener("click", function(){
+        document.querySelector("body").insertAdjacentHTML("afterbegin", verificationQueue());
+        document.querySelector(".modal_close").addEventListener("click", function(){document.querySelector(".modal_back").remove()})
+        startVerificationQueue()
+        
+        
+    })
+}
+verification_queue()

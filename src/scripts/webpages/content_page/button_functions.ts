@@ -1,6 +1,13 @@
 import {insert_ticket} from "../../common/mod_functions"
-import { add_icons } from "./content_page_buttons"
 import { addOnlyChecks } from "./tasks"
+import {
+  add_icons,
+  copy_links,
+  deletion_menu,
+  get_reported_content,
+  select_all,
+  toggle_selected
+} from "./content_page_buttons"
 
 export function selectAll(){
     let checkBoxes = document.getElementsByClassName("contentCheckboxes")
@@ -8,6 +15,34 @@ export function selectAll(){
         // @ts-ignore
         checkBoxes[i].checked = 'true'
     }
+}
+export function addTaskButtonsBasic(){
+  let buttonArea = document.querySelector("#content-old > div:nth-child(3) > p")
+  let content = document.querySelectorAll("#content-old > div:nth-child(2) > div:nth-child(25) > table > tbody > tr")
+  document.querySelector("thead tr").insertAdjacentHTML("afterbegin", "<th style = 'width: 5%'></th>")
+  for (let i = 0; i < content.length; i++) {
+      content[i].children[1].classList.add("iconcell")
+      content[i].insertAdjacentHTML('afterbegin', /*html*/`
+      <td class="sg-space-x-m" style = "padding-left: 8px">
+          <label class="sg-checkbox" for="${i}"><input type="checkbox" class="sg-checkbox__element contentCheckboxes" id="${i}">
+          <div class="sg-checkbox__ghost" aria-hidden="true">
+          <div class="sg-icon sg-icon--adaptive sg-icon--x16">
+              <svg class="sg-icon__svg" role="img" aria-labelledby="title-check-255xyo" focusable="false"><text id="title-check-255xyo" hidden="">check</text>
+              <use xlink:href="#icon-check" aria-hidden="true"></use></svg>
+          </div>
+          </div>
+          </label>
+      </td>
+      
+  `)
+  
+  }
+  buttonArea.insertAdjacentHTML('afterend', copy_links())
+  buttonArea.insertAdjacentHTML('afterend', toggle_selected())
+  buttonArea.insertAdjacentHTML('afterend', select_all())
+  document.getElementById("selectAll").addEventListener("click", function(){selectAll()})
+  document.getElementById("toggleSelected").addEventListener("click", function(){toggleSelection()})
+  document.getElementById("copyLinks").addEventListener("click", function(){copyLinks()})
 }
 export function copyLinks() {
     let checkBoxes = document.getElementsByClassName("sg-checkbox__element")

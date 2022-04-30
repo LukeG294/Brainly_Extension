@@ -254,6 +254,7 @@ async function add_question_data(res, d_reference){
   console.log(res);
   document.querySelector(".text-subj > div:nth-child(2)").innerHTML = d_reference.data.grades.find(({id}) => id === q_data.grade_id).name;
   document.querySelector(".text-subj > div:nth-child(1)").innerHTML = d_reference.data.subjects.find(({id}) => id === q_data.subject_id).name;
+  q_elem.querySelector(".ptsbox .text-points").innerHTML = "+" + q_data.points.ptsForResp;
   let asker = res.users_data.find(({id}) => id === q_data.user.id);
   //let warnings = await get_warnings(asker.id)
   //console.log(warnings)

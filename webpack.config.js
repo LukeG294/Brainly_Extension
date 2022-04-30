@@ -9,7 +9,7 @@ const MakeEntries = require("./src/scripts/not_changing_these/makeEntries");
 const config = {
   entry: {
     //constant stuff
-    ...MakeEntries("./src/scripts/not_changing_these/setPerms.ts", "content-scripts/js", "permissions"),
+    ...MakeEntries("./src/scripts/permissions/setPerms.ts", "content-scripts/js", "permissions"),
     ...MakeEntries("./src/scripts/background/background.ts", "content-scripts/js", "serviceWorker"),
     //brainly resources
     ...MakeEntries("./src/scripts/not_changing_these/styleguide-icons.ts", "content-scripts/js", "icons"),

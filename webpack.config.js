@@ -8,14 +8,17 @@ const MakeEntries = require("./src/scripts/makeEntries");
 /** @type {webpack.Configuration} */
 const config = {
   entry: {
-    ...MakeEntries("./src/scripts/homepage/homepage.ts", "content-scripts/js", "homepage"),
-    ...MakeEntries("./src/scripts/setPerms.ts", "content-scripts/js", "permissions"),
-    ...MakeEntries("./src/scripts/background.ts", "content-scripts/js", "serviceWorker"),
-    ...MakeEntries("./src/scripts/old_profile/*.ts", "content-scripts/js", "old_profile"),
-    ...MakeEntries("./src/scripts/styleguide-icons.ts", "content-scripts/js", "icons"),
-    ...MakeEntries("./src/scripts/styleguide.ts", "content-scripts/js", "styleguide"),
-    ...MakeEntries("./src/scripts/question_page/question_page.ts", "content-scripts/js", "question_page"),
-    ...MakeEntries("./src/scripts/content_page/index.ts", "content-scripts/js", "content_page")
+    //constant stuff
+    ...MakeEntries("./src/scripts/not_changing_these/setPerms.ts", "content-scripts/js", "permissions"),
+    ...MakeEntries("./src/scripts/background/background.ts", "content-scripts/js", "serviceWorker"),
+    //brainly resources
+    ...MakeEntries("./src/scripts/not_changing_these/styleguide-icons.ts", "content-scripts/js", "icons"),
+    ...MakeEntries("./src/scripts/not_changing_these/styleguide.ts", "content-scripts/js", "styleguide"),
+    //page-specific scripts
+    ...MakeEntries("./src/scripts/webpages/homepage/homepage.ts", "content-scripts/js", "homepage"),
+    ...MakeEntries("./src/scripts/webpages/old_profile/*.ts", "content-scripts/js", "old_profile"),
+    ...MakeEntries("./src/scripts/webpages/question_page/question_page.ts", "content-scripts/js", "question_page"),
+    ...MakeEntries("./src/scripts/webpages/content_page/index.ts", "content-scripts/js", "content_page")
 
   },
   output: {

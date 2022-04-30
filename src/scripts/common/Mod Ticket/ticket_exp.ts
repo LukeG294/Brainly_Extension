@@ -38,6 +38,7 @@ export function ticket(){
                   <div class="rank sg-text sg-text--small">Ambitious</div>
                 </div>
                 <div class="text-subj">
+                  <div class = "sg-text sg-text--xsmall rightdot">time</div>
                   <div class = "sg-text sg-text--xsmall rightdot">Subject</div>
                   <div class = "sg-text sg-text--xsmall">Middle School</div>
                 </div>

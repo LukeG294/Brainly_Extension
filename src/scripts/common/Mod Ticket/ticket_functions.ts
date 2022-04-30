@@ -34,6 +34,69 @@ function add_log(log){
     }
   }
 }
+function get_time_diff( dt ){
+    var datetime = new Date( dt ).getTime();
+    var now = new Date().getTime();
+
+    if( isNaN(datetime) ){
+        return "";
+    }
+
+    if (datetime < now) {
+        var milisec_diff = now - datetime;
+    }else{
+        var milisec_diff = datetime - now;
+    }
+
+    var days = Math.floor(milisec_diff / 1000 / 60 / (60 * 24));
+
+    var date_diff = new Date( milisec_diff );
+    let str = ''
+    if(days === 0){
+      if(days > 1){str = 's'}
+      //0 days, check for hours
+      if(date_diff.getHours() === 0){
+        if(date_diff.getHours() > 1){str = 's'}
+        //0 days, check for hours
+        if(date_diff.getMinutes() === 0){
+          if(date_diff.getMinutes() > 1){str = 's'}
+          //0 hours, check for minutes
+          if(date_diff.getSeconds() === 0){
+          //0 hours, check for minutes
+          }else{
+            if(date_diff.getSeconds() > 1){str = 's'}
+            return `${date_diff.getSeconds()} second${str} ago`
+          }
+        }else{
+          if(date_diff.getMinutes() > 1){str = 's'}
+          return `${date_diff.getMinutes()} minute${str} ago`
+        }
+      }else{ 
+        if(date_diff.getHours() > 1){str = 's'}
+        return `${date_diff.getHours()} hour${str} ago`
+      }
+    }else{
+      if(days >= 30){
+        if(Math.floor(days/30) > 12){
+          if(Math.floor((days/30)/12) > 1){str = 's'}
+          return `${Math.floor((days/30)/12)} year${str} ago`
+        }
+        else{
+          if(Math.floor(days/30) > 1){str = 's'}
+          return `${Math.floor(days/30)} month${str} ago`
+        }
+      }
+      else if(days >= 7){
+        if(Math.floor(days/7) > 1){str = 's'}
+        return `${Math.floor(days/7)} week${str} ago`
+      }
+      else{
+        if(days > 1){str = 's'}
+        str = 's'
+        return `${days} day${str} ago`
+      }
+    }
+}
 function add_deletion(del_rsn, elem, tid, type:string){
   for(let i = 0; i < del_rsn.length; i++){
     elem.querySelector(".primary-items").insertAdjacentHTML("beforeend",/*html*/`
@@ -172,6 +235,7 @@ function add_answer(ans,res,a, basic_data){
             <div class="rank sg-text sg-text--small">Ambitious</div>
           </div>
           <div class="text-subj">
+            <div class = "sg-text sg-text--xsmall time rightdot">time</div>
             <div class = "sg-text sg-text--xsmall">ansnum</div>
           </div>
         </div>
@@ -233,7 +297,8 @@ function add_answer(ans,res,a, basic_data){
   if(basic_data.approved.approver !== null){
     this_ans.classList.add("approved");
   }
-  this_ans.querySelector(".text-subj > div").innerHTML =  `${answerer.stats.answers} Answers`
+  this_ans.querySelector(".text-subj > div:nth-child(2)").innerHTML =  `${answerer.stats.answers} Answers`
+  this_ans.querySelector(".time").innerHTML = get_time_diff(res.data.responses[a].created)
   user_content_data(answerer, this_ans, ans);
   add_attachments(ans, this_ans);
   add_report(res,ans,this_ans);
@@ -252,12 +317,14 @@ async function add_question_data(res, d_reference){
   let q_data = res.data.task;
   let q_elem = document.querySelector(".qdata");
   console.log(res);
-  document.querySelector(".text-subj > div:nth-child(2)").innerHTML = d_reference.data.grades.find(({id}) => id === q_data.grade_id).name;
-  document.querySelector(".text-subj > div:nth-child(1)").innerHTML = d_reference.data.subjects.find(({id}) => id === q_data.subject_id).name;
+  document.querySelector(".text-subj > div:nth-child(3)").innerHTML = d_reference.data.grades.find(({id}) => id === q_data.grade_id).name;
+  document.querySelector(".text-subj > div:nth-child(2)").innerHTML = d_reference.data.subjects.find(({id}) => id === q_data.subject_id).name;
+  document.querySelector(".text-subj > div:nth-child(1)").innerHTML = get_time_diff(q_data.created);
   q_elem.querySelector(".ptsbox .text-points").innerHTML = "+" + q_data.points.ptsForResp;
   let asker = res.users_data.find(({id}) => id === q_data.user.id);
   //let warnings = await get_warnings(asker.id)
   //console.log(warnings)
+
   add_report(res, q_data, document.querySelector(".question"));
   user_content_data(asker, q_elem, q_data);
   add_attachments(q_data, q_elem);

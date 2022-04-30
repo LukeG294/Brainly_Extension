@@ -3,7 +3,7 @@ const webpack = require("webpack");
 const TerserPlugin = require("terser-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
-const MakeEntries = require("./src/scripts/makeEntries");
+const MakeEntries = require("./src/scripts/not_changing_these/makeEntries");
 
 /** @type {webpack.Configuration} */
 const config = {

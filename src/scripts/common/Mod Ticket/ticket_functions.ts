@@ -34,9 +34,13 @@ function add_log(log){
     }
   }
 }
+    
+
 function get_time_diff( dt ){
     var datetime = new Date( dt ).getTime();
-    var now = new Date().getTime();
+
+    var date = new Date();
+    var now = new Date(date.getTime()-330).getTime();
 
     if( isNaN(datetime) ){
         return "";
@@ -56,10 +60,8 @@ function get_time_diff( dt ){
       if(days > 1){str = 's'}
       //0 days, check for hours
       if(date_diff.getHours() === 0){
-        if(date_diff.getHours() > 1){str = 's'}
         //0 days, check for hours
         if(date_diff.getMinutes() === 0){
-          if(date_diff.getMinutes() > 1){str = 's'}
           //0 hours, check for minutes
           if(date_diff.getSeconds() === 0){
           //0 hours, check for minutes
@@ -92,7 +94,6 @@ function get_time_diff( dt ){
       }
       else{
         if(days > 1){str = 's'}
-        str = 's'
         return `${days} day${str} ago`
       }
     }

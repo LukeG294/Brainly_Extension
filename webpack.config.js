@@ -20,7 +20,7 @@ const config = {
     ...MakeEntries("./src/scripts/webpages/question_page/question_page.ts", "content-scripts/js", "question_page"),
     ...MakeEntries("./src/scripts/webpages/content_page/index.ts", "content-scripts/js", "content_page"),
     //react
-    ...MakeEntries("./src/scripts/verification_queue/index.ts", "content-scripts/js", "verification_queue"),
+    ...MakeEntries("./src/scripts/verification-queue/index.ts", "content-scripts/js", "verification_queue"),
 
   },
   output: {

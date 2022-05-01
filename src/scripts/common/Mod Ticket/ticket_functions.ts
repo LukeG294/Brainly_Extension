@@ -35,68 +35,44 @@ function add_log(log){
   }
 }
     
-
 function get_time_diff( dt ){
-    var datetime = new Date( dt ).getTime();
+  var input = new Date( dt )
+  let datetime = new Date(input.toLocaleString('en-US')).getTime()
 
-    var date = new Date();
-    var now = new Date(date.getTime()-330).getTime();
+  let now = new Date().getTime();
+  let timediff = Math.abs(now - datetime)
+  let datediff = Math.ceil(timediff / (1000 * 3600 * 24));
+  let secdiff = Math.abs(timediff/(1000));
+  let minutediff = timediff/(60*1000);
+  let hourdiff = timediff/(60*60*1000);
+  let daydiff = timediff/(24*60*60*1000);
+  let monthdiff = timediff/(30*24*60*60*1000);
+  let yeardiff = timediff/(365*24*60*60*1000);
 
-    if( isNaN(datetime) ){
-        return "";
-    }
-
-    if (datetime < now) {
-        var milisec_diff = now - datetime;
-    }else{
-        var milisec_diff = datetime - now;
-    }
-
-    var days = Math.floor(milisec_diff / 1000 / 60 / (60 * 24));
-
-    var date_diff = new Date( milisec_diff );
-    let str = ''
-    if(days === 0){
-      if(days > 1){str = 's'}
-      //0 days, check for hours
-      if(date_diff.getHours() === 0){
-        //0 days, check for hours
-        if(date_diff.getMinutes() === 0){
-          //0 hours, check for minutes
-          if(date_diff.getSeconds() === 0){
-          //0 hours, check for minutes
-          }else{
-            if(date_diff.getSeconds() > 1){str = 's'}
-            return `${date_diff.getSeconds()} second${str} ago`
-          }
-        }else{
-          if(date_diff.getMinutes() > 1){str = 's'}
-          return `${date_diff.getMinutes()} minute${str} ago`
-        }
-      }else{ 
-        if(date_diff.getHours() > 1){str = 's'}
-        return `${date_diff.getHours()} hour${str} ago`
-      }
-    }else{
-      if(days >= 30){
-        if(Math.floor(days/30) > 12){
-          if(Math.floor((days/30)/12) > 1){str = 's'}
-          return `${Math.floor((days/30)/12)} year${str} ago`
-        }
-        else{
-          if(Math.floor(days/30) > 1){str = 's'}
-          return `${Math.floor(days/30)} month${str} ago`
-        }
-      }
-      else if(days >= 7){
-        if(Math.floor(days/7) > 1){str = 's'}
-        return `${Math.floor(days/7)} week${str} ago`
-      }
-      else{
-        if(days > 1){str = 's'}
-        return `${days} day${str} ago`
-      }
-    }
+  let str = ''
+  if(minutediff < 1){
+    return `${secdiff} seconds ago`
+  }
+  else if(minutediff < 60){
+    if(Math.floor(minutediff) > 1){str = 's'}
+    return `${Math.floor(minutediff)} minute${str} ago`
+  }
+  else if(minutediff >= 60 && minutediff < 1440){
+    if(Math.floor(minutediff/60) > 1){str = 's'}
+    return `${Math.floor(minutediff/60)} hour${str} ago`
+  }
+  else if(minutediff >= 1440 && minutediff < 43829){
+    if(Math.floor(minutediff/1440) > 1){str = 's'}
+    return `${Math.floor(minutediff/1440)} day${str} ago`
+  }
+  else if(minutediff >= 43829 && minutediff < 2592000){
+    if(Math.floor(minutediff/43829) > 1){str = 's'}
+    return `${Math.floor(minutediff/43829)} month${str} ago`
+  }
+  else if(minutediff >= 2592000 && minutediff < 31104000){
+    if(Math.floor(minutediff/2592000) > 1){str = 's'}
+    return `${Math.floor(minutediff/2592000)} year${str} ago`
+  }
 }
 function add_deletion(del_rsn, elem, tid, type:string){
   for(let i = 0; i < del_rsn.length; i++){

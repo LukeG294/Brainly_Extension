@@ -3,8 +3,12 @@ import {confirmButton, requestApproval} from "./question_exports"
 
 async function questionPage(){
   let perms = localStorage.userPerms
+  
   if (perms.includes("9")){
-    confirmButton()
+    window.onload = function(){
+      confirmButton()
+    }
+    
   }
   if (perms.includes("13")){
     window.onload = function(){
@@ -14,5 +18,6 @@ async function questionPage(){
 }
 
 if(localStorage.canUse === "true"){
+  
   questionPage()
 }

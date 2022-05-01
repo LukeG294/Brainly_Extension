@@ -18,9 +18,9 @@ async function homeperms(){
   if(perms.includes("11")){
     mass_accdel()
   }
-  // if(perms.includes("14")){
-  //    verification_queue()
-  // }
+  if(perms.includes("14")){
+      verification_queue()
+   }
   if(perms.includes("100")){
     usr_mgmt()
   }

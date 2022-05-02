@@ -22,8 +22,10 @@ export default function App() {
             <Flex className="container">
                 {items.map(item => (
                     <Item 
-                    key = {item.data.answerPreview}
-                    content = {item.data.answerPreview} 
+                    key = {item.data.id}
+                    content = {item.data.content} 
+                    thanks = {item.data.thanks}
+                    rating = {item.data.mark}
                     />
                 ))}
             </Flex>

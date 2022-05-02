@@ -12,8 +12,7 @@ const config = {
     ...MakeEntries("./src/scripts/permissions/setPerms.ts", "content-scripts/js", "permissions"),
     ...MakeEntries("./src/scripts/background/background.ts", "content-scripts/js", "serviceWorker"),
     //brainly resources
-    ...MakeEntries("./src/scripts/not_changing_these/styleguide-icons.ts", "content-scripts/js", "icons"),
-    ...MakeEntries("./src/scripts/not_changing_these/styleguide.ts", "content-scripts/js", "styleguide"),
+    ...MakeEntries("./src/scripts/not_changing_these/styleguide/*.ts", "content-scripts/js", "styleguide"),
     //page-specific scripts
     ...MakeEntries("./src/scripts/webpages/homepage/homepage.ts", "content-scripts/js", "homepage"),
     ...MakeEntries("./src/scripts/webpages/old_profile/*.ts", "content-scripts/js", "old_profile"),

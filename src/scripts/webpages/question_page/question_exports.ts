@@ -81,7 +81,7 @@ export function requestApproval(){
         var requestOptions = {
           method: 'POST',
           headers: myHeaders,
-          body: raw
+          body: JSON.stringify(thisResponse)
        
         };
 

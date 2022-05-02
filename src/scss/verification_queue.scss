@@ -1,0 +1,14 @@
+#app{height:100vh;}
+div[data-testid = 'header']{
+    height: 64px;
+    display: flex;
+    border-bottom: 2px solid #ebf2f7;
+    padding: 16px 24px;
+    >div{
+        >a , >a>div{
+            width: 70px;
+            height: 31px;
+            display: inline-block;
+        }
+    }
+}

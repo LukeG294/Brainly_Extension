@@ -22,13 +22,14 @@
       "run_at": "document_start"
     },
     {
-      "matches": ["*://brainly.com/companion/verification_queue*"],
+      "matches": ["*://brainly.com/companion/verification/*"],
       "js": ["content-scripts/js/verification_queue.js"],
+      "css": ["content-scripts/css/verification_queue.css"],
       "run_at": "document_start"
     },
     {
       "matches": ["*://brainly.com/*"],
-      "exclude_globs": ["*://brainly.com/question/*","://brainly.com/profile/*"],
+      "exclude_globs": ["*://brainly.com/question/*","://brainly.com/profile/*","://brainly.com/companion/verification/*"],
       "js": ["content-scripts/js/homepage.js"],
       "css": ["content-scripts/css/homepage.css"]
     },

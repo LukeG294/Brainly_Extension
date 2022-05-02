@@ -27,6 +27,10 @@ gulp.task('sass', function(done){
         .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
         .pipe(concat("common.css"))
         .pipe(gulp.dest("dist/content-scripts/css/"));
+    gulp.src('src/scss/verification_queue.scss')
+        .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
+        .pipe(concat("verification_queue.css"))
+        .pipe(gulp.dest("dist/content-scripts/css/"));
     done();
 });
 gulp.task("manifest", function(done){

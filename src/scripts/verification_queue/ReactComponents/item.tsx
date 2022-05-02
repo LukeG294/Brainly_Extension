@@ -3,9 +3,11 @@ import { SubjectIconBox, SubjectIcon, Media, Avatar, Text, Button, Icon, Label} 
 
 interface Item{
     content: string;
+    thanks: string;
+    rating: string;
 }
 
-export default function Item({content}: Item) {
+export default function Item({content, thanks, rating}: Item) {
     return(
         <div className = "item" data-testid="item">
             <div className="head">
@@ -14,10 +16,11 @@ export default function Item({content}: Item) {
                 </svg>
                 <h2 className="sg-text sg-text--large sg-text--gray sg-text--bold">username</h2>
             </div>
-            <div className="content">{content}</div>
+            <div className="content" dangerouslySetInnerHTML={{__html: content}}></div>
+            
             <div className="stats">
-                <Label className = "thanks" color="achromatic" iconType="heart" type="transparent">0</Label>
-                <Label className = "rating" color="achromatic" iconType="star" type="transparent">0</Label>
+                <Label className = "thanks" color="achromatic" iconType="heart" type="transparent">{thanks}</Label>
+                <Label className = "rating" color="achromatic" iconType="star" type="transparent">{rating}</Label>
             </div>
             <div className="options">
                 <div className="user">

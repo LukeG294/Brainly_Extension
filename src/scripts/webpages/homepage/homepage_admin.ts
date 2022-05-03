@@ -1,5 +1,5 @@
 
-import { delete_user, sendMessages, startCompanionManager, startVerificationQueue } from "../../common/mod_functions";
+import { delete_user, sendMessages, startCompanionManager } from "../../common/mod_functions";
 import { showMessage } from "../../common/common_functions";
 import {macc_d, mcompu, verificationQueue, mmsg_s} from "../../HTML_exports/macc-d_exp"
 
@@ -33,7 +33,6 @@ async function sendmsg(userLink){
     });
    
 }
-
 export function mass_accdel(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
     <li class="sg-menu-list__element macc-d">   
@@ -142,8 +141,6 @@ export function mass_msg(){
         })
     })
 }
-
-
 export function usr_mgmt(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
     <li class="sg-menu-list__element mcomp-u">   
@@ -156,24 +153,6 @@ export function usr_mgmt(){
         document.querySelector("body").insertAdjacentHTML("afterbegin", mcompu());
         document.querySelector(".modal_close").addEventListener("click", function(){document.querySelector(".modal_back").remove()})
         startCompanionManager()
-        
-    })
-}
-
-
-export function verification_queue(){
-    document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
-    <li class="sg-menu-list__element verification-queue">   
-    <a class = "sg-menu-list__link">Verification Queue</a>
-    </li>
-    
-    `)
-
-    document.querySelector(".verification-queue").addEventListener("click", function(){
-        document.querySelector("body").insertAdjacentHTML("afterbegin", verificationQueue());
-        document.querySelector(".modal_close").addEventListener("click", function(){document.querySelector(".modal_back").remove()})
-        startVerificationQueue()
-        
         
     })
 }

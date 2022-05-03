@@ -40,7 +40,6 @@ export function addTaskButtonsDeletion(){
     document.querySelector("#deleteSelected").addEventListener("click", function(){showDelrsn("questions")})
     document.querySelector("#delete").addEventListener("click",function(){confirmDeletionQuestions()})
 }
-
 export function addTaskButtonsConfirmation(){
     buttonArea.insertAdjacentHTML('afterend', confirm_selected_questions())
     document.querySelector("#confirmSelectedQuestions").addEventListener("click",function(){confirmQuestions()})

@@ -1,5 +1,5 @@
-import {confirm_answer} from "../../common/mod_functions"
 import { showMessage } from "../../common/common_functions"
+import {answer} from "../../common/content"
 
 export function confirm_button(){
   return(/*html*/`
@@ -16,8 +16,9 @@ export function confirm_button(){
 function ConfirmButtonListener(number){
   document.getElementById("confirm"+number).addEventListener("click",function(){
     let answerIDs = JSON.parse(document.querySelector("#question-sg-layout-container > div.brn-qpage-layout.js-main-container.js-ads-screening-content > div.brn-qpage-layout__main.empty\\:sg-space-y-m.md\\:empty\\:sg-space-y-l > article").getAttribute("data-z"))
-    let answerToConfirm = answerIDs["responses"][number]["id"]
-    confirm_answer(answerToConfirm)
+    let ID = answerIDs["responses"][number]["id"]
+    let thisans = new answer()
+    thisans.confirm(ID)
   })
 }
 
@@ -33,7 +34,7 @@ export function confirmButton(){
 
 
 export function requestApproval(){
-  let answers = document.querySelectorAll(".AnswerBoxHeader-module__header--2JjZN")
+  let answers = document.querySelectorAll("div[data-testid = 'moderation_box_answer'] > div")
        
     for (let i = 0; i < answers.length; i++) {
       answers[i].insertAdjacentHTML("beforeend",`<button class="sg-button sg-button--m sg-button--solid-mint  request-verification"> <div class="spinner-container">
@@ -54,17 +55,9 @@ export function requestApproval(){
         document.querySelector(".request-verification .spinner-container").classList.add("show");
         let thisResponse = responses[index]
        
-        let userID = thisResponse.userId
-        let isReported = thisResponse.settings.canMarkAbuse
-        if (isReported){
-          isReported = false 
-        } else {
-          isReported = true
-        }
-       
         let databaseId = thisResponse.id
         let answerPreview = thisResponse.content
-        
+        let qinfo = JSON.parse(document.querySelector("article").getAttribute("data-z"))
         //@ts-ignore
         let requesterID = JSON.parse(document.querySelector("meta[name='user_data']").content).id
         var myHeaders = new Headers();
@@ -72,16 +65,17 @@ export function requestApproval(){
 
         var raw = JSON.stringify({
           "userRequester": requesterID,
-          "isReported": isReported,
-          "userAnswererId": userID,
+          "settings": thisResponse.settings,
           "answerDBid":databaseId,
-          "answerPreview":answerPreview
+          "content":answerPreview,
+          "qid": qinfo.id,
+          "user": JSON.parse(document.querySelector("meta[name='user_data']").getAttribute("content"))
         });
 
         var requestOptions = {
           method: 'POST',
           headers: myHeaders,
-          body: JSON.stringify(thisResponse)
+          body: raw
        
         };
 
@@ -99,6 +93,5 @@ export function requestApproval(){
       })
       
     }
-  
 }
 

@@ -1,7 +1,8 @@
 import {find, runtime} from "webextension-polyfill";
 import {get_warnings} from "../mod_functions"
 import {ticket} from "./ticket_exp"
-import {confirm_answer, approve_answer, confirm_question, delete_content} from "../mod_functions"
+import {answer, question} from "../content"
+import {get_time_diff} from "../common_functions"
 
 function add_log(log){
   for(let i = 0; i < log.data.length; i++){
@@ -34,47 +35,13 @@ function add_log(log){
     }
   }
 }
-    
-function get_time_diff( dt ){
-  var input = new Date( dt )
-  let datetime = new Date(input.toLocaleString('en-US')).getTime()
 
-  let now = new Date().getTime();
-  let timediff = Math.abs(now - datetime)
-  let datediff = Math.ceil(timediff / (1000 * 3600 * 24));
-  let secdiff = Math.abs(timediff/(1000));
-  let minutediff = timediff/(60*1000);
-  let hourdiff = timediff/(60*60*1000);
-  let daydiff = timediff/(24*60*60*1000);
-  let monthdiff = timediff/(30*24*60*60*1000);
-  let yeardiff = timediff/(365*24*60*60*1000);
+class item{
 
-  let str = ''
-  if(minutediff < 1){
-    return `${secdiff} seconds ago`
-  }
-  else if(minutediff < 60){
-    if(Math.floor(minutediff) > 1){str = 's'}
-    return `${Math.floor(minutediff)} minute${str} ago`
-  }
-  else if(minutediff >= 60 && minutediff < 1440){
-    if(Math.floor(minutediff/60) > 1){str = 's'}
-    return `${Math.floor(minutediff/60)} hour${str} ago`
-  }
-  else if(minutediff >= 1440 && minutediff < 43829){
-    if(Math.floor(minutediff/1440) > 1){str = 's'}
-    return `${Math.floor(minutediff/1440)} day${str} ago`
-  }
-  else if(minutediff >= 43829 && minutediff < 2592000){
-    if(Math.floor(minutediff/43829) > 1){str = 's'}
-    return `${Math.floor(minutediff/43829)} month${str} ago`
-  }
-  else if(minutediff >= 2592000 && minutediff < 31104000){
-    if(Math.floor(minutediff/2592000) > 1){str = 's'}
-    return `${Math.floor(minutediff/2592000)} year${str} ago`
-  }
 }
+
 function add_deletion(del_rsn, elem, tid, type:string){
+  //appending deletion reasons
   for(let i = 0; i < del_rsn.length; i++){
     elem.querySelector(".primary-items").insertAdjacentHTML("beforeend",/*html*/`
       <label class="sg-radio sg-radio--xxs" for="${del_rsn[i].id}${tid}">
@@ -84,15 +51,23 @@ function add_deletion(del_rsn, elem, tid, type:string){
       </label>`
     )
   }
+  //delete button listener
   elem.querySelector(".delete").addEventListener("click", () => {
     elem.querySelector(".delmenu").classList.toggle("show");
   })
+  //primary deletion reason listener
   elem.querySelector(".primary-items").addEventListener("change", async function(){
     elem.querySelector(".delmenu").classList.add("secondary");
+
+    //finds selected item and links it to the object
     let selected_index = elem.querySelector(".primary-items input:checked").getAttribute("index");
     let selected_subcats = del_rsn[selected_index].subcategories;
     console.log(selected_subcats);
+
+    //clears subcat elem before appending
     elem.querySelector(".secondary-items").innerHTML = '';
+
+    //adds subcategories to the elem
     for(let i = 0; i < selected_subcats.length; i++){
       elem.querySelector(".secondary-items").insertAdjacentHTML("beforeend",/*html*/`
         <label class="sg-radio sg-radio--xxs" for="${selected_subcats[i].id}${tid}">
@@ -102,6 +77,8 @@ function add_deletion(del_rsn, elem, tid, type:string){
         </label>`
       )
     }
+
+    //adds listener to the subcategories
     elem.querySelector(".secondary-items").addEventListener("change", function(){
       let selected_reason = selected_subcats[elem.querySelector(".secondary-items input:checked").getAttribute("index")]
       console.log(selected_reason);
@@ -116,7 +93,14 @@ function add_deletion(del_rsn, elem, tid, type:string){
       if((<HTMLInputElement>elem.querySelector("input[id ^= 'pts']")).checked){
         takepts = true;
       }
-      delete_content(type, tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value, warnuser, takepts);
+      if(type === "task"){
+        let thisq = new question();
+        thisq.delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value, warnuser, takepts)
+      }
+      if(type === "response"){
+        let thisa = new answer();
+        thisa.delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value, warnuser, takepts)
+      }
       elem.querySelector(".delmenu").classList.remove("show");
       if(type === "response"){
         elem.classList.add("deleted");
@@ -276,16 +260,19 @@ function add_answer(ans,res,a, basic_data){
   }
   this_ans.querySelector(".text-subj > div:nth-child(2)").innerHTML =  `${answerer.stats.answers} Answers`
   this_ans.querySelector(".time").innerHTML = get_time_diff(res.data.responses[a].created)
+
+  let ansobj = new answer()
+
   user_content_data(answerer, this_ans, ans);
   add_attachments(ans, this_ans);
   add_report(res,ans,this_ans);
   add_deletion(a_del_rsn, this_ans, answer_id, "response");
   this_ans.querySelector(".confirm").addEventListener("click", function(){
-    confirm_answer(answer_id);
+    ansobj.confirm(answer_id);
     this_ans.classList.remove("reported");
   })
   this_ans.querySelector(".approve").addEventListener("click", function(){
-    approve_answer(answer_id);
+    ansobj.approve(answer_id);
     this_ans.classList.add("approved")
     this_ans.classList.remove("reported")
   })
@@ -302,6 +289,8 @@ async function add_question_data(res, d_reference){
   //let warnings = await get_warnings(asker.id)
   //console.log(warnings)
 
+  let qobj = new question()
+
   add_report(res, q_data, document.querySelector(".question"));
   user_content_data(asker, q_elem, q_data);
   add_attachments(q_data, q_elem);
@@ -310,7 +299,7 @@ async function add_question_data(res, d_reference){
   let q_id = res.data.task.id;
   add_deletion(q_del_rsn, q_elem, q_id, "task");
   q_elem.querySelector(".confirm").addEventListener("click", function(){
-    confirm_question(q_id);
+    qobj.confirm(q_id);
     document.querySelector(".question").classList.remove("reported")
   })
   

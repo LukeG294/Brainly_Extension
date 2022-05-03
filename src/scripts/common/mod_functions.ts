@@ -8,22 +8,10 @@ function noclick(){
         <div class="blockint"></div>
     `)
 }
-export async function delete_content(type:string, id:string, reason:string, warn:boolean, take_point:boolean){
-    let model_type_id = 0;
-    if(type === "task") {model_type_id = 1;}
-    if(type === "response") {model_type_id = 2;}
-    await fetch(`https://brainly.com/api/28/moderation_new/delete_${type}_content`, {
-        method: "POST",
-        body:JSON.stringify({
-          "reason_id":2,
-          "reason":reason,
-          "give_warning":warn,
-          "take_points": take_point,
-          "schema":`moderation.${type}.delete`,
-          "model_type_id":model_type_id,
-          "model_id":id,
-        })
-      })
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
 }
 export async function insert_ticket(id, butspinner){
     butspinner.classList.add("show");
@@ -69,68 +57,6 @@ export async function insert_ticket(id, butspinner){
     xhttp.open("GET", `https://brainly.com/api/28/api_tasks/main_view/${id}`);
     xhttp.send();
 }
-export function confirm_answer(answerToConfirm:string){
-    var data = JSON.stringify({
-        "operationName": "AcceptModerationReportContent",
-        "variables": {
-        "input": {
-            "contentType": "Answer",
-            "contentId": answerToConfirm
-        }
-        },
-        "query": "mutation AcceptModerationReportContent($input: AcceptModerationReportContentInput!) {\n  acceptModerationReportContent(input: $input) {\n    validationErrors {\n      error\n      __typename\n    }\n    __typename\n  }\n}\n"
-    });
-    
-    var xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
-
-    xhr.addEventListener("readystatechange", function() {
-    if(this.readyState === 4) {
-        console.log(this.responseText);
-        
-    }
-    });
-
-    function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-    }
-    xhr.open("POST", "https://brainly.com/graphql/us");
-    xhr.setRequestHeader("authority", "brainly.com");
-    xhr.setRequestHeader("x-b-token-long", getCookie("Zadanepl_cookie[Token][Long]"));
-    xhr.setRequestHeader("accept", "*/*");
-    xhr.setRequestHeader("sec-ch-ua-mobile", "?0");
-    xhr.setRequestHeader("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36");
-    xhr.setRequestHeader("sec-ch-ua", "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"98\", \"Google Chrome\";v=\"98\"");
-    xhr.setRequestHeader("sec-ch-ua-platform", "\"macOS\"");
-    xhr.setRequestHeader("content-type", "application/json");
-    xhr.setRequestHeader("origin", "https://brainly.com");
-    xhr.setRequestHeader("sec-fetch-site", "same-origin");
-    xhr.setRequestHeader("sec-fetch-mode", "cors");
-    xhr.setRequestHeader("sec-fetch-dest", "empty");
-    xhr.setRequestHeader("referer", "https://brainly.com/tools/moderation?pageSize=60");
-
-    xhr.send(data);
-}
-export function approve_answer(answerToConfirm:string){
-    var raw = JSON.stringify({
-        "model_type": 2,
-        "model_id": answerToConfirm
-      });
-      
-      fetch("https://brainly.com/api/28/api_content_quality/confirm", { method: "POST",body: raw}).then(data => data.json());
-}
-export function confirm_question(id){
-    fetch("https://brainly.com/api/28/moderation_new/accept", {
-      "referrer": "https://brainly.com/tasks/archive_mod",
-      "referrerPolicy": "strict-origin-when-cross-origin",
-      "body": `{\"model_type_id\":1,\"model_id\":${id},\"schema\":\"moderation.content.ok\"}`,
-      "method": "POST",
-      "mode": "cors",
-      "credentials": "include"
-    });
-}
 export async function delete_user(uid:string){
     await fetch("https://brainly.com/admin/users/delete/"+uid, {
     headers: {
@@ -159,11 +85,6 @@ export async function get_warnings(user:string){
         warn_arr.push(this_warn);
     }
     return warn_arr
-}
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
 }
 export function sendMessages(users_ids, content){
 
@@ -500,94 +421,4 @@ export async function startCompanionManager(){
         
         
     })
-}
-  
-
-export async function startVerificationQueue(){
-    let txt = await fetch("https://th-extension.lukeg294.repl.co/get-all-verification-requests").then(data => data.json());
-    let modal = document.querySelector(".modal_mcomp_u")
-    modal.querySelector(".sg-spinner-container").classList.add("remove")
-
-    //inserting the  "add user" button
-    
-
-    //inserting all registered users
-    for (let index = 0; index < txt.length; index++) {
-        const element = txt[index].data;
-        let databaseId = txt[index].ref["@ref"].id
-        let fetchData = await fetch("https://brainly.com/profile/user-"+element.userRequester).then(data => data.text());
-        let parser = new DOMParser();
-        let profilePage = parser.parseFromString(fetchData, 'text/html');
-        //@ts-ignore
-        let requesterAvatar = profilePage.querySelector("#main-left > div.personal_info > div.header > div.avatar > a > img").src
-        //@ts-ignore
-        let requesterUsername = profilePage.querySelector("#main-left > div.personal_info > div.header > div.avatar > a > img").title
-        //@ts-ignore
-        let requesterRank = profilePage.querySelector("#main-left > div.personal_info > div.header > div.info > div.info_top > span.rank > h3 > span").innerText
-        
-        modal.querySelector(".answers").insertAdjacentHTML("afterbegin",/*html*/`
-        <div class="verificationObject" style="overflow-y:scroll">
-            <div class="user">
-            <img src=${requesterAvatar} class="companionUserAvatar"></img> 
-            <a href='https://brainly.com/profile/${requesterUsername}-${element.userRequester}' class="username">${requesterUsername}</a>  
-        </div>
-            <div class="answer">
-            ${element.answerPreview}
-            </div>
-            <div class="changedb">
-                <button id="${element.answerDBid}" faunaId = '${databaseId}' class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue verify-content">
-                    <div class="spinner-container">
-                        <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
-                    </div>
-                    <span class="sg-button__text"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></span>
-                </button>
-               
-            <button id="${element.answerDBid}" faunaId = '${databaseId}' class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue ignore-request">
-                    <div class="spinner-container">
-                        <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
-                    </div>
-                    <span class="sg-button__text"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-friend_remove"></use></svg></div></span>
-                </button></div>
-            <div class="permlist"></div>
-        </div>`)
-        
-    }
-
-    let verifyButtons = document.querySelectorAll(".verify-content")
-    for (let index = 0; index < verifyButtons.length; index++) {
-        const element = verifyButtons[index];
-       
-        element.addEventListener("click", async function(){
-            element.parentElement.parentElement.style.backgroundColor = "#9CE8C2"
-            element.querySelector(".spinner-container").classList.add("show");
-            await approve_answer(this.id)
-            
-            element.querySelector(".spinner-container").classList.remove("show");
-            let faunaDatabaseId = this.getAttribute("faunaId")
-            await removeAnswer(faunaDatabaseId)
-
-            element.parentElement.parentElement.remove();
-        })
-    }
-    let removeButtons = document.querySelectorAll(".ignore-request")
-    for (let index = 0; index < removeButtons.length; index++) {
-        const element = removeButtons[index];
-       
-        element.addEventListener("click", async function(){
-            element.querySelector(".spinner-container").classList.add("show");
-           
-           
-            element.querySelector(".spinner-container").classList.remove("show");
-            let faunaDatabaseId = this.getAttribute("faunaId")
-            await removeAnswer(faunaDatabaseId)
-            element.parentElement.parentElement.remove();
-        })
-    }
-    
-    
-   
-   
-        
-        
-    
 }

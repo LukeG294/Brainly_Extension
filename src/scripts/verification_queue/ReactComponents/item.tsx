@@ -1,20 +1,25 @@
 import React from "react";
 import { SubjectIconBox, SubjectIcon, Media, Avatar, Text, Button, Icon, Label} from "brainly-style-guide";
+import {get_time_diff} from "../../common/common_functions"
 
 interface Item{
     content: string;
     thanks: string;
     rating: string;
+    created: string;
 }
 
-export default function Item({content, thanks, rating}: Item) {
+export default function Item({content, thanks, rating, created}: Item) {
     return(
         <div className = "item" data-testid="item">
             <div className="head">
                 <svg className="sg-subject-icon">
                     <use xlinkHref="#icon-subject-accountancy"/>
                 </svg>
-                <h2 className="sg-text sg-text--large sg-text--gray sg-text--bold">username</h2>
+                <div className = "sg-flex flex-direction-column">
+                    <h2 className="sg-text sg-text--large sg-text--gray sg-text--bold username">username</h2>
+                    <h2 className="sg-text sg-text--large sg-text--gray created">{get_time_diff(created)}</h2>
+                </div>
             </div>
             <div className="content" dangerouslySetInnerHTML={{__html: content}}></div>
             

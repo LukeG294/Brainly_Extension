@@ -4,4 +4,4 @@ import {PreparePage} from "./prepare_page"
 setTimeout(() => {
     PreparePage();
     InjectReactApp();
-}, 200);
+}, 150);

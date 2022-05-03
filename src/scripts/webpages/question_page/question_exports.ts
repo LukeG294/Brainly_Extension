@@ -18,7 +18,7 @@ function ConfirmButtonListener(number){
     let answerIDs = JSON.parse(document.querySelector("#question-sg-layout-container > div.brn-qpage-layout.js-main-container.js-ads-screening-content > div.brn-qpage-layout__main.empty\\:sg-space-y-m.md\\:empty\\:sg-space-y-l > article").getAttribute("data-z"))
     let ID = answerIDs["responses"][number]["id"]
     let thisans = new answer()
-    thisans.confirm(ID)
+    thisans.Confirm(ID)
   })
 }
 

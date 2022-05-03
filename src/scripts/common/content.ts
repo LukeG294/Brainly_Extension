@@ -5,7 +5,7 @@ function getCookie(name) {
 }
 
 export class answer{
-    confirm(id:number){
+    Confirm(id:number){
         let res = fetch("https://brainly.com/graphql/us", {
             method: "POST",
             headers: {
@@ -24,7 +24,7 @@ export class answer{
             })
         })
     }
-    approve(id:string){
+    Approve(id:string){
         var raw = JSON.stringify({
             "model_type": 2,
             "model_id": id
@@ -32,7 +32,7 @@ export class answer{
           
           fetch("https://brainly.com/api/28/api_content_quality/confirm", { method: "POST",body: raw}).then(data => data.json());
     }
-    async delete(id:string, reason:string, warn:boolean, take_point:boolean){
+    async Delete(id:string, reason:string, warn:boolean, take_point:boolean){
         await fetch(`https://brainly.com/api/28/moderation_new/delete_response_content`, {
             method: "POST",
             body:JSON.stringify({
@@ -49,7 +49,7 @@ export class answer{
 }
 
 export class question{
-    confirm(id:number){
+    Confirm(id:number){
         fetch("https://brainly.com/api/28/moderation_new/accept", {
           "referrer": "https://brainly.com/tasks/archive_mod",
           "referrerPolicy": "strict-origin-when-cross-origin",
@@ -59,7 +59,7 @@ export class question{
           "credentials": "include"
         });
     }
-    async delete(id:string, reason:string, warn:boolean, take_point:boolean){
+    async Delete(id:string, reason:string, warn:boolean, take_point:boolean){
         await fetch(`https://brainly.com/api/28/moderation_new/delete_task_content`, {
             method: "POST",
             body:JSON.stringify({

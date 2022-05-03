@@ -95,11 +95,11 @@ function add_deletion(del_rsn, elem, tid, type:string){
       }
       if(type === "task"){
         let thisq = new question();
-        thisq.delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value, warnuser, takepts)
+        thisq.Delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value, warnuser, takepts)
       }
       if(type === "response"){
         let thisa = new answer();
-        thisa.delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value, warnuser, takepts)
+        thisa.Delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value, warnuser, takepts)
       }
       elem.querySelector(".delmenu").classList.remove("show");
       if(type === "response"){
@@ -268,11 +268,11 @@ function add_answer(ans,res,a, basic_data){
   add_report(res,ans,this_ans);
   add_deletion(a_del_rsn, this_ans, answer_id, "response");
   this_ans.querySelector(".confirm").addEventListener("click", function(){
-    ansobj.confirm(answer_id);
+    ansobj.Confirm(answer_id);
     this_ans.classList.remove("reported");
   })
   this_ans.querySelector(".approve").addEventListener("click", function(){
-    ansobj.approve(answer_id);
+    ansobj.Approve(answer_id);
     this_ans.classList.add("approved")
     this_ans.classList.remove("reported")
   })
@@ -299,7 +299,7 @@ async function add_question_data(res, d_reference){
   let q_id = res.data.task.id;
   add_deletion(q_del_rsn, q_elem, q_id, "task");
   q_elem.querySelector(".confirm").addEventListener("click", function(){
-    qobj.confirm(q_id);
+    qobj.Confirm(q_id);
     document.querySelector(".question").classList.remove("reported")
   })
   

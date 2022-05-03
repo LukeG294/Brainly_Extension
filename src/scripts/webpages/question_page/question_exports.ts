@@ -69,6 +69,7 @@ export function requestApproval(){
           "answerDBid":databaseId,
           "content":answerPreview,
           "qid": qinfo.id,
+          "subject":document.querySelector("a[data-testid = 'question_box_subject']").innerHTML,
           "user": JSON.parse(document.querySelector("meta[name='user_data']").getAttribute("content"))
         });
 

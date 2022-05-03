@@ -1,5 +1,5 @@
 import React, {useEffect} from "react"
-import { Flex, Button, Headline, Spinner } from "brainly-style-guide"
+import { Flex, Spinner } from "brainly-style-guide"
 import {Header} from "./ReactComponents/pageLayout"
 import Item from "./ReactComponents/item"
 

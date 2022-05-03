@@ -1,5 +1,4 @@
 import {find, runtime} from "webextension-polyfill";
-import {get_warnings} from "../mod_functions"
 import {ticket} from "./ticket_exp"
 import {Answer, Question} from "../content"
 import {get_time_diff} from "../common_functions"
@@ -34,10 +33,6 @@ function add_log(log){
       `)
     }
   }
-}
-
-class item{
-
 }
 
 function add_deletion(del_rsn, elem, tid, type:string){

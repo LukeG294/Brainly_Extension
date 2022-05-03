@@ -2,7 +2,7 @@ import {ryver_notification} from "../../common/Ryver/ryver_modal"
 import {login_run} from "../../common/Ryver/ryver_login"
 import { ModObserver, AnsObserver } from "./homepage_exports";
 //import {subscribe, setAuth} from "../common/livemod"
-import { mass_msg, mass_accdel, usr_mgmt, verification_queue } from "./homepage_admin";
+import { mass_msg, mass_accdel, usr_mgmt } from "./homepage_admin";
 import { showMessage } from "../../common/common_functions";
 
 //@ts-ignore
@@ -18,9 +18,6 @@ async function homeperms(){
   if(perms.includes("11")){
     mass_accdel()
   }
-  if(perms.includes("14")){
-      verification_queue()
-   }
   if(perms.includes("100")){
     usr_mgmt()
   }

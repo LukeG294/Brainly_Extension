@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "brainly-style-guide": "^208.1.0",
+    "concurrently": "^7.1.0",
     "eslint": "^8.10.0",
     "gulp-typescript": "^2.12.2",
     "gulp-watch": "^4.0.1",

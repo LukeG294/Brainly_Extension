@@ -6,6 +6,7 @@ export async function InjectReactApp() {
   let perms = localStorage.getItem("userPerms");
   if (perms.includes("14")){
     root.render(<App />);
+   
   } else {
     window.location.href = '/'
   }

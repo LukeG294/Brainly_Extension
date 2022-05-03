@@ -15,6 +15,7 @@ export default function App() {
             setItems(items);
         }
         fetchItems();
+        
     }, [])
     return (
         <>

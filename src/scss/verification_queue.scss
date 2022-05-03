@@ -26,6 +26,7 @@ div[data-testid = 'header']{
         border-radius: 5px;
         height: 300px;
         width: 300px;
+        margin-left:10px;
 
         display:flex;
         flex-direction: column;
@@ -78,7 +79,7 @@ div[data-testid = 'header']{
                         width:16px!important;
                     }
                 }
-                > button:nth-child(1){
+                > button:nth-child(1), button:nth-child(2){
                     margin-right:4px;
                 }
             }

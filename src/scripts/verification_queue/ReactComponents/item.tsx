@@ -43,6 +43,14 @@ export default function Item({content, thanks, rating}: Item) {
                     type="outline"
                     className = "approve"
                     />
+                    <Button 
+                    icon={<Icon color="adaptive" size={24} type="shield"/>}
+                    iconOnly
+                    size="m"
+                    toggle="mustard"
+                    type="outline"
+                    className = "ticket"
+                    />
                 </div>
             </div>
         </div>

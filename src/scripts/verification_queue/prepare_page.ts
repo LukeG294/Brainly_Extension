@@ -4,4 +4,5 @@ export async function PreparePage() {
     `;
     document.title = 'Brainly Companion'
     document.body.id = "brainly-companion";
+   
 }

@@ -1,7 +1,7 @@
 import {find, runtime} from "webextension-polyfill";
 import {get_warnings} from "../mod_functions"
 import {ticket} from "./ticket_exp"
-import {answer, question} from "../content"
+import {Answer, Question} from "../content"
 import {get_time_diff} from "../common_functions"
 
 function add_log(log){
@@ -94,11 +94,11 @@ function add_deletion(del_rsn, elem, tid, type:string){
         takepts = true;
       }
       if(type === "task"){
-        let thisq = new question();
+        let thisq = new Question();
         thisq.Delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value, warnuser, takepts)
       }
       if(type === "response"){
-        let thisa = new answer();
+        let thisa = new Answer();
         thisa.Delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value, warnuser, takepts)
       }
       elem.querySelector(".delmenu").classList.remove("show");
@@ -261,7 +261,7 @@ function add_answer(ans,res,a, basic_data){
   this_ans.querySelector(".text-subj > div:nth-child(2)").innerHTML =  `${answerer.stats.answers} Answers`
   this_ans.querySelector(".time").innerHTML = get_time_diff(res.data.responses[a].created)
 
-  let ansobj = new answer()
+  let ansobj = new Answer()
 
   user_content_data(answerer, this_ans, ans);
   add_attachments(ans, this_ans);
@@ -289,7 +289,7 @@ async function add_question_data(res, d_reference){
   //let warnings = await get_warnings(asker.id)
   //console.log(warnings)
 
-  let qobj = new question()
+  let qobj = new Question()
 
   add_report(res, q_data, document.querySelector(".question"));
   user_content_data(asker, q_elem, q_data);

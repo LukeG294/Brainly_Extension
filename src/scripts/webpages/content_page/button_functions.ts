@@ -3,8 +3,6 @@ import { addOnlyChecks } from "./tasks"
 import {
   add_icons,
   copy_links,
-  deletion_menu,
-  get_reported_content,
   select_all,
   toggle_selected
 } from "./content_page_buttons"

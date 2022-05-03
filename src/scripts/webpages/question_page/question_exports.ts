@@ -1,5 +1,5 @@
 import { showMessage } from "../../common/common_functions"
-import {answer} from "../../common/content"
+import {Answer} from "../../common/content"
 
 export function confirm_button(){
   return(/*html*/`
@@ -17,7 +17,7 @@ function ConfirmButtonListener(number){
   document.getElementById("confirm"+number).addEventListener("click",function(){
     let answerIDs = JSON.parse(document.querySelector("#question-sg-layout-container > div.brn-qpage-layout.js-main-container.js-ads-screening-content > div.brn-qpage-layout__main.empty\\:sg-space-y-m.md\\:empty\\:sg-space-y-l > article").getAttribute("data-z"))
     let ID = answerIDs["responses"][number]["id"]
-    let thisans = new answer()
+    let thisans = new Answer()
     thisans.Confirm(ID)
   })
 }

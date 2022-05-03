@@ -4,7 +4,7 @@ function getCookie(name) {
     if (parts.length === 2) return parts.pop().split(';').shift();
 }
 
-export class answer{
+export class Answer{
     Confirm(id:number){
         let res = fetch("https://brainly.com/graphql/us", {
             method: "POST",
@@ -48,7 +48,7 @@ export class answer{
     }
 }
 
-export class question{
+export class Question{
     Confirm(id:number){
         fetch("https://brainly.com/api/28/moderation_new/accept", {
           "referrer": "https://brainly.com/tasks/archive_mod",

@@ -1,37 +1,29 @@
 import { showMessage } from "../../common/common_functions"
 import {Answer} from "../../common/content"
 
-export function confirm_button(){
-  return(/*html*/`
-  <button title="confirm"  class="sg-button sg-button--s sg-button--solid"><span class="sg-button__icon sg-button__icon--s">
-      <div class="sg-icon sg-icon--icon-white sg-icon--x16">
-          <svg class="sg-icon__svg" role="img" aria-labelledby="title-star-e7dj7r" focusable="false"><text id="title-star-e7dj7r" hidden="">star</text><use xlink:href="#icon-star_outlined" aria-hidden="true"></use></svg>
-      </div>
-      </span>
-          <span class="sg-button__text">confirm</span>
-  </button>
-  `)
-}
-
-function ConfirmButtonListener(number){
-  document.getElementById("confirm"+number).addEventListener("click",function(){
-    let answerIDs = JSON.parse(document.querySelector("#question-sg-layout-container > div.brn-qpage-layout.js-main-container.js-ads-screening-content > div.brn-qpage-layout__main.empty\\:sg-space-y-m.md\\:empty\\:sg-space-y-l > article").getAttribute("data-z"))
-    let ID = answerIDs["responses"][number]["id"]
-    let thisans = new Answer()
-    thisans.Confirm(ID)
-  })
-}
-
 export function confirmButton(){
-    let answers = document.querySelectorAll("div[data-testid = 'moderation_box_answer'] > div")
-       
+    let answers = document.querySelectorAll("div[data-testid = 'moderation_box_answer'] > div");
+
+    let button = /*html*/`
+    <button title="confirm"  class="sg-button sg-button--s sg-button--solid"><span class="sg-button__icon sg-button__icon--s">
+        <div class="sg-icon sg-icon--icon-white sg-icon--x16">
+            <svg class="sg-icon__svg" role="img" aria-labelledby="title-star-e7dj7r" focusable="false"><text id="title-star-e7dj7r" hidden="">star</text><use xlink:href="#icon-star_outlined" aria-hidden="true"></use></svg>
+        </div>
+        </span>
+            <span class="sg-button__text">confirm</span>
+    </button>
+    `
+    
     for (let i = 0; i < answers.length; i++) {
-      answers[i].insertAdjacentHTML("afterbegin", `<div id=confirm${i}>`+confirm_button()+`</div>`) //set the id of the confirm button to confirm0 or confirm1 for click events later
-      ConfirmButtonListener(i) //add the event listener to the button
+      answers[i].insertAdjacentHTML("afterbegin", `<div id=confirm${i}>`+button+`</div>`) //set the id of the confirm button to confirm0 or confirm1 for click events later
+      document.getElementById("confirm"+i).addEventListener("click",function(){
+        let answerIDs = JSON.parse(document.querySelector("#question-sg-layout-container > div.brn-qpage-layout.js-main-container.js-ads-screening-content > div.brn-qpage-layout__main.empty\\:sg-space-y-m.md\\:empty\\:sg-space-y-l > article").getAttribute("data-z"))
+        let ID = answerIDs["responses"][i]["id"]
+        let thisans = new Answer()
+        thisans.Confirm(ID)
+      })
     }
 }
-
-
 
 export function requestApproval(){
   let answers = document.querySelectorAll("div[data-testid = 'moderation_box_answer'] > div")

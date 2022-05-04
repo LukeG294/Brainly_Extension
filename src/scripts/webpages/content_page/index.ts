@@ -7,7 +7,7 @@ import {addticket, addTaskButtonsBasic} from "./button_functions"
 //@ts-ignore
 
 async function addPerPage(){
-  let permsArr = localStorage.userPerms
+  let permsArr = localStorage.userPerms.split(",")
   
   //functions for all pages
   add_icons()

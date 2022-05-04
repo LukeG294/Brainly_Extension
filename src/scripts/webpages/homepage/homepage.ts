@@ -8,7 +8,7 @@ import { showMessage } from "../../common/common_functions";
 //@ts-ignore
 
 async function homeperms(){
-  let perms = localStorage.getItem("userPerms");
+  let perms = localStorage.getItem("userPerms").split(",")
   if (perms.includes("5")){
     ModObserver()
   }

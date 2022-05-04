@@ -5,12 +5,12 @@ import {show_recent_warnings} from "./recent_warnings"
 //@ts-ignore
 
 async function oldProfile(){
-    let perms = localStorage.userPerms
+    let perms = localStorage.userPerms.split(",")
     if(perms.includes("8")){
       let uid = (<string>window.location.href).split("-")[1].split("/")[0];
       show_recent_warnings(uid)
     }
-    if(perms.includes("4")){
+    if(perms.includes("4")){ 
       delete_user_btn()
     }
 }

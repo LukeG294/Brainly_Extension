@@ -7,19 +7,20 @@ interface Item{
     thanks: string;
     rating: string;
     created: string;
-    qid: string;
-    req_pfp: string;
+    ansdata
+    answerer
 }
 
-export default function Item({content, thanks, rating, created, qid, req_pfp}: Item) {
+export default function Item({content, thanks, rating, created, ansdata, answerer}: Item) {
+    console.log(answerer)
     return(
         <div className = "item" data-testid="item">
             <div className="head">
                 <svg className="sg-subject-icon">
-                    <use xlinkHref="#icon-subject-accountancy"/>
+                    <use xlinkHref={"#icon-subject-"+ansdata.subject}/>
                 </svg>
                 <div className = "sg-flex flex-direction-column">
-                    <h2 className="sg-text sg-text--large sg-text--gray sg-text--bold username">username</h2>
+                    <h2 className="sg-text sg-text--large sg-text--gray sg-text--bold username">{ansdata.qid}</h2>
                     <h2 className="sg-text sg-text--large sg-text--gray created">{get_time_diff(created)}</h2>
                 </div>
             </div>
@@ -31,7 +32,7 @@ export default function Item({content, thanks, rating, created, qid, req_pfp}: I
             </div>
             <div className="options">
                 <div className="user">
-                    <Avatar imgSrc={req_pfp} />
+                    <Avatar imgSrc={answerer.data.userById.avatar.url} />
                 </div>
                 <div className="actions">
                     <Button
@@ -50,7 +51,7 @@ export default function Item({content, thanks, rating, created, qid, req_pfp}: I
                     type="outline"
                     className = "approve"
                     />
-                    <Button id = {qid}
+                    <Button id = {ansdata.qid}
                     icon={<Icon color="adaptive" size={24} type="shield"/>}
                     iconOnly
                     size="m"

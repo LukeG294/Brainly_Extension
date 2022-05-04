@@ -2,6 +2,7 @@ import React, {useEffect} from "react"
 import { Flex, Spinner } from "brainly-style-guide"
 import {Header} from "./ReactComponents/pageLayout"
 import Item from "./ReactComponents/item"
+import {User} from "../common/user"
 
 //react app goes here, make components in the other folder
 export default function App() {
@@ -19,20 +20,21 @@ export default function App() {
         fetchItems();
         
     }, [])
+    let usr = new User();
     return (
         <>
             <Header />
             <Flex className="container">
                 <div className="spinner-container"> <Spinner /> </div>
-                {items.map(item => (
+                {items.map( item => (
                     <Item 
                     key = {item.data.id}
                     content = {item.data.content} 
                     thanks = {item.data.settings.thanks}
                     rating = {item.data.settings.mark}
                     created = {item.data.settings.created}
-                    qid = {item.data.qid}
-                    req_pfp = {item.data.user.avatar}
+                    ansdata = {item.data}
+                    answerer = {item.data.user}
                     />
                 ))}
             </Flex>

@@ -29,7 +29,7 @@
         padding:24px;
         display:grid!important;
         position:relative;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(275px, 400px));
         grid-gap:8px;
         .item{
             padding: 12px;

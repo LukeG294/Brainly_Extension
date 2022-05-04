@@ -1,5 +1,6 @@
 import { showMessage } from "../../common/common_functions"
 import {Answer} from "../../common/content"
+import {User} from "../../common/user"
 
 export function confirmButton(){
     let answers = document.querySelectorAll("div[data-testid = 'moderation_box_answer'] > div");
@@ -54,14 +55,14 @@ export function requestApproval(){
         let requesterID = JSON.parse(document.querySelector("meta[name='user_data']").content).id
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-
+        let usr = new User()
         var raw = JSON.stringify({
           "settings": thisResponse,
           "answerDBid":databaseId,
           "content":answerPreview,
           "qid": qinfo.id,
           "subject":document.querySelector("a[data-testid = 'question_box_subject']").innerHTML,
-          "user": JSON.parse(document.querySelector("meta[name='user_data']").getAttribute("content")),
+          "user": usr.Data(thisResponse.userId),
         });
 
         var requestOptions = {

@@ -56,13 +56,12 @@ export function requestApproval(){
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-          "userRequester": requesterID,
-          "settings": thisResponse.settings,
+          "settings": thisResponse,
           "answerDBid":databaseId,
           "content":answerPreview,
           "qid": qinfo.id,
           "subject":document.querySelector("a[data-testid = 'question_box_subject']").innerHTML,
-          "user": JSON.parse(document.querySelector("meta[name='user_data']").getAttribute("content"))
+          "user": JSON.parse(document.querySelector("meta[name='user_data']").getAttribute("content")),
         });
 
         var requestOptions = {

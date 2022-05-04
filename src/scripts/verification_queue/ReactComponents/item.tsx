@@ -7,9 +7,11 @@ interface Item{
     thanks: string;
     rating: string;
     created: string;
+    qid: string;
+    req_pfp: string;
 }
 
-export default function Item({content, thanks, rating, created}: Item) {
+export default function Item({content, thanks, rating, created, qid, req_pfp}: Item) {
     return(
         <div className = "item" data-testid="item">
             <div className="head">
@@ -29,7 +31,7 @@ export default function Item({content, thanks, rating, created}: Item) {
             </div>
             <div className="options">
                 <div className="user">
-                    <Avatar imgSrc="https://images.unsplash.com/photo-1645287628160-c7d824ebf16f?w=200" />
+                    <Avatar imgSrc={req_pfp} />
                 </div>
                 <div className="actions">
                     <Button
@@ -48,7 +50,7 @@ export default function Item({content, thanks, rating, created}: Item) {
                     type="outline"
                     className = "approve"
                     />
-                    <Button 
+                    <Button id = {qid}
                     icon={<Icon color="adaptive" size={24} type="shield"/>}
                     iconOnly
                     size="m"

@@ -28,9 +28,11 @@ export default function App() {
                     <Item 
                     key = {item.data.id}
                     content = {item.data.content} 
-                    thanks = {item.data.thanks}
-                    rating = {item.data.mark}
-                    created = {item.data.created}
+                    thanks = {item.data.settings.thanks}
+                    rating = {item.data.settings.mark}
+                    created = {item.data.settings.created}
+                    qid = {item.data.qid}
+                    req_pfp = {item.data.user.avatar}
                     />
                 ))}
             </Flex>

@@ -67,7 +67,7 @@
             }
             .content{
                 flex:1;
-                overflow:hidden;
+                overflow:scroll;
             }
             .stats{
                 .thanks{
@@ -94,13 +94,13 @@
                 padding: 8px 0px;
                 align-items: center;
                 justify-content: space-between;
-                .actions {
+                .actions, .ignoreRequest, .approveRequest {
                     display:flex;
-                    .tickbut, .verifybut{
+                    .tickbut, .ignoreRequest, .approveRequest{
                         display:flex;
                         align-items:center;
                         justify-content: center;
-                        button{margin-right:0px!important;}
+                        //button{margin-right:0px!important;}
                         .sg-spinner{
                             display:none;
                         }

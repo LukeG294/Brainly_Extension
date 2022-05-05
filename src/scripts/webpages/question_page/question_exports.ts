@@ -28,8 +28,9 @@ export function confirmButton(){
 
 export function requestApproval(){
   let answers = document.querySelectorAll("div[data-testid = 'moderation_box_answer'] > div")
-       
+  let responses = JSON.parse(document.querySelector("[data-testid='question_box']").getAttribute("data-z")).responses
     for (let i = 0; i < answers.length; i++) {
+     if (!responses[i].approved.date){
       answers[i].insertAdjacentHTML("beforeend",`<button class="sg-button sg-button--m sg-button--solid-mint  request-verification"> <div class="spinner-container">
       <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
   </div><span class="sg-button__icon sg-button__icon--m">
@@ -37,10 +38,12 @@ export function requestApproval(){
           <use xlink:href="#icon-check" aria-hidden="true"></use>
         </svg></div>
     </span><span class="sg-button__text">Request Verification</span></button>`)
+     }
+    
     }
 
     let requestButtons = document.querySelectorAll(".request-verification")
-    let responses = JSON.parse(document.querySelector("[data-testid='question_box']").getAttribute("data-z")).responses
+    
     for (let index = 0; index < requestButtons.length; index++) {
       const element = requestButtons[index];
       
@@ -56,15 +59,17 @@ export function requestApproval(){
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         let usr = new User()
+        let user = await usr.Data(thisResponse.userId)
+        console.log(user)
         var raw = JSON.stringify({
           "settings": thisResponse,
           "answerDBid":databaseId,
           "content":answerPreview,
           "qid": qinfo.id,
           "subject":document.querySelector("a[data-testid = 'question_box_subject']").innerHTML,
-          "user": await usr.Data(thisResponse.userId),
+          "user": user,
         });
-
+      
         var requestOptions = {
           method: 'POST',
           headers: myHeaders,

@@ -31,13 +31,14 @@ export class User{
         return warn_arr
     }
     async Data(id:string){
+       
         var myHeaders = new Headers();
         myHeaders.append("authority", "brainly.com");
         myHeaders.append("accept", "application/json");
         myHeaders.append("content-type", "application/json");
         myHeaders.append("accept-language", "en-US,en;q=0.9");
 
-        await fetch("https://brainly.com/graphql/us", {
+        let txt = await fetch("https://brainly.com/graphql/us", {
             method: 'POST',
             headers: myHeaders,
             body: JSON.stringify({
@@ -53,8 +54,7 @@ export class User{
             }),
             redirect: 'follow'
         })
-        .then(response => response.text())
-        .then(result => {return JSON.parse(result)})
-        .catch(error => console.log('error', error));
+        .then(response => response.json())
+        return txt
     }
 }

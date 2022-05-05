@@ -45,12 +45,12 @@ export async function requestApproval(){
           </span><span class="sg-button__text">Request Verification</span></button>`)
           let requestButtons = document.querySelectorAll(".request-verification")
     
-          for (let index = 0; index < requestButtons.length; index++) {
-            const element = requestButtons[index];
+         
+            const element = requestButtons[i];
             
             element.addEventListener("click", async function(){
               document.querySelector(".request-verification .spinner-container").classList.add("show");
-              let thisResponse = responses[index]
+              let thisResponse = responses[i]
             
               let databaseId = thisResponse.id
               let answerPreview = thisResponse.content
@@ -82,17 +82,17 @@ export async function requestApproval(){
                 let serverResponse = await fetch("https://th-extension.lukeg294.repl.co/request-verify-add", requestOptions).then(response => response.json())
               
                 //@ts-ignore
-                console.log(serverResponse)
-                if (serverResponse){
+                
+                if (!serverResponse.message){
                   showMessage("The answer has been added to the verification queue.","success")
                   document.querySelector(".request-verification .spinner-container").classList.remove("show");
                 } else {
-                  showMessage("There was an error adding to the verification queue.","error")
+                  showMessage("There was an error adding to the verification queue: "+serverResponse.message,"error")
                 }
                 
             })
             
-          }
+          
           //else - add already requested button
        } else {
          

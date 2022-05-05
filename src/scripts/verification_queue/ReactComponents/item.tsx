@@ -37,7 +37,7 @@ export default function Item({ content, thanks, rating, created, ansdata, faunad
                 </div>
                 <div className="actions">
                     <Button
-                    onClick={async () =>  await removeAnswer(faunadbid)}
+                    onClick={async () =>  await removeAnswer(faunadbid).then(() => console.log("Removed (add animation here)"))}
                     icon={<Icon color="adaptive" size={24} type="close"/>}
                     iconOnly
                     size="m"

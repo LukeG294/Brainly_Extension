@@ -2,6 +2,7 @@ import React from "react";
 import { SubjectIconBox, SubjectIcon, Media, Avatar, Text, Button, Icon, Label, Spinner} from "brainly-style-guide";
 import {get_time_diff} from "../../common/common_functions"
 import {insert_ticket} from "../../common/mod_functions"
+import {Answer} from "../../common/content"
 
 interface Item{
     key: string;
@@ -11,7 +12,7 @@ interface Item{
     created: string;
     ansdata
 }
-
+let ans = new Answer()
 export default function Item({ content, thanks, rating, created, ansdata}: Item) {
     return(
         <div className = "item" datatype = {ansdata.settings.id}>
@@ -43,14 +44,20 @@ export default function Item({ content, thanks, rating, created, ansdata}: Item)
                     type="outline"
                     className = "cancel"
                     />
-                    <Button
-                    icon={<Icon color="adaptive" size={24} type="check"/>}
-                    iconOnly
-                    size="m"
-                    toggle="blue"
-                    type="outline"
-                    className = "approve"
-                    />
+                    <div className="verifybut"> 
+                        <Spinner size={"xsmall"} />
+                        <Button
+                        onClick = {() => {
+                                ans.Approve(ansdata.id)
+                            }}
+                        icon={<Icon color="adaptive" size={24} type="check"/>}
+                        iconOnly
+                        size="m"
+                        toggle="blue"
+                        type="outline"
+                        className = "approve"
+                        />
+                    </div>
                     <div className="tickbut"> 
                         <Spinner size={"xsmall"} />
                         <Button 

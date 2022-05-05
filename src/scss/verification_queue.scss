@@ -29,7 +29,8 @@
         padding:24px;
         display:grid!important;
         position:relative;
-        grid-template-columns: repeat(auto-fit, minmax(275px, 400px));
+        grid-template-rows: repeat(auto-fit, minmax(300px, 300px));
+        grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
         grid-gap:8px;
         .item{
             padding: 12px;
@@ -95,7 +96,7 @@
                 justify-content: space-between;
                 .actions {
                     display:flex;
-                    .tickbut{
+                    .tickbut, .verifybut{
                         display:flex;
                         align-items:center;
                         justify-content: center;

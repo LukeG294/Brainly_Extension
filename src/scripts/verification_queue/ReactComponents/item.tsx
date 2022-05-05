@@ -1,6 +1,6 @@
 import React from "react";
 import { SubjectIconBox, SubjectIcon, Media, Avatar, Text, Button, Icon, Label, Spinner} from "brainly-style-guide";
-import {get_time_diff, removeAnswer} from "../../common/common_functions"
+import {approveAnswer, get_time_diff, removeAnswer} from "../../common/common_functions"
 import {insert_ticket} from "../../common/mod_functions"
 
 interface Item{
@@ -36,23 +36,32 @@ export default function Item({ content, thanks, rating, created, ansdata, faunad
                     <Avatar imgSrc="" />
                 </div>
                 <div className="actions">
-                    <Button
-                    onClick={async () =>  await removeAnswer(faunadbid).then(() => console.log("Removed (add animation here)"))}
-                    icon={<Icon color="adaptive" size={24} type="close"/>}
-                    iconOnly
-                    size="m"
-                    toggle="peach"
-                    type="outline"
-                    className = "cancel"
-                    />
-                    <Button
-                    icon={<Icon color="adaptive" size={24} type="check"/>}
-                    iconOnly
-                    size="m"
-                    toggle="blue"
-                    type="outline"
-                    className = "approve"
-                    />
+                
+                <div className="ignoreRequest"> 
+                        <Spinner size={"xsmall"} />
+                        <Button
+                        
+                        onClick={async () =>  await removeAnswer(faunadbid, document.querySelector(`[ datatype = '${ansdata.settings.id}'] .ignoreRequest`))}
+                        icon={<Icon color="adaptive" size={24} type="close"/>}
+                        iconOnly
+                        size="m"
+                        toggle="peach"
+                        type="outline"
+                        className = "cancel"
+                        />
+                    </div>
+                    <div className="approveRequest"> 
+                        <Spinner size={"xsmall"} />
+                        <Button
+                        onClick={async () =>  await approveAnswer(faunadbid, ansdata.answerDBid, document.querySelector(`[ datatype = '${ansdata.settings.id}'] .approveRequest`))}
+                        icon={<Icon color="adaptive" size={24} type="check"/>}
+                        iconOnly
+                        size="m"
+                        toggle="blue"
+                        type="outline"
+                        className = "approve"
+                        />
+                    </div>
                     <div className="tickbut"> 
                         <Spinner size={"xsmall"} />
                         <Button 

@@ -56,15 +56,17 @@ export function requestApproval(){
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         let usr = new User()
+        let user = await usr.Data(thisResponse.userId)
+        console.log(user)
         var raw = JSON.stringify({
           "settings": thisResponse,
           "answerDBid":databaseId,
           "content":answerPreview,
           "qid": qinfo.id,
           "subject":document.querySelector("a[data-testid = 'question_box_subject']").innerHTML,
-          "user": await usr.Data(thisResponse.userId),
+          "user": user,
         });
-
+      
         var requestOptions = {
           method: 'POST',
           headers: myHeaders,

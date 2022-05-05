@@ -1,6 +1,6 @@
 import React from "react";
 import { SubjectIconBox, SubjectIcon, Media, Avatar, Text, Button, Icon, Label, Spinner} from "brainly-style-guide";
-import {get_time_diff} from "../../common/common_functions"
+import {get_time_diff, removeAnswer} from "../../common/common_functions"
 import {insert_ticket} from "../../common/mod_functions"
 
 interface Item{
@@ -9,10 +9,11 @@ interface Item{
     thanks: string;
     rating: string;
     created: string;
-    ansdata
+    ansdata,
+    faunadbid:string;
 }
 
-export default function Item({ content, thanks, rating, created, ansdata}: Item) {
+export default function Item({ content, thanks, rating, created, ansdata, faunadbid}: Item) {
     return(
         <div className = "item" datatype = {ansdata.settings.id}>
             <div className="head">
@@ -36,6 +37,7 @@ export default function Item({ content, thanks, rating, created, ansdata}: Item)
                 </div>
                 <div className="actions">
                     <Button
+                    onClick={async () =>  await removeAnswer(faunadbid)}
                     icon={<Icon color="adaptive" size={24} type="close"/>}
                     iconOnly
                     size="m"

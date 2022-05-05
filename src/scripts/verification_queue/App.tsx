@@ -35,6 +35,7 @@ export default function App() {
                         rating={item.data.settings.mark}
                         created={item.data.settings.created}
                         ansdata={item.data}
+                        faunadbid = {item.ref["@ref"].id}
                     />
                 ))}
             </Flex>

@@ -67,3 +67,9 @@ export function get_time_diff( dt ){
       return `${Math.floor(minutediff/2592000)} year${str} ago`
     }
   }
+export async function removeAnswer(id){
+  await fetch("https://th-extension.lukeg294.repl.co/answers/"+id,{method: "DELETE"})
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
+}

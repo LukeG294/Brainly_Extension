@@ -45,12 +45,12 @@ export async function requestApproval(){
           </span><span class="sg-button__text">Request Verification</span></button>`)
           let requestButtons = document.querySelectorAll(".request-verification")
     
-          for (let index = 0; index < requestButtons.length; index++) {
-            const element = requestButtons[index];
+         
+            const element = requestButtons[i];
             
             element.addEventListener("click", async function(){
               document.querySelector(".request-verification .spinner-container").classList.add("show");
-              let thisResponse = responses[index]
+              let thisResponse = responses[i]
             
               let databaseId = thisResponse.id
               let answerPreview = thisResponse.content
@@ -92,7 +92,7 @@ export async function requestApproval(){
                 
             })
             
-          }
+          
           //else - add already requested button
        } else {
          

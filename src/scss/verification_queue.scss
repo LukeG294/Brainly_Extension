@@ -16,13 +16,13 @@
             }
         }
     }
-
+    .flash-messages-container{top:0!important;}
     .spinner-container{
         &.show{
             display:flex!important;
         }
     }
-    
+
     .container{
         flex:1;
         overflow-y: auto;
@@ -52,10 +52,10 @@
                 }
                 >div{
                     flex-direction: column;
-                    .username{
+                    .qid{
                         font-size:1.3rem;
-                        line-height:1.5rem;
-                        color:#323c45;
+                        line-height:1.3rem;
+                        color:#08c;
                     }
                     .created{
                         font-size:0.7rem;
@@ -94,6 +94,22 @@
                 align-items: center;
                 justify-content: space-between;
                 .actions {
+                    display:flex;
+                    .tickbut{
+                        display:flex;
+                        align-items:center;
+                        justify-content: center;
+                        button{margin-right:0px!important;}
+                        .sg-spinner{
+                            display:none;
+                        }
+                        &.show{
+                            .sg-spinner{
+                                position:absolute;
+                                display:flex;
+                            }
+                        }
+                    }
                     button{
                         height:32px!important;
                         width:32px!important;

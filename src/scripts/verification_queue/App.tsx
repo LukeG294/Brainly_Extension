@@ -25,16 +25,16 @@ export default function App() {
         <>
             <Header />
             <Flex className="container">
+                <div className="flash-messages-container"></div>
                 <div className="spinner-container"> <Spinner /> </div>
                 {items.map( item => (
                     <Item 
-                    key = {item.data.id}
-                    content = {item.data.content} 
-                    thanks = {item.data.settings.thanks}
-                    rating = {item.data.settings.mark}
-                    created = {item.data.settings.created}
-                    ansdata = {item.data}
-                    answerer = {item.data.user}
+                        key={item.data.id}
+                        content={item.data.content}
+                        thanks={item.data.settings.thanks}
+                        rating={item.data.settings.mark}
+                        created={item.data.settings.created}
+                        ansdata={item.data}
                     />
                 ))}
             </Flex>

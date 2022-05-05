@@ -62,7 +62,7 @@ export function requestApproval(){
           "content":answerPreview,
           "qid": qinfo.id,
           "subject":document.querySelector("a[data-testid = 'question_box_subject']").innerHTML,
-          "user": usr.Data(thisResponse.userId),
+          "user": await usr.Data(thisResponse.userId),
         });
 
         var requestOptions = {

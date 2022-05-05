@@ -30,14 +30,14 @@ export class User{
         }
         return warn_arr
     }
-    Data(id:string){
+    async Data(id:string){
         var myHeaders = new Headers();
         myHeaders.append("authority", "brainly.com");
         myHeaders.append("accept", "application/json");
         myHeaders.append("content-type", "application/json");
         myHeaders.append("accept-language", "en-US,en;q=0.9");
 
-        fetch("https://brainly.com/graphql/us", {
+        await fetch("https://brainly.com/graphql/us", {
             method: 'POST',
             headers: myHeaders,
             body: JSON.stringify({

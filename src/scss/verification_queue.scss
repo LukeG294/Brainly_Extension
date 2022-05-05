@@ -63,7 +63,16 @@
             border-radius: 5px;
             height: 300px;
             display:flex;
+            position:relative;
             flex-direction: column;
+            &.show{
+                .spinner-container{
+                    position:absolute;
+                    top:0;
+                    left:0;
+                    display:flex;
+                }
+            }
             &:hover{
                 border-color:#e1eaf1!important;
             }
@@ -95,6 +104,17 @@
                 overflow:scroll;
             }
             .stats{
+                display:flex;
+                align-items:center;
+                .no-attachment{
+                    display:none;
+                }
+                .attachment{
+                    margin-right:8px;
+                    svg{
+                        color:#323c45!important;
+                    }
+                }
                 .thanks{
                     margin-right:12px;
                     svg{

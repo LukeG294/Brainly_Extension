@@ -1,6 +1,7 @@
 import React from "react";
 import { SubjectIconBox, SubjectIcon, Media, Avatar, Text, Button, Icon, Label, Spinner} from "brainly-style-guide";
-import {approveAnswer, get_time_diff, removeAnswer} from "../../common/common_functions"
+import {approveAnswer, removeAnswer} from "../verification_queue_functions"
+import {get_time_diff} from "../../common/common_functions"
 import {insert_ticket} from "../../common/mod_functions"
 
 interface Item{

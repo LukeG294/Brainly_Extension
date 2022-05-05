@@ -45,12 +45,12 @@ export async function requestApproval(){
           </span><span class="sg-button__text">Request Verification</span></button>`)
           let requestButtons = document.querySelectorAll(".request-verification")
     
-         
-            const element = requestButtons[i];
+          for (let index = 0; index < requestButtons.length; index++) {
+            const element = requestButtons[index];
             
             element.addEventListener("click", async function(){
               document.querySelector(".request-verification .spinner-container").classList.add("show");
-              let thisResponse = responses[i]
+              let thisResponse = responses[index]
             
               let databaseId = thisResponse.id
               let answerPreview = thisResponse.content
@@ -69,7 +69,7 @@ export async function requestApproval(){
                 "qid": qinfo.id,
                 "subject":document.querySelector("a[data-testid = 'question_box_subject']").innerHTML,
                 "user": user,
-               
+                
               });
             
               var requestOptions = {
@@ -92,7 +92,7 @@ export async function requestApproval(){
                 
             })
             
-          
+          }
           //else - add already requested button
        } else {
          

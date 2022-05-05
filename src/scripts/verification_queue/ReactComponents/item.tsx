@@ -13,9 +13,10 @@ interface Item{
     created: string;
     ansdata,
     faunadbid:string;
+    answerer
 }
 
-export default function Item({ content, thanks, rating, created, ansdata, faunadbid}: Item) {
+export default function Item({ content, thanks, rating, created, ansdata, faunadbid, answerer}: Item) {
     return(
         <div className = "item" datatype = {ansdata.settings.id}>
             <div className="head">
@@ -35,7 +36,7 @@ export default function Item({ content, thanks, rating, created, ansdata, faunad
             </div>
             <div className="options">
                 <div className="user">
-                    <Avatar imgSrc="" />
+                    <Avatar imgSrc={answerer.data.userById.avatar.url} />
                 </div>
                 <div className="actions">
                 

@@ -94,13 +94,15 @@
                 padding: 8px 0px;
                 align-items: center;
                 justify-content: space-between;
-                .actions, .ignoreRequest, .approveRequest {
+                .actions{
                     display:flex;
+                    >div:nth-child(1), >div:nth-child(2){
+                        margin-right:4px;
+                    }
                     .tickbut, .ignoreRequest, .approveRequest{
                         display:flex;
                         align-items:center;
                         justify-content: center;
-                        //button{margin-right:0px!important;}
                         .sg-spinner{
                             display:none;
                         }
@@ -118,9 +120,6 @@
                             height:16px!important;
                             width:16px!important;
                         }
-                    }
-                    > button:nth-child(1), button:nth-child(2){
-                        margin-right:4px;
                     }
                 }
             }

@@ -25,6 +25,15 @@ export function confirmButton(){
       })
     }
 }
+export async function removeAnswer(id){
+  let resp = await fetch("https://th-extension.lukeg294.repl.co/answers/"+id,{method: "DELETE"})
+  .then(response => response.json())
+  if (resp.code){
+    showMessage("Could not delete: "+resp.message, "error")
+  } else {
+    showMessage("Cancelled the request for verification.")
+  }
+}
 
 export async function requestApproval(){
   let answers = document.querySelectorAll("div[data-testid = 'moderation_box_answer'] > div")
@@ -34,7 +43,7 @@ export async function requestApproval(){
        let answer = responses[i].id
        let resp = await fetch("https://TH-Extension.lukeg294.repl.co/get_answer_by_id/"+answer).then(response => response.json())
       //if cannot find previous request then add new button
-       if (!resp.data[0]){
+       if (!resp.data){
        
             answers[i].insertAdjacentHTML("beforeend",`<button class="sg-button sg-button--m sg-button--solid-mint  request-verification"> <div class="spinner-container">
             <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
@@ -69,6 +78,7 @@ export async function requestApproval(){
                 "qid": qinfo.id,
                 "subject":document.querySelector("a[data-testid = 'question_box_subject']").innerHTML,
                 "user": user,
+                "requesterId":requesterID
                 
               });
             
@@ -94,14 +104,30 @@ export async function requestApproval(){
             
           
           //else - add already requested button
-       } else {
-         
-            answers[i].insertAdjacentHTML("beforeend",` <div class="sg-flex sg-flex--column"><button style="margin-bottom:12px; opacity:0.6; pointer-events: none;" class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue"><span class="sg-button__icon sg-button__icon--m">
-            <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-heart-215qb" focusable="false"><text id="title-heart-215qb" hidden="">heart</text>
-                <use xlink:href="#icon-send" aria-hidden="true"></use>
-              </svg></div>
-          </span><span class="sg-button__text">Verification Requested</span></button></div>`)
+        //@ts-ignore
+       } else if (resp.data.requesterId === String(JSON.parse(document.querySelector("meta[name='user_data']").content).id)){
 
+        answers[i].insertAdjacentHTML("beforeend",` <div class="sg-flex sg-flex--column"><button style="margin-bottom:12px;" id="${resp.ref["@ref"].id}" class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-peach cancel-request">
+        <div class="spinner-container">
+            <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
+        <span class="sg-button__icon sg-button__icon--m">
+        <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-heart-215qb" focusable="false"><text id="title-heart-215qb" hidden="">heart</text>
+           
+        <use xlink:href="#icon-close" aria-hidden="true"></use>
+          </svg></div>
+      </span><span class="sg-button__text">Cancel Verification</span></button></div>`)
+        document.querySelector(".cancel-request").addEventListener("click", async function(){
+          document.querySelector(".cancel-request .spinner-container").classList.add("show");
+          await removeAnswer(this.id)
+          document.querySelector(".cancel-request .spinner-container").classList.remove("show");
+        })
+
+       } else {
+        answers[i].insertAdjacentHTML("beforeend",` <div class="sg-flex sg-flex--column"><button style="margin-bottom:12px; opacity:0.6; pointer-events: none;" class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue"><span class="sg-button__icon sg-button__icon--m">
+        <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-heart-215qb" focusable="false"><text id="title-heart-215qb" hidden="">heart</text>
+            <use xlink:href="#icon-counter" aria-hidden="true"></use>
+          </svg></div>
+      </span><span class="sg-button__text">Verification Requested</span></button></div>`)
        }
       
      

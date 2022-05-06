@@ -46,7 +46,7 @@ export async function loadNextPage(){
   //@ts-expect-error
     let currentPageDisplay = parseInt(document.querySelector(".pagenum").innerText)
     if (currentPageDisplay >= 0){
-        let nextData = await fetch("https://TH-Extension.lukeg294.repl.co/get_next_page/"+String(currentPageDisplay+1))
+        let nextData = await fetch("https://TH-Extension.lukeg294.repl.co/get_next_page/"+String(currentPageDisplay))
         .then(response => response.json())
         //@ts-ignore
         document.querySelector(".pagenum").innerText = parseInt(currentPageDisplay) + 1

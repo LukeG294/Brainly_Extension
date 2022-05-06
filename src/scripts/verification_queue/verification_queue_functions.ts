@@ -41,6 +41,8 @@ export async function approveAnswer(id, answerId, button){
 }
 
 export async function loadNextPage(){
+    //@ts-expect-error
+    document.querySelector(".pagination").style.opacity = "0.5"
   //@ts-expect-error
     let currentPageDisplay = document.querySelector(".pagenum").innerText
     if (parseInt(currentPageDisplay) > 0){
@@ -49,12 +51,16 @@ export async function loadNextPage(){
         //@ts-ignore
         document.querySelector(".pagenum").innerText = parseInt(currentPageDisplay) + 1
         //@ts-ignore
+
     }
+    //@ts-expect-error
+    document.querySelector(".pagination").style.opacity = "1"
     
 }
 
 export async function loadPrevPage(){
-    
+    //@ts-expect-error
+    document.querySelector(".pagination").style.opacity = "0.5"
     //@ts-expect-error
     let currentPageDisplay = document.querySelector(".pagenum").innerText
     if (parseInt(currentPageDisplay) > 1){
@@ -64,6 +70,8 @@ export async function loadPrevPage(){
         document.querySelector(".pagenum").innerText = parseInt(currentPageDisplay) - 1
         //@ts-ignore
     }
+    //@ts-expect-error
+    document.querySelector(".pagination").style.opacity = "1"
     
     
 }

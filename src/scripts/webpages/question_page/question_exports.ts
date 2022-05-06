@@ -113,14 +113,16 @@ export async function requestApproval(){
 
         answers[i].insertAdjacentHTML("afterbegin",/*html*/` 
           <button id="${resp.ref["@ref"].id}" class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-peach cancel-request">
-        <div class="spinner-container">
-            <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
-        <span class="sg-button__icon sg-button__icon--m">
-        <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-heart-215qb" focusable="false"><text id="title-heart-215qb" hidden="">cancel</text>
-           
-        <use xlink:href="#icon-close" aria-hidden="true"></use>
-          </svg></div>
-      </span></button>`)
+          <div class="spinner-container">
+              <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
+          <span class="sg-button__icon sg-button__icon--m">
+          <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-heart-215qb" focusable="false"><text id="title-heart-215qb" hidden="">cancel</text>
+            
+          <use xlink:href="#icon-close" aria-hidden="true"></use>
+            </svg></div>
+          </span></button>`
+        )
+
         document.querySelector(".cancel-request").addEventListener("click", async function(){
           document.querySelector(".cancel-request .spinner-container").classList.add("show");
           await removeAnswer(this.id)
@@ -128,11 +130,13 @@ export async function requestApproval(){
         })
 
        } else {
-        answers[i].insertAdjacentHTML("beforeend",` <div class="sg-flex sg-flex--column"><button style="margin-bottom:12px; opacity:0.6; pointer-events: none;" class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue"><span class="sg-button__icon sg-button__icon--m">
+        answers[i].insertAdjacentHTML("afterbegin",/*html*/` 
+        <button style="margin-bottom:12px; opacity:0.6; pointer-events: none;" class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue requested"><span class="sg-button__icon sg-button__icon--m">
         <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-heart-215qb" focusable="false"><text id="title-heart-215qb" hidden="">heart</text>
             <use xlink:href="#icon-counter" aria-hidden="true"></use>
           </svg></div>
-      </span><span class="sg-button__text">Verification Requested</span></button></div>`)
+      </span>
+        </button>`)
        }
       
      

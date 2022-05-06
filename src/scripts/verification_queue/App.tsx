@@ -10,7 +10,7 @@ export default function App() {
         //fetch items from server, runs on page render
         const fetchItems = async () => {
             document.querySelector(".spinner-container").classList.add("show");
-            let items = await fetch("https://TH-Extension.lukeg294.repl.co/get_next_page/1").then(data => data.json());
+            let items = await fetch("https://TH-Extension.lukeg294.repl.co/get_next_page/0").then(data => data.json());
             document.querySelector(".spinner-container").classList.remove("show");
             console.log(items);
             setItems(items);
@@ -23,8 +23,11 @@ export default function App() {
         document.querySelector(".spinner-container").classList.add("show");
         let newdata = await loadNextPage();
         document.querySelector(".spinner-container").classList.remove("show");
-        console.log(newdata)
-        setItems(newdata);
+     
+        if (!newdata.end){
+            setItems(newdata);
+        }
+        
     }
     const prevPage = async () => {
         //fetch next page of items from server, runs on next page button click
@@ -32,7 +35,9 @@ export default function App() {
         let newdata = await loadPrevPage();
         document.querySelector(".spinner-container").classList.remove("show");
         console.log(newdata)
-        setItems(newdata);
+        if (!newdata.end){
+            setItems(newdata);
+        }
     }
     return (
         <>

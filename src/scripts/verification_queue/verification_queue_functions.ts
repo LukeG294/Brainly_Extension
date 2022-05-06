@@ -45,7 +45,7 @@ export async function loadNextPage(){
     document.querySelector(".pagination").style.opacity = "0.5"
   //@ts-expect-error
     let currentPageDisplay = document.querySelector(".pagenum").innerText
-    if (parseInt(currentPageDisplay) > 0){
+    if (parseInt(currentPageDisplay) >= 0){
         let nextData = await fetch("https://TH-Extension.lukeg294.repl.co/get_next_page/"+currentPageDisplay)
         .then(response => response.json())
         //@ts-ignore
@@ -62,7 +62,7 @@ export async function loadPrevPage(){
     document.querySelector(".pagination").style.opacity = "0.5"
     //@ts-expect-error
     let currentPageDisplay = document.querySelector(".pagenum").innerText
-    if (parseInt(currentPageDisplay) > 1){
+    if (parseInt(currentPageDisplay) >= 0){
         let prevData = await fetch("https://TH-Extension.lukeg294.repl.co/get_prev_page/"+currentPageDisplay)
         .then(response => response.json())
         //@ts-ignore

@@ -51,6 +51,7 @@ export async function loadNextPage(){
         //@ts-ignore
         document.querySelector(".pagenum").innerText = parseInt(currentPageDisplay) + 1
         //@ts-ignore
+        document.querySelector(".pagination").style.opacity = "1"
         return nextData
     }
     //@ts-expect-error
@@ -68,6 +69,7 @@ export async function loadPrevPage(){
         //@ts-ignore
         document.querySelector(".pagenum").innerText = parseInt(currentPageDisplay) - 1
         //@ts-ignore
+        document.querySelector(".pagination").style.opacity = "1"
         return prevData
     }
     //@ts-expect-error

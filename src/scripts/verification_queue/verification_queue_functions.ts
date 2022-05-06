@@ -31,7 +31,7 @@ export async function approveAnswer(id, answerId, button){
     answer.Approve(answerId)
     let item = button.parentElement.parentElement.parentElement
     button.classList.remove("show");
-    item.style.background = '#9CE8C2'
+    item.style.border = '2px solid #9CE8C2'
     item.style.pointerEvents = 'none'
     
   } else {

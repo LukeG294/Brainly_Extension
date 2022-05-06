@@ -36,7 +36,7 @@ export async function removeAnswer(id){
 }
 
 export async function requestApproval(){
-  let answers = document.querySelectorAll("div[data-testid = 'moderation_box_answer'] > div")
+  let answers = document.querySelectorAll("div[data-testid = 'answer_box'] div[data-testid = 'one_off_achievement_tooltip']")
   let responses = JSON.parse(document.querySelector("[data-testid='question_box']").getAttribute("data-z")).responses
     for (let i = 0; i < answers.length; i++) {
      if (!responses[i].approved.date){
@@ -45,13 +45,17 @@ export async function requestApproval(){
       //if cannot find previous request then add new button
        if (!resp.data){
        
-            answers[i].insertAdjacentHTML("beforeend",`<button class="sg-button sg-button--m sg-button--solid-mint  request-verification"> <div class="spinner-container">
-            <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
-        </div><span class="sg-button__icon sg-button__icon--m">
-            <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-heart_outlined-pld9rg" focusable="false"><text id="title-heart_outlined-pld9rg" hidden="">heart outlined</text>
-                <use xlink:href="#icon-check" aria-hidden="true"></use>
-              </svg></div>
-          </span><span class="sg-button__text">Request Verification</span></button>`)
+            answers[i].insertAdjacentHTML("afterbegin",/*html*/`
+            <button class="sg-button sg-button--m sg-button--solid-mint  request-verification"> 
+              <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
+              <span class="sg-button__icon sg-button__icon--m">
+                <div class="sg-icon sg-icon--adaptive sg-icon--x24">
+                  <svg class="sg-icon__svg" role="img" aria-labelledby="title-heart_outlined-pld9rg" focusable="false"><text id="title-heart_outlined-pld9rg" hidden="">heart outlined</text>
+                    <use xlink:href="#icon-check" aria-hidden="true"></use>
+                  </svg>
+                </div>
+              </span>
+            </button>`)
           let requestButtons = document.querySelectorAll(".request-verification")
     
          
@@ -107,15 +111,16 @@ export async function requestApproval(){
         //@ts-ignore
        } else if (resp.data.requesterId === String(JSON.parse(document.querySelector("meta[name='user_data']").content).id)){
 
-        answers[i].insertAdjacentHTML("beforeend",` <div class="sg-flex sg-flex--column"><button style="margin-bottom:12px;" id="${resp.ref["@ref"].id}" class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-peach cancel-request">
+        answers[i].insertAdjacentHTML("afterbegin",/*html*/` 
+          <button id="${resp.ref["@ref"].id}" class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-peach cancel-request">
         <div class="spinner-container">
             <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
         <span class="sg-button__icon sg-button__icon--m">
-        <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-heart-215qb" focusable="false"><text id="title-heart-215qb" hidden="">heart</text>
+        <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-heart-215qb" focusable="false"><text id="title-heart-215qb" hidden="">cancel</text>
            
         <use xlink:href="#icon-close" aria-hidden="true"></use>
           </svg></div>
-      </span><span class="sg-button__text">Cancel Verification</span></button></div>`)
+      </span></button>`)
         document.querySelector(".cancel-request").addEventListener("click", async function(){
           document.querySelector(".cancel-request .spinner-container").classList.add("show");
           await removeAnswer(this.id)

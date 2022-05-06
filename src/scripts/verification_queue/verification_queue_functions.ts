@@ -39,3 +39,31 @@ export async function approveAnswer(id, answerId, button){
   }
   
 }
+
+export async function loadNextPage(){
+  //@ts-expect-error
+    let currentPageDisplay = document.querySelector(".pagenum").innerText
+    if (parseInt(currentPageDisplay) > 0){
+        let nextData = await fetch("https://TH-Extension.lukeg294.repl.co/get_next_page/"+currentPageDisplay)
+        .then(response => response.json())
+        //@ts-ignore
+        document.querySelector(".pagenum").innerText = parseInt(currentPageDisplay) + 1
+        //@ts-ignore
+    }
+    
+}
+
+export async function loadPrevPage(){
+    
+    //@ts-expect-error
+    let currentPageDisplay = document.querySelector(".pagenum").innerText
+    if (parseInt(currentPageDisplay) > 1){
+        let prevData = await fetch("https://TH-Extension.lukeg294.repl.co/get_next_page/"+currentPageDisplay)
+        .then(response => response.json())
+        //@ts-ignore
+        document.querySelector(".pagenum").innerText = parseInt(currentPageDisplay) - 1
+        //@ts-ignore
+    }
+    
+    
+}

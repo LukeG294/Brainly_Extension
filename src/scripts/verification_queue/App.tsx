@@ -10,7 +10,7 @@ export default function App() {
         //fetch items from server, runs on page render
         const fetchItems = async () => {
             document.querySelector(".spinner-container").classList.add("show");
-            let items = await fetch("https://th-extension.lukeg294.repl.co/get-all-verification-requests").then(data => data.json());
+            let items = await fetch("https://TH-Extension.lukeg294.repl.co/get_next_page/0").then(data => data.json());
             document.querySelector(".spinner-container").classList.remove("show");
             console.log(items);
             setItems(items);

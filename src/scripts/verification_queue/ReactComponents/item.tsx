@@ -46,6 +46,12 @@ export default function Item({ content, thanks, rating, created, ansdata, faunad
                 />
                 <Label className = "thanks" color="achromatic" iconType="heart" type="transparent">{thanks}</Label>
                 <Label className = "rating" color="achromatic" iconType="star" type="transparent">{rating}</Label>
+                <Icon
+                className = {ansdata.settings.isMarkedAbuse ? "reported" : "not-reported"}
+                color="icon-red-50"
+                size={16}
+                type="report_flag"
+                />
             </div>
             <div className="options">
                 <div className="user">

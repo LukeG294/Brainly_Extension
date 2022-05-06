@@ -1,6 +1,5 @@
 import React, {useEffect} from "react"
 import Item from "./item"
-import {loadNextPage, loadPrevPage} from "../verification_queue_functions"
 
 interface list{
     obj

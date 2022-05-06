@@ -1,7 +1,6 @@
 import React, {useEffect} from "react"
 import { Flex, Spinner, Button , Icon} from "brainly-style-guide"
 import {loadNextPage, loadPrevPage} from "./verification_queue_functions"
-import Item from "./ReactComponents/item"
 import {List} from "./ReactComponents/itemList"
 //react app goes here, make components in the other folder
 export default function App() {

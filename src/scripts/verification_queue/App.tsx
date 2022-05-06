@@ -1,13 +1,12 @@
 import React, {useEffect} from "react"
-import { Flex, Spinner } from "brainly-style-guide"
-import {Header} from "./ReactComponents/pageLayout"
+import { Flex, Spinner, Button , Icon} from "brainly-style-guide"
+import {loadNextPage, loadPrevPage} from "./verification_queue_functions"
 import Item from "./ReactComponents/item"
-import {User} from "../common/user"
-
+import {List} from "./ReactComponents/itemList"
 //react app goes here, make components in the other folder
 export default function App() {
-    const [items, setItems] = React.useState([]);
 
+    const [items, setItems] = React.useState([]);
     useEffect(() => {
         //fetch items from server, runs on page render
         const fetchItems = async () => {
@@ -20,25 +19,54 @@ export default function App() {
         fetchItems();
         
     }, [])
-    let usr = new User();
+    const nextPage = async () =>{
+        //fetch next page of items from server, runs on next page button click
+        document.querySelector(".spinner-container").classList.add("show");
+        let newdata = await loadNextPage();
+        document.querySelector(".spinner-container").classList.remove("show");
+        console.log(newdata)
+        setItems(newdata);
+    }
+    const prevPage = async () => {
+        //fetch next page of items from server, runs on next page button click
+        document.querySelector(".spinner-container").classList.add("show");
+        let newdata = await loadPrevPage();
+        document.querySelector(".spinner-container").classList.remove("show");
+        console.log(newdata)
+        setItems(newdata);
+    }
     return (
         <>
-            <Header />
+            <div data-testid="header">
+                <div className="sg-flex sg-flex--justify-content-space-between sg-flex--align-items-center">
+                    <a href="https://brainly.com"title="Go to main page">
+                        <div className="sg-logo">
+                            <img className="sg-logo__image" src="https://styleguide.brainly.com/images/logos/brainly-5c4a769505.svg" alt="brainly"/>
+                        </div>
+                    </a>
+                </div>
+                <div className="pagination">
+                <Button
+                
+                    onClick={async function(){await prevPage()}}
+                    icon={<Icon color="adaptive" type="arrow_left"/>}
+                    iconOnly
+                    type="transparent"
+                
+                />
+                <p className = "pagenum">1</p>
+                <Button
+                    onClick={async function(){await nextPage()}}
+                    icon={<Icon color="adaptive" type="arrow_right"/>}
+                    iconOnly
+                    type="transparent"
+                />
+                </div>
+            </div>
             <Flex className="container">
                 <div className="flash-messages-container"></div>
                 <div className="spinner-container"> <Spinner /> </div>
-                {items.map( item => (
-                    <Item 
-                        key={item.data.id}
-                        content={item.data.content}
-                        thanks={item.data.settings.thanks}
-                        rating={item.data.settings.mark}
-                        created={item.data.settings.created}
-                        ansdata={item.data}
-                        answerer = {item.data.user}
-                        faunadbid = {item.ref["@ref"].id}
-                    />
-                ))}
+                    <List obj = {items} />
             </Flex>
         </>
     )

@@ -51,6 +51,7 @@ export async function loadNextPage(){
         //@ts-ignore
         document.querySelector(".pagenum").innerText = parseInt(currentPageDisplay) + 1
         //@ts-ignore
+        document.querySelector(".pagination").style.opacity = "1"
         return nextData
     }
     //@ts-expect-error
@@ -63,11 +64,12 @@ export async function loadPrevPage(){
     //@ts-expect-error
     let currentPageDisplay = document.querySelector(".pagenum").innerText
     if (parseInt(currentPageDisplay) > 1){
-        let prevData = await fetch("https://TH-Extension.lukeg294.repl.co/get_next_page/"+currentPageDisplay)
+        let prevData = await fetch("https://TH-Extension.lukeg294.repl.co/get_prev_page/"+currentPageDisplay)
         .then(response => response.json())
         //@ts-ignore
         document.querySelector(".pagenum").innerText = parseInt(currentPageDisplay) - 1
         //@ts-ignore
+        document.querySelector(".pagination").style.opacity = "1"
         return prevData
     }
     //@ts-expect-error

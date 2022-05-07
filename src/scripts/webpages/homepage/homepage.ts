@@ -27,6 +27,7 @@ async function homeperms(){
   else{
     AnsObserver()
   }
+ 
 }
 if(localStorage.canUse === "true"){
   homeperms()

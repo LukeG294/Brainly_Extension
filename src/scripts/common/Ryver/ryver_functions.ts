@@ -16,3 +16,38 @@ export async function sendmsg(roomID, body, roomType){
         })
     });
 }
+export async function createTask(subject, content, boardID, categoryID){
+    
+
+    var raw = JSON.stringify({
+      "subject": subject,
+      "body": content,
+      "assignees": {
+        "results": [
+          {
+            "id": 1000192
+          }
+        ]
+      },
+      "category": {
+        "id": categoryID
+        //1000306
+      },
+      "board": {
+        "id": boardID
+        //1000010
+      }
+    });
+    
+    var requestOptions = {
+      method: 'POST',
+      body: raw
+      
+    };
+    
+    await fetch("https://brainlyus.ryver.com/api/1/odata.svc/tasks", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+    
+    }

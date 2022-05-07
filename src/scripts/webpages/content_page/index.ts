@@ -11,40 +11,31 @@ async function addPerPage(){
   
   //functions for all pages
   add_icons()
-  if(permsArr.includes("12")){
+  if(permsArr.includes("1") || permsArr.includes("2") || permsArr.includes("3") || permsArr.includes("4")){
     addticket()
-  }
-  if (permsArr.includes("12")){
     addTaskButtonsBasic()
   }
+
   //tasks page
   if(window.location.href.includes("task") || (!window.location.href.includes("responses") && !window.location.href.includes("comments_tr"))){
-    if (permsArr.includes("7")){
+    if (permsArr.includes("1") || permsArr.includes("2") || permsArr.includes("3") || permsArr.includes("4")){
       addTaskButtonsDeletion()
-    }
-    if (permsArr.includes("0")){
+      addTaskButtonsReportedContent()
       addTaskButtonsConfirmation()
     }
-    if (permsArr.includes("2")){
-      addTaskButtonsReportedContent()
-    }
+  
   }
 
   //responses page
   if(window.location.href.includes("responses")){
-    if (permsArr.includes("0")){
+    if (permsArr.includes("1") || permsArr.includes("2") || permsArr.includes("3") || permsArr.includes("4")){
       addResponseButtonsConfirm()
-    }
-    if (permsArr.includes("7")){
+      addResponseButtonsFetchReported()
       addResponseButtonsDelete()
-    }
-    if (permsArr.includes("1")){
       addResponseButtonsApprove()
     }
-    if (permsArr.includes("2")){
-      addResponseButtonsFetchReported()
-    }
-    if (permsArr.includes("3")){
+   
+    if (permsArr.includes("3") || permsArr.includes("4")){
       addResponseButtonsUnverify()
     }
   }

@@ -9,19 +9,15 @@ import { showMessage } from "../../common/common_functions";
 
 async function homeperms(){
   let perms = localStorage.getItem("userPerms").split(",")
-  if (perms.includes("5")){
+  if (perms.includes("1")){
     ModObserver()
   }
-  if(perms.includes("10")){
+  if(perms.includes("4")){
     mass_msg()
-  }
-  if(perms.includes("11")){
     mass_accdel()
-  }
-  if(perms.includes("100")){
     usr_mgmt()
   }
-  if(perms.includes("14")){
+  if(perms.includes("5") || perms.includes("4")){
     verification_queue()
   }
   else{

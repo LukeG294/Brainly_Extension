@@ -1,7 +1,7 @@
 
 import { delete_user, sendMessages, startCompanionManager } from "../../common/mod_functions";
 import { showMessage } from "../../common/common_functions";
-import {macc_d, mcompu, verificationQueue, mmsg_s} from "../../HTML_exports/macc-d_exp"
+import {macc_d, mcompu, mmsg_s} from "../../HTML_exports/macc-d_exp"
 
 //@ts-ignore
 

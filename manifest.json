@@ -2,7 +2,7 @@
   "name": "Brainly Companion (Beta)",
   "description": "A tool in it's beta version to help Brainly Volunteers perform their tasks actions more efficiently.",
   "manifest_version": 3,
-  "version":"1.5.3",
+  "version":"1.5.5",
   "icons": {
     "128": "resources/icon.png"
   },
@@ -25,6 +25,13 @@
       "matches": ["*://brainly.com/companion/verification/*"],
       "js": ["content-scripts/js/verification_queue.js"],
       "css": ["content-scripts/css/verification_queue.css"],
+      "run_at": "document_start"
+    },
+    
+    {
+      "matches": ["*://brainly.com/companion/reported_content/*"],
+      "js": ["content-scripts/js/reported_content.js"],
+      "css": ["content-scripts/css/reported_content.css"],
       "run_at": "document_start"
     },
     {

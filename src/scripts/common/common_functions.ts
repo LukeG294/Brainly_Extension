@@ -6,6 +6,10 @@
 
 import { Answer } from "./content";
 
+export async function get_bio(id){
+  let resp = await fetch("https://brainly.com/api/28/api_user_profiles/get_by_id/"+id).then(res => res.json());
+  return resp.data.description
+}
 export function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);

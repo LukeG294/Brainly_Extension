@@ -1,6 +1,19 @@
 .header,#profile{
     display:flex!important;
 }
+.bio-container{
+    padding: 12px 0px;
+    position: relative;
+    font-size: 0.9rem;
+    border-top: 1px solid #e1eaf1;
+    border-bottom: 1px solid #e1eaf1;
+    &::before{
+        content: 'user bio:';
+        margin-right: 4px;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+}
 .helped_info{display:none!important;}
 .mod-profile-panel{
     position:relative;

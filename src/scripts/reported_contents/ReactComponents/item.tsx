@@ -15,11 +15,22 @@ interface Item{
     subject_id: string;
     task_id: string;
     user: object;
+   
 }
-
 export default function Item({ content_short, created, grade_id, model_id, model_type_id, report, subject_id, task_id, user}: Item) {
     let subjects = JSON.parse(localStorage.subjects)
-   
+    let user_data = JSON.parse(localStorage.user_data)
+    var userReportedInfo = user_data.filter(user_data => {
+        //@ts-expect-error
+        return user_data.id === user.id
+      })
+    let insertAvatar = ""
+    if (!userReportedInfo[0].avatar){
+        insertAvatar = "https://brainly.com/img/avatars/100-ON.png"
+    } else {
+        insertAvatar = userReportedInfo[0].avatar["64"]
+    }
+    console.log(userReportedInfo)
     return(
         <div className = "item" datatype = {task_id}>
             <div className="spinner-container"><Spinner /></div>
@@ -43,7 +54,7 @@ export default function Item({ content_short, created, grade_id, model_id, model
            
             <div className="options">
                 <div className="user">
-                    <Avatar  />
+                 <Avatar imgSrc={insertAvatar} />
                 </div>
                 <div className="actions">
                 

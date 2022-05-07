@@ -16,7 +16,7 @@ export default function App() {
 
 
             var raw = JSON.stringify({
-            "last_id": 27589350,
+            "last_id": 4474190,
             "subject_id": 0,
             "category_id": 0
             });
@@ -29,9 +29,9 @@ export default function App() {
             };
 
             let items = await fetch("https://brainly.com/api/28/moderation_new/index", requestOptions).then(response => response.json())
-            
+            localStorage.setItem("user_data",JSON.stringify(items.users_data))
             document.querySelector(".spinner-container").classList.remove("show");
-            console.log(items);
+            
             setItems(items.data.items);
         }
         fetchItems();

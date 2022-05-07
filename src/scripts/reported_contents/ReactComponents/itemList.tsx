@@ -20,7 +20,10 @@ export function List({obj}: list){
             task_id = {item.task_id}
             user = {item.user}
             />
-        ))}
+        ))
+        
+        }
+        
         </>
     )
 }

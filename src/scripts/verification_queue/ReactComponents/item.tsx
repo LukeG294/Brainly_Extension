@@ -3,7 +3,6 @@ import { SubjectIconBox, SubjectIcon, Media, Avatar, Text, Button, Icon, Label, 
 import {approveAnswer, removeAnswer} from "../verification_queue_functions"
 import {get_time_diff} from "../../common/common_functions"
 import {insert_ticket} from "../../common/mod_functions"
-import {Answer} from "../../common/content"
 
 interface Item{
     key: string;
@@ -11,7 +10,7 @@ interface Item{
     thanks: string;
     rating: string;
     created: string;
-    ansdata,
+    ansdata
     faunadbid:string;
     answerer
 }

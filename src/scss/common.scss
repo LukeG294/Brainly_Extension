@@ -1,3 +1,14 @@
+*{
+  --primary-color: #6d83f3;
+}
+[class ^= 'Header-module'], div[class ^= 'brn-header-placeholder'], .brn-footer, #html .mint .mint-header, #moderate-functions-panel .covering-text, footer[data-testid = 'footer_layout']{
+  background-color:var(--primary-color)!important;
+  border-bottom-color: var(--primary-color)!important;
+}
+// #moderate-functions-panel .text, .menu-list a:before, a[data-testid = 'navigation_add_question'] > span, div[class ^= 'Header-module__subnav'] span, div[class ^= 'Header-module__subnav'] a, button[aria-label = 'notification center'] svg, .brn-footer-legal-section div, .brn-footer-legal-section p, .brn-footer__container a, .brn-footer__container span, .brn-footer__container h3{
+//   color: var(--primary-text)!important;
+// }
+
 .qdel, .adel{
   display:none!important;
 }

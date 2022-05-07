@@ -8,4 +8,5 @@ export async function insert_bio(){
     document.querySelectorAll(".header")[3].insertAdjacentHTML("afterend", `<div class="bio-container">
     ${bio}
     </div>`)
+    
 }

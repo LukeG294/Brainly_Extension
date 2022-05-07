@@ -27,6 +27,13 @@
       "css": ["content-scripts/css/verification_queue.css"],
       "run_at": "document_start"
     },
+    
+    {
+      "matches": ["*://brainly.com/companion/reported_content/*"],
+      "js": ["content-scripts/js/reported_content.js"],
+      "css": ["content-scripts/css/reported_content.css"],
+      "run_at": "document_start"
+    },
     {
       "matches": ["*://brainly.com/*"],
       "exclude_globs": ["*://brainly.com/question/*","*://brainly.com/profile/*","*://brainly.com/companion/verification*"],

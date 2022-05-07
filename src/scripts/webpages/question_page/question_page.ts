@@ -15,6 +15,8 @@ async function questionPage(){
       requestApproval()
     }
   }
+  
+  
 }
 
 if(localStorage.canUse === "true"){

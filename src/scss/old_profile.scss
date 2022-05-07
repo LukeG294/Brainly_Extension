@@ -1,6 +1,11 @@
 .header,#profile{
     display:flex!important;
 }
+.changePermissions{
+    flex-direction: column;
+    display: flex;
+    padding: 5px;
+}
 .bio-container{
     padding: 12px 0px;
     position: relative;

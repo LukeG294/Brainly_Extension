@@ -1,5 +1,5 @@
-import { brainly_legacy_api_url } from "configs/config"
-import {confirmButton, requestApproval} from "./question_exports"
+
+import {confirmButton, requestApproval} from "./QuestionExports"
 //@ts-ignore
 
 async function questionPage(){
@@ -11,7 +11,7 @@ async function questionPage(){
     }
     
   }
-  let user = await fetch(`${brainly_legacy_api_url()}/api_users/me`).then(data => data.json())
+  let user = await fetch(`https://brainly.com/api/28/api_users/me`).then(data => data.json())
   let num = user.data.user.mod_actions_count
   
 

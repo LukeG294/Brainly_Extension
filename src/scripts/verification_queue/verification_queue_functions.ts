@@ -1,11 +1,11 @@
-import { extension_server_url } from "configs/server";
+import { extension_server_url } from "configs/links";
 import {showMessage} from ".././common/common_functions"
 import {Answer} from ".././common/content"
 export async function removeAnswer(id, button){
   
   button.classList.add("show");
   console.log(button)
-  let resp = await fetch("https://th-extension.lukeg294.repl.co/answers/"+id,{method: "DELETE"})
+  let resp = await fetch(`${extension_server_url()}/answers/`+id,{method: "DELETE"})
   .then(response => response.json())
 
   if (!resp.statusCode){
@@ -24,7 +24,7 @@ export async function approveAnswer(id, answerId, button){
   
   button.classList.add("show");
   console.log(button)
-  let resp = await fetch("https://th-extension.lukeg294.repl.co/answers/"+id,{method: "DELETE"})
+  let resp = await fetch(`${extension_server_url()}/answers/`+id,{method: "DELETE"})
   .then(response => response.json())
 
   if (!resp.statusCode){

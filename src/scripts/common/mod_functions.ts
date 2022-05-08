@@ -2,7 +2,7 @@ import {ticket_data} from "../common/Mod Ticket/ticket_functions"
 import {showMessage} from "../common/common_functions"
 import{ removeUser, editUser, checkPermissionSet, getPermissions, removeAnswer} from "../permissions/permission_system"
 import{ permissionChecks } from "../webpages/homepage/homepage_exports"
-import {extension_server_url} from "../../configs/server"
+import {brainly_legacy_api_url, extension_server_url} from "../../configs/links"
 function noclick(){
     document.querySelector("body").insertAdjacentHTML("afterbegin",/*html*/`
         <div class="blockint"></div>
@@ -44,7 +44,7 @@ export async function insert_ticket(id, butspinner){
                 "model_id":id,
                 "schema":"moderation.content.get"
             }
-            xhttp1.open("POST", `https://brainly.com/api/28/moderation_new/get_content`, true);
+            xhttp1.open("POST", `${brainly_legacy_api_url()}moderation_new/get_content`, true);
             xhttp1.send(JSON.stringify(body));
         }
         else{
@@ -54,7 +54,7 @@ export async function insert_ticket(id, butspinner){
             showMessage("Question has been deleted", "error")
         }
     }}
-    xhttp.open("GET", `https://brainly.com/api/28/api_tasks/main_view/${id}`);
+    xhttp.open("GET", `${brainly_legacy_api_url()}api_tasks/main_view/${id}`);
     xhttp.send();
 }
 export async function delete_user(uid:string){
@@ -117,7 +117,7 @@ export function sendMessages(users_ids, content){
        
   
           
-        xhr.open("POST", "https://brainly.com/api/28/api_messages/send");
+        xhr.open("POST", "${brainly_legacy_api_url()}api_messages/send");
         xhr.setRequestHeader("authority", "brainly.com");
         xhr.setRequestHeader("sec-ch-ua", "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"98\", \"Google Chrome\";v=\"98\"");
         xhr.setRequestHeader("sec-ch-ua-mobile", "?0");
@@ -132,7 +132,7 @@ export function sendMessages(users_ids, content){
         }
     });
     
-    xhr.open("POST", "https://brainly.com/api/28/api_messages/check");
+    xhr.open("POST", "${brainly_legacy_api_url()}api_messages/check");
     xhr.setRequestHeader("authority", "brainly.com");
     
     xhr.setRequestHeader("content-type", "application/json");

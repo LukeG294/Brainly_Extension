@@ -3,11 +3,11 @@
 * @param {string} type Takes 3 values, success, error, info. Dhows default message if nothing provided
 *
 */
-
+import { brainly_legacy_api_url } from "configs/links"
 import { Answer } from "./content";
 
 export async function get_bio(id){
-  let resp = await fetch("https://brainly.com/api/28/api_user_profiles/get_by_id/"+id).then(res => res.json());
+  let resp = await fetch(`${brainly_legacy_api_url()}/api_user_profiles/get_by_id/`+id).then(res => res.json());
   return resp.data.description
 }
 export function getCookie(name) {

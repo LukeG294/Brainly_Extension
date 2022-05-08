@@ -1,4 +1,4 @@
-import { extension_server_url } from "configs/server"
+import { extension_server_url } from "configs/links"
 import {showMessage} from "../common/common_functions"
 import {Answer} from "../common/content"
 

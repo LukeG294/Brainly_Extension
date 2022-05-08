@@ -1,3 +1,4 @@
+import { brainly_legacy_api_url } from "configs/links"
 import {runtime} from "webextension-polyfill"
 
 export function select_all(){
@@ -225,7 +226,7 @@ export function add_icons(){
         
           }
         });
-        xhr.open("POST", "https://brainly.com/api/28/api_tasks/main_view/"+qid+"?accept=application/json");
+        xhr.open("POST", `${brainly_legacy_api_url()}/api_tasks/main_view/"+qid+"?accept=application/json`);
         xhr.send();
       }
     }

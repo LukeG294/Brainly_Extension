@@ -2,6 +2,7 @@ import React, {useEffect} from "react"
 import { Flex, Spinner, Button , Icon} from "brainly-style-guide"
 import {loadNextPage, loadPrevPage} from "./verification_queue_functions"
 import {List} from "./ReactComponents/itemList"
+import { extension_server_url } from "configs/server";
 //react app goes here, make components in the other folder
 export default function App() {
 
@@ -10,7 +11,7 @@ export default function App() {
         //fetch items from server, runs on page render
         const fetchItems = async () => {
             document.querySelector(".spinner-container").classList.add("show");
-            let items = await fetch("https://TH-Extension.lukeg294.repl.co/get_next_page/0").then(data => data.json());
+            let items = await fetch(`${extension_server_url()}/get_next_page/0`).then(data => data.json());
             document.querySelector(".spinner-container").classList.remove("show");
             console.log(items);
             setItems(items);

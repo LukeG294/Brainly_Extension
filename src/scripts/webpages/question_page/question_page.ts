@@ -15,9 +15,10 @@ async function questionPage(){
   
 
   if (perms.includes("5") && num === 100){
-    window.onload = function(){
+  
+    
       requestApproval()
-    }
+    
   }
   
   

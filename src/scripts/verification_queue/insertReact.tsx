@@ -6,7 +6,7 @@ export async function InjectReactApp() {
   let perms = localStorage.userPerms.split(",")
   let user = await fetch("https://brainly.com/api/28/api_users/me").then(data => data.json())
   let num = user.data.user_category
-  if (perms.includes("5") || perms.includes("4") && num !== 100){
+  if (perms.includes("5") && num !== 100 || perms.includes("4") && num !== 100){
     root.render(<App />);
    
   } else {

@@ -27,7 +27,7 @@ export function confirmButton(){
     }
 }
 export async function removeAnswer(id){
-  let resp = await fetch(`${extension_server_url}/answers/`+id,{method: "DELETE"})
+  let resp = await fetch(`${extension_server_url()}/answers/`+id,{method: "DELETE"})
   .then(response => response.json())
   if (resp.code){
     showMessage("Could not delete: "+resp.message, "error")
@@ -37,6 +37,7 @@ export async function removeAnswer(id){
 }
 
 export async function requestApproval(){
+
   function requestVerificationButton(i){
     let requestButtons = document.querySelectorAll(".request-verification")
     
@@ -75,7 +76,7 @@ export async function requestApproval(){
     
       };
 
-        let serverResponse = await fetch(`${extension_server_url}/request-verify-add`, requestOptions).then(response => response.json())
+        let serverResponse = await fetch(`${extension_server_url()}/request-verify-add`, requestOptions).then(response => response.json())
       
         //@ts-ignore
         
@@ -123,7 +124,7 @@ export async function requestApproval(){
     for (let i = 0; i < answers.length; i++) {
      if (!responses[i].approved.date){
        let answer = responses[i].id
-       let resp = await fetch(`${extension_server_url}/get_answer_by_id/`+answer).then(response => response.json())
+       let resp = await fetch(`${extension_server_url()}/get_answer_by_id/`+answer).then(response => response.json())
       //if cannot find previous request then add new button
        if (!resp.data){
        

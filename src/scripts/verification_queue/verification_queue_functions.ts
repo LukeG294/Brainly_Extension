@@ -47,7 +47,7 @@ export async function loadNextPage(){
   //@ts-expect-error
     let currentPageDisplay = parseInt(document.querySelector(".pagenum").innerText)
     if (currentPageDisplay >= 0){
-        let nextData = await fetch(`${extension_server_url}/get_next_page/`+String(currentPageDisplay))
+        let nextData = await fetch(`${extension_server_url()}/get_next_page/`+String(currentPageDisplay))
         .then(response => response.json())
         //@ts-ignore
        
@@ -71,7 +71,7 @@ export async function loadPrevPage(){
     //@ts-expect-error
     let currentPageDisplay = document.querySelector(".pagenum").innerText
     if (parseInt(currentPageDisplay) > 1){
-        let prevData = await fetch(`${extension_server_url}/get_prev_page/`+currentPageDisplay)
+        let prevData = await fetch(`${extension_server_url()}/get_prev_page/`+currentPageDisplay)
         .then(response => response.json())
         if (!prevData.end){
           //@ts-ignore

@@ -4,7 +4,7 @@ import{ removeUser, editUser, checkPermissionSet, getPermissions, removeAnswer} 
 import{ permissionChecks } from "../views/homepage/exports"
 import BrainlyAPI from "./BrainlyAPI"
 import Extension from "../../locales/en/localization.json"
-import {extension_server_url} from "../../configs/config"
+import {extension_server_url, parseProfileLink} from "../../configs/config"
 
 function noclick(){
     document.querySelector("body").insertAdjacentHTML("afterbegin",/*html*/`

@@ -22,6 +22,11 @@ export function macc_d(){
                     <span class="sg-radio__ghost" aria-hidden="true"></span>
                     <span class="sg-text sg-text--small sg-text--bold sg-radio__label">Inappropriate Username</span>
                 </label>
+                <label class="sg-radio sg-radio--xxs" for="inactive">
+                    <input type="radio" class="sg-radio__element" name="group1" id="inactive" reason = "Inactive">
+                    <span class="sg-radio__ghost" aria-hidden="true"></span>
+                    <span class="sg-text sg-text--small sg-text--bold sg-radio__label">Inactive</span>
+                </label>
             </div>
             <textarea placeholder="Reason" class="deletion-reason sg-textarea sg-textarea--tall"></textarea>
             <button class="sg-button sg-button--m sg-button--solid-light delete-acc"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">${Extension.buttons.delete}</span></button>

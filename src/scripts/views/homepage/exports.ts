@@ -23,6 +23,14 @@ export function ModObserver(){
         HomeMod()
     }
     addFunctionifFeed()
+    function userSearchIfPanel(){
+      let target = document.querySelector(".brn-moderation-panel__content");
+      if(!target){ return setTimeout(userSearchIfPanel, 100); }
+      
+      observer.observe(target, { attributes: true, childList: true, subtree: true, characterData:true });
+      UserSearchTool()
+  }
+  userSearchIfPanel()
 }
 export function AnsObserver(){
     const observer = new MutationObserver(HomeAns);
@@ -52,6 +60,9 @@ async function HomeAns(){
             questionBox.querySelector(".brn-feed-item__points .brn-points-on-feed").insertAdjacentHTML("afterbegin",`<div class = "repflag"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-report_flag"></use></svg></div></div>`)
         }
     }
+}
+export async function UserSearchTool(){
+  
 }
 export async function HomeMod() {
     const questions = document.querySelectorAll(".brn-feed-items > div[data-testid = 'feed-item']");

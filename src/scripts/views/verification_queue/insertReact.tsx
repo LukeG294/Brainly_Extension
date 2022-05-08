@@ -6,8 +6,9 @@ export async function InjectReactApp() {
   const root = ReactDOM.createRoot(document.getElementById("app"));
   let perms = localStorage.userPerms.split(",")
   let user = await fetch(`${brainly_legacy_api_url()}/api_users/me`).then(data => data.json())
-  let num = user.data.user_category
-  if (perms.includes("5") && num !== 100 || perms.includes("4") && num !== 100){
+  let num = user.data.user.mod_actions_count
+ 
+  if (perms.includes("5") && num || perms.includes("4") && num){
     root.render(<App />);
    
   } else {

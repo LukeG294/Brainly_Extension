@@ -2,6 +2,7 @@ import { extension_server_url } from "configs/config";
 import { showMessage } from "../../common/common_functions"
 import {Answer} from "../../common/content"
 import {User} from "../../common/user"
+import Extension from "../../../locales/en/localization.json"
 
 export function confirmButton(){
     let answers = document.querySelectorAll("div[data-testid = 'moderation_box_answer'] > div");
@@ -114,7 +115,7 @@ export async function requestApproval(){
                 })
 
         } else {
-          showMessage("There was an error adding to the verification queue: "+serverResponse.message,"error")
+          showMessage(Extension.common.verificationQueueError + serverResponse.message,"error")
         }
         
     })

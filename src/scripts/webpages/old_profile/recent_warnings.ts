@@ -1,5 +1,5 @@
 import {User} from "../../common/user"
-
+import Extension from "../../../locales/en/localization.json"
 let warn_area = /*html*/`
 <div class="warnbox">
     <div class="heading">
@@ -78,16 +78,16 @@ export async function show_recent_warnings(uid){
         if(warns.length > 3){
             document.querySelector(".warnbox").insertAdjacentHTML("beforeend", `
             <div class = "toggleview">
-                <button class="sg-button sg-button--m sg-button--outline warnview"><span class="sg-button__text">show all</span></button>
+                <button class="sg-button sg-button--m sg-button--outline warnview"><span class="sg-button__text">${Extension.buttons.showAll}</span></button>
             </div>
             `)
             document.querySelector(".warnview").addEventListener("click", function(){
                 document.querySelector(".warnings").classList.toggle("all");
                 if(document.querySelector(".warnings").classList.contains("all")){
-                    document.querySelector(".warnview > span").innerHTML = 'show less'
+                    document.querySelector(".warnview > span").innerHTML = Extension.buttons.showLess
                 }
                 if(!document.querySelector(".warnings").classList.contains("all")){
-                    document.querySelector(".warnview > span").innerHTML = 'show all'
+                    document.querySelector(".warnview > span").innerHTML = Extension.buttons.showAll
                 }
             })
         }

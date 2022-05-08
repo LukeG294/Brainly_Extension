@@ -9,7 +9,7 @@ import { showMessage } from "../../common/common_functions";
 
 async function homeperms(){
   let perms = localStorage.getItem("userPerms").split(",")
-  if (perms.includes("1")){
+  if (perms.includes("1") || perms.includes("2") || perms.includes("3") || perms.includes("4")){
     ModObserver()
   }
   if(perms.includes("4")){

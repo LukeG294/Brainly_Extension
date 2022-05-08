@@ -5,7 +5,7 @@ import {confirmButton, requestApproval} from "./question_exports"
 async function questionPage(){
   let perms = localStorage.userPerms
   
-  if (perms.includes("1")){
+  if (perms.includes("1") || perms.includes("2") || perms.includes("3") || perms.includes("4")){
     window.onload = function(){
       confirmButton()
     }

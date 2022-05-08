@@ -2,8 +2,9 @@ import {ticket_data} from "../common/Mod Ticket/ticket_functions"
 import {showMessage} from "../common/common_functions"
 import{ removeUser, editUser, checkPermissionSet, getPermissions, removeAnswer} from "../common/permissions/permission_system"
 import{ permissionChecks } from "../views/homepage/homepage_exports"
-import {brainly_legacy_api_url, extension_server_url, parseProfileLink} from "../../configs/config"
+import BrainlyAPI from "./BrainlyAPI"
 import Extension from "../../locales/en/localization.json"
+import {extension_server_url} from "../../configs/config"
 
 function noclick(){
     document.querySelector("body").insertAdjacentHTML("afterbegin",/*html*/`
@@ -18,46 +19,32 @@ function getCookie(name) {
 export async function insert_ticket(id, butspinner){
     butspinner.classList.add("show");
     noclick()
-
-    let xhttp = new XMLHttpRequest()
-    xhttp.onreadystatechange = function(){
-    if(this.readyState == 4 && this.status === 200){
-        let basic_data = JSON.parse(this.responseText)
+    let BasicData = await BrainlyAPI.GetQuestion(id)
       
-        if(!basic_data.data.task.settings.is_deleted){
-            //if question is not deleted
-            let xhttp1 = new XMLHttpRequest();
-            xhttp1.onreadystatechange = async function() {
-            if (this.readyState == 4 && this.status == 200) {
-                let res = JSON.parse(this.responseText);
-                if(res.schema !== "moderation/responses/moderation.ticket.error.res"){
-                    //no issues, show ticket now
-                    ticket_data(id,res,basic_data, butspinner)
-                }
-                else{
-                    //ticket reserved
-                    butspinner.classList.remove("show");
-                    document.querySelector(".blockint").remove();
-                    showMessage("Ticket is already reserved for another moderator")
-                }
-            }}
-            let body = {
-                "model_type_id":1,
-                "model_id":id,
-                "schema":"moderation.content.get"
-            }
-            xhttp1.open("POST", `${brainly_legacy_api_url()}/moderation_new/get_content`, true);
-            xhttp1.send(JSON.stringify(body));
+    if(!BasicData.data.task.settings.is_deleted){
+        //if question is not deleted
+        let res = await BrainlyAPI.Legacy("POST", "moderation_new/get_content", JSON.stringify({
+            "model_type_id":1,
+            "model_id":id,
+            "schema":"moderation.content.get"
+        }));
+        if(res.schema !== "moderation/responses/moderation.ticket.error.res"){
+            //showing the ticket
+            ticket_data(id,res,BasicData, butspinner)
         }
         else{
-            //question does not exist
+            //ticket reserved
             butspinner.classList.remove("show");
             document.querySelector(".blockint").remove();
-            showMessage(Extension.common.questionDeleted, "error")
+            showMessage("Ticket is already reserved for another moderator")
         }
-    }}
-    xhttp.open("GET", `${brainly_legacy_api_url()}/api_tasks/main_view/${id}`);
-    xhttp.send();
+    }
+    else{
+        //question does not exist
+        butspinner.classList.remove("show");
+        document.querySelector(".blockint").remove();
+        showMessage(Extension.common.questionDeleted, "error")
+    }
 }
 export async function delete_user(uid:string){
     await fetch("https://brainly.com/admin/users/delete/"+uid, {

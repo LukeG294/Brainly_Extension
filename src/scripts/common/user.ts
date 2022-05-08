@@ -1,4 +1,4 @@
-import { brainly_graphql_url, brainly_legacy_api_url } from "configs/config";
+import BrainlyAPI from "./BrainlyAPI"
 import {getCookie} from "./common_functions"
 
 export class User{
@@ -32,34 +32,19 @@ export class User{
         return warn_arr
     }
     async Data(id:string){
-       
-        var myHeaders = new Headers();
-        myHeaders.append("authority", "brainly.com");
-        myHeaders.append("accept", "application/json");
-        myHeaders.append("content-type", "application/json");
-        myHeaders.append("accept-language", "en-US,en;q=0.9");
-
-        let txt = await fetch(brainly_graphql_url(), {
-            method: 'POST',
-            headers: myHeaders,
-            body: JSON.stringify({
-                query: `
-                query {
-                    userById(id: ${id}) {
-                        nick
-                        avatar{
-                            url
-                        }
+        return await BrainlyAPI.GQL(JSON.stringify({
+            query: `
+            query {
+                userById(id: ${id}) {
+                    nick
+                    avatar{
+                        url
                     }
-                }`
-            }),
-            redirect: 'follow'
-        })
-        .then(response => response.json())
-        return txt
+                }
+            }`
+        }))
     }
-    async Get_Bio(id:string){
-        let resp = await fetch(`${brainly_legacy_api_url()}/api_user_profiles/get_by_id/`+id).then(res => res.json());
-        return resp.data.description
+    async Get_Bio(id:number){
+        return await (await BrainlyAPI.GetUser(id)).data.description;
     }
 }

@@ -35,7 +35,7 @@ export class Answer{
           fetch(`${brainly_legacy_api_url()}/api_content_quality/confirm`, { method: "POST",body: raw}).then(data => data.json());
     }
     async Delete(id:string, reason:string, warn:boolean, take_point:boolean){
-        await fetch(`https://brainly.com/api/28/moderation_new/delete_response_content`, {
+        await fetch(`${brainly_legacy_api_url()}moderation_new/delete_response_content`, {
             method: "POST",
             body:JSON.stringify({
               "reason_id":2,

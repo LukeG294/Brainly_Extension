@@ -1,5 +1,5 @@
 import {showMessage} from "../common/common_functions"
-import {extension_server_url} from "../../configs/server"
+import {extension_server_url} from "../../configs/links"
 
 export async function getPermissions(username,password){   
     var myHeaders = new Headers();

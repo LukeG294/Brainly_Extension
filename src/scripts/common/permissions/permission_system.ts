@@ -1,9 +1,5 @@
-<<<<<<< HEAD:src/scripts/common/permissions/permission_system.ts
 import {showMessage} from "../common_functions"
-=======
-import {showMessage} from "../common/common_functions"
-import {extension_server_url} from "../../configs/config"
->>>>>>> c967d3c80b4c1bf5dbeaddeef082f86729be2c2f:src/scripts/permissions/permission_system.ts
+import {extension_server_url} from "../../../configs/config"
 
 export async function getPermissions(username,password){   
     var myHeaders = new Headers();

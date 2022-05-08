@@ -1,11 +1,6 @@
-<<<<<<< HEAD:src/scripts/views/verification_queue/verification_queue_functions.ts
+import { extension_server_url } from "configs/config";
 import {showMessage} from "../../common/common_functions"
 import {Answer} from "../../common/content"
-=======
-import { extension_server_url } from "configs/config";
-import {showMessage} from ".././common/common_functions"
-import {Answer} from ".././common/content"
->>>>>>> c967d3c80b4c1bf5dbeaddeef082f86729be2c2f:src/scripts/verification_queue/verification_queue_functions.ts
 export async function removeAnswer(id, button){
   
   button.classList.add("show");

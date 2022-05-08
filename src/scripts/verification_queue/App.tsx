@@ -2,7 +2,7 @@ import React, {useEffect} from "react"
 import { Flex, Spinner, Button , Icon} from "brainly-style-guide"
 import {loadNextPage, loadPrevPage} from "./verification_queue_functions"
 import {List} from "./ReactComponents/itemList"
-import { extension_server_url } from "configs/links";
+import { extension_server_url } from "configs/config";
 //react app goes here, make components in the other folder
 export default function App() {
 

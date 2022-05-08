@@ -2,6 +2,7 @@ import {find, runtime} from "webextension-polyfill";
 import {ticket} from "./ticket_exp"
 import {Answer, Question} from "../content"
 import {get_time_diff} from "../common_functions"
+import Extension from "../../../locales/en/localization.json"
 
 function add_log(log){
   for(let i = 0; i < log.data.length; i++){
@@ -226,18 +227,18 @@ function add_answer(ans,res,a, basic_data){
                     <div class="sg-checkbox__ghost" aria-hidden="true">
                       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
                     </div>
-                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">take points</span>
+                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">${Extension.buttons.takePoints}</span>
                   </label>
                   <label class="sg-checkbox" for="warn${a}">
                     <input type="checkbox" class="sg-checkbox__element" id="warn${a}">
                     <div class="sg-checkbox__ghost" aria-hidden="true">
                       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
                     </div>
-                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">warn user</span>
+                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">${Extension.buttons.warnUser}</span>
                   </label>
                 </div>
                 <div class="confirmdel">
-                <button class="sg-button sg-button--m sg-button--outline"><span class="sg-button__text">confirm</span></button>
+                <button class="sg-button sg-button--m sg-button--outline"><span class="sg-button__text">${Extension.buttons.confirm}</span></button>
                 </div>
               </div>
             </div>

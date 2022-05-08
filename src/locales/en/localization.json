@@ -1,0 +1,58 @@
+{
+    "common": {
+      "unauthorized": "You are not allowed to use this extension.",
+      "questionDeleted": "This question has been deleted.",
+      "addUser":"Add User",
+      "cannotFetchData":"Please re-open the modal, we can't fetch data for this user yet.",
+      "verificationQueueError": "There was an error adding to the verification queue.",
+      "noAnswersYet": "No answers yet"
+      
+    },
+    "ryver": {
+        "ryverLogin" : "Login With Ryver",
+        "username": "username",
+        "password": "password",
+        "login": "login"
+    },
+    "times":{
+      "seconds": "seconds",
+      "minute": "minute",
+      "hour": "hour",
+      "day": "day",
+      "month": "month",
+      "year": "year",
+      "ago": "ago"
+    },
+    "titles": {
+      "massAccountDeleter":"Mass Account Deleter",
+      "manageExtensionUsers":"Manage Extension Users",
+      "manageUsers":"Manage Extension Users",
+      "verificationQueue":"Verification Queue",
+      "massMessageUsers":"Mass Message Users",
+      "questionContent":"Question Content",
+      "question":"question"
+      
+    }, 
+    "buttons": {
+      "delete": "Delete!",
+      "sendMessages":"Send Messages!",
+      "deleteUser": "Delete User",
+      "showAll": "Show All",
+      "showLess": "Show Less",
+      "selectAll":"Select All",
+      "toggleSelected": "Toggle Selected",
+      "copySelectedLinks":"Copy Selected Links",
+      "deleteContentPage":"Delete",
+      "fetchReported":"Fetch Reported",
+      "approve":"Approve",
+      "confirm":"Confirm",
+      "unverify":"Unverify",
+      "warnUser":"warn user",
+      "takePoints":"take points"
+    },
+    "instructions":{
+      "onePerLine":"Paste profile links here, one link per line"
+    }
+   
+   
+}

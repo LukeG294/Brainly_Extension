@@ -1,4 +1,6 @@
+import { brainly_legacy_api_url } from "configs/config"
 import {runtime} from "webextension-polyfill"
+import Extension from "../../../locales/en/localization.json"
 
 export function select_all(){
     return(/*html*/`
@@ -10,7 +12,7 @@ export function select_all(){
           <use xlink:href="#icon-add_more" aria-hidden="true"></use>
           </svg>
         </div>
-        </span><span class="sg-button__text">Select All</span></button>
+        </span><span class="sg-button__text">${Extension.buttons.selectAll}</span></button>
                     
                     
     `)
@@ -24,7 +26,7 @@ export function toggle_selected(){
         <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">filter filled</text>
             <use xlink:href="#icon-filters" aria-hidden="true"></use>
           </svg></div>
-      </span><span class="sg-button__text">Toggle Selected</span>
+      </span><span class="sg-button__text">${Extension.buttons.toggleSelected}</span>
     </button>
                     
                      
@@ -39,7 +41,7 @@ export function copy_links(){
         <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">clibboard filled</text>
             <use xlink:href="#icon-clipboard" aria-hidden="true"></use>
           </svg></div>
-      </span><span class="sg-button__text">Copy Selected Links</span>
+      </span><span class="sg-button__text">${Extension.buttons.copySelectedLinks}</span>
     </button>
                     
                      
@@ -54,7 +56,7 @@ export function delete_selected_questions(){
         <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">trash filled</text>
             <use xlink:href="#icon-trash" aria-hidden="true"></use>
           </svg></div>
-      </span><span class="sg-button__text">Delete</span>
+      </span><span class="sg-button__text">${Extension.buttons.deleteContentPage}</span>
     </button>                   
     `)
 }
@@ -66,7 +68,7 @@ export function delete_selected_answers(){
       <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">trash filled</text>
           <use xlink:href="#icon-trash" aria-hidden="true"></use>
         </svg></div>
-    </span><span class="sg-button__text">Delete</span>
+    </span><span class="sg-button__text">${Extension.buttons.deleteContentPage}</span>
   </button>
   `)
 }
@@ -78,7 +80,7 @@ export function delete_selected_comments(){
       <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">trash filled</text>
           <use xlink:href="#icon-trash" aria-hidden="true"></use>
         </svg></div>
-    </span><span class="sg-button__text">Delete</span>
+    </span><span class="sg-button__text">${Extension.buttons.deleteContentPage}</span>
   </button>
                   
                    
@@ -92,7 +94,7 @@ export function get_reported_content(){
       <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">trash filled</text>
           <use xlink:href="#icon-report_flag" aria-hidden="true"></use>
         </svg></div>
-    </span><span class="sg-button__text">Fetch All Reported</span>
+    </span><span class="sg-button__text">${Extension.buttons.fetchReported}</span>
   </button>                   
   `)
 }
@@ -104,7 +106,7 @@ export function approve_selected(){
         <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">check filled</text>
             <use xlink:href="#icon-check" aria-hidden="true"></use>
           </svg></div>
-      </span><span class="sg-button__text">Approve</span>
+      </span><span class="sg-button__text">${Extension.buttons.approve}</span>
     </button>
                     
                      
@@ -119,7 +121,7 @@ export function confirm_selected_questions(){
         <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">star outlined</text>
             <use xlink:href="#icon-star" aria-hidden="true"></use>
           </svg></div>
-      </span><span class="sg-button__text">Confirm</span>
+      </span><span class="sg-button__text">${Extension.buttons.confirm}</span>
     </button>
                     
                      
@@ -133,7 +135,7 @@ export function confirm_selected_answers(){
       <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">star outlined</text>
           <use xlink:href="#icon-star" aria-hidden="true"></use>
         </svg></div>
-    </span><span class="sg-button__text">Confirm</span>
+    </span><span class="sg-button__text">${Extension.buttons.confirm}</span>
   </button>
                   
                    
@@ -148,7 +150,7 @@ export function unverify_selected(){
         <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">star outlined</text>
             <use xlink:href="#icon-less" aria-hidden="true"></use>
           </svg></div>
-      </span><span class="sg-button__text">Unverify</span>
+      </span><span class="sg-button__text">${Extension.buttons.unverify}</span>
     </button>
                     
                      
@@ -168,18 +170,18 @@ export function deletion_menu(){
                     <div class="sg-checkbox__ghost" aria-hidden="true">
                       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
                     </div>
-                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">take points</span>
+                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">${Extension.buttons.takePoints}s</span>
                   </label>
                   <label class="sg-checkbox" for="warn">
                     <input type="checkbox" class="sg-checkbox__element" id="warn">
                     <div class="sg-checkbox__ghost" aria-hidden="true">
                       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
                     </div>
-                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">warn user</span>
+                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">${Extension.buttons.warnUser}</span>
                   </label>
                 </div>
                 <div class="confirmdel">
-                <button class="sg-button sg-button--m sg-button--outline" id="delete"> <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">confirm</span></button>
+                <button class="sg-button sg-button--m sg-button--outline" id="delete"> <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">${Extension.buttons.confirm}</span></button>
                 </div>
               </div>
             </div>
@@ -225,7 +227,7 @@ export function add_icons(){
         
           }
         });
-        xhr.open("POST", "https://brainly.com/api/28/api_tasks/main_view/"+qid+"?accept=application/json");
+        xhr.open("POST", `${brainly_legacy_api_url()}/api_tasks/main_view/"+qid+"?accept=application/json`);
         xhr.send();
       }
     }

@@ -1,3 +1,4 @@
+import { brainly_legacy_api_url } from "configs/config";
 import Browser, { browserAction, storage} from "webextension-polyfill";
 
 class LiveMod {
@@ -85,7 +86,7 @@ class LiveMod {
     }
   }
 export async function setAuth(){
-  let medata = await fetch("https://brainly.com/api/28/api_users/me").then(data => data.json());
+  let medata = await fetch(`${brainly_legacy_api_url()}api_users/me`).then(data => data.json());
   storage.local.set({
     user: {
       id: medata.data.user.id,

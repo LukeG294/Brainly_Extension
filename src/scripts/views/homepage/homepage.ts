@@ -4,35 +4,34 @@ import { ModObserver, AnsObserver } from "./homepage_exports";
 //import {subscribe, setAuth} from "../common/livemod"
 import { mass_msg, mass_accdel, usr_mgmt, verification_queue } from "./homepage_admin";
 import { showMessage } from "../../common/common_functions";
+import Extension from "../../../locales/en/localization.json"
 
 //@ts-ignore
 
 async function homeperms(){
   let perms = localStorage.getItem("userPerms").split(",")
-  if (perms.includes("5")){
+  if (perms.includes("1") || perms.includes("2") || perms.includes("3") || perms.includes("4")){
     ModObserver()
   }
-  if(perms.includes("10")){
+  if(perms.includes("4")){
     mass_msg()
-  }
-  if(perms.includes("11")){
     mass_accdel()
-  }
-  if(perms.includes("100")){
     usr_mgmt()
   }
-  if(perms.includes("14")){
+  if(perms.includes("5") || perms.includes("4")){
     verification_queue()
   }
   else{
     AnsObserver()
   }
+ 
+ 
 }
 if(localStorage.canUse === "true"){
   homeperms()
 }
 else{
-  showMessage("You are not Authorised to use this Extension", "error")
+  showMessage(Extension.common.unauthorized, "error")
 }
 
 //if user does not have username and password in local storage

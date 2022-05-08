@@ -1,3 +1,4 @@
+import { brainly_legacy_api_url } from "configs/config";
 import {insert_ticket} from "../../common/mod_functions"
 
 let modbutton = /*html*/`
@@ -46,7 +47,7 @@ async function HomeAns(){
         }
 
         //check if the question has been reported + add the report flag
-        let bdata = await fetch("https://brainly.com/api/28/api_tasks/main_view/"+qid, {method: "GET"}).then(data => data.json());
+        let bdata = await fetch(`${brainly_legacy_api_url()}/api_tasks/main_view/${qid}`, {method: "GET"}).then(data => data.json());
         if(bdata.data.task.settings.is_marked_abuse === true){
             questionBox.querySelector(".brn-feed-item__points .brn-points-on-feed").insertAdjacentHTML("afterbegin",`<div class = "repflag"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-report_flag"></use></svg></div></div>`)
         }
@@ -84,7 +85,7 @@ export async function HomeMod() {
       }
   
       //check if the question has been reported + add the report flag
-      let bdata = await fetch("https://brainly.com/api/28/api_tasks/main_view/"+qid, {method: "GET"}).then(data => data.json());
+      let bdata = await fetch(`${brainly_legacy_api_url()}/api_tasks/main_view/${qid}`, {method: "GET"}).then(data => data.json());
       if(bdata.data.task.settings.is_marked_abuse === true){
         questionBox.querySelector(".brn-feed-item__points .brn-points-on-feed").insertAdjacentHTML("afterbegin",`<div class = "repflag"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-report_flag"></use></svg></div></div>`)
       }
@@ -103,19 +104,11 @@ export async function HomeMod() {
     return(/*html*/`
    
     <label class="sg-checkbox permission" for="" >
-    <input type="checkbox" class="sg-checkbox__element perm0" id="0">
-    <div class="sg-checkbox__ghost" aria-hidden="true">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-    </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Confirm Selected</span>
-    </label>
-
-    <label class="sg-checkbox permission"  >
     <input type="checkbox" class="sg-checkbox__element perm1" id="1">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Verify Selected</span>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Junior Mod+</span>
     </label>
 
     <label class="sg-checkbox permission"  >
@@ -123,7 +116,7 @@ export async function HomeMod() {
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Fetch Reported</span>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Senior Mod</span>
     </label>
 
     <label class="sg-checkbox permission"  >
@@ -131,7 +124,7 @@ export async function HomeMod() {
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Unverify Selected</span>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Super Mod</span>
     </label>
 
     <label class="sg-checkbox permission"  >
@@ -139,7 +132,7 @@ export async function HomeMod() {
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Delete User</span>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Admin</span>
     </label>
 
     <label class="sg-checkbox permission"  >
@@ -147,88 +140,9 @@ export async function HomeMod() {
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Homepage Tickets</span>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Verification Subteam</span>
     </label>
 
-    <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element perm6" id="6">
-    <div class="sg-checkbox__ghost" aria-hidden="true">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-    </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Cont. Pg Tickets</span>
-    </label>
-
-    <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element perm7" id="7">
-    <div class="sg-checkbox__ghost" aria-hidden="true">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-    </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Delete Selected</span>
-    </label>
-
-    <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element perm8" id="8">
-    <div class="sg-checkbox__ghost" aria-hidden="true">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-    </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Warnings Prev.</span>
-    </label>
-
-    <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element perm9" id="9">
-    <div class="sg-checkbox__ghost" aria-hidden="true">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-    </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Confirm Button</span>
-    </label>
-
-    <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element perm10" id="10">
-    <div class="sg-checkbox__ghost" aria-hidden="true">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-    </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Mass-Message Users</span>
-    </label>
-
-    <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element perm11" id="11">
-    <div class="sg-checkbox__ghost" aria-hidden="true">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-    </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Mass-Delete Users</span>
-    </label>
-
-    <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element perm12" id="12">
-    <div class="sg-checkbox__ghost" aria-hidden="true">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-    </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Select All Links</span>
-    </label>
-
-    <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element perm13" id="13">
-    <div class="sg-checkbox__ghost" aria-hidden="true">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-    </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Request Verification</span>
-    </label>
-
-    <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element perm14" id="14">
-    <div class="sg-checkbox__ghost" aria-hidden="true">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-    </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">View Verify Queue</span>
-    </label>
-
-    <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element perm100" id="100">
-    <div class="sg-checkbox__ghost" aria-hidden="true">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-    </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">User Management</span>
-    </label>
     <button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue submit-permissions">
       <div class="spinner-container">
           <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>

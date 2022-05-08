@@ -6,7 +6,8 @@ import {
   select_all,
   toggle_selected
 } from "./content_page_buttons"
-
+import { brainly_legacy_api_url, parseQuestionLink } from "configs/config"
+import {getCookie} from "../../common/common_functions"
 export function selectAll(){
     let checkBoxes = document.getElementsByClassName("contentCheckboxes")
     for (let i = 0; i < checkBoxes.length; i++) {
@@ -83,10 +84,10 @@ export async function showDelrsn(type:string){
     document.querySelector(".primary-items").innerHTML = '';
     let id = document.querySelector("tbody a").getAttribute("href").replace("/question/","");
     document.querySelector("#deleteSelected .spinner-container").classList.add("show");
-    let res = await fetch(`https://brainly.com/api/28/moderation_new/get_content`, { method: "POST",body: (`{"model_type_id":1,"model_id":${id},"schema":"moderation.content.get"}`)}).then(data => data.json());
+    let res = await fetch(`${brainly_legacy_api_url()}/moderation_new/get_content`, { method: "POST",body: (`{"model_type_id":1,"model_id":${id},"schema":"moderation.content.get"}`)}).then(data => data.json());
     document.querySelector("#deleteSelected .spinner-container").classList.remove("show");
     document.querySelector(".delmenu").classList.toggle("show");
-    fetch(`https://brainly.com/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${id},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
+    fetch(`${brainly_legacy_api_url()}/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${id},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
     let del_reasons;
     if(type === "questions"){
       del_reasons = res.data.delete_reasons.task;
@@ -144,7 +145,7 @@ export async function confirmDeletionQuestions(){
       if (String(checkBoxes[i].checked) === "true") {
           //@ts-ignore
           let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
-          let id = link.split("/")[4]
+          let id = parseQuestionLink(link)
           idsToDelete.push(id)
       } 
   }
@@ -159,7 +160,7 @@ export async function confirmDeletionQuestions(){
       let warn = document.querySelector("#warn").checked
       //@ts-expect-error
       let take_point = document.querySelector("#pts").checked
-      await fetch(`https://brainly.com/api/28/moderation_new/delete_${type}_content`, {
+      await fetch(`${brainly_legacy_api_url()}/moderation_new/delete_${type}_content`, {
           method: "POST",
           body:JSON.stringify({
             "reason_id":2,
@@ -208,7 +209,7 @@ export async function confirmDeletionAnswers(){
       if (String(checkBoxes[i].checked) === "true") {
           //@ts-ignore
           let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
-          let id = link.split("/")[4]
+          let id = parseQuestionLink(link)
           idsToDelete.push(id)
       } 
   }
@@ -217,8 +218,8 @@ export async function confirmDeletionAnswers(){
   for (let i = 0; i < idsToDelete.length; i++) {
     
     let questionID = idsToDelete[i]
-    let res = await fetch(`https://brainly.com/api/28/moderation_new/get_content`, { method: "POST",body: (`{"model_type_id":1,"model_id":${questionID},"schema":"moderation.content.get"}`)}).then(data => data.json());
-    await fetch(`https://brainly.com/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${questionID},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
+    let res = await fetch(`${brainly_legacy_api_url()}/moderation_new/get_content`, { method: "POST",body: (`{"model_type_id":1,"model_id":${questionID},"schema":"moderation.content.get"}`)}).then(data => data.json());
+    await fetch(`${brainly_legacy_api_url()}/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${questionID},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
     let answers = res.data.responses
     let times = 0
     
@@ -250,7 +251,7 @@ export async function confirmDeletionAnswers(){
       let warn = document.querySelector("#warn").checked
       //@ts-expect-error
       let take_point = document.querySelector("#pts").checked
-      let response = await fetch(`https://brainly.com/api/28/moderation_new/delete_${type}_content`, {method: "POST",body:JSON.stringify({"reason_id":2,"reason":reason,"give_warning":warn,"take_points": take_point,"schema":`moderation.${type}.delete`,"model_type_id":model_type_id,"model_id":answerIDtoDelete[i]})}).then(data => data.json());;
+      let response = await fetch(`${brainly_legacy_api_url()}/moderation_new/delete_${type}_content`, {method: "POST",body:JSON.stringify({"reason_id":2,"reason":reason,"give_warning":warn,"take_points": take_point,"schema":`moderation.${type}.delete`,"model_type_id":model_type_id,"model_id":answerIDtoDelete[i]})}).then(data => data.json());;
       console.log(response)
       if (response["success"] === true){
         success+=1
@@ -294,7 +295,7 @@ export async function unverifyAnswers(){
       if (String(checkBoxes[i].checked) === "true") {
           //@ts-ignore
           let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
-          let id = link.split("/")[4]
+          let id = parseQuestionLink(link)
           idsToUnverify.push(id)
       } 
   }
@@ -305,8 +306,8 @@ export async function unverifyAnswers(){
     
     let questionID = idsToUnverify[i]
     questionIDsafety = idsToUnverify[i]
-    let res = await fetch(`https://brainly.com/api/28/moderation_new/get_content`, { method: "POST",body: (`{"model_type_id":1,"model_id":${questionID},"schema":"moderation.content.get"}`)}).then(data => data.json());
-    await fetch(`https://brainly.com/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${questionID},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
+    let res = await fetch(`${brainly_legacy_api_url()}/moderation_new/get_content`, { method: "POST",body: (`{"model_type_id":1,"model_id":${questionID},"schema":"moderation.content.get"}`)}).then(data => data.json());
+    await fetch(`${brainly_legacy_api_url()}/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${questionID},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
     let answers = res.data.responses
     let times = 0
     
@@ -353,7 +354,7 @@ export async function unverifyAnswers(){
       });
       
       
-      let response = await fetch("https://brainly.com/api/28/api_content_quality/unconfirm", { method: "POST",body: raw}).then(data => data.json());;
+      let response = await fetch(`${brainly_legacy_api_url()}/api_content_quality/unconfirm`, { method: "POST",body: raw}).then(data => data.json());;
       console.log(response)
       if (response["success"] === true){
         success+=1
@@ -396,7 +397,7 @@ export async function approveAnswers(){
         if (String(checkBoxes[i].checked) === "true") {
             //@ts-ignore
             let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
-            let id = link.split("/")[4]
+            let id = parseQuestionLink(link)
             idsToVerify.push(id)
         } 
     }
@@ -407,8 +408,8 @@ export async function approveAnswers(){
       
       let questionID = idsToVerify[i]
       questionIDsafety = idsToVerify[i]
-      let res = await fetch(`https://brainly.com/api/28/moderation_new/get_content`, { method: "POST",body: (`{"model_type_id":1,"model_id":${questionID},"schema":"moderation.content.get"}`)}).then(data => data.json());
-      await fetch(`https://brainly.com/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${questionID},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
+      let res = await fetch(`${brainly_legacy_api_url()}/moderation_new/get_content`, { method: "POST",body: (`{"model_type_id":1,"model_id":${questionID},"schema":"moderation.content.get"}`)}).then(data => data.json());
+      await fetch(`${brainly_legacy_api_url()}/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${questionID},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
       let answers = res.data.responses
       let times = 0
       
@@ -455,7 +456,7 @@ export async function approveAnswers(){
         });
         
         
-        let response = await fetch("https://brainly.com/api/28/api_content_quality/confirm", { method: "POST",body: raw}).then(data => data.json());;
+        let response = await fetch(`${brainly_legacy_api_url()}/api_content_quality/confirm`, { method: "POST",body: raw}).then(data => data.json());;
         console.log(response)
         if (response["success"] === true){
           success+=1
@@ -498,7 +499,7 @@ export async function confirmAnswers(){
       if (String(checkBoxes[i].checked) === "true") {
           //@ts-ignore
           let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
-          let id = link.split("/")[4]
+          let id = parseQuestionLink(link)
           idsToConfirm.push(id)
       } 
   }
@@ -509,8 +510,8 @@ export async function confirmAnswers(){
     
     let questionID = idsToConfirm[i]
     questionIDsafety =  idsToConfirm[i]
-    let res = await fetch(`https://brainly.com/api/28/moderation_new/get_content`, { method: "POST",body: (`{"model_type_id":1,"model_id":${questionID},"schema":"moderation.content.get"}`)}).then(data => data.json());
-    await fetch(`https://brainly.com/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${questionID},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
+    let res = await fetch(`${brainly_legacy_api_url()}/moderation_new/get_content`, { method: "POST",body: (`{"model_type_id":1,"model_id":${questionID},"schema":"moderation.content.get"}`)}).then(data => data.json());
+    await fetch(`${brainly_legacy_api_url()}/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${questionID},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
    
     if (res.success){
       let answers = res.data.responses
@@ -545,21 +546,7 @@ export async function confirmAnswers(){
       
      
       
-      function getCookie(cname) {
-        let name = cname + "=";
-        let decodedCookie = decodeURIComponent(document.cookie);
-        let ca = decodedCookie.split(';');
-        for(let i = 0; i <ca.length; i++) {
-          let c = ca[i];
-          while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-          }
-          if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-          }
-        }
-        return "";
-      }
+      
       let myToken = getCookie("Zadanepl_cookie[Token][Long]")
       
       let response = await fetch("https://brainly.com/graphql/us", {
@@ -598,29 +585,15 @@ export async function confirmQuestions(){
       if (String(checkBoxes[i].checked) === "true") {
           //@ts-ignore
           let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
-          let id = link.split("/")[4]
+          let id = parseQuestionLink(link)
           idsToConfirm.push(id)
       } 
   }
-  function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    for(let i = 0; i <ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
-  }
+  
   let myToken = getCookie("Zadanepl_cookie[Token][Long]")
   for (let i = 0; i < idsToConfirm.length; i++) {
    
-    await fetch("https://brainly.com/api/28/moderation_new/accept", {
+    await fetch(`${brainly_legacy_api_url()}/moderation_new/accept`, {
       "headers": {
         "accept": "application/json, text/javascript, */*; q=0.01",
         "accept-language": "en-US,en;q=0.9",
@@ -697,7 +670,7 @@ export async function find_reported_content(id,type){
               }
           }
         });
-        xhr.open("POST", "https://brainly.com/api/28/api_tasks/main_view/"+qid+"?accept=application/json");
+        xhr.open("POST", `${brainly_legacy_api_url()}/api_tasks/main_view/"+qid+"?accept=application/json`);
         xhr.send();
         }
     } 

@@ -1,4 +1,5 @@
 import { delete_user } from "../../common/mod_functions";
+import Extension from "../../../locales/en/localization.json"
 export function add_del_menu(){
     return /*html*/`
         <div class="modal_back">
@@ -97,7 +98,7 @@ export function delete_user_btn(){
             <span class="sg-button__icon sg-button__icon--m">
             <div class="sg-icon sg-icon--dark sg-icon--x32" style="height: 26px;width: 26px;">
                 <svg class="sg-icon__svg"><use xlink:href="#icon-trash"></use></svg>
-            </div><div class="mint-label__text" style="font-size: 13px;color: rgb(255, 121, 104);">delete user</div>
+            </div><div class="mint-label__text" style="font-size: 13px;color: rgb(255, 121, 104);">${Extension.buttons.deleteUser}</div>
             </span>
         </button>
     `)

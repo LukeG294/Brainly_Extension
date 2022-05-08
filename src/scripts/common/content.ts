@@ -1,3 +1,5 @@
+import { brainly_graphql_url, brainly_legacy_api_url } from "configs/config";
+
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -6,7 +8,7 @@ function getCookie(name) {
 
 export class Answer{
     Confirm(id:number){
-        let res = fetch("https://brainly.com/graphql/us", {
+        let res = fetch(brainly_graphql_url(), {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -30,10 +32,10 @@ export class Answer{
             "model_id": id
           });
           
-          fetch("https://brainly.com/api/28/api_content_quality/confirm", { method: "POST",body: raw}).then(data => data.json());
+          fetch(`${brainly_legacy_api_url()}/api_content_quality/confirm`, { method: "POST",body: raw}).then(data => data.json());
     }
     async Delete(id:string, reason:string, warn:boolean, take_point:boolean){
-        await fetch(`https://brainly.com/api/28/moderation_new/delete_response_content`, {
+        await fetch(`${brainly_legacy_api_url()}moderation_new/delete_response_content`, {
             method: "POST",
             body:JSON.stringify({
               "reason_id":2,
@@ -50,7 +52,7 @@ export class Answer{
 
 export class Question{
     Confirm(id:number){
-        fetch("https://brainly.com/api/28/moderation_new/accept", {
+        fetch(`${brainly_legacy_api_url()}/moderation_new/accept`, {
           "referrer": "https://brainly.com/tasks/archive_mod",
           "referrerPolicy": "strict-origin-when-cross-origin",
           "body": `{\"model_type_id\":1,\"model_id\":${id},\"schema\":\"moderation.content.ok\"}`,
@@ -60,7 +62,7 @@ export class Question{
         });
     }
     async Delete(id:string, reason:string, warn:boolean, take_point:boolean){
-        await fetch(`https://brainly.com/api/28/moderation_new/delete_task_content`, {
+        await fetch(`${brainly_legacy_api_url()}/moderation_new/delete_task_content`, {
             method: "POST",
             body:JSON.stringify({
               "reason_id":2,

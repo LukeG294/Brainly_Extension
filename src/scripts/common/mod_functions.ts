@@ -1,7 +1,14 @@
 import {ticket_data} from "../common/Mod Ticket/ticket_functions"
 import {showMessage} from "../common/common_functions"
+<<<<<<< HEAD
 import{ removeUser, editUser, checkPermissionSet, getPermissions, removeAnswer} from "./permissions/permission_system"
 import{ permissionChecks } from "../views/homepage/homepage_exports"
+=======
+import{ removeUser, editUser, checkPermissionSet, getPermissions, removeAnswer} from "../permissions/permission_system"
+import{ permissionChecks } from "../webpages/homepage/homepage_exports"
+import {brainly_legacy_api_url, extension_server_url, parseProfileLink} from "../../configs/config"
+import Extension from "../../locales/en/localization.json"
+>>>>>>> c967d3c80b4c1bf5dbeaddeef082f86729be2c2f
 
 function noclick(){
     document.querySelector("body").insertAdjacentHTML("afterbegin",/*html*/`
@@ -21,7 +28,7 @@ export async function insert_ticket(id, butspinner){
     xhttp.onreadystatechange = function(){
     if(this.readyState == 4 && this.status === 200){
         let basic_data = JSON.parse(this.responseText)
-        console.log(basic_data)
+      
         if(!basic_data.data.task.settings.is_deleted){
             //if question is not deleted
             let xhttp1 = new XMLHttpRequest();
@@ -44,17 +51,17 @@ export async function insert_ticket(id, butspinner){
                 "model_id":id,
                 "schema":"moderation.content.get"
             }
-            xhttp1.open("POST", `https://brainly.com/api/28/moderation_new/get_content`, true);
+            xhttp1.open("POST", `${brainly_legacy_api_url()}/moderation_new/get_content`, true);
             xhttp1.send(JSON.stringify(body));
         }
         else{
             //question does not exist
             butspinner.classList.remove("show");
             document.querySelector(".blockint").remove();
-            showMessage("Question has been deleted", "error")
+            showMessage(Extension.common.questionDeleted, "error")
         }
     }}
-    xhttp.open("GET", `https://brainly.com/api/28/api_tasks/main_view/${id}`);
+    xhttp.open("GET", `${brainly_legacy_api_url()}/api_tasks/main_view/${id}`);
     xhttp.send();
 }
 export async function delete_user(uid:string){
@@ -117,7 +124,7 @@ export function sendMessages(users_ids, content){
        
   
           
-        xhr.open("POST", "https://brainly.com/api/28/api_messages/send");
+        xhr.open("POST", "${brainly_legacy_api_url()}api_messages/send");
         xhr.setRequestHeader("authority", "brainly.com");
         xhr.setRequestHeader("sec-ch-ua", "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"98\", \"Google Chrome\";v=\"98\"");
         xhr.setRequestHeader("sec-ch-ua-mobile", "?0");
@@ -132,7 +139,7 @@ export function sendMessages(users_ids, content){
         }
     });
     
-    xhr.open("POST", "https://brainly.com/api/28/api_messages/check");
+    xhr.open("POST", "${brainly_legacy_api_url()}api_messages/check");
     xhr.setRequestHeader("authority", "brainly.com");
     
     xhr.setRequestHeader("content-type", "application/json");
@@ -154,7 +161,7 @@ export function sendMessages(users_ids, content){
     }
 }
 export async function startCompanionManager(){
-    let txt = await fetch("https://th-extension.lukeg294.repl.co/all").then(data => data.json());
+    let txt = await fetch(`${extension_server_url()}/all`).then(data => data.json());
     let modal = document.querySelector(".modal_mcomp_u")
     modal.querySelector(".sg-spinner-container").classList.add("remove")
 
@@ -231,7 +238,7 @@ export async function startCompanionManager(){
             if (!appended){
                 let userToGet = element.parentElement.parentElement.querySelector(".username")
                 //@ts-ignore
-                let prevPerms = await getPermissions(userToGet.innerText,userToGet.href.split("/")[4].split("-")[1])
+                let prevPerms = await getPermissions(userToGet.innerText, parseProfileLink(userToGet.href))
                 element.parentElement.parentElement.querySelector(".permlist").insertAdjacentHTML("beforeend",permissionChecks())
                 element.parentElement.parentElement.classList.add("openelem")
                 let decodedPerms = atob(prevPerms).split(",")
@@ -282,7 +289,7 @@ export async function startCompanionManager(){
             <input type="text" placeholder="Username" class="sg-input userSpace" >
             <button class="sg-button sg-button--m sg-button--solid-mint confirm-add-user">
                 <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
-                <span class="sg-button__text">Add User</span>
+                <span class="sg-button__text">${Extension.common.addUser}</span>
             </button>
             `)
             
@@ -328,7 +335,7 @@ export async function startCompanionManager(){
                                     //@ts-ignore
                                     let username = profilePage.querySelector("#main-left > div.personal_info > div.header > div.info > div.info_top > span.ranking > h2 > a").innerText
                                     //@ts-ignore
-                                    let id = profilePage.querySelector(".avatar").children[0].href.split("/")[4].split("-")[1]
+                                    let id = parseProfileLink(profilePage.querySelector(".avatar").children[0].href)
                                     
                                     var myHeaders = new Headers();
                                     myHeaders.append("Content-Type", "application/json");
@@ -348,12 +355,12 @@ export async function startCompanionManager(){
                                     
                                     };
                         
-                                    await fetch("https://th-extension.lukeg294.repl.co/users", requestOptions)
+                                    await fetch(`${extension_server_url()}/users`, requestOptions)
                                     .then(response => response.text())
                                     .then(result => console.log(result))
                                     .catch(error => console.log('error', error));
                                     this.querySelector(".spinner-container").classList.remove("show")
-                                    if (avatar === "https://brainly.com/img/"){
+                                    if (avatar === `https://brainly.com/img/`){
                                         avatar = "https://brainly.com/img/avatars/100-ON.png"
                                     }
                                     let modal = document.querySelector(".modal_mcomp_u")
@@ -382,7 +389,7 @@ export async function startCompanionManager(){
                                     for (let index = 0; index < buttons.length; index++) {
                                         const element = buttons[index];
                                         element.addEventListener("click",function(){
-                                            alert("Please re-open the modal, we can't fetch data for this user yet.")
+                                            alert(Extension.common.cannotFetchData)
                                         })
                                         
                                     }

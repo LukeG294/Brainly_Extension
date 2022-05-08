@@ -1,3 +1,4 @@
+import { brainly_graphql_url, brainly_legacy_api_url } from "configs/config";
 import {getCookie} from "./common_functions"
 
 export class User{
@@ -38,7 +39,7 @@ export class User{
         myHeaders.append("content-type", "application/json");
         myHeaders.append("accept-language", "en-US,en;q=0.9");
 
-        let txt = await fetch("https://brainly.com/graphql/us", {
+        let txt = await fetch(brainly_graphql_url(), {
             method: 'POST',
             headers: myHeaders,
             body: JSON.stringify({
@@ -56,5 +57,9 @@ export class User{
         })
         .then(response => response.json())
         return txt
+    }
+    async Get_Bio(id:string){
+        let resp = await fetch(`${brainly_legacy_api_url()}/api_user_profiles/get_by_id/`+id).then(res => res.json());
+        return resp.data.description
     }
 }

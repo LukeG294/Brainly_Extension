@@ -1,10 +1,16 @@
+<<<<<<< HEAD:src/scripts/views/verification_queue/verification_queue_functions.ts
 import {showMessage} from "../../common/common_functions"
 import {Answer} from "../../common/content"
+=======
+import { extension_server_url } from "configs/config";
+import {showMessage} from ".././common/common_functions"
+import {Answer} from ".././common/content"
+>>>>>>> c967d3c80b4c1bf5dbeaddeef082f86729be2c2f:src/scripts/verification_queue/verification_queue_functions.ts
 export async function removeAnswer(id, button){
   
   button.classList.add("show");
   console.log(button)
-  let resp = await fetch("https://th-extension.lukeg294.repl.co/answers/"+id,{method: "DELETE"})
+  let resp = await fetch(`${extension_server_url()}/answers/`+id,{method: "DELETE"})
   .then(response => response.json())
 
   if (!resp.statusCode){
@@ -23,7 +29,7 @@ export async function approveAnswer(id, answerId, button){
   
   button.classList.add("show");
   console.log(button)
-  let resp = await fetch("https://th-extension.lukeg294.repl.co/answers/"+id,{method: "DELETE"})
+  let resp = await fetch(`${extension_server_url()}/answers/`+id,{method: "DELETE"})
   .then(response => response.json())
 
   if (!resp.statusCode){
@@ -46,7 +52,7 @@ export async function loadNextPage(){
   //@ts-expect-error
     let currentPageDisplay = parseInt(document.querySelector(".pagenum").innerText)
     if (currentPageDisplay >= 0){
-        let nextData = await fetch("https://TH-Extension.lukeg294.repl.co/get_next_page/"+String(currentPageDisplay))
+        let nextData = await fetch(`${extension_server_url()}/get_next_page/`+String(currentPageDisplay))
         .then(response => response.json())
         //@ts-ignore
        
@@ -70,7 +76,7 @@ export async function loadPrevPage(){
     //@ts-expect-error
     let currentPageDisplay = document.querySelector(".pagenum").innerText
     if (parseInt(currentPageDisplay) > 1){
-        let prevData = await fetch("https://TH-Extension.lukeg294.repl.co/get_prev_page/"+currentPageDisplay)
+        let prevData = await fetch(`${extension_server_url()}/get_prev_page/`+currentPageDisplay)
         .then(response => response.json())
         if (!prevData.end){
           //@ts-ignore

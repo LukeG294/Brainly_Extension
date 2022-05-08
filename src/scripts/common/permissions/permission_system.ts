@@ -1,4 +1,9 @@
+<<<<<<< HEAD:src/scripts/common/permissions/permission_system.ts
 import {showMessage} from "../common_functions"
+=======
+import {showMessage} from "../common/common_functions"
+import {extension_server_url} from "../../configs/config"
+>>>>>>> c967d3c80b4c1bf5dbeaddeef082f86729be2c2f:src/scripts/permissions/permission_system.ts
 
 export async function getPermissions(username,password){   
     var myHeaders = new Headers();
@@ -13,7 +18,7 @@ export async function getPermissions(username,password){
     headers: myHeaders,
     body: raw,
     };
-    let txt = await fetch("https://th-extension.lukeg294.repl.co/login", requestOptions)
+    let txt = await fetch(`${extension_server_url()}/login`, requestOptions)
     .then(data => data.text())
     if (txt){
       let secret = JSON.parse(txt).secret.secret;
@@ -26,10 +31,43 @@ export async function getPermissions(username,password){
         method: 'GET',
         headers: myHeaders,
       };
-      let resp = await fetch("https://th-extension.lukeg294.repl.co/users/"+documentID,request).then(data => data.text());
+      let resp = await fetch(`${extension_server_url()}/users/`+documentID,request).then(data => data.text());
       let permissionsResponseJSON = JSON.parse(resp)
-      return permissionsResponseJSON["data"]["permissions"] 
+      return permissionsResponseJSON["data"]["permissions"]
     }
+}
+
+
+export async function getPermissionsWithDocId(username,password){   
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+  "username": username,
+  "password": password
+  });
+  var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: raw,
+  };
+  let txt = await fetch(`${extension_server_url()}/login`, requestOptions)
+  .then(data => data.text())
+  if (txt){
+    let secret = JSON.parse(txt).secret.secret;
+    let responseJSON = JSON.parse(txt)
+    let documentID = responseJSON.secret.instance["@ref"].id
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("fauna-secret", secret);
+    var request = {
+      method: 'GET',
+      headers: myHeaders,
+    };
+    let resp = await fetch(`${extension_server_url()}/users/`+documentID,request).then(data => data.text());
+    let permissionsResponseJSON = JSON.parse(resp)
+    return `${permissionsResponseJSON["data"]["permissions"]},${documentID}`
+  }
 }
 
 
@@ -65,18 +103,18 @@ export async function checkPermissionSet(){
 //       }
 //     });
     
-//     xhr.open("POST", "https://th-extension.lukeg294.repl.co/login");
+//     xhr.open("POST", `${extension_server_url}/login`);
 //     xhr.setRequestHeader("Content-Type", "application/json");
 //     xhr.send(data);
 // }
 export async function removeUser(id){
-  await fetch("https://th-extension.lukeg294.repl.co/users/"+id,{method: "DELETE"})
+  await fetch(`${extension_server_url()}/users/`+id,{method: "DELETE"})
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
 }
 export async function removeAnswer(id){
-  await fetch("https://th-extension.lukeg294.repl.co/answers/"+id,{method: "DELETE"})
+  await fetch(`${extension_server_url()}/answers/`+id,{method: "DELETE"})
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
@@ -96,7 +134,7 @@ export async function editUser(id, perms){
   body: raw,
   };
 
-  await fetch("https://th-extension.lukeg294.repl.co/permissions/"+id, requestOptions)
+  await fetch(`${extension_server_url()}/permissions/`+id, requestOptions)
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
@@ -132,7 +170,7 @@ export async function addUser(profileLink){
       
       };
 
-      fetch("https://th-extension.lukeg294.repl.co/users", requestOptions)
+      fetch(`${extension_server_url()}/users`, requestOptions)
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));

@@ -1,10 +1,11 @@
 import {runtime} from "webextension-polyfill";
+import Extension from "../../../locales/en/localization.json"
 let noanswer = runtime.getURL("resources/Compositions/Feature In Progress.svg");
 export function ticket(){
   
     return(/*html*/`
     <div class = "modal_back"><div class = "modal">
-    <h1 class="sg-text-bit--gray-secondary sg-headline sg-headline--xlarge sg-headline--extra-bold" style = "color:#323c45; margin-bottom:8px;">Question Content</h1>
+    <h1 class="sg-text-bit--gray-secondary sg-headline sg-headline--xlarge sg-headline--extra-bold" style = "color:#323c45; margin-bottom:8px;">${Extension.titles.questionContent}</h1>
       <div class = "modal_close"><div class="sg-toplayer__close" role="button" tabindex="0"><div class="sg-icon sg-icon--icon-gray-50 sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-close-zvtc08" focusable="false"><title id="title-close-zvtc08">close</title><use xlink:href="#icon-close" aria-hidden="true"></use></svg></div></div></div>
     
       <div class = "preview-content">
@@ -15,7 +16,7 @@ export function ticket(){
           </div>
         </div>
         <div class = "content-item question">
-        <h1 class="sg-text-bit sg-text-bit--small sg-text-bit--peach-primary" style="display: flex;justify-content: center;line-height: 1.2rem;font-size: 1rem;color: #c3d1dd;align-items: center;">question</h1>
+        <h1 class="sg-text-bit sg-text-bit--small sg-text-bit--peach-primary" style="display: flex;justify-content: center;line-height: 1.2rem;font-size: 1rem;color: #c3d1dd;align-items: center;">${Extension.titles.question}</h1>
           <div class = "report">
           <div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-report_flag"></use></svg></div>
           <div class="text-rep">
@@ -74,14 +75,14 @@ export function ticket(){
                     <div class="sg-checkbox__ghost" aria-hidden="true">
                       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
                     </div>
-                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">take points</span>
+                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">${Extension.buttons.takePoints}</span>
                   </label>
                   <label class="sg-checkbox" for="warn">
                     <input type="checkbox" class="sg-checkbox__element" id="warn">
                     <div class="sg-checkbox__ghost" aria-hidden="true">
                       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
                     </div>
-                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">warn user</span>
+                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">${Extension.buttons.warnUser}</span>
                   </label>
                 </div>
                 <div class="confirmdel">
@@ -95,7 +96,7 @@ export function ticket(){
         <div class = "answers">
           <div class="noanswer">
             <img src="${noanswer}" alt="">
-            <h1 class="sg-text-bit sg-text-bit--small sg-text-bit--peach-primary">no answers... yet</h1>
+            <h1 class="sg-text-bit sg-text-bit--small sg-text-bit--peach-primary">${Extension.common.noAnswersYet}</h1>
           </div>
         </div>
         <h1 class="sg-text-bit--gray-secondary sg-headline sg-headline--xlarge sg-headline--extra-bold" style = "color:#323c45;font-size:1.5rem;">Log</h1>

@@ -1,3 +1,4 @@
+import { extension_server_url } from "configs/server";
 import { showMessage } from "../../common/common_functions"
 import {Answer} from "../../common/content"
 import {User} from "../../common/user"
@@ -26,7 +27,7 @@ export function confirmButton(){
     }
 }
 export async function removeAnswer(id){
-  let resp = await fetch("https://th-extension.lukeg294.repl.co/answers/"+id,{method: "DELETE"})
+  let resp = await fetch(`${extension_server_url}/answers/`+id,{method: "DELETE"})
   .then(response => response.json())
   if (resp.code){
     showMessage("Could not delete: "+resp.message, "error")
@@ -74,7 +75,7 @@ export async function requestApproval(){
     
       };
 
-        let serverResponse = await fetch("https://th-extension.lukeg294.repl.co/request-verify-add", requestOptions).then(response => response.json())
+        let serverResponse = await fetch(`${extension_server_url}/request-verify-add`, requestOptions).then(response => response.json())
       
         //@ts-ignore
         
@@ -122,7 +123,7 @@ export async function requestApproval(){
     for (let i = 0; i < answers.length; i++) {
      if (!responses[i].approved.date){
        let answer = responses[i].id
-       let resp = await fetch("https://TH-Extension.lukeg294.repl.co/get_answer_by_id/"+answer).then(response => response.json())
+       let resp = await fetch(`${extension_server_url}/get_answer_by_id/`+answer).then(response => response.json())
       //if cannot find previous request then add new button
        if (!resp.data){
        

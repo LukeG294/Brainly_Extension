@@ -2,7 +2,7 @@ import {ticket_data} from "../common/Mod Ticket/ticket_functions"
 import {showMessage} from "../common/common_functions"
 import{ removeUser, editUser, checkPermissionSet, getPermissions, removeAnswer} from "../permissions/permission_system"
 import{ permissionChecks } from "../webpages/homepage/homepage_exports"
-
+import {extension_server_url} from "../../configs/server"
 function noclick(){
     document.querySelector("body").insertAdjacentHTML("afterbegin",/*html*/`
         <div class="blockint"></div>
@@ -154,7 +154,7 @@ export function sendMessages(users_ids, content){
     }
 }
 export async function startCompanionManager(){
-    let txt = await fetch("https://th-extension.lukeg294.repl.co/all").then(data => data.json());
+    let txt = await fetch(`${extension_server_url()}/all`).then(data => data.json());
     let modal = document.querySelector(".modal_mcomp_u")
     modal.querySelector(".sg-spinner-container").classList.add("remove")
 
@@ -348,7 +348,7 @@ export async function startCompanionManager(){
                                     
                                     };
                         
-                                    await fetch("https://th-extension.lukeg294.repl.co/users", requestOptions)
+                                    await fetch(`${extension_server_url}/users`, requestOptions)
                                     .then(response => response.text())
                                     .then(result => console.log(result))
                                     .catch(error => console.log('error', error));

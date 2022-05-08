@@ -2,7 +2,7 @@ import {ticket_data} from "../common/Mod Ticket/ticket_functions"
 import {showMessage} from "../common/common_functions"
 import{ removeUser, editUser, checkPermissionSet, getPermissions, removeAnswer} from "../permissions/permission_system"
 import{ permissionChecks } from "../webpages/homepage/homepage_exports"
-import {brainly_legacy_api_url, extension_server_url} from "../../configs/config"
+import {brainly_legacy_api_url, extension_server_url, parseProfileLink} from "../../configs/config"
 function noclick(){
     document.querySelector("body").insertAdjacentHTML("afterbegin",/*html*/`
         <div class="blockint"></div>
@@ -231,7 +231,7 @@ export async function startCompanionManager(){
             if (!appended){
                 let userToGet = element.parentElement.parentElement.querySelector(".username")
                 //@ts-ignore
-                let prevPerms = await getPermissions(userToGet.innerText,parseProfileLink(userToGet.href))
+                let prevPerms = await getPermissions(userToGet.innerText, parseProfileLink(userToGet.href))
                 element.parentElement.parentElement.querySelector(".permlist").insertAdjacentHTML("beforeend",permissionChecks())
                 element.parentElement.parentElement.classList.add("openelem")
                 let decodedPerms = atob(prevPerms).split(",")

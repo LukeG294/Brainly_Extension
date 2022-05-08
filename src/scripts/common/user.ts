@@ -1,4 +1,4 @@
-import { brainly_legacy_api_url } from "configs/config";
+import { brainly_graphql_url, brainly_legacy_api_url } from "configs/config";
 import {getCookie} from "./common_functions"
 
 export class User{
@@ -39,7 +39,7 @@ export class User{
         myHeaders.append("content-type", "application/json");
         myHeaders.append("accept-language", "en-US,en;q=0.9");
 
-        let txt = await fetch("https://brainly.com/graphql/us", {
+        let txt = await fetch(brainly_graphql_url(), {
             method: 'POST',
             headers: myHeaders,
             body: JSON.stringify({

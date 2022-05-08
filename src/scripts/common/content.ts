@@ -1,4 +1,4 @@
-import { brainly_legacy_api_url } from "configs/config";
+import { brainly_graphql_url, brainly_legacy_api_url } from "configs/config";
 
 function getCookie(name) {
     const value = `; ${document.cookie}`;
@@ -8,7 +8,7 @@ function getCookie(name) {
 
 export class Answer{
     Confirm(id:number){
-        let res = fetch("https://brainly.com/graphql/us", {
+        let res = fetch(brainly_graphql_url(), {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

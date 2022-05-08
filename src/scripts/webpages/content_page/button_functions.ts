@@ -6,7 +6,7 @@ import {
   select_all,
   toggle_selected
 } from "./content_page_buttons"
-import { brainly_legacy_api_url } from "configs/config"
+import { brainly_legacy_api_url, parseQuestionLink } from "configs/config"
 
 export function selectAll(){
     let checkBoxes = document.getElementsByClassName("contentCheckboxes")
@@ -145,7 +145,7 @@ export async function confirmDeletionQuestions(){
       if (String(checkBoxes[i].checked) === "true") {
           //@ts-ignore
           let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
-          let id = link.split("/")[4]
+          let id = parseQuestionLink(link)
           idsToDelete.push(id)
       } 
   }
@@ -209,7 +209,7 @@ export async function confirmDeletionAnswers(){
       if (String(checkBoxes[i].checked) === "true") {
           //@ts-ignore
           let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
-          let id = link.split("/")[4]
+          let id = parseQuestionLink(link)
           idsToDelete.push(id)
       } 
   }
@@ -295,7 +295,7 @@ export async function unverifyAnswers(){
       if (String(checkBoxes[i].checked) === "true") {
           //@ts-ignore
           let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
-          let id = link.split("/")[4]
+          let id = parseQuestionLink(link)
           idsToUnverify.push(id)
       } 
   }
@@ -397,7 +397,7 @@ export async function approveAnswers(){
         if (String(checkBoxes[i].checked) === "true") {
             //@ts-ignore
             let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
-            let id = link.split("/")[4]
+            let id = parseQuestionLink(link)
             idsToVerify.push(id)
         } 
     }
@@ -499,7 +499,7 @@ export async function confirmAnswers(){
       if (String(checkBoxes[i].checked) === "true") {
           //@ts-ignore
           let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
-          let id = link.split("/")[4]
+          let id = parseQuestionLink(link)
           idsToConfirm.push(id)
       } 
   }
@@ -599,7 +599,7 @@ export async function confirmQuestions(){
       if (String(checkBoxes[i].checked) === "true") {
           //@ts-ignore
           let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
-          let id = link.split("/")[4]
+          let id = parseQuestionLink(link)
           idsToConfirm.push(id)
       } 
   }

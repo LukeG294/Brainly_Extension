@@ -4,3 +4,12 @@ export function extension_server_url(){
 export function brainly_legacy_api_url(){
     return 'https://brainly.com/api/28'
 }
+export function brainly_graphql_url(){
+    return 'https://brainly.com/graphql/us'
+}
+export function parseProfileLink(link: string){
+    return link.split("/")[4].split("-")[1]
+}
+export function parseQuestionLink(link: string){
+    return link.split("/")[4]
+}

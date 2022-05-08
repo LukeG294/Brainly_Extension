@@ -231,7 +231,7 @@ export async function startCompanionManager(){
             if (!appended){
                 let userToGet = element.parentElement.parentElement.querySelector(".username")
                 //@ts-ignore
-                let prevPerms = await getPermissions(userToGet.innerText,userToGet.href.split("/")[4].split("-")[1])
+                let prevPerms = await getPermissions(userToGet.innerText,parseProfileLink(userToGet.href))
                 element.parentElement.parentElement.querySelector(".permlist").insertAdjacentHTML("beforeend",permissionChecks())
                 element.parentElement.parentElement.classList.add("openelem")
                 let decodedPerms = atob(prevPerms).split(",")
@@ -328,7 +328,7 @@ export async function startCompanionManager(){
                                     //@ts-ignore
                                     let username = profilePage.querySelector("#main-left > div.personal_info > div.header > div.info > div.info_top > span.ranking > h2 > a").innerText
                                     //@ts-ignore
-                                    let id = profilePage.querySelector(".avatar").children[0].href.split("/")[4].split("-")[1]
+                                    let id = parseProfileLink(profilePage.querySelector(".avatar").children[0].href)
                                     
                                     var myHeaders = new Headers();
                                     myHeaders.append("Content-Type", "application/json");
@@ -353,7 +353,7 @@ export async function startCompanionManager(){
                                     .then(result => console.log(result))
                                     .catch(error => console.log('error', error));
                                     this.querySelector(".spinner-container").classList.remove("show")
-                                    if (avatar === "https://brainly.com/img/"){
+                                    if (avatar === `https://brainly.com/img/`){
                                         avatar = "https://brainly.com/img/avatars/100-ON.png"
                                     }
                                     let modal = document.querySelector(".modal_mcomp_u")

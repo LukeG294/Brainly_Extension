@@ -1,3 +1,4 @@
+import { brainly_legacy_api_url } from "configs/links";
 import {getCookie} from "./common_functions"
 
 export class User{
@@ -56,5 +57,9 @@ export class User{
         })
         .then(response => response.json())
         return txt
+    }
+    async Get_Bio(id:string){
+        let resp = await fetch(`${brainly_legacy_api_url()}/api_user_profiles/get_by_id/`+id).then(res => res.json());
+        return resp.data.description
     }
 }

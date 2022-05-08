@@ -6,10 +6,7 @@
 import { brainly_legacy_api_url } from "configs/links"
 import { Answer } from "./content";
 
-export async function get_bio(id){
-  let resp = await fetch(`${brainly_legacy_api_url()}/api_user_profiles/get_by_id/`+id).then(res => res.json());
-  return resp.data.description
-}
+
 export function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);

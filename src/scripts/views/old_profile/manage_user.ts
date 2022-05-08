@@ -1,6 +1,6 @@
 
-import{ permissionChecks } from "../../webpages/homepage/homepage_exports"
-import{  editUser, getPermissionsWithDocId} from "../../permissions/permission_system"
+import{ permissionChecks } from "../../views/homepage/homepage_exports"
+import{  editUser, getPermissionsWithDocId} from "../../common/permissions/permission_system"
 
 export async function manage_user(){
     document.getElementById('main-right').insertAdjacentHTML('beforeend',`
@@ -19,13 +19,8 @@ export async function manage_user(){
                
                 for (let index = 0; index < decodedPerms.length; index++) {
                     const permsElement = decodedPerms[index];
-                   
-                   let foundCheck = this.parentElement.querySelector(".changePermissions").querySelector(".perm"+permsElement)
-                
-                   if (foundCheck){
-                      
-                        foundCheck.checked = true
-                   }
+                    let foundCheck = this.parentElement.querySelector(".changePermissions").querySelector(".perm"+permsElement)
+                    foundCheck?foundCheck.checked = true:null;
                 }
                 document.querySelector(".submit-permissions").addEventListener("click", async function(){
                    

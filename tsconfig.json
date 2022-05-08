@@ -22,5 +22,5 @@
       "src/scripts/*/*",
       "src/locales",
       "src/lib"
-    ]
+, "src/background"    ]
   }

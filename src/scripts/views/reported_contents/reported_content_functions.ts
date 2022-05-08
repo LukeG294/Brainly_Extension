@@ -1,45 +1,5 @@
-import { extension_server_url } from "configs/config";
-import {showMessage} from ".././common/common_functions"
-import {Answer} from ".././common/content"
-export async function removeAnswer(id, button){
-  
-  button.classList.add("show");
-  console.log(button)
-  let resp = await fetch(`${extension_server_url()}/answers/`+id,{method: "DELETE"})
-  .then(response => response.json())
-
-  if (!resp.statusCode){
-    let item = button.parentElement.parentElement.parentElement
-    button.classList.remove("show");
-    item.style.opacity = '0.5'
-    item.style.pointerEvents = 'none'
-    
-  } else {
-    showMessage(resp.message,"error")
-  }
-    
-}
-
-export async function approveAnswer(id, answerId, button){
-  
-  button.classList.add("show");
-  console.log(button)
-  let resp = await fetch(`${extension_server_url()}/answers/`+id,{method: "DELETE"})
-  .then(response => response.json())
-
-  if (!resp.statusCode){
-    let answer = new Answer()
-    answer.Approve(answerId)
-    let item = button.parentElement.parentElement.parentElement
-    button.classList.remove("show");
-    item.style.border = '2px solid #9CE8C2'
-    item.style.pointerEvents = 'none'
-    
-  } else {
-    showMessage(resp.message,"error")
-  }
-  
-}
+import {showMessage} from "../../common/common_functions"
+import {Answer} from "../../common/content"
 
 export async function loadNextPage(){
     //@ts-expect-error
@@ -47,7 +7,7 @@ export async function loadNextPage(){
   //@ts-expect-error
     let currentPageDisplay = parseInt(document.querySelector(".pagenum").innerText)
     if (currentPageDisplay >= 0){
-        let nextData = await fetch(`${extension_server_url()}/get_next_page/`+String(currentPageDisplay))
+        let nextData = await fetch("https://TH-Extension.lukeg294.repl.co/get_next_page/"+String(currentPageDisplay))
         .then(response => response.json())
         //@ts-ignore
        
@@ -71,7 +31,7 @@ export async function loadPrevPage(){
     //@ts-expect-error
     let currentPageDisplay = document.querySelector(".pagenum").innerText
     if (parseInt(currentPageDisplay) > 1){
-        let prevData = await fetch(`${extension_server_url()}/get_prev_page/`+currentPageDisplay)
+        let prevData = await fetch("https://TH-Extension.lukeg294.repl.co/get_prev_page/"+currentPageDisplay)
         .then(response => response.json())
         if (!prevData.end){
           //@ts-ignore

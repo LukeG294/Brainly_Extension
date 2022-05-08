@@ -25,8 +25,8 @@
     },
     "titles": {
       "massAccountDeleter":"Mass Account Deleter",
-      "manageExtensionUsers":"Manage Extension Users",
-      "manageUsers":"Manage Extension Users",
+      "manageExtensionUsers":"Manage Companion Users",
+      "manageUsers":"Manage Companion Users",
       "verificationQueue":"Verification Queue",
       "massMessageUsers":"Mass Message Users",
       "questionContent":"Question Content",

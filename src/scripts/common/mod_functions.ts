@@ -23,7 +23,7 @@ export async function insert_ticket(id, butspinner){
       
     if(!BasicData.data.task.settings.is_deleted){
         //if question is not deleted
-        let res = await BrainlyAPI.Legacy("POST", "moderation_new/get_content", JSON.stringify({
+        let res = await BrainlyAPI.Legacy("POST", "moderation_new/get_content", ({
             "model_type_id":1,
             "model_id":id,
             "schema":"moderation.content.get"

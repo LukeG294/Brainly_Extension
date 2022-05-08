@@ -2,6 +2,7 @@
 import { delete_user, sendMessages, startCompanionManager } from "../../common/mod_functions";
 import { showMessage } from "../../common/common_functions";
 import {macc_d, mcompu, mmsg_s} from "../../HTML_exports/macc-d_exp"
+import Extension from "../../../locales/en/localization.json"
 
 //@ts-ignore
 
@@ -37,7 +38,7 @@ async function sendmsg(userLink){
 export function mass_accdel(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
     <li class="sg-menu-list__element macc-d">   
-        <a class = "sg-menu-list__link">Mass-Account Deletion</a>
+        <a class = "sg-menu-list__link">${Extension.titles.massAccountDeleter}</a>
     </li>
     
     `)
@@ -79,7 +80,7 @@ export function mass_accdel(){
 export function mass_msg(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
     <li class="sg-menu-list__element mmsg-s">   
-    <a class = "sg-menu-list__link">Mass-Message Users</a>
+    <a class = "sg-menu-list__link">${Extension.titles.massMessageUsers}</a>
     </li>
     
     `)
@@ -147,7 +148,7 @@ export function mass_msg(){
 export function usr_mgmt(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
     <li class="sg-menu-list__element mcomp-u">   
-    <a class = "sg-menu-list__link">Manage Users</a>
+    <a class = "sg-menu-list__link">${Extension.titles.manageUsers}</a>
     </li>
     
     `)
@@ -164,7 +165,7 @@ export function usr_mgmt(){
 export function verification_queue(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
     <li class="sg-menu-list__element verification-queue">   
-    <a class = "sg-menu-list__link">Verification Queue</a>
+    <a class = "sg-menu-list__link">${Extension.titles.verificationQueue}</a>
     </li>
     
     `)

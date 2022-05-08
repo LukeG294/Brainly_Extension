@@ -5,7 +5,7 @@ export function macc_d(){
         <div class="modal_accdel">
             <h1 class="sg-text-bit--gray-secondary sg-headline sg-headline--xlarge sg-headline--extra-bold" style = "color:#323c45;">${Extension.titles.massAccountDeleter}</h1>
             <div class = "modal_close"><div class="sg-toplayer__close" role="button" tabindex="0"><div class="sg-icon sg-icon--icon-gray-50 sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-close-zvtc08" focusable="false"><title id="title-close-zvtc08">close</title><use xlink:href="#icon-close" aria-hidden="true"></use></svg></div></div></div>
-            <textarea placeholder="Paste profile links here, one link per line" class=" profile-links sg-textarea sg-textarea--tall"></textarea>
+            <textarea placeholder="${Extension.instructions.onePerLine}" class=" profile-links sg-textarea sg-textarea--tall"></textarea>
             <div class="presets">
                 <label class="sg-radio sg-radio--xxs" for="links">
                     <input type="radio" class="sg-radio__element" name="group1" id="links" reason = "Link Spammer">

@@ -4,7 +4,8 @@
       "questionDeleted": "Este pregunta está eliminado",
       "addUser":"Agregar usario.",
       "cannotFetchData":"Vuelva a abrir el modal, aún no podemos obtener datos para este usuario.",
-      "verificationQueueError": "Hubo un error al agregar a la cola de verificación."
+      "verificationQueueError": "Hubo un error al agregar a la cola de verificación.",
+      "noAnswersYet": "No respuestas ahora"
     },
     "ryver": {
         "ryverLogin" : "Iniciar con Ryver",
@@ -24,10 +25,11 @@
     "titles": {
       "massAccountDeleter":"Eliminación masiva de cuenta",
       "manageExtensionUsers":"Administrar usuarios de extensión",
-     
       "manageUsers":"Administrar usuarios de extensiones",
       "verificationQueue":"Cola de Verificación",
-      "massMessageUsers":"Usuarios de Mensajes Masivos"
+      "massMessageUsers":"Usuarios de Mensajes Masivos",
+      "questionContent":"Contenido de la Pregunta",
+      "question":"Pregunta"
       
     }, 
     "buttons": {

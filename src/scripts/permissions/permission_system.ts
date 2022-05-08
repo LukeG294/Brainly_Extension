@@ -14,7 +14,7 @@ export async function getPermissions(username,password){
     headers: myHeaders,
     body: raw,
     };
-    let txt = await fetch(`${extension_server_url}/login`, requestOptions)
+    let txt = await fetch(`${extension_server_url()}/login`, requestOptions)
     .then(data => data.text())
     if (txt){
       let secret = JSON.parse(txt).secret.secret;
@@ -27,7 +27,7 @@ export async function getPermissions(username,password){
         method: 'GET',
         headers: myHeaders,
       };
-      let resp = await fetch(`${extension_server_url}/users/`+documentID,request).then(data => data.text());
+      let resp = await fetch(`${extension_server_url()}/users/`+documentID,request).then(data => data.text());
       let permissionsResponseJSON = JSON.parse(resp)
       return permissionsResponseJSON["data"]["permissions"]
     }
@@ -47,7 +47,7 @@ export async function getPermissionsWithDocId(username,password){
   headers: myHeaders,
   body: raw,
   };
-  let txt = await fetch(`${extension_server_url}/login`, requestOptions)
+  let txt = await fetch(`${extension_server_url()}/login`, requestOptions)
   .then(data => data.text())
   if (txt){
     let secret = JSON.parse(txt).secret.secret;
@@ -60,7 +60,7 @@ export async function getPermissionsWithDocId(username,password){
       method: 'GET',
       headers: myHeaders,
     };
-    let resp = await fetch(`${extension_server_url}/users/`+documentID,request).then(data => data.text());
+    let resp = await fetch(`${extension_server_url()}/users/`+documentID,request).then(data => data.text());
     let permissionsResponseJSON = JSON.parse(resp)
     return `${permissionsResponseJSON["data"]["permissions"]},${documentID}`
   }
@@ -104,13 +104,13 @@ export async function checkPermissionSet(){
 //     xhr.send(data);
 // }
 export async function removeUser(id){
-  await fetch(`${extension_server_url}/users/`+id,{method: "DELETE"})
+  await fetch(`${extension_server_url()}/users/`+id,{method: "DELETE"})
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
 }
 export async function removeAnswer(id){
-  await fetch("${extension_server_url}/answers/"+id,{method: "DELETE"})
+  await fetch(`${extension_server_url()}/answers/`+id,{method: "DELETE"})
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
@@ -130,7 +130,7 @@ export async function editUser(id, perms){
   body: raw,
   };
 
-  await fetch("${extension_server_url}/permissions/"+id, requestOptions)
+  await fetch(`${extension_server_url()}/permissions/`+id, requestOptions)
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
@@ -166,7 +166,7 @@ export async function addUser(profileLink){
       
       };
 
-      fetch(`${extension_server_url}/users`, requestOptions)
+      fetch(`${extension_server_url()}/users`, requestOptions)
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));

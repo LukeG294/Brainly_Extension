@@ -1,4 +1,4 @@
-import {checkPermissionSet} from "./permission_system"
+import {checkPermissionSet} from "./PermissionSystem"
 setTimeout(async () => {
     let permsArr = await checkPermissionSet();
     localStorage.setItem("userPerms", permsArr.toString())

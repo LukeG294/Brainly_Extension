@@ -1,8 +1,8 @@
-import {addResponseButtonsApprove, addResponseButtonsConfirm, addResponseButtonsFetchReported, addResponseButtonsUnverify, addResponseButtonsDelete} from "./responses"
-import { addTaskButtonsConfirmation, addTaskButtonsDeletion, addTaskButtonsReportedContent} from "./tasks"
+import {addResponseButtonsApprove, addResponseButtonsConfirm, addResponseButtonsFetchReported, addResponseButtonsUnverify, addResponseButtonsDelete} from "./Responses"
+import { addTaskButtonsConfirmation, addTaskButtonsDeletion, addTaskButtonsReportedContent} from "./Tasks"
 //import { checkUser, checkPermissionSet } from "../common/permission_system"
-import {add_icons} from "./content_page_buttons"
-import {addticket, addTaskButtonsBasic} from "./button_functions"
+import {add_icons} from "./ContentPageButtons"
+import {addticket, addTaskButtonsBasic} from "./ButtonFunctions"
 
 //@ts-ignore
 

@@ -1,7 +1,7 @@
 import {find, runtime} from "webextension-polyfill";
 import {ticket} from "./ticket_exp"
-import {Answer, Question} from "../content"
-import {get_time_diff} from "../common_functions"
+import {Answer, Question} from "../Content"
+import {get_time_diff} from "../CommonFunctions"
 import Extension from "../../../locales/en/localization.json"
 
 function add_log(log){

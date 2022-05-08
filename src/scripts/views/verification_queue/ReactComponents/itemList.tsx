@@ -1,5 +1,5 @@
 import React, {useEffect} from "react"
-import Item from "./item"
+import Item from "./Item"
 import {runtime} from "webextension-polyfill"
 
 interface list{

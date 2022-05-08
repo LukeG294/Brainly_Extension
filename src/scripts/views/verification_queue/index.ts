@@ -1,5 +1,5 @@
-import { InjectReactApp } from "./insertReact";
-import {PreparePage} from "./prepare_page"
+import { InjectReactApp } from "./InsertReact";
+import {PreparePage} from "./PreparePage"
 
 setTimeout(() => {
     PreparePage();

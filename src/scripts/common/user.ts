@@ -1,5 +1,5 @@
 import BrainlyAPI from "./BrainlyAPI"
-import {getCookie} from "./common_functions"
+import {getCookie} from "./CommonFunctions"
 
 export class User{
     async Delete(uid:string){

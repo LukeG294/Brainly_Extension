@@ -4,13 +4,13 @@ import {
     delete_selected_questions,
     deletion_menu,
     get_reported_content
-} from "./content_page_buttons"
+} from "./ContentPageButtons"
 import {
     showDelrsn,
     confirmDeletionQuestions,
     confirmQuestions,
     find_reported_content
-} from "./button_functions"
+} from "./ButtonFunctions"
 import { pageElement, pageElementAll } from "configs/config"
 
 export function addOnlyChecks(){

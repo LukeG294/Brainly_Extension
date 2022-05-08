@@ -1,4 +1,4 @@
-import { showDelrsn, confirmDeletionAnswers, unverifyAnswers, approveAnswers, confirmAnswers, find_reported_content } from "./button_functions"
+import { showDelrsn, confirmDeletionAnswers, unverifyAnswers, approveAnswers, confirmAnswers, find_reported_content } from "./ButtonFunctions"
 import {
     approve_selected,
     delete_selected_answers,
@@ -6,7 +6,7 @@ import {
     unverify_selected,
     confirm_selected_answers,
     get_reported_content
-} from "./content_page_buttons"
+} from "./ContentPageButtons"
 
 let buttonArea = document.querySelector("#content-old > div:nth-child(3) > p")
 

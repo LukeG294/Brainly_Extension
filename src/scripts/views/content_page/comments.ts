@@ -6,7 +6,7 @@ import {
     select_all,
     toggle_selected,
     unverify_selected
-} from "./content_page_buttons"
+} from "./ContentPageButtons"
 
 window.addEventListener("load", function() {
     function getPageType() {

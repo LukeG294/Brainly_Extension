@@ -348,7 +348,7 @@ export async function startCompanionManager(){
                                     
                                     };
                         
-                                    await fetch(`${extension_server_url}/users`, requestOptions)
+                                    await fetch(`${extension_server_url()}/users`, requestOptions)
                                     .then(response => response.text())
                                     .then(result => console.log(result))
                                     .catch(error => console.log('error', error));

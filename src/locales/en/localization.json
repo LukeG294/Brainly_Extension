@@ -1,56 +1,58 @@
 {
     "common": {
-      "unauthorized": "No puedes usar esta extensión.",
-      "questionDeleted": "Este pregunta está eliminado",
-      "addUser":"Agregar usario.",
-      "cannotFetchData":"Vuelva a abrir el modal, aún no podemos obtener datos para este usuario.",
-      "verificationQueueError": "Hubo un error al agregar a la cola de verificación.",
-      "noAnswersYet": "No respuestas ahora"
+      "unauthorized": "You are not allowed to use this extension.",
+      "questionDeleted": "This question has been deleted.",
+      "addUser":"Add User",
+      "cannotFetchData":"Please re-open the modal, we can't fetch data for this user yet.",
+      "verificationQueueError": "There was an error adding to the verification queue.",
+      "noAnswersYet": "No answers yet"
+      
     },
     "ryver": {
-        "ryverLogin" : "Iniciar con Ryver",
-        "username": "nombre de usuario",
-        "password": "clave",
-        "login": "entrar"
+        "ryverLogin" : "Login With Ryver",
+        "username": "username",
+        "password": "password",
+        "login": "login"
     },
     "times":{
-      "seconds": "segundos",
-      "minute": "minuto",
-      "hour": "hora",
-      "day": "día",
-      "month": "mes",
-      "year": "año",
-      "ago": "atrás"
+      "seconds": "seconds",
+      "minute": "minute",
+      "hour": "hour",
+      "day": "day",
+      "month": "month",
+      "year": "year",
+      "ago": "ago"
     },
     "titles": {
-      "massAccountDeleter":"Eliminación masiva de cuenta",
-      "manageExtensionUsers":"Administrar usuarios de extensión",
-      "manageUsers":"Administrar usuarios de extensiones",
-      "verificationQueue":"Cola de Verificación",
-      "massMessageUsers":"Usuarios de Mensajes Masivos",
-      "questionContent":"Contenido de la Pregunta",
-      "question":"Pregunta"
+      "massAccountDeleter":"Mass Account Deleter",
+      "manageExtensionUsers":"Manage Extension Users",
+      "manageUsers":"Manage Extension Users",
+      "verificationQueue":"Verification Queue",
+      "massMessageUsers":"Mass Message Users",
+      "questionContent":"Question Content",
+      "question":"question"
       
     }, 
     "buttons": {
-      "delete": "¡Eliminar!",
-      "sendMessages":"¡Enviar mensajes!",
-      "deleteUser": "Eliminar usuario",
-      "showAll": "Mostrar Todo",
-      "showLess": "Mostrar Menos",
-      "selectAll":"Seleccionar Todo",
-      "toggleSelected": "Alternar Seleccionado",
-      "copySelectedLinks":"Copiar Enlaces Seleccionados",
-      "deleteContentPage":"Eliminar",
-      "fetchReported":"Recuperar informado",
-      "approve":"Aprobar",
-      "confirm":"Confirmar",
-      "unverify":"Anular la Verificación",
-      "warnUser":"advertir al usuario",
-      "takePoints":"tocar puntos"
+      "delete": "Delete!",
+      "sendMessages":"Send Messages!",
+      "deleteUser": "Delete User",
+      "showAll": "Show All",
+      "showLess": "Show Less",
+      "selectAll":"Select All",
+      "toggleSelected": "Toggle Selected",
+      "copySelectedLinks":"Copy Selected Links",
+      "deleteContentPage":"Delete",
+      "fetchReported":"Fetch Reported",
+      "approve":"Approve",
+      "confirm":"Confirm",
+      "unverify":"Unverify",
+      "warnUser":"warn user",
+      "takePoints":"take points"
     },
     "instructions":{
-      "onePerLine":"Pegue enlaces de perfil aquí, un enlace por línea."
+      "onePerLine":"Paste profile links here, one link per line"
     }
+   
    
 }

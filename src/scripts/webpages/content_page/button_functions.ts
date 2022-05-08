@@ -670,7 +670,7 @@ export async function find_reported_content(id,type){
               }
           }
         });
-        xhr.open("POST", "${brainly_legacy_api_url()}/api_tasks/main_view/"+qid+"?accept=application/json");
+        xhr.open("POST", `${brainly_legacy_api_url()}/api_tasks/main_view/"+qid+"?accept=application/json`);
         xhr.send();
         }
     } 

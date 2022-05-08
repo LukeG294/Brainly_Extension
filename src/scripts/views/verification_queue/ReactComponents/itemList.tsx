@@ -27,7 +27,7 @@ export function List({obj}: list){
             </>
         )
     }else{
-        document.querySelector(".spinner-container").classList.remove("show");
+        //document.querySelector(".spinner-container").classList.remove("show");
         return(
             <div className="empty">
                 <img src={runtime.getURL("resources/Compositions/Leadership_Development.svg")} alt="" />

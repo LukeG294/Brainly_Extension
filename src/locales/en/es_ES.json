@@ -1,7 +1,9 @@
 {
     "common": {
-      "unauthorized": "No puedes usar esta extensión."
-     
+      "unauthorized": "No puedes usar esta extensión.",
+      "questionDeleted": "Este pregunta está eliminado",
+      "addUser":"Agregar usario.",
+      "cannotFetchData":"Vuelva a abrir el modal, aún no podemos obtener datos para este usuario."
       
     },
     "ryver": {
@@ -18,6 +20,18 @@
       "month": "mes",
       "year": "año",
       "ago": "atrás"
+    },
+    "titles": {
+      "massAccountDeleter":"Eliminación masiva de cuenta",
+      "manageExtensionUsers":"Administrar usuarios de extensión"
+      
+    }, 
+    "buttons": {
+      "delete": "¡Eliminar!",
+      "sendMessages":"¡Enviar mensajes!"
+    },
+    "instructions":{
+      "onePerLine":"Pegue enlaces de perfil aquí, un enlace por línea."
     }
    
 }

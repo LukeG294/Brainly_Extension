@@ -3,6 +3,7 @@ import {showMessage} from "../common/common_functions"
 import{ removeUser, editUser, checkPermissionSet, getPermissions, removeAnswer} from "../permissions/permission_system"
 import{ permissionChecks } from "../webpages/homepage/homepage_exports"
 import {brainly_legacy_api_url, extension_server_url, parseProfileLink} from "../../configs/config"
+
 function noclick(){
     document.querySelector("body").insertAdjacentHTML("afterbegin",/*html*/`
         <div class="blockint"></div>
@@ -21,7 +22,7 @@ export async function insert_ticket(id, butspinner){
     xhttp.onreadystatechange = function(){
     if(this.readyState == 4 && this.status === 200){
         let basic_data = JSON.parse(this.responseText)
-        console.log(basic_data)
+      
         if(!basic_data.data.task.settings.is_deleted){
             //if question is not deleted
             let xhttp1 = new XMLHttpRequest();

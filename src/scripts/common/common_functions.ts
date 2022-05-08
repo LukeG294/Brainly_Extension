@@ -3,7 +3,7 @@
 * @param {string} type Takes 3 values, success, error, info. Dhows default message if nothing provided
 *
 */
-import { brainly_legacy_api_url } from "configs/links"
+import { brainly_legacy_api_url } from "configs/config"
 import { Answer } from "./content";
 
 

@@ -6,7 +6,7 @@ import {
   select_all,
   toggle_selected
 } from "./content_page_buttons"
-import { brainly_legacy_api_url } from "configs/links"
+import { brainly_legacy_api_url } from "configs/config"
 
 export function selectAll(){
     let checkBoxes = document.getElementsByClassName("contentCheckboxes")

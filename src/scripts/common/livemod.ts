@@ -1,4 +1,4 @@
-import { brainly_legacy_api_url } from "configs/links";
+import { brainly_legacy_api_url } from "configs/config";
 import Browser, { browserAction, storage} from "webextension-polyfill";
 
 class LiveMod {

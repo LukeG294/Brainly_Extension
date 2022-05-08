@@ -7,7 +7,7 @@ import {
   toggle_selected
 } from "./content_page_buttons"
 import { brainly_legacy_api_url, parseQuestionLink } from "configs/config"
-
+import {getCookie} from "../../common/common_functions"
 export function selectAll(){
     let checkBoxes = document.getElementsByClassName("contentCheckboxes")
     for (let i = 0; i < checkBoxes.length; i++) {
@@ -546,21 +546,7 @@ export async function confirmAnswers(){
       
      
       
-      function getCookie(cname) {
-        let name = cname + "=";
-        let decodedCookie = decodeURIComponent(document.cookie);
-        let ca = decodedCookie.split(';');
-        for(let i = 0; i <ca.length; i++) {
-          let c = ca[i];
-          while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-          }
-          if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-          }
-        }
-        return "";
-      }
+      
       let myToken = getCookie("Zadanepl_cookie[Token][Long]")
       
       let response = await fetch("https://brainly.com/graphql/us", {
@@ -603,21 +589,7 @@ export async function confirmQuestions(){
           idsToConfirm.push(id)
       } 
   }
-  function getCookie(cname) {
-    let name = cname + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    for(let i = 0; i <ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
-  }
+  
   let myToken = getCookie("Zadanepl_cookie[Token][Long]")
   for (let i = 0; i < idsToConfirm.length; i++) {
    

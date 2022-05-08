@@ -12,10 +12,10 @@ async function questionPage(){
     
   }
   let user = await fetch(`${brainly_legacy_api_url()}/api_users/me`).then(data => data.json())
-  let num = user.data.user_category
+  let num = user.data.user.mod_actions_count
   
 
-  if (perms.includes("5") && num === 100){
+  if (perms.includes("5") && !num){
   
     
       requestApproval()

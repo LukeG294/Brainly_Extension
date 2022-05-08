@@ -1,4 +1,4 @@
-import { brainly_legacy_api_url } from "configs/config";
+import BrainlyAPI from "../../common/BrainlyAPI";
 import {insert_ticket} from "../../common/mod_functions"
 
 let modbutton = /*html*/`
@@ -47,7 +47,7 @@ async function HomeAns(){
         }
 
         //check if the question has been reported + add the report flag
-        let bdata = await fetch(`${brainly_legacy_api_url()}/api_tasks/main_view/${qid}`, {method: "GET"}).then(data => data.json());
+        let bdata = await BrainlyAPI.GetQuestion(parseInt(qid));
         if(bdata.data.task.settings.is_marked_abuse === true){
             questionBox.querySelector(".brn-feed-item__points .brn-points-on-feed").insertAdjacentHTML("afterbegin",`<div class = "repflag"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-report_flag"></use></svg></div></div>`)
         }
@@ -85,7 +85,7 @@ export async function HomeMod() {
       }
   
       //check if the question has been reported + add the report flag
-      let bdata = await fetch(`${brainly_legacy_api_url()}/api_tasks/main_view/${qid}`, {method: "GET"}).then(data => data.json());
+      let bdata = await BrainlyAPI.GetQuestion(parseInt(qid));
       if(bdata.data.task.settings.is_marked_abuse === true){
         questionBox.querySelector(".brn-feed-item__points .brn-points-on-feed").insertAdjacentHTML("afterbegin",`<div class = "repflag"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-report_flag"></use></svg></div></div>`)
       }

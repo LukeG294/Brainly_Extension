@@ -1,4 +1,4 @@
-import {showMessage} from "../common/common_functions"
+import {showMessage} from "../common_functions"
 
 export async function getPermissions(username,password){   
     var myHeaders = new Headers();

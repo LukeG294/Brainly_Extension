@@ -1,9 +1,9 @@
 import React from "react";
 import { SubjectIconBox, SubjectIcon, Media, Avatar, Text, Button, Icon, Label, Spinner} from "brainly-style-guide";
 
-import {get_time_diff} from "../../common/common_functions"
-import {insert_ticket} from "../../common/mod_functions"
-import {Answer} from "../../common/content"
+import {get_time_diff} from "../../../common/common_functions"
+import {insert_ticket} from "../../../common/mod_functions"
+import {Answer} from "../../../common/content"
 
 interface Item{
     content_short: string;

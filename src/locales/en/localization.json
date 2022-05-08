@@ -23,7 +23,11 @@
     },
     "titles": {
       "massAccountDeleter":"Eliminación masiva de cuenta",
-      "manageExtensionUsers":"Administrar usuarios de extensión"
+      "manageExtensionUsers":"Administrar usuarios de extensión",
+     
+      "manageUsers":"Administrar usuarios de extensiones",
+      "verificationQueue":"Cola de Verificación",
+      "massMessageUsers":"Usuarios de Mensajes Masivos"
       
     }, 
     "buttons": {

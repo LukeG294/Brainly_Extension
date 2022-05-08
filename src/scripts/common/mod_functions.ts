@@ -44,7 +44,7 @@ export async function insert_ticket(id, butspinner){
                 "model_id":id,
                 "schema":"moderation.content.get"
             }
-            xhttp1.open("POST", `${brainly_legacy_api_url()}moderation_new/get_content`, true);
+            xhttp1.open("POST", `${brainly_legacy_api_url()}/moderation_new/get_content`, true);
             xhttp1.send(JSON.stringify(body));
         }
         else{
@@ -54,7 +54,7 @@ export async function insert_ticket(id, butspinner){
             showMessage("Question has been deleted", "error")
         }
     }}
-    xhttp.open("GET", `${brainly_legacy_api_url()}api_tasks/main_view/${id}`);
+    xhttp.open("GET", `${brainly_legacy_api_url()}/api_tasks/main_view/${id}`);
     xhttp.send();
 }
 export async function delete_user(uid:string){

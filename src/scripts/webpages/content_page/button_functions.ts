@@ -354,7 +354,7 @@ export async function unverifyAnswers(){
       });
       
       
-      let response = await fetch("${brainly_legacy_api_url()}/api_content_quality/unconfirm", { method: "POST",body: raw}).then(data => data.json());;
+      let response = await fetch(`${brainly_legacy_api_url()}/api_content_quality/unconfirm`, { method: "POST",body: raw}).then(data => data.json());;
       console.log(response)
       if (response["success"] === true){
         success+=1
@@ -593,7 +593,7 @@ export async function confirmQuestions(){
   let myToken = getCookie("Zadanepl_cookie[Token][Long]")
   for (let i = 0; i < idsToConfirm.length; i++) {
    
-    await fetch("${brainly_legacy_api_url()}/moderation_new/accept", {
+    await fetch(`${brainly_legacy_api_url()}/moderation_new/accept`, {
       "headers": {
         "accept": "application/json, text/javascript, */*; q=0.01",
         "accept-language": "en-US,en;q=0.9",

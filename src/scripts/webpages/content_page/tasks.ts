@@ -11,10 +11,11 @@ import {
     confirmQuestions,
     find_reported_content
 } from "./button_functions"
+import { pageElement, pageElementAll } from "configs/config"
 
 export function addOnlyChecks(){
-    let buttonArea = document.querySelector("#content-old > div:nth-child(3) > p")
-    let content = document.querySelectorAll("#content-old > div:nth-child(2) > div:nth-child(25) > table > tbody > tr")
+    let buttonArea = pageElement("#content-old > div:nth-child(3) > p")
+    let content = pageElementAll("#content-old > div:nth-child(2) > div:nth-child(25) > table > tbody > tr")
     document.querySelector("thead tr").insertAdjacentHTML("afterbegin", "<th style = 'width: 5%'></th>")
     for (let i = 0; i < content.length; i++) {
         content[i].children[1].classList.add("iconcell")
@@ -37,18 +38,18 @@ let buttonArea = document.querySelector("#content-old > div:nth-child(3) > p")
 export function addTaskButtonsDeletion(){
     buttonArea.insertAdjacentHTML('afterend', deletion_menu())
     buttonArea.insertAdjacentHTML('afterend', delete_selected_questions())
-    document.querySelector("#deleteSelected").addEventListener("click", function(){showDelrsn("questions")})
-    document.querySelector("#delete").addEventListener("click",function(){confirmDeletionQuestions()})
+    pageElement("#deleteSelected").addEventListener("click", function(){showDelrsn("questions")})
+    pageElement("#delete").addEventListener("click",function(){confirmDeletionQuestions()})
 }
 export function addTaskButtonsConfirmation(){
     buttonArea.insertAdjacentHTML('afterend', confirm_selected_questions())
-    document.querySelector("#confirmSelectedQuestions").addEventListener("click",function(){confirmQuestions()})
+    pageElement("#confirmSelectedQuestions").addEventListener("click",function(){confirmQuestions()})
 }
 export function addTaskButtonsReportedContent(){
 
     buttonArea.insertAdjacentHTML('afterend', get_reported_content())
     let id = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
-    document.querySelector("#fetchReported").addEventListener("click", async function(){
+    pageElement("#fetchReported").addEventListener("click", async function(){
         await find_reported_content(id,"tasks");
         add_icons()
     })

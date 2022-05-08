@@ -13,3 +13,6 @@ export function parseProfileLink(link: string){
 export function parseQuestionLink(link: string){
     return link.split("/")[4]
 }
+export function currentLocalizationFile(){
+    return "en_US.json"
+}

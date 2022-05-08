@@ -1,0 +1,38 @@
+{
+    "common": {
+      "unauthorized": "You are not allowed to use this extension.",
+      "questionDeleted": "This question has been deleted.",
+      "addUser":"Add User",
+      "cannotFetchData":"Please re-open the modal, we can't fetch data for this user yet."
+     
+      
+    },
+    "ryver": {
+        "ryverLogin" : "Login With Ryver",
+        "username": "username",
+        "password": "password",
+        "login": "login"
+    },
+    "times":{
+      "seconds": "seconds",
+      "minute": "minute",
+      "hour": "hour",
+      "day": "day",
+      "month": "month",
+      "year": "year",
+      "ago": "ago"
+    },
+    "titles": {
+      "massAccountDeleter":"Mass Account Deleter",
+      "manageExtensionUsers":"Manage Extension Users"
+      
+    }, 
+    "buttons": {
+      "delete": "Delete!",
+      "sendMessages":"Send Messages!"
+    },
+    "instructions":{
+      "onePerLine":"Paste profile links here, one link per line"
+    }
+   
+}

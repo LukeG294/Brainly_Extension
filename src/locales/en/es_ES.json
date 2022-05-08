@@ -1,0 +1,23 @@
+{
+    "common": {
+      "unauthorized": "No puedes usar esta extensión."
+     
+      
+    },
+    "ryver": {
+        "ryverLogin" : "Iniciar con Ryver",
+        "username": "nombre de usuario",
+        "password": "clave",
+        "login": "entrar"
+    },
+    "times":{
+      "seconds": "segundos",
+      "minute": "minuto",
+      "hour": "hora",
+      "day": "día",
+      "month": "mes",
+      "year": "año",
+      "ago": "atrás"
+    }
+   
+}

@@ -4,7 +4,7 @@ import { ModObserver, AnsObserver } from "./homepage_exports";
 //import {subscribe, setAuth} from "../common/livemod"
 import { mass_msg, mass_accdel, usr_mgmt, verification_queue } from "./homepage_admin";
 import { showMessage } from "../../common/common_functions";
-import Extension from "../../../locales/en/en_US.json"
+import Extension from "../../../locales/en/localization.json"
 
 //@ts-ignore
 

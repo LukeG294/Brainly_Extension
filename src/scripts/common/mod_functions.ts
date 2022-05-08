@@ -3,6 +3,7 @@ import {showMessage} from "../common/common_functions"
 import{ removeUser, editUser, checkPermissionSet, getPermissions, removeAnswer} from "../permissions/permission_system"
 import{ permissionChecks } from "../webpages/homepage/homepage_exports"
 import {brainly_legacy_api_url, extension_server_url, parseProfileLink} from "../../configs/config"
+import Extension from "../../locales/en/localization.json"
 
 function noclick(){
     document.querySelector("body").insertAdjacentHTML("afterbegin",/*html*/`
@@ -52,7 +53,7 @@ export async function insert_ticket(id, butspinner){
             //question does not exist
             butspinner.classList.remove("show");
             document.querySelector(".blockint").remove();
-            showMessage("Question has been deleted", "error")
+            showMessage(Extension.common.questionDeleted, "error")
         }
     }}
     xhttp.open("GET", `${brainly_legacy_api_url()}/api_tasks/main_view/${id}`);
@@ -283,7 +284,7 @@ export async function startCompanionManager(){
             <input type="text" placeholder="Username" class="sg-input userSpace" >
             <button class="sg-button sg-button--m sg-button--solid-mint confirm-add-user">
                 <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
-                <span class="sg-button__text">Add User</span>
+                <span class="sg-button__text">${Extension.common.addUser}</span>
             </button>
             `)
             
@@ -383,7 +384,7 @@ export async function startCompanionManager(){
                                     for (let index = 0; index < buttons.length; index++) {
                                         const element = buttons[index];
                                         element.addEventListener("click",function(){
-                                            alert("Please re-open the modal, we can't fetch data for this user yet.")
+                                            alert(Extension.common.cannotFetchData)
                                         })
                                         
                                     }

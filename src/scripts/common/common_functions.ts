@@ -5,7 +5,7 @@
 */
 import { brainly_legacy_api_url } from "configs/config"
 import { Answer } from "./content";
-
+import Extension from "../../locales/en/localization.json"
 
 export function getCookie(name) {
   const value = `; ${document.cookie}`;
@@ -47,26 +47,26 @@ export function get_time_diff( dt ){
   
     let str = ''
     if(minutediff < 1){
-      return `${secdiff} seconds ago`
+      return `${secdiff} ${Extension.times.seconds} ${Extension.times.ago}`
     }
     else if(minutediff < 60){
       if(Math.floor(minutediff) > 1){str = 's'}
-      return `${Math.floor(minutediff)} minute${str} ago`
+      return `${Math.floor(minutediff)} ${Extension.times.minute}${str} ${Extension.times.ago}`
     }
     else if(minutediff >= 60 && minutediff < 1440){
       if(Math.floor(minutediff/60) > 1){str = 's'}
-      return `${Math.floor(minutediff/60)} hour${str} ago`
+      return `${Math.floor(minutediff/60)} ${Extension.times.hour}${str} ${Extension.times.ago}`
     }
     else if(minutediff >= 1440 && minutediff < 43829){
       if(Math.floor(minutediff/1440) > 1){str = 's'}
-      return `${Math.floor(minutediff/1440)} day${str} ago`
+      return `${Math.floor(minutediff/1440)} ${Extension.times.day}${str} ${Extension.times.ago}`
     }
     else if(minutediff >= 43829 && minutediff < 2592000){
       if(Math.floor(minutediff/43829) > 1){str = 's'}
-      return `${Math.floor(minutediff/43829)} month${str} ago`
+      return `${Math.floor(minutediff/43829)} ${Extension.times.month}${str} ${Extension.times.ago}`
     }
     else if(minutediff >= 2592000 && minutediff < 31104000){
       if(Math.floor(minutediff/2592000) > 1){str = 's'}
-      return `${Math.floor(minutediff/2592000)} year${str} ago`
+      return `${Math.floor(minutediff/2592000)} ${Extension.times.year}${str} ${Extension.times.ago}`
     }
   }

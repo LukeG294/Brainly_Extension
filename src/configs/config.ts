@@ -16,3 +16,9 @@ export function parseQuestionLink(link: string){
 export function currentLocalizationFile(){
     return "en_US.json"
 }
+export function pageElement(selector: string){
+    return document.querySelector(selector)
+}
+export function pageElementAll(selector: string){
+    return document.querySelectorAll(selector)
+}

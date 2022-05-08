@@ -1,12 +1,12 @@
-import { extension_server_url } from "configs/config";
+import { extension_server_url, pageElement, pageElementAll } from "configs/config";
 import { showMessage } from "../../common/common_functions"
 import {Answer} from "../../common/content"
 import {User} from "../../common/user"
 import Extension from "../../../locales/en/localization.json"
 
 export function confirmButton(){
-    let answers = document.querySelectorAll("div[data-testid = 'moderation_box_answer'] > div");
-
+    let answers = pageElementAll("div[data-testid = 'moderation_box_answer'] > div");
+    
     let button = /*html*/`
     <button title="confirm"  class="sg-button sg-button--s sg-button--solid"><span class="sg-button__icon sg-button__icon--s">
         <div class="sg-icon sg-icon--icon-white sg-icon--x16">
@@ -20,7 +20,7 @@ export function confirmButton(){
     for (let i = 0; i < answers.length; i++) {
       answers[i].insertAdjacentHTML("afterbegin", `<div id=confirm${i}>`+button+`</div>`) //set the id of the confirm button to confirm0 or confirm1 for click events later
       document.getElementById("confirm"+i).addEventListener("click",function(){
-        let answerIDs = JSON.parse(document.querySelector("#question-sg-layout-container > div.brn-qpage-layout.js-main-container.js-ads-screening-content > div.brn-qpage-layout__main.empty\\:sg-space-y-m.md\\:empty\\:sg-space-y-l > article").getAttribute("data-z"))
+        let answerIDs = JSON.parse(pageElement("#question-sg-layout-container > div.brn-qpage-layout.js-main-container.js-ads-screening-content > div.brn-qpage-layout__main.empty\\:sg-space-y-m.md\\:empty\\:sg-space-y-l > article").getAttribute("data-z"))
         let ID = answerIDs["responses"][i]["id"]
         let thisans = new Answer()
         thisans.Confirm(ID)
@@ -40,20 +40,20 @@ export async function removeAnswer(id){
 export async function requestApproval(){
 
   function requestVerificationButton(i){
-    let requestButtons = document.querySelectorAll(".request-verification")
-    
+    let requestButtons = pageElementAll(".request-verification")
+     
          
     const element = requestButtons[i];
     
     element.addEventListener("click", async function(){
-      document.querySelector(".request-verification .spinner-container").classList.add("show");
+      pageElement(".request-verification .spinner-container").classList.add("show");
       let thisResponse = responses[i]
     
       let databaseId = thisResponse.id
       let answerPreview = thisResponse.content
-      let qinfo = JSON.parse(document.querySelector("article").getAttribute("data-z"))
+      let qinfo = JSON.parse(pageElement("article").getAttribute("data-z"))
       //@ts-ignore
-      let requesterID = JSON.parse(document.querySelector("meta[name='user_data']").content).id
+      let requesterID = JSON.parse(pageElement("meta[name='user_data']").content).id
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       let usr = new User()
@@ -64,7 +64,7 @@ export async function requestApproval(){
         "answerDBid":databaseId,
         "content":answerPreview,
         "qid": qinfo.id,
-        "subject":document.querySelector("a[data-testid = 'question_box_subject']").innerHTML,
+        "subject":pageElement("a[data-testid = 'question_box_subject']").innerHTML,
         "user": user,
         "requesterId":requesterID
         
@@ -83,8 +83,8 @@ export async function requestApproval(){
         
         if (!serverResponse.message){
           showMessage("The answer has been added to the verification queue.","success")
-          document.querySelector(".request-verification .spinner-container").classList.remove("show");
-          document.querySelector(".request-verification").remove();
+          pageElement(".request-verification .spinner-container").classList.remove("show");
+          pageElement(".request-verification").remove();
           answers[i].insertAdjacentHTML("afterbegin",/*html*/` 
                 <button id="${serverResponse.ref["@ref"].id}" class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-peach cancel-request">
                 <div class="spinner-container">
@@ -95,11 +95,11 @@ export async function requestApproval(){
                 <use xlink:href="#icon-close" aria-hidden="true"></use>
                   </svg></div>
                 </span></button>`)
-                document.querySelector(".cancel-request").addEventListener("click", async function(){
-                  document.querySelector(".cancel-request .spinner-container").classList.add("show");
+                pageElement(".cancel-request").addEventListener("click", async function(){
+                  pageElement(".cancel-request .spinner-container").classList.add("show");
                   await removeAnswer(this.id)
-                  document.querySelector(".cancel-request .spinner-container").classList.remove("show");
-                  document.querySelector(".cancel-request").remove()
+                  pageElement(".cancel-request .spinner-container").classList.remove("show");
+                  pageElement(".cancel-request").remove()
                   answers[i].insertAdjacentHTML("afterbegin",/*html*/`
                   <button class="sg-button sg-button--m sg-button--solid-mint  request-verification"> 
                     <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
@@ -159,11 +159,11 @@ export async function requestApproval(){
           </span></button>`
         )
 
-        document.querySelector(".cancel-request").addEventListener("click", async function(){
-          document.querySelector(".cancel-request .spinner-container").classList.add("show");
+        pageElement(".cancel-request").addEventListener("click", async function(){
+          pageElement(".cancel-request .spinner-container").classList.add("show");
           await removeAnswer(this.id)
-          document.querySelector(".cancel-request .spinner-container").classList.remove("show");
-          document.querySelector(".cancel-request").remove()
+          pageElement(".cancel-request .spinner-container").classList.remove("show");
+          pageElement(".cancel-request").remove()
           answers[i].insertAdjacentHTML("afterbegin",/*html*/`
           <button class="sg-button sg-button--m sg-button--solid-mint  request-verification"> 
             <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>

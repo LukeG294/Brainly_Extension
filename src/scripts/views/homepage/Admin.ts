@@ -241,11 +241,7 @@ export function reportedCommentsDeleter(){
         <div class = "deleter">
             <div class="sg-select sg-select--full-width">
             <div class="sg-select__icon"></div>
-            <select class="sg-select__element reasons">
-                <option value="" selected="true">Select a reason</option>
-                <option value="Your comment violates our Community Guidelines, so we had to take it down. Please review the guidelines here: https://faq.brainly.com/hc/en-us/articles/360014661139 - Thanks for being a team player!" class="default">Default</option>
-                <option value="custom" class="custom">Custom</option>
-            </select>
+           
             </div>
             <button style="margin-bottom:12px" class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-peach delete-comments"><span class="sg-button__icon sg-button__icon--m">
             <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>

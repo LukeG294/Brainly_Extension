@@ -298,7 +298,7 @@ export function reportedCommentsDeleter(){
             FirstPageComments.forEach(async element => {
                 let commentObject = new CommentHandler()
                 //@ts-expect-error
-                await commentObject.Delete(element.model_id, document.querySelector('.reasons').value, true);
+                await commentObject.Delete(element.model_id, document.querySelector('.reasons').value, false);
                 //@ts-expect-error
                 document.querySelector('.deleted-count').innerText = parseInt(document.querySelector('.deleted-count').innerText) + 1
                 finalCount+=1
@@ -319,7 +319,7 @@ export function reportedCommentsDeleter(){
                 comments.forEach(async element => {
                     let commentObject = new CommentHandler()
                     //@ts-expect-error
-                    await commentObject.Delete(element.model_id, document.querySelector('.reasons').value, true);
+                    await commentObject.Delete(element.model_id, document.querySelector('.reasons').value, false);
                     //@ts-expect-error
                     document.querySelector('.deleted-count').innerText = parseInt(document.querySelector('.deleted-count').innerText) + 1
                     finalCount+=1

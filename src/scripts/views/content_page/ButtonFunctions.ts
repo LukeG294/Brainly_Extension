@@ -622,7 +622,7 @@ export async function find_reported_content(id,type){
               }
           }
         });
-        xhr.open("POST", `https://brainly.com/api/28/api_tasks/main_view/"+qid+"?accept=application/json`);
+        xhr.open("POST", `https://brainly.com/api/28/api_tasks/main_view/${qid}?accept=application/json`);
         xhr.send();
         }
     } 

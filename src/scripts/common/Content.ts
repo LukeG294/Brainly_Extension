@@ -44,7 +44,7 @@ export class Question{
     }
 
     async Delete(id:string, reason:string, warn:boolean, take_point:boolean){
-        BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_task_content', {
+        await BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_task_content', {
             "reason_id":2,
             "reason":reason,
             "give_warning":warn,
@@ -53,5 +53,22 @@ export class Question{
             "model_type_id":1,
             "model_id":id,
           })
+        
     }
+   
+}
+
+export class CommentHandler{
+   
+    async Delete(id:string, reason:string, warn:boolean){
+        await BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_comment_content', {
+            "reason_id":34,
+            "reason":reason,
+            "give_warning":warn,
+            "model_type_id":45,
+            "model_id":id,
+          })
+        
+    }
+   
 }

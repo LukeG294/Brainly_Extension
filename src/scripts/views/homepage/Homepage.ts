@@ -2,7 +2,7 @@ import {ryver_notification} from "../../common/Ryver/RyverModal"
 import {login_run} from "../../common/Ryver/RyverLogin"
 import { ModObserver, AnsObserver } from "./Exports";
 //import {subscribe, setAuth} from "../common/livemod"
-import { mass_msg, mass_accdel, usr_mgmt, verification_queue, md_content } from "./Admin";
+import { mass_msg, mass_accdel, usr_mgmt, verification_queue, md_content, reportedCommentsDeleter } from "./Admin";
 import { showMessage } from "../../common/CommonFunctions";
 import Extension from "../../../locales/en/localization.json"
 
@@ -18,6 +18,7 @@ async function homeperms(){
     mass_accdel()
     usr_mgmt()
     md_content()
+    reportedCommentsDeleter()
   }
   if(perms.includes("5") || perms.includes("4")){
     verification_queue()

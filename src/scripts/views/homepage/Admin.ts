@@ -3,7 +3,7 @@ import { delete_user, sendMessages, startCompanionManager } from "../../common/M
 import { showMessage } from "../../common/CommonFunctions";
 import {macc_d, mcompu, mmContentModal, mmsg_s} from "../../HTML_exports/macc-d_exp"
 import Extension from "../../../locales/en/localization.json"
-import {Question} from "../../common/Content"
+import {CommentHandler, Question} from "../../common/Content"
 
 //@ts-ignore
 
@@ -201,7 +201,7 @@ export function md_content(){
 
         
         document.querySelector(".delete-content").addEventListener("click", async function(){
-            
+           
             //@ts-expect-error
             let linksArray = String(document.querySelector(".profile-links").value).split("\n")
             let error = false
@@ -214,8 +214,10 @@ export function md_content(){
                 usersToMsg.push(qid)
                
             }
+            document.querySelector(".delete-content .spinner-container").classList.add("show")
             usersToMsg.forEach(async element => {
-                let question = new Question();
+                
+                let question = await new Question();
                 console.log(element)
                 //@ts-ignore
                 let warnUser = document.getElementById("warn").checked
@@ -226,11 +228,12 @@ export function md_content(){
                 
                 await question.Delete(element, reason, warnUser, takePts)
             });
-            
+         
             if (error){
                 document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
             } else {
                 document.querySelector(".profile-links").classList.add("sg-textarea--valid")
+                document.querySelector(".delete-content .spinner-container").classList.remove("show")
                 
             }
            
@@ -238,3 +241,98 @@ export function md_content(){
     })
 }
 
+export function reportedCommentsDeleter(){
+    document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
+    <li class="sg-menu-list__element reported-comments-deleter">   
+        <a class = "sg-menu-list__link">${Extension.titles.reportedCommentsDeleter}</a>
+    </li>
+    `)
+
+    document.querySelector(".reported-comments-deleter").addEventListener("click", function(){
+      if (!document.querySelector('.deleter')){
+        document.querySelector(".sg-menu-list").insertAdjacentHTML("beforeend",  `
+        <div class = "deleter">
+            <div class="sg-select sg-select--full-width">
+            <div class="sg-select__icon"></div>
+            <select class="sg-select__element reasons">
+                <option value="" selected="true">Select a reason</option>
+                <option value="default" class="default">Default</option>
+                <option value="custom" class="custom">Custom</option>
+            </select>
+            </div>
+            <button style="margin-bottom:12px" class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-peach delete-comments"><span class="sg-button__icon sg-button__icon--m">
+                    <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-heart-3qxpca" focusable="false"><text id="title-heart-3qxpca" hidden="">heart</text>
+                        <use xlink:href="#icon-close" aria-hidden="true"></use>
+                      </svg></div>
+                  </span><span class="sg-button__text">Delete</span></button>
+                  <label class="sg-checkbox" for="warn" style="margin-left: 10%;">
+                    <input type="checkbox" class="sg-checkbox__element" id="warn-all">
+                    <div class="sg-checkbox__ghost" aria-hidden="true">
+                        <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+                    </div>
+                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label" style="margin-left:5px">warn user</span>
+                    </label>
+                  <h2 class="sg-text sg-text--text-gray-70 sg-text--small sg-text--bold">Fetched:<div id='fetched-count'></div></h2>
+                  <h2 class="sg-text sg-text--text-gray-70 sg-text--small sg-text--bold">Deleted:<div id='deleted-count'></div></h2>
+
+        </div>`
+        )
+        document.querySelector(".reasons").addEventListener("change", function(){
+            if (this.value === "custom"){
+                let reason = prompt('What custom reason would you like to use?')
+                //@ts-ignore
+                document.querySelector(".reasons .custom").value = reason
+                document.querySelector(".reasons .custom").innerHTML = reason
+            }
+       })
+       document.querySelector(".delete-comments").addEventListener("click", async function(){
+            //first page
+            let OriginalResponse = await fetch("https://brainly.com/api/28/moderation_new/index", {
+            "body": "{\"subject_id\":0,\"category_id\":0,\"schema\":\"moderation.index\"}",
+            "method": "POST",
+            "mode": "cors",
+            "credentials": "include"
+            }).then(data => data.json());
+            let OriginalCount = OriginalResponse.data.items.length
+            document.getElementById('fetched-count').innerText = OriginalCount
+            let OriginalLastId = OriginalResponse.data.last_id
+            fetchNextPage(OriginalLastId)
+           
+            //rest of pages
+            async function fetchNextPage(last_id){
+
+                let response = await fetch("https://brainly.com/api/28/moderation_new/get_comments_content", {
+                    "body": `{\"subject_id\":0,\"category_id\":998,\"schema\":\"moderation.index\",\"last_id\":${last_id}}`,
+                    "method": "POST",
+                    "mode": "cors",
+                    "credentials": "include"
+                    }).then(data => data.json());
+                let count = response.data.items.length
+                let comments = response.data.items
+                comments.forEach(async element => {
+                    let commentObject = new CommentHandler()
+                    //@ts-expect-error
+                    await commentObject.Delete(element.model_id, document.querySelector('.reasons').value, document.getElementById('warn-all').checked);
+                    //@ts-expect-error
+                    document.querySelector('.deleted-count').innerText = parseInt(document.querySelector('.deleted-count').innerText) + 1
+                });
+                document.getElementById('fetched-count').innerText = parseInt(document.getElementById('fetched-count').innerText) + count
+                if (response.data.last_id !== 0){
+                    fetchNextPage(response.data.last_id)
+                }
+                
+                
+            }
+           
+            
+        
+           
+       })
+      } else {
+          document.querySelector('.deleter').remove()
+        }
+       
+
+      
+    })
+}

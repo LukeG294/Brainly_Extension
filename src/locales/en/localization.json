@@ -7,6 +7,7 @@
       "verificationQueueError": "There was an error adding to the verification queue.",
       "noAnswersYet": "No answers yet"
       
+      
     },
     "ryver": {
         "ryverLogin" : "Login With Ryver",
@@ -27,6 +28,7 @@
       "massAccountDeleter":"Mass Account Deleter",
       "manageExtensionUsers":"Manage Companion Users",
       "massManageContent":"Mass Manage Content",
+      "reportedCommentsDeleter":"Reported Comments Deleter",
       "manageUsers":"Manage Companion Users",
       "verificationQueue":"Verification Queue",
       "massMessageUsers":"Mass Message Users",

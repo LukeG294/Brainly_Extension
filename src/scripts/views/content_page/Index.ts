@@ -18,21 +18,25 @@ async function addPerPage(){
 
   //tasks page
   if(window.location.href.includes("task") || (!window.location.href.includes("responses") && !window.location.href.includes("comments_tr"))){
-    if (permsArr.includes("1") || permsArr.includes("2") || permsArr.includes("3") || permsArr.includes("4")){
-      addTaskButtonsDeletion()
+    if (permsArr.includes("2") || permsArr.includes("3") || permsArr.includes("4")){
       addTaskButtonsReportedContent()
       addTaskButtonsConfirmation()
+      
     }
   
   }
 
   //responses page
   if(window.location.href.includes("responses")){
-    if (permsArr.includes("1") || permsArr.includes("2") || permsArr.includes("3") || permsArr.includes("4")){
+    if (permsArr.includes("2") || permsArr.includes("3") || permsArr.includes("4")){
       addResponseButtonsConfirm()
       addResponseButtonsFetchReported()
-      addResponseButtonsDelete()
+      
       addResponseButtonsApprove()
+    }
+    if (permsArr.includes("2") || permsArr.includes("3") || permsArr.includes("4")){
+      addResponseButtonsDelete()
+      addTaskButtonsDeletion()
     }
    
     if (permsArr.includes("3") || permsArr.includes("4")){

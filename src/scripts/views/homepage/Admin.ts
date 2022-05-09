@@ -47,13 +47,11 @@ export function mass_accdel(){
         document.querySelector("body").insertAdjacentHTML("afterbegin", macc_d());
         document.querySelector(".modal_close").addEventListener("click", function(){document.querySelector(".modal_back").remove()})
         
-        
         document.querySelector(".presets").addEventListener("change", function(){
             let rsn = document.querySelector(".presets input:checked").getAttribute("reason");
             (<HTMLInputElement>document.querySelector(".deletion-reason")).value = rsn;
         });
-        
-        
+
         document.querySelector(".delete-acc").addEventListener("click", async function(){
            
             //@ts-expect-error
@@ -236,34 +234,7 @@ export function reportedCommentsDeleter(){
     `)
 
     document.querySelector(".reported-comments-deleter").addEventListener("click", function(){
-      if (!document.querySelector('.deleter')){
-        document.querySelector(".sg-menu-list").insertAdjacentHTML("beforeend",  /*html*/`
-        <div class = "deleter">
-            <div class="sg-select sg-select--full-width">
-            <div class="sg-select__icon"></div>
-           
-            </div>
-            <button style="margin-bottom:12px" class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-peach delete-comments"><span class="sg-button__icon sg-button__icon--m">
-            <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
-                    <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-heart-3qxpca" focusable="false"><text id="title-heart-3qxpca" hidden="">heart</text>
-                        <use xlink:href="#icon-close" aria-hidden="true"></use>
-                      </svg></div>
-                  </span><span class="sg-button__text">Delete</span></button>
-                 
-                  <h2 class="sg-text sg-text--text-gray-70 sg-text--small sg-text--bold">Fetched:<div id='fetched-count'></div></h2>
-                  <h2 class="sg-text sg-text--text-gray-70 sg-text--small sg-text--bold">Deleted:<div id='deleted-count'></div></h2>
-
-        </div>`
-        )
-        document.querySelector(".reasons").addEventListener("change", function(){
-            if (this.value === "custom"){
-                let reason = prompt('What custom reason would you like to use?')
-                //@ts-ignore
-                document.querySelector(".reasons .custom").value = reason
-                document.querySelector(".reasons .custom").innerHTML = reason
-            }
-       })
-       document.querySelector(".delete-comments").addEventListener("click", async function(){
+       async function removeComments(){
 
            document.querySelector(".delete-comments .spinner-container").classList.add("show")
             //first page
@@ -291,7 +262,6 @@ export function reportedCommentsDeleter(){
            
             //rest of pages
             async function fetchNextPage(last_id){
-
                 let response = await fetch("https://brainly.com/api/28/moderation_new/get_comments_content", {
                     "body": `{\"subject_id\":0,\"category_id\":998,\"schema\":\"moderation.index\",\"last_id\":${last_id}}`,
                     "method": "POST",
@@ -315,19 +285,8 @@ export function reportedCommentsDeleter(){
                     document.querySelector(".delete-comments .spinner-container").classList.remove("show")
                     showMessage(`Mod all comments cleared! ${finalCount} were removed.`,"success")
                 }
-                
-                
             }
-           
-            
-        
-           
-       })
-      } else {
-          document.querySelector('.deleter').remove()
-        }
-       
-
-      
-    })
+       }
+       OpenDialog("Delete all reported comments", "are you sure you want to delete all reported comments on the queue? clicking on 'Proceed' will start the process. Please make sure you don't close the tab until you are notified, or else the reported comments will be partially removed.", removeComments);
+    });
 }

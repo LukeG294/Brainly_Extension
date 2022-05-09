@@ -75,9 +75,9 @@ export async function get_warnings(user:string){
     }
     return warn_arr
 }
-export function sendMessages(users_ids, content){
-
-    function getConvoId(userid, varContent){
+export async function sendMessages(users_ids, content){
+    document.querySelector(".send-message .spinner-container").classList.add("show");
+    async function getConvoId(userid, varContent){
         var data = JSON.stringify({
         "user_id": userid
         });
@@ -85,7 +85,7 @@ export function sendMessages(users_ids, content){
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
     
-    xhr.addEventListener("readystatechange", function() {
+    xhr.addEventListener("readystatechange", async function() {
         if(this.readyState === 4) {
         let response = JSON.parse(this.responseText)
        
@@ -98,15 +98,16 @@ export function sendMessages(users_ids, content){
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         
-        xhr.addEventListener("readystatechange", function() {
+        xhr.addEventListener("readystatechange",  function() {
             if(this.readyState === 4) {
             console.log(this.responseText);
+            document.querySelector(".send-message .spinner-container").classList.remove("show");
             }
         });
        
   
           
-        xhr.open("POST", "${brainly_legacy_api_url()}api_messages/send");
+        xhr.open("POST", "https://brainly.com/api/28/api_messages/send");
         xhr.setRequestHeader("authority", "brainly.com");
         xhr.setRequestHeader("sec-ch-ua", "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"98\", \"Google Chrome\";v=\"98\"");
         xhr.setRequestHeader("sec-ch-ua-mobile", "?0");
@@ -117,18 +118,18 @@ export function sendMessages(users_ids, content){
         xhr.setRequestHeader("x-requested-with", "XMLHttpRequest");
         
         
-        xhr.send(data);
+        await xhr.send(data);
         }
     });
     
-    xhr.open("POST", "${brainly_legacy_api_url()}api_messages/check");
+    xhr.open("POST", "https://brainly.com/api/28/api_messages/check");
     xhr.setRequestHeader("authority", "brainly.com");
     
     xhr.setRequestHeader("content-type", "application/json");
     xhr.setRequestHeader("x-b-token-long", getCookie("Zadanepl_cookie[Token][Long]"));
     
     
-    xhr.send(data);
+    await xhr.send(data);
     }
     
 

@@ -119,7 +119,7 @@ export function mass_msg(){
             }, 100);
         });
         document.querySelector(".send-message").addEventListener("click", async function(){
-            document.querySelector(".send-message .spinner-container").classList.add("show");
+           
             //@ts-expect-error
             let linksArray = String(document.querySelector(".profile-links").value).split("\n")
             let error = false
@@ -133,14 +133,14 @@ export function mass_msg(){
                     usersToMsg.push(uid+"-"+uname)
                 } else { error = true }
             }
-            sendMessages(usersToMsg, (<HTMLInputElement>document.querySelector(".message-content")).value)
+            await sendMessages(usersToMsg, (<HTMLInputElement>document.querySelector(".message-content")).value)
             if (error){
                 document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
             } else {
                 document.querySelector(".profile-links").classList.add("sg-textarea--valid")
                 
             }
-            document.querySelector(".send-message .spinner-container").classList.remove("show");
+           
         })
     })
 }

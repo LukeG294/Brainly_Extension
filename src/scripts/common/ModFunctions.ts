@@ -47,6 +47,7 @@ export async function insert_ticket(id, butspinner){
     }
 }
 export async function delete_user(uid:string){
+    document.querySelector(".delete-acc .spinner-container").classList.add("show");
     await fetch("https://brainly.com/admin/users/delete/"+uid, {
     headers: {
         Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -55,6 +56,7 @@ export async function delete_user(uid:string){
         "Upgrade-Insecure-Requests": "1"
     }
     });
+    document.querySelector(".delete-acc .spinner-container").classList.remove("show");
 }
 export async function get_warnings(user:string){
     let warn_arr = [];

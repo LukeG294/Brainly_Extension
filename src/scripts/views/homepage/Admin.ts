@@ -55,7 +55,7 @@ export function mass_accdel(){
         
         
         document.querySelector(".delete-acc").addEventListener("click", async function(){
-            document.querySelector(".delete-acc .spinner-container").classList.add("show");
+           
             //@ts-expect-error
             let linksArray = String(document.querySelector(".profile-links").value).split("\n")
             let error = false
@@ -74,7 +74,7 @@ export function mass_accdel(){
                 document.querySelector(".profile-links").classList.add("sg-textarea--valid")
                 
             }
-            document.querySelector(".delete-acc .spinner-container").classList.remove("show");
+          
         })
     })
 }

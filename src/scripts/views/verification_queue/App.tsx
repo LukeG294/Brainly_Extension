@@ -1,7 +1,7 @@
 import React, {useEffect} from "react"
 import { Flex, Spinner, Button , Icon} from "brainly-style-guide"
 import {loadNextPage, loadPrevPage} from "./VerificationQueueFunctions"
-import {List} from "./ReactComponents/itemList"
+import {List} from "./ReactComponents/ItemList"
 import { extension_server_url } from "configs/config";
 //react app goes here, make components in the other folder
 export default function App() {
@@ -17,17 +17,14 @@ export default function App() {
             setItems(items);
         }
         fetchItems();
-        
     }, [])
     const nextPage = async () =>{
         //fetch next page of items from server, runs on next page button click
         document.querySelector(".spinner-container").classList.add("show");
         let newdata = await loadNextPage();
         document.querySelector(".spinner-container").classList.remove("show");
-     
-        if (!newdata.end){
-            setItems(newdata);
-        }
+        
+        newdata.end?{}:setItems(newdata)
         
     }
     const prevPage = async () => {

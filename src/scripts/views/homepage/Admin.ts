@@ -184,9 +184,8 @@ export function verification_queue(){
 export function md_content(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
     <li class="sg-menu-list__element mm-content">   
-    <a class = "sg-menu-list__link">${Extension.titles.massManageContent}</a>
+        <a class = "sg-menu-list__link">${Extension.titles.massManageContent}</a>
     </li>
-    
     `)
 
     document.querySelector(".mm-content").addEventListener("click", function(){

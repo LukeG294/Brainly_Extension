@@ -1,4 +1,4 @@
-import {User} from "../../common/user"
+import {User} from "../../common/User"
 import Extension from "../../../locales/en/localization.json"
 let warn_area = /*html*/`
 <div class="warnbox">

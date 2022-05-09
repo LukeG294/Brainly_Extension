@@ -1,7 +1,7 @@
 import {ticket_data} from "./Mod Ticket/ticket_functions"
 import {showMessage} from "./CommonFunctions"
 import{ removeUser, editUser, checkPermissionSet, getPermissions, removeAnswer} from "./permissions/PermissionSystem"
-import{ permissionChecks } from "../views/homepage/exports"
+import{ permissionChecks } from "../views/homepage/Exports"
 import BrainlyAPI from "./BrainlyAPI"
 import Extension from "../../locales/en/localization.json"
 import {extension_server_url, parseProfileLink} from "../../configs/config"

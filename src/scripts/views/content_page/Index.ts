@@ -21,6 +21,8 @@ async function addPerPage(){
     if (permsArr.includes("2") || permsArr.includes("3") || permsArr.includes("4")){
       addTaskButtonsReportedContent()
       addTaskButtonsConfirmation()
+     
+      addTaskButtonsDeletion()
       
     }
   
@@ -31,13 +33,10 @@ async function addPerPage(){
     if (permsArr.includes("2") || permsArr.includes("3") || permsArr.includes("4")){
       addResponseButtonsConfirm()
       addResponseButtonsFetchReported()
-      
+      addResponseButtonsDelete()
       addResponseButtonsApprove()
     }
-    if (permsArr.includes("2") || permsArr.includes("3") || permsArr.includes("4")){
-      addResponseButtonsDelete()
-      addTaskButtonsDeletion()
-    }
+   
    
     if (permsArr.includes("3") || permsArr.includes("4")){
       addResponseButtonsUnverify()

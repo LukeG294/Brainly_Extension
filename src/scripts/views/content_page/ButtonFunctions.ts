@@ -591,9 +591,11 @@ export async function find_reported_content(id,type){
     //@ts-ignore
     if(!responseHTML.querySelector(".border-error")){ 
       //@ts-ignore
-      let content =  responseHTML.querySelector("tbody").children
-      for (let i = 0; i < content.length; i++) {
-        let contentlink = content[i]
+      let content = responseHTML.querySelector("tbody").children
+      var elements = Array.from(content)
+      elements.forEach( async element => {
+        
+        let contentlink = element
         let xhr = new XMLHttpRequest();
         
         xhr.withCredentials = true;
@@ -624,7 +626,7 @@ export async function find_reported_content(id,type){
         });
         xhr.open("POST", `https://brainly.com/api/28/api_tasks/main_view/${qid}?accept=application/json`);
         xhr.send();
-        }
+      });
     } 
     
 }

@@ -8,6 +8,8 @@ import {
 } from "./ContentPageButtons"
 import { parseQuestionLink } from "configs/config"
 import {getCookie} from "../../common/CommonFunctions"
+import {Answer, Question} from "../../common/Content"
+
 export function selectAll(){
     let checkBoxes = document.getElementsByClassName("contentCheckboxes")
     for (let i = 0; i < checkBoxes.length; i++) {
@@ -402,15 +404,12 @@ export async function approveAnswers(){
         } 
     }
     
-    let answerIDtoVerify = []
-    let questionIDsafety = ""
-    for (let i = 0; i < idsToVerify.length; i++) {
-      
-      let questionID = idsToVerify[i]
-      questionIDsafety = idsToVerify[i]
-      let res = await fetch(`https://brainly.com/api/28/moderation_new/get_content`, { method: "POST",body: (`{"model_type_id":1,"model_id":${questionID},"schema":"moderation.content.get"}`)}).then(data => data.json());
-      await fetch(`https://brainly.com/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${questionID},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
-      let answers = res.data.responses
+    idsToVerify.forEach(async element => {
+      let questionID = element
+      let qobj = new Question()
+      let questionObjectData = await qobj.Get(questionID)
+      //@ts-ignore
+      let answers = questionObjectData.data.responses
       let times = 0
       
      
@@ -423,71 +422,24 @@ export async function approveAnswers(){
         
         let user = String(answers[x]["user_id"])
         if (user === String(window.location.href.split("/")[5])){
-          answerIDtoVerify.push(answers[x]["id"])
+        
+          let answerObj = new Answer()
+          await answerObj.Approve(answers[x]["id"])
         }
       }
-      
-    }
-  
-    let success = 0
-    let fail = 0
-    for (let i = 0; i < answerIDtoVerify.length; i++) {
-     
-        let model_type_id = 2;
-        let type = "response"
-        //@ts-expect-error
-        let reason = document.querySelectorAll(".deletion-reason")[0].value
-        //@ts-expect-error
-        let warn = document.querySelector("#warn").checked
-        //@ts-expect-error
-        let take_point = document.querySelector("#pts").checked
-        var myHeaders = new Headers();
-        myHeaders.append("authority", "brainly.com");
-        myHeaders.append("accept", "application/json");
-        myHeaders.append("accept-language", "en-US,en;q=0.9");
-        myHeaders.append("content-type", "application/json");
-        myHeaders.append("origin", "https://brainly.com");
-        myHeaders.append("referer", "https://brainly.com/question/"+questionIDsafety);
-        myHeaders.append("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36");
-        
-        var raw = JSON.stringify({
-          "model_type": 2,
-          "model_id": answerIDtoVerify[i]
-        });
-        
-        
-        let response = await fetch(`https://brainly.com/api/28/api_content_quality/confirm`, { method: "POST",body: raw}).then(data => data.json());;
-        console.log(response)
-        if (response["success"] === true){
-          success+=1
-        } else {
-          fail +=1
-        }
-    }
-  
-    if (fail > 0){
-      let banner = document.createElement('div')
-      document.querySelector("#flash-msg").appendChild(banner)
-      banner.outerHTML = `<div aria-live="assertive" class="sg-flash" role="alert">
-                  <div class="sg-flash__message sg-flash__message--error">
-                  <div class="sg-text sg-text--small sg-text--bold sg-text--to-center">${success} approved, ${fail} had an error. Maybe already approved?</div>
-                  </div>
-              </div>`
-      document.querySelector(".sg-flash").addEventListener("click",function(){
-        this.remove();
-      })
-    } else {
+    });
+    
       let banner = document.createElement('div')
       document.querySelector("#flash-msg").appendChild(banner)
       banner.outerHTML = `<div aria-live="assertive" class="sg-flash" role="alert">
                   <div class="sg-flash__message sg-flash__message--success">
-                  <div class="sg-text sg-text--small sg-text--bold sg-text--to-center">${success} approved successfully!</div>
+                  <div class="sg-text sg-text--small sg-text--bold sg-text--to-center">Approved selected answers!</div>
                   </div>
               </div>`
       document.querySelector(".sg-flash").addEventListener("click",function(){
         this.remove();
       })
-    }
+    
     document.querySelector("#approveSelected  .spinner-container").classList.remove("show");
 }
 export async function confirmAnswers(){

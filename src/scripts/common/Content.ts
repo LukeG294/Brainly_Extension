@@ -49,10 +49,23 @@ export class Question{
             "reason":reason,
             "give_warning":warn,
             "take_points": take_point,
-            "schema":`moderation.tasm.delete`,
+            "schema":`moderation.task.delete`,
             "model_type_id":1,
             "model_id":id,
           })
+    }
+    async Get(id:string){
+        let data = await BrainlyAPI.Legacy(`POST`, 'moderation_new/get_content', {
+            "model_id":id,
+            "model_type_id":1,
+            "schema": "moderation.content.get",
+        })
+        await BrainlyAPI.Legacy(`POST`, 'moderate_tickets/expire', {
+            "model_id":id,
+            "model_type_id":1,
+            "schema": "moderation.ticket.expire",
+        })
+        return data
     }
 }
 

@@ -236,7 +236,7 @@ export function reportedCommentsDeleter(){
     document.querySelector(".reported-comments-deleter").addEventListener("click", function(){
        async function removeComments(){
 
-           document.querySelector(".delete-comments .spinner-container").classList.add("show")
+         
             //first page
             let finalCount = 0
             let OriginalResponse = await fetch("https://brainly.com/api/28/moderation_new/index", {
@@ -247,16 +247,16 @@ export function reportedCommentsDeleter(){
             }).then(data => data.json());
             
             let OriginalCount = OriginalResponse.data.items.length
-            document.getElementById('fetched-count').innerText = OriginalCount
+         
             let OriginalLastId = OriginalResponse.data.last_id
             let FirstPageComments = OriginalResponse.data.items
+           
             FirstPageComments.forEach(async element => {
                 let commentObject = new CommentHandler()
-            
+                console.log(element.model_id)
                 await commentObject.Delete(element.model_id, "Deleting all reported comments.", false);
-                //@ts-expect-error
-                document.querySelector('.deleted-count').innerText = parseInt(document.querySelector('.deleted-count').innerText) + 1
                 finalCount+=1
+              
             });
             fetchNextPage(OriginalLastId)
            
@@ -272,17 +272,17 @@ export function reportedCommentsDeleter(){
                 let comments = response.data.items
                 comments.forEach(async element => {
                     let commentObject = new CommentHandler()
-                
+               
                     await commentObject.Delete(element.model_id, "Deleting all reported comments.", false);
-                    //@ts-expect-error
-                    document.querySelector('.deleted-count').innerText = parseInt(document.querySelector('.deleted-count').innerText) + 1
+                    
+                   
                     finalCount+=1
                 });
-                document.getElementById('fetched-count').innerText = parseInt(document.getElementById('fetched-count').innerText) + count
+               
                 if (response.data.last_id !== 0){
                     fetchNextPage(response.data.last_id)
                 } else {
-                    document.querySelector(".delete-comments .spinner-container").classList.remove("show")
+                   
                     showMessage(`Mod all comments cleared! ${finalCount} were removed.`,"success")
                 }
             }

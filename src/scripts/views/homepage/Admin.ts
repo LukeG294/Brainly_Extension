@@ -256,7 +256,7 @@ export function reportedCommentsDeleter(){
             <div class="sg-select__icon"></div>
             <select class="sg-select__element reasons">
                 <option value="" selected="true">Select a reason</option>
-                <option value="default" class="default">Default</option>
+                <option value="Your comment violates our Community Guidelines, so we had to take it down. Please review the guidelines here: https://faq.brainly.com/hc/en-us/articles/360014661139 - Thanks for being a team player!" class="default">Default</option>
                 <option value="custom" class="custom">Custom</option>
             </select>
             </div>

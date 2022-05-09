@@ -70,7 +70,7 @@ export function get_time_diff( dt ){
       return `${Math.floor(minutediff/2592000)} ${Extension.times.year}${str} ${Extension.times.ago}`
     }
   }
-function OpenDialog(heading, content){
+export function OpenDialog(heading, content, confirmfn){
   document.querySelector("body").insertAdjacentHTML("afterbegin", /*html*/`
     <div class="js-dialog sg-dialog__overlay sg-dialog__overlay--scroll sg-dialog__overlay--open" style="z-index: 999;">
       <div tabindex="0"></div><div role="dialog" class="sg-dialog__container sg-dialog__container--size-m sg-dialog__container--open" aria-modal="true" tabindex="-1">
@@ -86,11 +86,15 @@ function OpenDialog(heading, content){
           <div class="sg-flex sg-flex--margin-bottom-m">${content}</div>
           <div class="sg-flex sg-flex--justify-content-flex-end sg-space-x-s">
             <button class="sg-button sg-button--m sg-button--outline" onclick = "document.querySelector('.js-dialog').remove()"><span class="sg-button__text">cancel</span></button>
-            <button class="sg-button sg-button--m sg-button--solid" onclick = "return true"><span class="sg-button__text">proceed</span></button>
+            <button class="sg-button sg-button--m sg-button--solid returnfun"><span class="sg-button__text">proceed</span></button>
           </div>
         </div>
       </div>
     <div tabindex="0">
     </div>
   </div>`)
+  document.querySelector(".js-dialog .returnfun").addEventListener("click", () => {
+    document.querySelector(".js-dialog").remove()
+    confirmfn()
+  });
 }

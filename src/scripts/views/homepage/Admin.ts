@@ -1,6 +1,6 @@
 
 import { delete_user, sendMessages, startCompanionManager } from "../../common/ModFunctions";
-import { showMessage } from "../../common/CommonFunctions";
+import { showMessage, OpenDialog } from "../../common/CommonFunctions";
 import {macc_d, mcompu, mmContentModal, mmsg_s} from "../../HTML_exports/macc-d_exp"
 import Extension from "../../../locales/en/localization.json"
 import {CommentHandler, Question} from "../../common/Content"
@@ -268,6 +268,7 @@ export function reportedCommentsDeleter(){
             }
        })
        document.querySelector(".delete-comments").addEventListener("click", async function(){
+
            document.querySelector(".delete-comments .spinner-container").classList.add("show")
             //first page
             let finalCount = 0

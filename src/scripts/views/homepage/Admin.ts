@@ -201,7 +201,7 @@ export function md_content(){
 
         
         document.querySelector(".delete-content").addEventListener("click", async function(){
-            document.querySelector(".delete-content .spinner-container").classList.add("show");
+            
             //@ts-expect-error
             let linksArray = String(document.querySelector(".profile-links").value).split("\n")
             let error = false
@@ -233,7 +233,7 @@ export function md_content(){
                 document.querySelector(".profile-links").classList.add("sg-textarea--valid")
                 
             }
-            document.querySelector(".delete-content .spinner-container").classList.remove("show");
+           
         })
     })
 }

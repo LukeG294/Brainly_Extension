@@ -21,7 +21,7 @@ export function macc_d(){
                 <label class="sg-radio sg-radio--xxs" for="username">
                     <input type="radio" class="sg-radio__element" name="group1" id="username" reason = "Inappropriate Username">
                     <span class="sg-radio__ghost" style="margin-left:10px" aria-hidden="true"></span>
-                    <span class="sg-text sg-text--small sg-text--bold sg-radio__label" style="margin-left:5px"><Inappropriate Username</span>
+                    <span class="sg-text sg-text--small sg-text--bold sg-radio__label" style="margin-left:5px">Inappropriate Username</span>
                 </label>
                 <label class="sg-radio sg-radio--xxs" for="inactive">
                     <input type="radio" class="sg-radio__element" name="group1" id="inactive" reason = "Inactive">

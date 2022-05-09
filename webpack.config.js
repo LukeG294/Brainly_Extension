@@ -14,13 +14,13 @@ const config = {
     //brainly resources
     ...MakeEntries("./src/scripts/styleguide/*.ts", "content-scripts/js", "styleguide"),
     //page-specific scripts
-    ...MakeEntries("./src/scripts/views/homepage/homepage.ts", "content-scripts/js", "homepage"),
+    ...MakeEntries("./src/scripts/views/homepage/Homepage.ts", "content-scripts/js", "homepage"),
     ...MakeEntries("./src/scripts/views/old_profile/*.ts", "content-scripts/js", "old_profile"),
     ...MakeEntries("./src/scripts/views/question_page/QuestionPage.ts", "content-scripts/js", "question_page"),
-    ...MakeEntries("./src/scripts/views/content_page/index.ts", "content-scripts/js", "content_page"),
+    ...MakeEntries("./src/scripts/views/content_page/Index.ts", "content-scripts/js", "content_page"),
     //react
-    ...MakeEntries("./src/scripts/views/verification_queue/index.ts", "content-scripts/js", "verification_queue"),
-    ...MakeEntries("./src/scripts/views/reported_contents/index.ts", "content-scripts/js", "reported_content")
+    ...MakeEntries("./src/scripts/views/verification_queue/Index.ts", "content-scripts/js", "verification_queue"),
+    ...MakeEntries("./src/scripts/views/reported_contents/Index.ts", "content-scripts/js", "reported_content")
 
   },
   output: {

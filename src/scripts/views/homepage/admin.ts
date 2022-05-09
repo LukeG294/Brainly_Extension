@@ -1,7 +1,7 @@
 
 import { delete_user, sendMessages, startCompanionManager } from "../../common/ModFunctions";
 import { showMessage } from "../../common/CommonFunctions";
-import {macc_d, mcompu, mmsg_s} from "../../HTML_exports/macc-d_exp"
+import {macc_d, mcompu, mmContentModal, mmsg_s} from "../../HTML_exports/macc-d_exp"
 import Extension from "../../../locales/en/localization.json"
 
 //@ts-ignore
@@ -175,6 +175,75 @@ export function verification_queue(){
         
         
         
+    })
+}
+
+
+
+export function md_content(){
+    document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
+    <li class="sg-menu-list__element mm-content">   
+    <a class = "sg-menu-list__link">${Extension.titles.massManageContent}</a>
+    </li>
+    
+    `)
+
+    document.querySelector(".mm-content").addEventListener("click", function(){
+        document.querySelector("body").insertAdjacentHTML("afterbegin", mmContentModal());
+        document.querySelector(".modal_close").addEventListener("click", function(){document.querySelector(".modal_back").remove()})
+        
+        
+        document.querySelector(".presets").addEventListener("change", function(){
+            let rsn = document.querySelector(".presets input:checked").getAttribute("reason");
+            (<HTMLInputElement>document.querySelector(".message-content")).value = rsn;
+        });
+        let input = document.querySelector(".message-content");
+
+        // Init a timeout variable to be used below
+        let timeout = null;
+
+        // Listen for keystroke events
+        input.addEventListener('keyup', function (e) {
+            // Clear the timeout if it has already been set.
+            // This will prevent the previous task from executing
+            // if it has been less than <MILLISECONDS>
+            clearTimeout(timeout);
+
+            // Make a new timeout set to go off in 1000ms (1 second)
+            timeout = setTimeout(function () {
+                if (String((<HTMLInputElement>input).value).includes("{user}")){
+                    //@ts-ignore
+                    document.querySelector(".send-message").setAttribute("style","background-color:#6D83F3 !important")
+                } else {
+                    //@ts-ignore
+                    document.querySelector(".send-message").setAttribute("style","background-color:#4FB3F6 !important")
+                }
+            }, 100);
+        });
+        document.querySelector(".send-message").addEventListener("click", async function(){
+            document.querySelector(".send-message .spinner-container").classList.add("show");
+            //@ts-expect-error
+            let linksArray = String(document.querySelector(".profile-links").value).split("\n")
+            let error = false
+            let usersToMsg = []
+            for (let index = 0; index < linksArray.length; index++) {
+                const element = linksArray[index];
+                let regexString = new RegExp(`https:\/\/brainly\.com\/profile\/.*-.*`)
+                if (regexString.test(element)) {
+                    let uid = String(element).split("/")[4].split("-")[1]
+                    let uname = String(element).split("/")[4].split("-")[0]
+                    usersToMsg.push(uid+"-"+uname)
+                } else { error = true }
+            }
+            sendMessages(usersToMsg, (<HTMLInputElement>document.querySelector(".message-content")).value)
+            if (error){
+                document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
+            } else {
+                document.querySelector(".profile-links").classList.add("sg-textarea--valid")
+                
+            }
+            document.querySelector(".send-message .spinner-container").classList.remove("show");
+        })
     })
 }
 

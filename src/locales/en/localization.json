@@ -26,6 +26,7 @@
     "titles": {
       "massAccountDeleter":"Mass Account Deleter",
       "manageExtensionUsers":"Manage Companion Users",
+      "massManageContent":"Mass Manage Content",
       "manageUsers":"Manage Companion Users",
       "verificationQueue":"Verification Queue",
       "massMessageUsers":"Mass Message Users",

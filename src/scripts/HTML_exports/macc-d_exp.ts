@@ -1,4 +1,5 @@
 import Extension from "../../locales/en/localization.json"
+
 export function macc_d(){
     return(/*html*/`
     <div class="modal_back">
@@ -9,23 +10,23 @@ export function macc_d(){
             <div class="presets">
                 <label class="sg-radio sg-radio--xxs" for="links">
                     <input type="radio" class="sg-radio__element" name="group1" id="links" reason = "Link Spammer">
-                    <span class="sg-radio__ghost" aria-hidden="true"></span>
-                    <span class="sg-text sg-text--small sg-text--bold sg-radio__label">Link spammer</span>
+                    <span class="sg-radio__ghost" style="margin-left:10px" aria-hidden="true"></span>
+                    <span class="sg-text sg-text--small sg-text--bold sg-radio__label" style="margin-left:5px">Link spammer</span>
                 </label>
                 <label class="sg-radio sg-radio--xxs" for="alt">
                     <input type="radio" class="sg-radio__element" name="group1" id="alt" reason = "Alternate Accounts">
-                    <span class="sg-radio__ghost" aria-hidden="true"></span>
-                    <span class="sg-text sg-text--small sg-text--bold sg-radio__label">Alt Accounts</span>
+                    <span class="sg-radio__ghost" style="margin-left:10px" aria-hidden="true"></span>
+                    <span class="sg-text sg-text--small sg-text--bold sg-radio__label" style="margin-left:5px">Alt Accounts</span>
                 </label>
                 <label class="sg-radio sg-radio--xxs" for="username">
                     <input type="radio" class="sg-radio__element" name="group1" id="username" reason = "Inappropriate Username">
-                    <span class="sg-radio__ghost" aria-hidden="true"></span>
-                    <span class="sg-text sg-text--small sg-text--bold sg-radio__label">Inappropriate Username</span>
+                    <span class="sg-radio__ghost" style="margin-left:10px" aria-hidden="true"></span>
+                    <span class="sg-text sg-text--small sg-text--bold sg-radio__label" style="margin-left:5px"><Inappropriate Username</span>
                 </label>
                 <label class="sg-radio sg-radio--xxs" for="inactive">
                     <input type="radio" class="sg-radio__element" name="group1" id="inactive" reason = "Inactive">
-                    <span class="sg-radio__ghost" aria-hidden="true"></span>
-                    <span class="sg-text sg-text--small sg-text--bold sg-radio__label">Inactive</span>
+                    <span class="sg-radio__ghost" style="margin-left:10px" aria-hidden="true"></span>
+                    <span class="sg-text sg-text--small sg-text--bold sg-radio__label" style="margin-left:5px">Inactive</span>
                 </label>
             </div>
             <textarea placeholder="Reason" class="deletion-reason sg-textarea sg-textarea--tall"></textarea>

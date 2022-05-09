@@ -261,6 +261,7 @@ export function reportedCommentsDeleter(){
             </select>
             </div>
             <button style="margin-bottom:12px" class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-peach delete-comments"><span class="sg-button__icon sg-button__icon--m">
+            <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
                     <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-heart-3qxpca" focusable="false"><text id="title-heart-3qxpca" hidden="">heart</text>
                         <use xlink:href="#icon-close" aria-hidden="true"></use>
                       </svg></div>
@@ -286,16 +287,28 @@ export function reportedCommentsDeleter(){
             }
        })
        document.querySelector(".delete-comments").addEventListener("click", async function(){
+           document.querySelector(".delete-comments .spinner-container").classList.add("show")
             //first page
+            let finalCount = 0
             let OriginalResponse = await fetch("https://brainly.com/api/28/moderation_new/index", {
             "body": "{\"subject_id\":0,\"category_id\":0,\"schema\":\"moderation.index\"}",
             "method": "POST",
             "mode": "cors",
             "credentials": "include"
             }).then(data => data.json());
+            
             let OriginalCount = OriginalResponse.data.items.length
             document.getElementById('fetched-count').innerText = OriginalCount
             let OriginalLastId = OriginalResponse.data.last_id
+            let FirstPageComments = OriginalResponse.data.items
+            FirstPageComments.forEach(async element => {
+                let commentObject = new CommentHandler()
+                //@ts-expect-error
+                await commentObject.Delete(element.model_id, document.querySelector('.reasons').value, document.getElementById('warn-all').checked);
+                //@ts-expect-error
+                document.querySelector('.deleted-count').innerText = parseInt(document.querySelector('.deleted-count').innerText) + 1
+                finalCount+=1
+            });
             fetchNextPage(OriginalLastId)
            
             //rest of pages
@@ -315,10 +328,14 @@ export function reportedCommentsDeleter(){
                     await commentObject.Delete(element.model_id, document.querySelector('.reasons').value, document.getElementById('warn-all').checked);
                     //@ts-expect-error
                     document.querySelector('.deleted-count').innerText = parseInt(document.querySelector('.deleted-count').innerText) + 1
+                    finalCount+=1
                 });
                 document.getElementById('fetched-count').innerText = parseInt(document.getElementById('fetched-count').innerText) + count
                 if (response.data.last_id !== 0){
                     fetchNextPage(response.data.last_id)
+                } else {
+                    document.querySelector(".delete-comments .spinner-container").classList.remove("show")
+                    showMessage(`Mod all comments cleared! ${finalCount} were removed.`,"success")
                 }
                 
                 

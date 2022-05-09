@@ -5,6 +5,7 @@ import {User} from "../../common/user"
 import Extension from "../../../locales/en/localization.json"
 
 export function confirmButton(){
+  
     let answers = pageElementAll("div[data-testid = 'moderation_box_answer'] > div");
     
     let button = /*html*/`

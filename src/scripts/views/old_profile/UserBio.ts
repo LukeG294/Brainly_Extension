@@ -1,4 +1,4 @@
-import {User} from "../../common/user"
+import {User} from "../../common/User"
 
 export async function insert_bio(){
     

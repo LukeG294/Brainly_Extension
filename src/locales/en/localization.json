@@ -32,7 +32,6 @@
       "massMessageUsers":"Mass Message Users",
       "questionContent":"Question Content",
       "question":"question"
-      
     }, 
     "buttons": {
       "delete": "Delete!",

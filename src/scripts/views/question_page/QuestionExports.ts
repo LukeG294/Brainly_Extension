@@ -1,7 +1,7 @@
 import { extension_server_url, pageElement, pageElementAll } from "configs/config";
 import { showMessage } from "../../common/CommonFunctions"
 import {Answer} from "../../common/Content"
-import {User} from "../../common/user"
+import {User} from "../../common/User"
 import Extension from "../../../locales/en/localization.json"
 
 export function confirmButton(){

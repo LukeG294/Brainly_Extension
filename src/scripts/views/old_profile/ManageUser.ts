@@ -1,5 +1,5 @@
 
-import{ permissionChecks } from "../homepage/exports"
+import{ permissionChecks } from "../homepage/Exports"
 import{  editUser, getPermissionsWithDocId} from "../../common/permissions/PermissionSystem"
 
 export async function manage_user(){

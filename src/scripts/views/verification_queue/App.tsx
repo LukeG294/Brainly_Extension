@@ -17,17 +17,14 @@ export default function App() {
             setItems(items);
         }
         fetchItems();
-        
     }, [])
     const nextPage = async () =>{
         //fetch next page of items from server, runs on next page button click
         document.querySelector(".spinner-container").classList.add("show");
         let newdata = await loadNextPage();
         document.querySelector(".spinner-container").classList.remove("show");
-     
-        if (!newdata.end){
-            setItems(newdata);
-        }
+        
+        newdata.end?{}:setItems(newdata)
         
     }
     const prevPage = async () => {

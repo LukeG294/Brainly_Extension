@@ -70,3 +70,27 @@ export function get_time_diff( dt ){
       return `${Math.floor(minutediff/2592000)} ${Extension.times.year}${str} ${Extension.times.ago}`
     }
   }
+function OpenDialog(heading, content){
+  document.querySelector("body").insertAdjacentHTML("afterbegin", /*html*/`
+    <div class="js-dialog sg-dialog__overlay sg-dialog__overlay--scroll sg-dialog__overlay--open" style="z-index: 999;">
+      <div tabindex="0"></div><div role="dialog" class="sg-dialog__container sg-dialog__container--size-m sg-dialog__container--open" aria-modal="true" tabindex="-1">
+        <button aria-label="Close this dialog window" class="sg-button sg-button--m sg-button--transparent sg-button--icon-only sg-dialog__close-button" onclick = "document.querySelector('.js-dialog').remove()">
+          <span class="sg-button__icon sg-button__icon--m"><div class="sg-icon sg-icon--icon-black sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-close-3k8spn" focusable="false"><text id="title-close-3k8spn" hidden="">close</text><use xlink:href="#icon-close" aria-hidden="true"></use></svg></div></span><span class="sg-button__text"></span>
+        </button>
+        <div class="sg-dialog__header" id="dialog-header">
+          <div class="sg-flex sg-flex--margin-bottom-m">
+            <h1 class="sg-headline">${heading}</h1>
+          </div>
+        </div>
+        <div class="sg-dialog__body">
+          <div class="sg-flex sg-flex--margin-bottom-m">${content}</div>
+          <div class="sg-flex sg-flex--justify-content-flex-end sg-space-x-s">
+            <button class="sg-button sg-button--m sg-button--outline" onclick = "document.querySelector('.js-dialog').remove()"><span class="sg-button__text">cancel</span></button>
+            <button class="sg-button sg-button--m sg-button--solid" onclick = "return true"><span class="sg-button__text">proceed</span></button>
+          </div>
+        </div>
+      </div>
+    <div tabindex="0">
+    </div>
+  </div>`)
+}

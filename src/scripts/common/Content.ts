@@ -53,13 +53,10 @@ export class Question{
             "model_type_id":1,
             "model_id":id,
           })
-        
     }
-   
 }
 
 export class CommentHandler{
-   
     async Delete(id:string, reason:string, warn:boolean){
         await BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_comment_content', {
             "reason_id":34,
@@ -68,7 +65,5 @@ export class CommentHandler{
             "model_type_id":45,
             "model_id":id,
           })
-        
     }
-   
 }

@@ -261,13 +261,7 @@ export function reportedCommentsDeleter(){
                         <use xlink:href="#icon-close" aria-hidden="true"></use>
                       </svg></div>
                   </span><span class="sg-button__text">Delete</span></button>
-                  <label class="sg-checkbox" for="warn" style="margin-left: 10%;">
-                    <input type="checkbox" class="sg-checkbox__element" id="warn-all">
-                    <div class="sg-checkbox__ghost" aria-hidden="true">
-                        <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-                    </div>
-                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label" style="margin-left:5px">warn user</span>
-                    </label>
+                 
                   <h2 class="sg-text sg-text--text-gray-70 sg-text--small sg-text--bold">Fetched:<div id='fetched-count'></div></h2>
                   <h2 class="sg-text sg-text--text-gray-70 sg-text--small sg-text--bold">Deleted:<div id='deleted-count'></div></h2>
 
@@ -299,7 +293,7 @@ export function reportedCommentsDeleter(){
             FirstPageComments.forEach(async element => {
                 let commentObject = new CommentHandler()
                 //@ts-expect-error
-                await commentObject.Delete(element.model_id, document.querySelector('.reasons').value, document.getElementById('warn-all').checked);
+                await commentObject.Delete(element.model_id, document.querySelector('.reasons').value, false);
                 //@ts-expect-error
                 document.querySelector('.deleted-count').innerText = parseInt(document.querySelector('.deleted-count').innerText) + 1
                 finalCount+=1
@@ -320,7 +314,7 @@ export function reportedCommentsDeleter(){
                 comments.forEach(async element => {
                     let commentObject = new CommentHandler()
                     //@ts-expect-error
-                    await commentObject.Delete(element.model_id, document.querySelector('.reasons').value, document.getElementById('warn-all').checked);
+                    await commentObject.Delete(element.model_id, document.querySelector('.reasons').value, false);
                     //@ts-expect-error
                     document.querySelector('.deleted-count').innerText = parseInt(document.querySelector('.deleted-count').innerText) + 1
                     finalCount+=1

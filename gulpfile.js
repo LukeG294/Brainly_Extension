@@ -35,10 +35,7 @@ gulp.task('sass', function(done){
         .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
         .pipe(concat("question_page.css"))
         .pipe(gulp.dest("dist/content-scripts/css/"));
-    gulp.src('src/styles/reported_content.scss')
-    .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
-    .pipe(concat("reported_content.css"))
-    .pipe(gulp.dest("dist/content-scripts/css/"));
+   
     done();
 });
 gulp.task("manifest", function(done){

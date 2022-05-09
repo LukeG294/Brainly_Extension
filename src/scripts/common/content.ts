@@ -15,14 +15,14 @@ export class Answer{
         BrainlyAPI.GQL(AcceptBody);
     }
     Approve(id:string){
-          BrainlyAPI.Legacy(`POST`, "api_content_quality/confirm", JSON.stringify({
+          BrainlyAPI.Legacy(`POST`, "api_content_quality/confirm", {
             "model_type": 2,
             "model_id": id
-          }));
+          });
     }
 
     async Delete(id:string, reason:string, warn:boolean, take_point:boolean){
-        BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_response_content', JSON.stringify({
+        BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_response_content', {
             "reason_id":2,
             "reason":reason,
             "give_warning":warn,
@@ -30,21 +30,21 @@ export class Answer{
             "schema":`moderation.response.delete`,
             "model_type_id":2,
             "model_id":id,
-          }))
+          })
         }
 }
 
 export class Question{
     Confirm(id:number) {
-        BrainlyAPI.Legacy(`POST`, "api_content_quality/confirm", JSON.stringify({
+        BrainlyAPI.Legacy(`POST`, "api_content_quality/confirm", {
             "model_type_id":1,
             "model_id":id,
             "schema":"moderation.content.ok"
-        }))
+        })
     }
 
     async Delete(id:string, reason:string, warn:boolean, take_point:boolean){
-        BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_task_content', JSON.stringify({
+        BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_task_content', {
             "reason_id":2,
             "reason":reason,
             "give_warning":warn,
@@ -52,6 +52,6 @@ export class Question{
             "schema":`moderation.tasm.delete`,
             "model_type_id":1,
             "model_id":id,
-          }))
+          })
     }
 }

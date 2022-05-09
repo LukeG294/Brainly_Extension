@@ -74,9 +74,7 @@ export function OpenDialog(heading, content, confirmfn){
   document.querySelector("body").insertAdjacentHTML("afterbegin", /*html*/`
     <div class="js-dialog sg-dialog__overlay sg-dialog__overlay--scroll sg-dialog__overlay--open" style="z-index: 999;">
       <div tabindex="0"></div><div role="dialog" class="sg-dialog__container sg-dialog__container--size-m sg-dialog__container--open" aria-modal="true" tabindex="-1">
-        <button aria-label="Close this dialog window" class="sg-button sg-button--m sg-button--transparent sg-button--icon-only sg-dialog__close-button" onclick = "document.querySelector('.js-dialog').remove()">
-          <span class="sg-button__icon sg-button__icon--m"><div class="sg-icon sg-icon--icon-black sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-close-3k8spn" focusable="false"><text id="title-close-3k8spn" hidden="">close</text><use xlink:href="#icon-close" aria-hidden="true"></use></svg></div></span><span class="sg-button__text"></span>
-        </button>
+       
         <div class="sg-dialog__header" id="dialog-header">
           <div class="sg-flex sg-flex--margin-bottom-m">
             <h1 class="sg-headline">${heading}</h1>
@@ -93,6 +91,7 @@ export function OpenDialog(heading, content, confirmfn){
     <div tabindex="0">
     </div>
   </div>`)
+
   document.querySelector(".js-dialog .returnfun").addEventListener("click", () => {
     document.querySelector(".js-dialog").remove()
     confirmfn()

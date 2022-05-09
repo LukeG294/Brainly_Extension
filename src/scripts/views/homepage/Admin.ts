@@ -287,6 +287,6 @@ export function reportedCommentsDeleter(){
                 }
             }
        }
-       OpenDialog("Delete all reported comments", "are you sure you want to delete all reported comments on the queue? clicking on 'Proceed' will start the process. Please make sure you don't close the tab until you are notified, or else the reported comments will be partially removed.", removeComments);
+       OpenDialog("Delete all reported comments", "Are you sure you want to delete all reported comments in the moderate all queue? Clicking on 'Proceed' will start the process. Please make sure you don't close the tab until you are notified, or else the reported comments will be partially removed.", removeComments);
     });
 }

@@ -165,18 +165,10 @@ export function usr_mgmt(){
 
 export function verification_queue(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
-    <li class="sg-menu-list__element verification-queue">   
-    <a class = "sg-menu-list__link">${Extension.titles.verificationQueue}</a>
-    </li>
-    
+        <li class="sg-menu-list__element verification-queue">   
+            <a class = "sg-menu-list__link" href = "https://brainly.com/companion/verification">${Extension.titles.verificationQueue}</a>
+        </li>
     `)
-
-    document.querySelector(".verification-queue").addEventListener("click", function(){
-        window.location.href = "https://brainly.com/companion/verification"
-        
-        
-        
-    })
 }
 
 

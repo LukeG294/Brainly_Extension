@@ -31,7 +31,7 @@
    
     {
       "matches": ["*://brainly.com/*"],
-      "exclude_globs": ["*://brainly.com/question/*","*://brainly.com/profile/*","*://brainly.com/companion/verification*"],
+      "exclude_globs": ["*://brainly.com/question/*","*://brainly.com/profile/*","*://brainly.com/companion/verification*","*://brainly.com/users/*"],
       "js": ["content-scripts/js/homepage.js"],
       "css": ["content-scripts/css/homepage.css"]
     },

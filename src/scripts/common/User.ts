@@ -32,8 +32,7 @@ export class User{
         return warn_arr
     }
     async Data(id:string){
-        return await BrainlyAPI.GQL(JSON.stringify({
-            query: `
+        return await BrainlyAPI.GQL(`
             query {
                 userById(id: ${id}) {
                     nick
@@ -42,7 +41,7 @@ export class User{
                     }
                 }
             }`
-        }))
+        )
     }
     async Get_Bio(id:number){
         return await (await BrainlyAPI.GetUser(id)).data.description;

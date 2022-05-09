@@ -191,11 +191,6 @@ export function md_content(){
     document.querySelector(".mm-content").addEventListener("click", function(){
         document.querySelector("body").insertAdjacentHTML("afterbegin", mmContentModal());
         document.querySelector(".modal_close").addEventListener("click", function(){document.querySelector(".modal_back").remove()})
-        
-        
-      
-       
-
         // Init a timeout variable to be used below
         let timeout = null;
 
@@ -250,7 +245,7 @@ export function reportedCommentsDeleter(){
 
     document.querySelector(".reported-comments-deleter").addEventListener("click", function(){
       if (!document.querySelector('.deleter')){
-        document.querySelector(".sg-menu-list").insertAdjacentHTML("beforeend",  `
+        document.querySelector(".sg-menu-list").insertAdjacentHTML("beforeend",  /*html*/`
         <div class = "deleter">
             <div class="sg-select sg-select--full-width">
             <div class="sg-select__icon"></div>

@@ -19,32 +19,29 @@ function getCookie(name) {
 export async function insert_ticket(id, butspinner){
     butspinner.classList.add("show");
     noclick()
-    let BasicData = await BrainlyAPI.GetQuestion(id)
+    // let BasicData = await BrainlyAPI.GetQuestion(id)
       
-    if(!BasicData.data.task.settings.is_deleted){
+    // if(!BasicData.data.task.settings.is_deleted){
         //if question is not deleted
-        let res = await BrainlyAPI.Legacy("POST", "moderation_new/get_content", ({
-            "model_type_id":1,
-            "model_id":id,
-            "schema":"moderation.content.get"
-        }));
-        if(res.schema !== "moderation/responses/moderation.ticket.error.res"){
-            //showing the ticket
-            ticket_data(id,res,BasicData, butspinner)
-        }
-        else{
-            //ticket reserved
+        try{
+            let res = await BrainlyAPI.Legacy("POST", "moderation_new/get_content", ({
+                "model_type_id":1,
+                "model_id":id,
+                "schema":"moderation.content.get"
+            }));
+            ticket_data(id,res, butspinner)
+        }catch(e){
             butspinner.classList.remove("show");
             document.querySelector(".blockint").remove();
-            showMessage("Ticket is already reserved for another moderator")
+            showMessage(String(e).replace("Error: ",""), "error")
         }
-    }
-    else{
-        //question does not exist
-        butspinner.classList.remove("show");
-        document.querySelector(".blockint").remove();
-        showMessage(Extension.common.questionDeleted, "error")
-    }
+    // }
+    // else{
+    //     //question does not exist
+    //     butspinner.classList.remove("show");
+    //     document.querySelector(".blockint").remove();
+    //     showMessage(Extension.common.questionDeleted, "error")
+    // }
 }
 export async function delete_user(uid:string){
    

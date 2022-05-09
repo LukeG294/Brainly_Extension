@@ -1,4 +1,5 @@
-export async function sendmsg(roomID, body, roomType){
+export default new class Ryver{
+  async Message(roomID, body, roomType){
     let token = localStorage.getItem("userAuth");
     await fetch(`https://brainlyus.ryver.com/api/1/odata.svc/${roomType}(${roomID})/Chat.PostMessage()`, {
         method: 'POST',
@@ -15,10 +16,9 @@ export async function sendmsg(roomID, body, roomType){
         "body":`${body}`                
         })
     });
-}
-export async function createTask(subject, content, boardID, categoryID){
-    
+  }
 
+  async Task(subject, content, boardID, categoryID){
     var raw = JSON.stringify({
       "subject": subject,
       "body": content,
@@ -49,5 +49,5 @@ export async function createTask(subject, content, boardID, categoryID){
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
-    
-    }
+  }
+}

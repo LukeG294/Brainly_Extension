@@ -12,7 +12,6 @@ export default new class BrainlyAPI {
     constructor() {
         this.SetAuthToken();
     }
-    
     private SetAuthToken() {
         let cookie = document.cookie.split("; ").find(cookie => /\[Token\]\[Long\]/i.test(cookie));
         this.tokenLong = cookie?.split("=")?.pop();

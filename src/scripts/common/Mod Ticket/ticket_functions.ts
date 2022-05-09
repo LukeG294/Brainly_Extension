@@ -3,8 +3,11 @@ import {ticket} from "./ticket_exp"
 import {Answer, Question} from "../Content"
 import {get_time_diff} from "../CommonFunctions"
 import Extension from "../../../locales/en/localization.json"
+import BrainlyAPI from "../BrainlyAPI"
 
 function add_log(log){
+  let ThisDate;
+  let GroupedLog;
   for(let i = 0; i < log.data.length; i++){
     let date = log.data[i].date;
     let time = log.data[i].time;
@@ -308,13 +311,15 @@ function show_ticket(qid:string){
         await fetch(`https://brainly.com/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${qid},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
       });
 }
-export async function ticket_data(id, res, basic_data, butspinner){
+export async function ticket_data(id, res, butspinner){
+
+  let basic_data = await BrainlyAPI.GetQuestion(id)
   let d_reference = await fetch('https://brainly.com/api/28/api_config/desktop_view', {method: "GET"}).then(data => data.json());
   let log = await fetch(`https://brainly.com/api/28/api_task_lines/big/${id}`, {method: "GET"}).then(data => data.json());
-  console.log(log)
-  console.log("ticket")
 
+  console.log(log)
   show_ticket(id);
+
   document.querySelector(".blockint").remove();
   butspinner.classList.remove("show");
   await add_question_data(res,d_reference);

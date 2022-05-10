@@ -96,12 +96,39 @@ export class Question{
 
 export class CommentHandler{
     async Delete(id:string, reason:string, warn:boolean){
-        await BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_comment_content', {
-            "reason_id":34,
-            "reason":reason,
-            "give_warning":warn,
-            "model_type_id":45,
-            "model_id":id,
+       try {
+            await BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_comment_content', {
+                "reason_id":34,
+                "reason":reason,
+                "give_warning":warn,
+                "model_type_id":45,
+                "model_id":id,
+            })
+       } catch(err){
+           //pass
+       }
+        
+       
+    }
+    async GetAllReported(last_id:string){
+        let response = await BrainlyAPI.Legacy(`POST`, 'moderation_new/get_comments_content', {
+            "subject_id":0,
+            "category_id":998,
+            "schema":"moderation.index",
+            "last_id":last_id
+            
           })
+        return response
+        
+    }
+    async GetFirstReported(){
+        let response = await BrainlyAPI.Legacy(`POST`, 'moderation_new/get_comments_content', {
+            "subject_id":0,
+            "category_id":998,
+            "schema":"moderation.index"
+            
+            
+          })
+        return response
     }
 }

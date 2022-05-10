@@ -219,25 +219,25 @@ export function reportedCommentsDeleter(){
     document.querySelector(".reported-comments-deleter").addEventListener("click", function(){
        async function removeComments(){
 
-         
+            let StoredToDelete = []
             //first page
             let finalCount = 0
-            let OriginalResponse = await fetch("https://brainly.com/api/28/moderation_new/index", {
-            "body": "{\"subject_id\":0,\"category_id\":0,\"schema\":\"moderation.index\"}",
-            "method": "POST",
-            "mode": "cors",
-            "credentials": "include"
-            }).then(data => data.json());
+            let OriginalResponse = await fetch("https://brainly.com/api/28/moderation_new/get_comments_content", {
+                "body": `{\"subject_id\":0,\"category_id\":998,\"schema\":\"moderation.index\"}`,
+                "method": "POST",
+                "mode": "cors",
+                "credentials": "include"
+                }).then(data => data.json())
             
-            let OriginalCount = OriginalResponse.data.items.length
+           
          
             let OriginalLastId = OriginalResponse.data.last_id
             let FirstPageComments = OriginalResponse.data.items
            
             FirstPageComments.forEach(async element => {
                 let commentObject = new CommentHandler()
-                console.log(element.model_id)
-                await commentObject.Delete(element.model_id, "Deleting all reported comments.", false);
+                StoredToDelete.push(element.model_id)
+                
                 finalCount+=1
               
             });
@@ -245,6 +245,10 @@ export function reportedCommentsDeleter(){
            
             //rest of pages
             async function fetchNextPage(last_id){
+                function sleep(ms) {
+                    return new Promise(resolve => setTimeout(resolve, ms));
+                  }
+               
                 let response = await fetch("https://brainly.com/api/28/moderation_new/get_comments_content", {
                     "body": `{\"subject_id\":0,\"category_id\":998,\"schema\":\"moderation.index\",\"last_id\":${last_id}}`,
                     "method": "POST",
@@ -255,8 +259,8 @@ export function reportedCommentsDeleter(){
                 let comments = response.data.items
                 comments.forEach(async element => {
                     let commentObject = new CommentHandler()
-               
-                    await commentObject.Delete(element.model_id, "Deleting all reported comments.", false);
+                    StoredToDelete.push(element.model_id)
+                    //await commentObject.Delete(element.model_id, "Deleting all reported comments.", false);
                     
                    
                     finalCount+=1
@@ -266,10 +270,19 @@ export function reportedCommentsDeleter(){
                     fetchNextPage(response.data.last_id)
                 } else {
                    
+                  
+                    for (let i = 0; i < StoredToDelete.length; i++) {
+                        let commentObject = new CommentHandler()
+                        await commentObject.Delete(StoredToDelete[i], "Deleting all reported comments.", false);
+                    }
                     showMessage(`Mod all comments cleared! ${finalCount} were removed.`,"success")
                 }
             }
+
+           
+           
        }
+
        OpenDialog("Delete all reported comments", "Are you sure you want to delete all reported comments in the moderate all queue? Clicking on 'Proceed' will start the process. Please make sure you don't close the tab until you are notified, or else the reported comments will be partially removed.", removeComments);
     });
 }

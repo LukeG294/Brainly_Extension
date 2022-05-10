@@ -222,6 +222,7 @@ export function reportedCommentsDeleter(){
             let StoredToDelete = []
             //first page
             let finalCount = 0
+            let totalCount = 0
             let OriginalResponse = await fetch("https://brainly.com/api/28/moderation_new/get_comments_content", {
                 "body": `{\"subject_id\":0,\"category_id\":998,\"schema\":\"moderation.index\"}`,
                 "method": "POST",
@@ -237,8 +238,8 @@ export function reportedCommentsDeleter(){
             FirstPageComments.forEach(async element => {
                 let commentObject = new CommentHandler()
                 StoredToDelete.push(element.model_id)
+                totalCount +=1
                 
-                finalCount+=1
               
             });
             fetchNextPage(OriginalLastId)
@@ -263,7 +264,7 @@ export function reportedCommentsDeleter(){
                     //await commentObject.Delete(element.model_id, "Deleting all reported comments.", false);
                     
                    
-                    finalCount+=1
+                    totalCount+=1
                 });
                
                 if (response.data.last_id !== 0){
@@ -273,9 +274,18 @@ export function reportedCommentsDeleter(){
                   
                     for (let i = 0; i < StoredToDelete.length; i++) {
                         let commentObject = new CommentHandler()
-                        await commentObject.Delete(StoredToDelete[i], "Deleting all reported comments.", false);
+                        const delay = ms => new Promise(res => setTimeout(res, ms));
+                        
+                        try{
+                            await commentObject.Delete(StoredToDelete[i], "Deleting all reported comments.", false);
+                            finalCount+=1
+                        } catch(err){
+                            //pass
+                        }
+                        
+                       // await commentObject.Delete(StoredToDelete[i], "Deleting all reported comments.", false);
                     }
-                    showMessage(`Mod all comments cleared! ${finalCount} were removed.`,"success")
+                    showMessage(`Mod all comments cleared! ${finalCount}/${totalCount} were deleted.`,"success")
                 }
             }
 

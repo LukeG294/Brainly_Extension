@@ -57,15 +57,14 @@ export function mass_accdel(){
             //@ts-expect-error
             let linksArray = String(document.querySelector(".profile-links").value).split("\n")
             let error = false
-            for (let index = 0; index < linksArray.length; index++) {
-                const element = linksArray[index];
+            linksArray.forEach(async element => {
                 let regexString = new RegExp(`https:\/\/brainly\.com\/profile\/.*-.*`)
                 if (regexString.test(element)) {
                     let uid = String(element).split("/")[4].split("-")[1]
                     await delete_user(uid)
                     await sendmsg(element);
                 } else { error = true }
-            }
+            })
             if (error){
                 document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
             } else {

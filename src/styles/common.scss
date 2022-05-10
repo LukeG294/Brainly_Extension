@@ -493,6 +493,7 @@
           max-height: 350px;
           max-width:350px;
           border-radius: 10px;
+          
         }
       }
       .attachment-tools{
@@ -522,6 +523,7 @@
           border: 2px solid #e1eaf1;
           border-radius: 10px;
           cursor:pointer;
+          margin-right:8px;
           &:hover{
             border-color:#c3d1dd;
           }

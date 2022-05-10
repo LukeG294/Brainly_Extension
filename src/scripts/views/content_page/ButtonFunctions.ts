@@ -446,87 +446,45 @@ export async function confirmAnswers(){
   document.querySelector("#confirmSelectedAnswers  .spinner-container").classList.add("show");
   let checkBoxes = document.getElementsByClassName("contentCheckboxes")
   let idsToConfirm = []
-  for (let i = 0; i < checkBoxes.length; i++) {
+  let checkBoxesArr = Array.from(checkBoxes)
+  checkBoxesArr.forEach( async element => {
+    //@ts-expect-error
+    if (String(checkBoxes[i].checked) === "true") {
       //@ts-ignore
-      if (String(checkBoxes[i].checked) === "true") {
-          //@ts-ignore
-          let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
-          let id = parseQuestionLink(link)
-          idsToConfirm.push(id)
-      } 
-  }
-
-  let answerIDtoConfirm= []
-  let questionIDsafety = ""
-  for (let i = 0; i < idsToConfirm.length; i++) {
+      let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
+      let id = parseQuestionLink(link)
+      let questionID = element
+      let qObj = new Question()
+      let res = await qObj.Get(id)
     
-    let questionID = idsToConfirm[i]
-    questionIDsafety =  idsToConfirm[i]
-    let res = await fetch(`https://brainly.com/api/28/moderation_new/get_content`, { method: "POST",body: (`{"model_type_id":1,"model_id":${questionID},"schema":"moderation.content.get"}`)}).then(data => data.json());
-    await fetch(`https://brainly.com/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${questionID},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
-   
-    if (res.success){
-      let answers = res.data.responses
-      let times = 0
-      
-      
-      if (answers.length === 1){
-        times = 1
-      } else {
-        times = 2
-      }
-      for (let x = 0; x < times; x++) {
+      if (res.success){
+        //@ts-expect-error
+        let answers = res.data.responses
+        let times = 0
         
-        let user = String(answers[x]["user_id"])
-        if (user === String(window.location.href.split("/")[5])){
-          answerIDtoConfirm.push(answers[x]["id"])
+        
+        if (answers.length === 1){
+          times = 1
+        } else {
+          times = 2
         }
+        for (let x = 0; x < times; x++) {
+          
+          let user = String(answers[x]["user_id"])
+          if (user === String(window.location.href.split("/")[5])){
+            let ansObj = await new Answer()
+            ansObj.Confirm(answers[x]["id"])
+          }
+        }
+      } else {
+        console.log("Skipped a ticket due to reservation by another mod.")
       }
-    } else {
-      console.log("Skipped a ticket due to reservation by another mod.")
-    }
-    
-    
-  }
-
-  let success = 0
-  let fail = 0
-  for (let i = 0; i < answerIDtoConfirm.length; i++) {
-    
-      
-     
-      
-     
-      
-      
-      let myToken = getCookie("Zadanepl_cookie[Token][Long]")
-      
-      let response = await fetch("https://brainly.com/graphql/us", {
-        "headers": {
-          "accept": "*/*",
-          "accept-language": "en-US,en;q=0.9",
-          "content-type": "application/json",
-          "sec-ch-ua": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"100\", \"Google Chrome\";v=\"100\"",
-          "sec-ch-ua-mobile": "?0",
-          "sec-ch-ua-platform": "\"macOS\"",
-          "sec-fetch-dest": "empty",
-          "sec-fetch-mode": "cors",
-          "sec-fetch-site": "same-origin",
-          "x-b-token-long": myToken
-        },
-        "referrer": "https://brainly.com/tools/moderation",
-        "referrerPolicy": "strict-origin-when-cross-origin",
-        "body": `{\"operationName\":\"AcceptModerationReportContent\",\"variables\":{\"input\":{\"contentType\":\"Answer\",\"contentId\":${answerIDtoConfirm[i]}}},\"query\":\"mutation AcceptModerationReportContent($input: AcceptModerationReportContentInput!) {\\n  acceptModerationReportContent(input: $input) {\\n    validationErrors {\\n      error\\n      __typename\\n    }\\n    __typename\\n  }\\n}\\n\"}`,
-        "method": "POST",
-        "mode": "cors",
-        "credentials": "include"
-      }).then(data => data.json());;
-      
-  }
-
- 
-  document.querySelector("#confirmSelectedAnswers  .spinner-container").classList.remove("show");
+  } 
+  });
   window.location.reload()
+  
+  document.querySelector("#confirmSelectedAnswers  .spinner-container").classList.remove("show");
+  
 }
 export async function confirmQuestions(){
   document.querySelector("#confirmSelectedQuestions  .spinner-container").classList.add("show");
@@ -543,31 +501,12 @@ export async function confirmQuestions(){
   }
   
   let myToken = getCookie("Zadanepl_cookie[Token][Long]")
-  for (let i = 0; i < idsToConfirm.length; i++) {
-   
-    await fetch(`https://brainly.com/api/28/moderation_new/accept`, {
-      "headers": {
-        "accept": "application/json, text/javascript, */*; q=0.01",
-        "accept-language": "en-US,en;q=0.9",
-        "content-type": "application/json",
-        "sec-ch-ua": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"100\", \"Google Chrome\";v=\"100\"",
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": "\"macOS\"",
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "same-origin",
-        "x-b-token-long": myToken,
-        "x-requested-with": "XMLHttpRequest"
-      },
-      "referrer": "https://brainly.com/tasks/archive_mod",
-      "referrerPolicy": "strict-origin-when-cross-origin",
-      "body": `{\"model_type_id\":1,\"model_id\":${idsToConfirm[i]},\"schema\":\"moderation.content.ok\"}`,
-      "method": "POST",
-      "mode": "cors",
-      "credentials": "include"
+  idsToConfirm.forEach(async element => {
+      let ansObj = new Answer();
+      await ansObj.Confirm(element)
     });
   
-  }
+ 
   document.querySelector("#confirmSelectedQuestions  .spinner-container").classList.remove("show");
   window.location.reload();
 }

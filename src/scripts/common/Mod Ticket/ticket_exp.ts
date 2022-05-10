@@ -92,12 +92,6 @@ export function ticket(){
             </div>
           </div>
         </div>
-        <div class="sg-flex sg-flex--margin-bottom-m task-comments">
-          <div class="sg-box sg-box--transparent sg-box--border-color-gray-20 sg-box--no-shadow sg-box--border-radius sg-box--border sg-box--padding-m sg-box--padding-m-border md:sg-box--padding-m-border lg:sg-box--padding-m-border xl:sg-box--padding-m-border sg-box--border-color-gray-20 md:sg-box--border-color-gray-20 lg:sg-box--border-color-gray-20 xl:sg-box--border-color-gray-20 task-comment">
-            <div class="sg-text sg-text--small">Box with default border</div>
-          </div>
-                </div>
-        </div>
         <div class = "answers">
           <div class="noanswer">
             <img src="${noanswer}" alt="">

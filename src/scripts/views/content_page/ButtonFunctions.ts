@@ -141,19 +141,13 @@ export async function showDelrsn(type:string){
 export async function confirmDeletionQuestions(){
   document.querySelector("#delete  .spinner-container").classList.add("show");
   let checkBoxes = document.getElementsByClassName("contentCheckboxes")
-  let idsToDelete = []
-  for (let i = 0; i < checkBoxes.length; i++) {
+  let checkBoxesArr = Array.from(checkBoxes)
+  checkBoxesArr.forEach(element => {
+    //@ts-ignore
+    if (String(element.checked) === "true") {
       //@ts-ignore
-      if (String(checkBoxes[i].checked) === "true") {
-          //@ts-ignore
-          let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
-          let id = parseQuestionLink(link)
-          idsToDelete.push(id)
-      } 
-  }
-  
-  for (let i = 0; i < idsToDelete.length; i++) {
-   
+      let link = element.closest("tr").getElementsByTagName('a')[0].href
+      let id = parseQuestionLink(link)
       let model_type_id = 1;
       let type = "task"
       //@ts-expect-error
@@ -162,20 +156,14 @@ export async function confirmDeletionQuestions(){
       let warn = document.querySelector("#warn").checked
       //@ts-expect-error
       let take_point = document.querySelector("#pts").checked
-      await fetch(`https://brainly.com/api/28/moderation_new/delete_${type}_content`, {
-          method: "POST",
-          body:JSON.stringify({
-            "reason_id":2,
-            "reason":reason,
-            "give_warning":warn,
-            "take_points": take_point,
-            "schema":`moderation.${type}.delete`,
-            "model_type_id":model_type_id,
-            "model_id":idsToDelete[i],
-          })
-        })
-  
-  }
+      let questionObj = new Question()
+      questionObj.Delete(id,reason,warn,take_point)
+      element.closest("tr").getElementsByTagName('a')[0].parentElement.style.backgroundColor = `#ffc7bf`
+ 
+  } 
+  });
+  showMessage("Selected questions removed successfully.","success")
+
   document.querySelector("#delete  .spinner-container").classList.remove("show");
 }
 export function addticket(){
@@ -213,15 +201,16 @@ export async function confirmDeletionAnswers(){
           let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
           let id = parseQuestionLink(link)
           idsToDelete.push(id)
+          checkBoxes[i].closest("tr").getElementsByTagName('a')[0].parentElement.style.backgroundColor = `#ffc7bf`
       } 
   }
   
-  let answerIDtoDelete = []
-  for (let i = 0; i < idsToDelete.length; i++) {
-    
-    let questionID = idsToDelete[i]
-    let res = await fetch(`https://brainly.com/api/28/moderation_new/get_content`, { method: "POST",body: (`{"model_type_id":1,"model_id":${questionID},"schema":"moderation.content.get"}`)}).then(data => data.json());
-    await fetch(`https://brainly.com/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${questionID},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
+  
+  idsToDelete.forEach(async elem => {
+    let questionID = elem
+    let qObj = new Question()
+    let res = await qObj.Get(questionID)
+    //@ts-expect-error
     let answers = res.data.responses
     let times = 0
     
@@ -235,57 +224,37 @@ export async function confirmDeletionAnswers(){
       
       let user = String(answers[x]["user_id"])
       if (user === String(window.location.href.split("/")[5])){
-        answerIDtoDelete.push(answers[x]["id"])
+        let success = 0
+        let fail = 0
+        //@ts-expect-error
+        let reason = document.querySelectorAll(".deletion-reason")[0].value
+        //@ts-expect-error
+        let warn = document.querySelector("#warn").checked
+        //@ts-expect-error
+        let take_point = document.querySelector("#pts").checked
+        let aObj = new Answer()
+        let response = await aObj.Delete(answers[x]["id"],reason,warn,take_point)
+        
+        
+         
+          document.querySelector(".sg-flash").addEventListener("click",function(){
+            this.remove();
+          })
+        
       }
+     
     }
-    
-  }
-
-  let success = 0
-  let fail = 0
-  for (let i = 0; i < answerIDtoDelete.length; i++) {
-   
-      let model_type_id = 2;
-      let type = "response"
-      //@ts-expect-error
-      let reason = document.querySelectorAll(".deletion-reason")[0].value
-      //@ts-expect-error
-      let warn = document.querySelector("#warn").checked
-      //@ts-expect-error
-      let take_point = document.querySelector("#pts").checked
-      let response = await fetch(`https://brainly.com/api/28/moderation_new/delete_${type}_content`, {method: "POST",body:JSON.stringify({"reason_id":2,"reason":reason,"give_warning":warn,"take_points": take_point,"schema":`moderation.${type}.delete`,"model_type_id":model_type_id,"model_id":answerIDtoDelete[i]})}).then(data => data.json());;
-      console.log(response)
-      if (response["success"] === true){
-        success+=1
-      } else {
-        fail +=1
-      }
-  }
-
-  if (fail > 0){
-    let banner = document.createElement('div')
-    document.querySelector("#flash-msg").appendChild(banner)
-    banner.outerHTML = `<div aria-live="assertive" class="sg-flash" role="alert">
-                <div class="sg-flash__message sg-flash__message--error">
-                <div class="sg-text sg-text--small sg-text--bold sg-text--to-center">${success} removed, ${fail} had an error. Make sure they weren't already deleted.</div>
-                </div>
-            </div>`
-    document.querySelector(".sg-flash").addEventListener("click",function(){
-      this.remove();
-    })
-  } else {
-    let banner = document.createElement('div')
-    document.querySelector("#flash-msg").appendChild(banner)
-    banner.outerHTML = `<div aria-live="assertive" class="sg-flash" role="alert">
-                <div class="sg-flash__message sg-flash__message--success">
-                <div class="sg-text sg-text--small sg-text--bold sg-text--to-center">${success} removed successfully!</div>
-                </div>
-            </div>`
-    document.querySelector(".sg-flash").addEventListener("click",function(){
-      this.remove();
-    })
-  }
   
+  })
+
+  
+  let banner = document.createElement('div')
+  document.querySelector("#flash-msg").appendChild(banner)
+  banner.outerHTML = `<div aria-live="assertive" class="sg-flash" role="alert">
+              <div class="sg-flash__message sg-flash__message--success">
+              <div class="sg-text sg-text--small sg-text--bold sg-text--to-center">Removed selected answers.</div>
+              </div>
+          </div>`
   document.querySelector("#delete  .spinner-container").classList.remove("show");
 }
 export async function unverifyAnswers(){

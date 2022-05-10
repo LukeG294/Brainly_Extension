@@ -1,6 +1,6 @@
 import {find, runtime} from "webextension-polyfill";
 import {ticket} from "./ticket_exp"
-import {Answer, Question} from "../Content"
+import {Answer, CommentHandler, Question} from "../Content"
 import {get_time_diff} from "../CommonFunctions"
 import Extension from "../../../locales/en/localization.json"
 import BrainlyAPI from "../BrainlyAPI"
@@ -41,7 +41,43 @@ function add_log(log){
 
 function add_deletion(del_rsn, elem, tid, type:string){
   //appending deletion reasons
+ 
+  
+  if (type === 'comment'){
+    
+      elem.children[0].insertAdjacentHTML("beforeend",` <div class="delmenu">
+      <div class="primary-items"></div>
+      <div class="secondary-items"></div>
+      <textarea placeholder="Reason" class=" deletion-reason sg-textarea sg-textarea--tall"></textarea>
+      <div class="sg-space-x-m del-options">
+        <div class="warnpts">
+
+          <label class="sg-checkbox" for="pts">
+            <input type="checkbox" class="sg-checkbox__element" id="pts">
+            <div class="sg-checkbox__ghost" aria-hidden="true">
+              <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+            </div>
+            <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">${Extension.buttons.takePoints}</span>
+          </label>
+          <label class="sg-checkbox" for="warn">
+            <input type="checkbox" class="sg-checkbox__element" id="warn">
+            <div class="sg-checkbox__ghost" aria-hidden="true">
+              <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+            </div>
+            <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">${Extension.buttons.warnUser}</span>
+          </label>
+        </div>
+        <div class="confirmdel">
+        <button class="sg-button sg-button--m sg-button--outline"><span class="sg-button__text">confirm</span></button>
+        </div>
+      </div>
+    </div>`)
+    elem = elem.querySelector('.delmenu')
+  
+      
+  }
   for(let i = 0; i < del_rsn.length; i++){
+    
     elem.querySelector(".primary-items").insertAdjacentHTML("beforeend",/*html*/`
       <label class="sg-radio sg-radio--xxs" for="${del_rsn[i].id}${tid}">
         <input type="radio" class="sg-radio__element" name="group1" id="${del_rsn[i].id}${tid}" index = "${i}">
@@ -50,13 +86,26 @@ function add_deletion(del_rsn, elem, tid, type:string){
       </label>`
     )
   }
+
+  
   //delete button listener
-  elem.querySelector(".delete").addEventListener("click", () => {
-    elem.querySelector(".delmenu").classList.toggle("show");
-  })
+  if (type === 'comment'){
+    elem.style.display = 'block'
+    elem.classList.toggle("show");
+  } else {
+    elem.querySelector('.delete').addEventListener("click", () => {
+      elem.querySelector(".delmenu").classList.toggle("show");
+    })
+  }
+  
+
   //primary deletion reason listener
   elem.querySelector(".primary-items").addEventListener("change", async function(){
-    elem.querySelector(".delmenu").classList.add("secondary");
+    if (type === 'comment'){
+      elem.classList.add("secondary");
+    } else {
+      elem.querySelector(".delmenu").classList.add("secondary");
+    }
 
     //finds selected item and links it to the object
     let selected_index = elem.querySelector(".primary-items input:checked").getAttribute("index");
@@ -81,6 +130,7 @@ function add_deletion(del_rsn, elem, tid, type:string){
     elem.querySelector(".secondary-items").addEventListener("change", function(){
       let selected_reason = selected_subcats[elem.querySelector(".secondary-items input:checked").getAttribute("index")]
       console.log(selected_reason);
+      
       (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value = selected_reason.text;
     });
     elem.querySelector(".confirmdel button").addEventListener("click", function(){
@@ -100,7 +150,15 @@ function add_deletion(del_rsn, elem, tid, type:string){
         let thisa = new Answer();
         thisa.Delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value, warnuser, takepts)
       }
-      elem.querySelector(".delmenu").classList.remove("show");
+      if (type === "comment"){
+        let thisc = new CommentHandler();
+        thisc.Delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value, warnuser)
+        elem.style.display = 'none';
+        elem.parentElement.parentElement.classList.add("deleted");
+        elem.parentElement.parentElement.style.backgroundColor = `#ffc7bf`
+      } else {
+        elem.querySelector(".delmenu").classList.remove("show");
+      }
       if(type === "response"){
         elem.classList.add("deleted");
       }
@@ -126,32 +184,85 @@ function add_report(data, item, elem){
     report_elem.querySelector(".rank").setAttribute("style", `color: ${reporter.ranks.color}`)
   }
 }
-function add_task_comments(data){
+function add_task_comments(data, users_data, deletion_reasons){
   
   data.comments.forEach(element => {
-    console.log(element)
-    document.querySelector('.task-comments').insertAdjacentHTML('beforeend',`
-    <div style='height:50px; margin-top: 5px;  margin-bottom: 7px;' class="sg-box sg-box--transparent sg-box--border-color-gray-20 sg-box--no-shadow sg-box--border-radius sg-box--border sg-box--padding-m sg-box--padding-m-border md:sg-box--padding-m-border lg:sg-box--padding-m-border xl:sg-box--padding-m-border sg-box--border-color-gray-20 md:sg-box--border-color-gray-20 lg:sg-box--border-color-gray-20 xl:sg-box--border-color-gray-20 task-comment">
-      <div class="comment-data" style='display:flex;'>
-        <div class="pfp"><div class="sg-avatar" style='margin-top: -40%;'><div class="sg-avatar__image sg-avatar__image--icon"><div class="sg-icon sg-icon--gray-light sg-icon--x32 sg-avatar__icon"><svg class="sg-icon__svg"><use xlink:href="#icon-profile"></use></svg></div></div></div></div>
-        <div class="sg-text sg-text--small comment-content" style='font-size: 12px; margin-top: -1.5%;'>${element.content}</div>
+    var result = users_data.filter(obj => {
+      return obj.id === element.user_id
+    })
+   
+    if (!result[0].avatar){
+      result = {0:{"avatar":{64:'https://brainly.com/img/avatars/100-ON.png'}}}
+    } 
+    let bgColor = 'white'
+    if (element.deleted){
+      bgColor = `#ffc7bf`
+    }
+     
+        document.querySelector('.task-comments').insertAdjacentHTML('beforeend',`
+      <div style='background-color:${bgColor}; height:50px; margin-top: 5px;  margin-bottom: 7px;' class="sg-box sg-box--transparent sg-box--border-color-gray-20 sg-box--no-shadow sg-box--border-radius sg-box--border sg-box--padding-m sg-box--padding-m-border md:sg-box--padding-m-border lg:sg-box--padding-m-border xl:sg-box--padding-m-border sg-box--border-color-gray-20 md:sg-box--border-color-gray-20 lg:sg-box--border-color-gray-20 xl:sg-box--border-color-gray-20 task-comment">
+        <div class="comment-data" style='display:flex;'>
+          <div class="pfp"> <img src=${result[0].avatar[64]} alt=""></div>
+          <div class="sg-text sg-text--small comment-content" style='font-size: 12px; margin-top: -1.5%;'>${element.content}</div>
+          <div class="actions">
+              <div class="actionbut confirmComment" id='${element.id}' style="border-color: #60d399!important;"><div class="sg-icon sg-icon--dark sg-icon--x32" style="fill: #60d399;"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></div>
+              <div class="actionbut deleteComment" id='${element.id}'><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg" style='fill:red !important;'><use xlink:href="#icon-trash"></use></svg></div></div>
+            </div>
+        </div>
       </div>
-    </div>
-         `)
+           `)
+           let commentDelete = document.querySelectorAll('.deleteComment')
+           commentDelete.forEach(element => {
+             element.addEventListener('click', function(){
+              add_deletion(deletion_reasons, element.parentElement.parentElement.parentElement, element.id, "comment")
+             })
+           })     
+      
+      
+   
+  
   })
 }
-function add_response_comments(data, a){
-  
+function add_response_comments(data, a, users_data, deletion_reasons){
+ 
   data.comments.forEach(element => {
-    console.log(element)
+  
+    var result = users_data.filter(obj => {
+      return obj.id === element.user_id
+    })
+   
+    if (!result[0].avatar){
+      result = {0:{"avatar":{64:'https://brainly.com/img/avatars/100-ON.png'}}}
+    } 
+    let bgColor = 'white'
+    if (element.deleted){
+      bgColor = `#ffc7bf`
+    }
     document.querySelector('.response-comments'+a).insertAdjacentHTML('beforeend',`
-    <div style='height:50px; margin-top: 5px;  margin-bottom: 7px;' class="sg-box sg-box--transparent sg-box--border-color-gray-20 sg-box--no-shadow sg-box--border-radius sg-box--border sg-box--padding-m sg-box--padding-m-border md:sg-box--padding-m-border lg:sg-box--padding-m-border xl:sg-box--padding-m-border sg-box--border-color-gray-20 md:sg-box--border-color-gray-20 lg:sg-box--border-color-gray-20 xl:sg-box--border-color-gray-20 response-comment">
+    <div style=' background-color:${bgColor};height:50px; margin-top: 5px;  margin-bottom: 7px;' class="sg-box sg-box--transparent sg-box--border-color-gray-20 sg-box--no-shadow sg-box--border-radius sg-box--border sg-box--padding-m sg-box--padding-m-border md:sg-box--padding-m-border lg:sg-box--padding-m-border xl:sg-box--padding-m-border sg-box--border-color-gray-20 md:sg-box--border-color-gray-20 lg:sg-box--border-color-gray-20 xl:sg-box--border-color-gray-20 response-comment">
       <div class="comment-data" style='display:flex;'>
-        <div class="pfp"><div class="sg-avatar" style='margin-top: -40%;'><div class="sg-avatar__image sg-avatar__image--icon"><div class="sg-icon sg-icon--gray-light sg-icon--x32 sg-avatar__icon"><svg class="sg-icon__svg"><use xlink:href="#icon-profile"></use></svg></div></div></div></div>
+      <div class="pfp"> <img src=${result[0].avatar[64]} alt=""></div>
         <div class="sg-text sg-text--small comment-content" style='font-size: 12px; margin-top: -1.5%;'>${element.content}</div>
+        <div class="actions">
+              <div class="actionbut confirmComment" id='${element.id}' style="border-color: #60d399!important;"><div class="sg-icon sg-icon--dark sg-icon--x32" style="fill: #60d399;"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></div>
+              <div class="actionbut deleteComment" id='${element.id}'><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg" style='fill:red !important;'><use xlink:href="#icon-trash"></use></svg></div></div>
+            </div>
       </div>
+    
     </div>
-         `)
+   
+      `)
+    
+      
+    
+  })
+  let commentDelete = document.querySelectorAll('.deleteComment')
+  commentDelete.forEach(element => {
+    element.addEventListener('click', function(){
+      add_deletion(deletion_reasons, element.parentElement.parentElement.parentElement, element.id, "comment")
+    
+     
+    })
   })
 }
 function add_attachments(item, elem){
@@ -197,7 +308,7 @@ function user_content_data(user, elem, item){
   elem.querySelector(".text-user .rank").setAttribute("style", `color: ${user.ranks.color}`)
   elem.querySelector(".content").innerHTML = item.content;
 }
-function add_answer(ans,res,a, basic_data){
+function add_answer(ans,res,a, basic_data, users_data){
   let answerer = res.users_data.find(({id}) => id === ans.user.id);
   let answer_elem = /*html*/`
   <div class = "content-item answer${a}">
@@ -295,7 +406,7 @@ function add_answer(ans,res,a, basic_data){
 
   user_content_data(answerer, this_ans, ans);
   add_attachments(ans, this_ans);
-  add_response_comments(ans, a)
+  add_response_comments(ans, a, users_data, res.data.delete_reasons.comment)
   add_report(res,ans,this_ans);
   add_deletion(a_del_rsn, this_ans, answer_id, "response");
   this_ans.querySelector(".confirm").addEventListener("click", function(){
@@ -308,7 +419,7 @@ function add_answer(ans,res,a, basic_data){
     this_ans.classList.remove("reported")
   })
 }
-async function add_question_data(res, d_reference){
+async function add_question_data(res, d_reference, users_data){
   let q_data = res.data.task;
   let q_elem = document.querySelector(".qdata");
   console.log(res);
@@ -325,7 +436,7 @@ async function add_question_data(res, d_reference){
   add_report(res, q_data, document.querySelector(".question"));
   user_content_data(asker, q_elem, q_data);
   add_attachments(q_data, q_elem);
-  add_task_comments(q_data);
+  add_task_comments(q_data, users_data, res.data.delete_reasons.comment);
   let q_del_rsn = res.data.delete_reasons.task;
   let q_id = res.data.task.id;
   add_deletion(q_del_rsn, q_elem, q_id, "task");
@@ -355,15 +466,16 @@ export async function ticket_data(id, res, butspinner){
 
   document.querySelector(".blockint").remove();
   butspinner.classList.remove("show");
-  await add_question_data(res,d_reference);
-
+  let users_data = log.users_data
+  await add_question_data(res,d_reference,users_data);
+  
   if(res.data.responses.length !== 0){
       document.querySelector(".answers").innerHTML = '';
       for(let a = 0; a < res.data.responses.length; a++){
           console.log(a);
           let this_ans_data = basic_data.data.responses[a];
           console.log(this_ans_data)
-          add_answer(res.data.responses[a],res, a, this_ans_data);
+          add_answer(res.data.responses[a],res, a, this_ans_data, log.users_data);
       }
   }
   else{

@@ -1,18 +1,37 @@
 import BrainlyAPI from "./BrainlyAPI"
+import {getCookie} from "./CommonFunctions"
 
 export class Answer{
     Confirm(id:number){
-        let AcceptBody = JSON.stringify({
-                "operationName": "AcceptModerationReportContent",
-                "variables": {
-                "input": {
-                    "contentType": "Answer",
-                    "contentId": id
-                }
-                },
-                "query": "mutation AcceptModerationReportContent($input: AcceptModerationReportContentInput!) {\n  acceptModerationReportContent(input: $input) {\n    validationErrors {\n      error\n      __typename\n    }\n    __typename\n  }\n}\n"
-            })
-        BrainlyAPI.GQL(AcceptBody);
+            var myHeaders = new Headers();
+            myHeaders.append("authority", "brainly.com");
+            myHeaders.append("accept", "*/*");
+            myHeaders.append("accept-language", "en-US,en;q=0.9");
+            myHeaders.append("content-type", "application/json");
+            myHeaders.append("x-b-token-long", getCookie('Zadanepl_cookie[Token][Long]'));
+
+        var raw = JSON.stringify({
+        "operationName": "AcceptModerationReportContent",
+        "variables": {
+            "input": {
+            "contentType": "Answer",
+            "contentId": id
+            }
+        },
+        "query": "mutation AcceptModerationReportContent($input: AcceptModerationReportContentInput!) {\n  acceptModerationReportContent(input: $input) {\n    validationErrors {\n      error\n      __typename\n    }\n    __typename\n  }\n}\n"
+        });
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        
+        };
+
+        fetch("https://brainly.com/graphql/us", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
     }
     Approve(id:string){
           BrainlyAPI.Legacy(`POST`, "api_content_quality/confirm", {

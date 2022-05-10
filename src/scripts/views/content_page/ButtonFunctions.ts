@@ -7,7 +7,7 @@ import {
   toggle_selected
 } from "./ContentPageButtons"
 import { parseQuestionLink } from "configs/config"
-import {getCookie} from "../../common/CommonFunctions"
+import {getCookie, showMessage} from "../../common/CommonFunctions"
 import {Answer, Question} from "../../common/Content"
 
 export function selectAll(){
@@ -445,15 +445,15 @@ export async function approveAnswers(){
 export async function confirmAnswers(){
   document.querySelector("#confirmSelectedAnswers  .spinner-container").classList.add("show");
   let checkBoxes = document.getElementsByClassName("contentCheckboxes")
-  let idsToConfirm = []
+  
   let checkBoxesArr = Array.from(checkBoxes)
   checkBoxesArr.forEach( async element => {
     //@ts-expect-error
-    if (String(checkBoxes[i].checked) === "true") {
+    if (String(element.checked) === "true") {
       //@ts-ignore
-      let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
+      let link = element.closest("tr").getElementsByTagName('a')[0].href
       let id = parseQuestionLink(link)
-      let questionID = element
+      
       let qObj = new Question()
       let res = await qObj.Get(id)
     
@@ -479,9 +479,11 @@ export async function confirmAnswers(){
       } else {
         console.log("Skipped a ticket due to reservation by another mod.")
       }
+      
   } 
   });
-  window.location.reload()
+  showMessage("Confirmed selected answers!","success")
+  
   
   document.querySelector("#confirmSelectedAnswers  .spinner-container").classList.remove("show");
   

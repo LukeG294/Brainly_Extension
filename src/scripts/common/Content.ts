@@ -39,6 +39,12 @@ export class Answer{
             "model_id": id
           });
     }
+    Unapprove(id:string){
+        BrainlyAPI.Legacy(`POST`, "api_content_quality/unconfirm", {
+          "model_type": 2,
+          "model_id": id
+        });
+  }
 
     async Delete(id:string, reason:string, warn:boolean, take_point:boolean){
         BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_response_content', {

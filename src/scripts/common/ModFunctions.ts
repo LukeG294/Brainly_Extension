@@ -132,15 +132,14 @@ export async function sendMessages(users_ids, content){
     }
     
 
-    let convo_ids = []
-    for (let i = 0; i < users_ids.length; i++) {
-        let idForConvo = String(users_ids[i]).split("-")[0]
-        let unameForConvo = String(users_ids[i]).split("-")[1]
+    users_ids.forEach(element => {
+        let idForConvo = String(element).split("-")[0]
+        let unameForConvo = String(element).split("-")[1]
         let varContent = content.replaceAll("{user}",unameForConvo)
         
         getConvoId(idForConvo,varContent)
-       
-    }
+    })
+   
 }
 export async function startCompanionManager(){
     let txt = await fetch(`${extension_server_url()}/all`).then(data => data.json());

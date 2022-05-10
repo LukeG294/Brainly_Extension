@@ -122,15 +122,15 @@ export function mass_msg(){
             let linksArray = String(document.querySelector(".profile-links").value).split("\n")
             let error = false
             let usersToMsg = []
-            for (let index = 0; index < linksArray.length; index++) {
-                const element = linksArray[index];
+            linksArray.forEach(element => {
+               
                 let regexString = new RegExp(`https:\/\/brainly\.com\/profile\/.*-.*`)
                 if (regexString.test(element)) {
                     let uid = String(element).split("/")[4].split("-")[1]
                     let uname = String(element).split("/")[4].split("-")[0]
                     usersToMsg.push(uid+"-"+uname)
                 } else { error = true }
-            }
+            })
             await sendMessages(usersToMsg, (<HTMLInputElement>document.querySelector(".message-content")).value)
             if (error){
                 document.querySelector(".profile-links").classList.add("sg-textarea--invalid")

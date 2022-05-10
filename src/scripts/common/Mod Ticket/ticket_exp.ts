@@ -92,6 +92,9 @@ export function ticket(){
             </div>
           </div>
         </div>
+        <div class="sg-flex sg-flex--margin-bottom-m task-comments" style='display:block;'>
+          
+        </div>
         <div class = "answers">
           <div class="noanswer">
             <img src="${noanswer}" alt="">

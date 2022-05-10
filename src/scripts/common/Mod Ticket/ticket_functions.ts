@@ -126,6 +126,34 @@ function add_report(data, item, elem){
     report_elem.querySelector(".rank").setAttribute("style", `color: ${reporter.ranks.color}`)
   }
 }
+function add_task_comments(data){
+  
+  data.comments.forEach(element => {
+    console.log(element)
+    document.querySelector('.task-comments').insertAdjacentHTML('beforeend',`
+    <div style='height:50px; margin-top: 5px;  margin-bottom: 7px;' class="sg-box sg-box--transparent sg-box--border-color-gray-20 sg-box--no-shadow sg-box--border-radius sg-box--border sg-box--padding-m sg-box--padding-m-border md:sg-box--padding-m-border lg:sg-box--padding-m-border xl:sg-box--padding-m-border sg-box--border-color-gray-20 md:sg-box--border-color-gray-20 lg:sg-box--border-color-gray-20 xl:sg-box--border-color-gray-20 task-comment">
+      <div class="comment-data" style='display:flex;'>
+        <div class="pfp"><div class="sg-avatar" style='margin-top: -40%;'><div class="sg-avatar__image sg-avatar__image--icon"><div class="sg-icon sg-icon--gray-light sg-icon--x32 sg-avatar__icon"><svg class="sg-icon__svg"><use xlink:href="#icon-profile"></use></svg></div></div></div></div>
+        <div class="sg-text sg-text--small comment-content" style='font-size: 12px; margin-top: -1.5%;'>${element.content}</div>
+      </div>
+    </div>
+         `)
+  })
+}
+function add_response_comments(data, a){
+  
+  data.comments.forEach(element => {
+    console.log(element)
+    document.querySelector('.response-comments'+a).insertAdjacentHTML('beforeend',`
+    <div style='height:50px; margin-top: 5px;  margin-bottom: 7px;' class="sg-box sg-box--transparent sg-box--border-color-gray-20 sg-box--no-shadow sg-box--border-radius sg-box--border sg-box--padding-m sg-box--padding-m-border md:sg-box--padding-m-border lg:sg-box--padding-m-border xl:sg-box--padding-m-border sg-box--border-color-gray-20 md:sg-box--border-color-gray-20 lg:sg-box--border-color-gray-20 xl:sg-box--border-color-gray-20 response-comment">
+      <div class="comment-data" style='display:flex;'>
+        <div class="pfp"><div class="sg-avatar" style='margin-top: -40%;'><div class="sg-avatar__image sg-avatar__image--icon"><div class="sg-icon sg-icon--gray-light sg-icon--x32 sg-avatar__icon"><svg class="sg-icon__svg"><use xlink:href="#icon-profile"></use></svg></div></div></div></div>
+        <div class="sg-text sg-text--small comment-content" style='font-size: 12px; margin-top: -1.5%;'>${element.content}</div>
+      </div>
+    </div>
+         `)
+  })
+}
 function add_attachments(item, elem){
   if(item.attachments.length !== 0){
     let rotation = 0;
@@ -249,6 +277,9 @@ function add_answer(ans,res,a, basic_data){
         </div>
     </div>
   </div>
+  <div class="sg-flex sg-flex--margin-bottom-m response-comments${a}" style='display:block;'>
+          
+  </div>
   `
   document.querySelector(".answers").insertAdjacentHTML("beforeend",answer_elem);
   let this_ans = document.querySelector(`.answer${a}`);
@@ -264,6 +295,7 @@ function add_answer(ans,res,a, basic_data){
 
   user_content_data(answerer, this_ans, ans);
   add_attachments(ans, this_ans);
+  add_response_comments(ans, a)
   add_report(res,ans,this_ans);
   add_deletion(a_del_rsn, this_ans, answer_id, "response");
   this_ans.querySelector(".confirm").addEventListener("click", function(){
@@ -293,7 +325,7 @@ async function add_question_data(res, d_reference){
   add_report(res, q_data, document.querySelector(".question"));
   user_content_data(asker, q_elem, q_data);
   add_attachments(q_data, q_elem);
-
+  add_task_comments(q_data);
   let q_del_rsn = res.data.delete_reasons.task;
   let q_id = res.data.task.id;
   add_deletion(q_del_rsn, q_elem, q_id, "task");

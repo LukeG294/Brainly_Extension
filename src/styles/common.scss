@@ -8,7 +8,9 @@
 // #moderate-functions-panel .text, .menu-list a:before, a[data-testid = 'navigation_add_question'] > span, div[class ^= 'Header-module__subnav'] span, div[class ^= 'Header-module__subnav'] a, button[aria-label = 'notification center'] svg, .brn-footer-legal-section div, .brn-footer-legal-section p, .brn-footer__container a, .brn-footer__container span, .brn-footer__container h3{
 //   color: var(--primary-text)!important;
 // }
-
+.brn-moderation-panel .sg-menu-list__link{
+  cursor: pointer!important;
+}
 .qdel, .adel{
   display:none!important;
 }

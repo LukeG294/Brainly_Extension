@@ -148,8 +148,6 @@ export async function confirmDeletionQuestions(){
       //@ts-ignore
       let link = element.closest("tr").getElementsByTagName('a')[0].href
       let id = parseQuestionLink(link)
-      let model_type_id = 1;
-      let type = "task"
       //@ts-expect-error
       let reason = document.querySelectorAll(".deletion-reason")[0].value
       //@ts-expect-error

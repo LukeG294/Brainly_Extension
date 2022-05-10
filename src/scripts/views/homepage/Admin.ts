@@ -4,36 +4,20 @@ import { showMessage, OpenDialog } from "../../common/CommonFunctions";
 import {macc_d, mcompu, mmContentModal, mmsg_s} from "../../HTML_exports/macc-d_exp"
 import Extension from "../../../locales/en/localization.json"
 import {CommentHandler, Question} from "../../common/Content"
+import Ryver from "../../common/Ryver/Ryver";
 
 //@ts-ignore
 
 async function sendmsg(userLink){
-    let token = localStorage.getItem("userAuth");
     let del_reason = (<HTMLInputElement>document.querySelector(".deletion-reason")).value;
     if(del_reason === ''){del_reason = "Not Provided"};
     //@ts-expect-error
     let mod_name = JSON.parse(document.querySelector('meta[name="user_data"]').content)["nick"]
-    await fetch('https://brainlyus.ryver.com/api/1/odata.svc/workrooms(1291498)/Chat.PostMessage()', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': 'Basic ' +token
-        },
-        body: JSON.stringify({
-      "createSource": {
-        "avatar": "https://camo.githubusercontent.com/30eb9e12b3f4f08d458a18dd5357be53348530ad1be7ca65b422e07083445790/68747470733a2f2f636f6e746174746166696c65732e73332e75732d776573742d312e616d617a6f6e6177732e636f6d2f746e7432393834362f6e75476d4f73676856485539555a7a2f506173746564253230496d61676525334125323044656325323038253243253230323032312532302d2532303225334133392533413135616d",
-        "displayName": "Brainly Companion"
-      },
-      "body":
-        `---
-**Deleted account**: ${userLink}
+    let message = `---
+    **Deleted account**: ${userLink}
 **Why**: ${del_reason}
 ###### **Moderator**: ${mod_name}`
-                             
-    })
-    });
-   
+    Ryver.Message('1291498', message, "workrooms")
 }
 
 export function mass_accdel(){

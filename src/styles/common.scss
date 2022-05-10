@@ -508,10 +508,13 @@
         display:flex;
         img{
           height: 64px;
-          padding: 0px 8px;
+          padding: 8px 8px;
+          border: 2px solid #e1eaf1;
+          border-radius:10px;
+          margin-right:8px;
           cursor:pointer;
-          &:not(:last-child){
-            border-right: 1px solid #c3d1dd;
+          &:hover{
+            border-color:#c3d1dd;
           }
         }
       }

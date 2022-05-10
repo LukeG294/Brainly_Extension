@@ -158,7 +158,7 @@ export async function confirmDeletionQuestions(){
       let take_point = document.querySelector("#pts").checked
       let questionObj = new Question()
       questionObj.Delete(id,reason,warn,take_point)
-      element.closest("tr").getElementsByTagName('a')[0].parentElement.style.backgroundColor = `#ffc7bf`
+      element.closest("tr").getElementsByTagName('a')[0].parentElement.parentElement.style.backgroundColor = `#ffc7bf`
  
   } 
   });
@@ -201,7 +201,7 @@ export async function confirmDeletionAnswers(){
           let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
           let id = parseQuestionLink(link)
           idsToDelete.push(id)
-          checkBoxes[i].closest("tr").getElementsByTagName('a')[0].parentElement.style.backgroundColor = `#ffc7bf`
+          checkBoxes[i].closest("tr").getElementsByTagName('a')[0].parentElement.parentElement.style.backgroundColor = `#ffc7bf`
       } 
   }
   

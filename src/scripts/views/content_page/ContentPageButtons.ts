@@ -169,7 +169,7 @@ export function deletion_menu(){
                     <div class="sg-checkbox__ghost" aria-hidden="true">
                       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
                     </div>
-                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">${Extension.buttons.takePoints}s</span>
+                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">${Extension.buttons.takePoints}</span>
                   </label>
                   <label class="sg-checkbox" for="warn">
                     <input type="checkbox" class="sg-checkbox__element" id="warn">

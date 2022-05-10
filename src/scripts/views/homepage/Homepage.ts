@@ -17,7 +17,7 @@ async function homeperms(){
     mass_msg()
     mass_accdel()
     usr_mgmt()
-    md_content()
+    // md_content()
     reportedCommentsDeleter()
   }
   if(perms.includes("5") || perms.includes("4")){

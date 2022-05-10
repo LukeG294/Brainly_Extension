@@ -303,6 +303,7 @@ async function add_question_data(res, d_reference){
   })
   
 }
+
 function show_ticket(qid:string){
     document.body.insertAdjacentHTML("beforeend", <string>ticket())
 

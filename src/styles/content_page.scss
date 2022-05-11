@@ -15,6 +15,15 @@ button#selectAll::after {
   position: absolute;
   right: -14px;
 }
+.mass-actions{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: white;
+  width: 100%;
+  z-index: 800;
+  padding: 12px 18px;
+}
 .primary-items, .secondary-items, .warnpts{ 
     margin-top:8px;
     padding: 8px 0px;

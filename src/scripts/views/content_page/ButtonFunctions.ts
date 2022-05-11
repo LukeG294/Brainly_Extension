@@ -38,9 +38,9 @@ export function addTaskButtonsBasic(){
   `)
   
   }
-  buttonArea.insertAdjacentHTML('afterend', copy_links())
-  buttonArea.insertAdjacentHTML('afterend', toggle_selected())
-  buttonArea.insertAdjacentHTML('afterend', select_all())
+  buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', copy_links())
+  buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', toggle_selected())
+  buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', select_all())
   document.getElementById("selectAll").addEventListener("click", function(){selectAll()})
   document.getElementById("toggleSelected").addEventListener("click", function(){toggleSelection()})
   document.getElementById("copyLinks").addEventListener("click", function(){copyLinks()})

@@ -37,17 +37,17 @@ let buttonArea = document.querySelector("#content-old > div:nth-child(3) > p")
 
 export function addTaskButtonsDeletion(){
     buttonArea.insertAdjacentHTML('afterend', deletion_menu())
-    buttonArea.insertAdjacentHTML('afterend', delete_selected_questions())
+    buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', delete_selected_questions())
     pageElement("#deleteSelected").addEventListener("click", function(){showDelrsn("questions")})
     pageElement("#delete").addEventListener("click",function(){confirmDeletionQuestions()})
 }
 export function addTaskButtonsConfirmation(){
-    buttonArea.insertAdjacentHTML('afterend', confirm_selected_questions())
+    buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', confirm_selected_questions())
     pageElement("#confirmSelectedQuestions").addEventListener("click",function(){confirmQuestions()})
 }
 export function addTaskButtonsReportedContent(){
 
-    buttonArea.insertAdjacentHTML('afterend', get_reported_content())
+    buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', get_reported_content())
     let id = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
     pageElement("#fetchReported").addEventListener("click", async function(){
         await find_reported_content(id,"tasks");

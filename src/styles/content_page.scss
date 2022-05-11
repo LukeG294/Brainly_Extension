@@ -6,6 +6,15 @@
 .warnpts{
   border-bottom:none!important;
 }
+button#selectAll::after {
+  content: '';
+  width: 1px;
+  margin: 0px 8px;
+  height: 100%;
+  background: #c3d1dd;
+  position: absolute;
+  right: -14px;
+}
 .primary-items, .secondary-items, .warnpts{ 
     margin-top:8px;
     padding: 8px 0px;

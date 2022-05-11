@@ -367,6 +367,44 @@
           }
         }
       }
+      .comments{
+        display: flex;
+        flex-direction: column;
+        padding: 12px;
+        width:100%;
+        margin-top:0px!important;
+        border: none!important;
+        .comment{
+          border: 1px solid #ebf2f7;
+          border-radius: 8px;
+          padding: 8px;
+          margin-bottom: 8px;
+          .comment-content{
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            .comment-data{
+              display: flex;
+              align-items: center;
+            }
+            .actions{
+              margin-top:0px!important;
+              .actionbut{
+                display:flex;
+                align-items: center;
+                justify-content: center;
+                .confirmComment{
+                  display:none;
+                }
+                .sg-icon{
+                  height:21px;
+                  width:21px;
+                }
+              }
+            }
+          }
+        }
+      }
       .content-item{
         margin-bottom:8px;
         border:1px solid #e1eaf1;

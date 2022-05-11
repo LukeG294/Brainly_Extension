@@ -2,8 +2,8 @@ import {find, runtime} from "webextension-polyfill";
 import {ticket} from "./ticket_exp"
 import {Answer, CommentHandler, Question} from "../Content"
 import {get_time_diff} from "../CommonFunctions"
-import Extension from "../../../locales/en/localization.json"
 import BrainlyAPI from "../BrainlyAPI"
+import {DelMenu, AnswerElem} from "../../HTML_exports/Snippets"
 
 function add_log(log){
   let ThisDate;
@@ -38,46 +38,15 @@ function add_log(log){
     }
   }
 }
-
 function add_deletion(del_rsn, elem, tid, type:string){
   //appending deletion reasons
- 
-  
-  if (type === 'comment'){
-    
-      elem.children[0].insertAdjacentHTML("beforeend",` <div class="delmenu">
-      <div class="primary-items"></div>
-      <div class="secondary-items"></div>
-      <textarea placeholder="Reason" class=" deletion-reason sg-textarea sg-textarea--tall"></textarea>
-      <div class="sg-space-x-m del-options">
-        <div class="warnpts">
 
-          <label class="sg-checkbox" for="pts">
-            <input type="checkbox" class="sg-checkbox__element" id="pts">
-            <div class="sg-checkbox__ghost" aria-hidden="true">
-              <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-            </div>
-            <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">${Extension.buttons.takePoints}</span>
-          </label>
-          <label class="sg-checkbox" for="warn">
-            <input type="checkbox" class="sg-checkbox__element" id="warn">
-            <div class="sg-checkbox__ghost" aria-hidden="true">
-              <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-            </div>
-            <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">${Extension.buttons.warnUser}</span>
-          </label>
-        </div>
-        <div class="confirmdel">
-        <button class="sg-button sg-button--m sg-button--outline"><span class="sg-button__text">confirm</span></button>
-        </div>
-      </div>
-    </div>`)
-    elem = elem.querySelector('.delmenu')
-  
-      
+  if (type === 'comment'){
+    elem.insertAdjacentHTML("beforeend", DelMenu())
+    elem = elem.querySelector('.delmenu') 
   }
+
   for(let i = 0; i < del_rsn.length; i++){
-    
     elem.querySelector(".primary-items").insertAdjacentHTML("beforeend",/*html*/`
       <label class="sg-radio sg-radio--xxs" for="${del_rsn[i].id}${tid}">
         <input type="radio" class="sg-radio__element" name="group1" id="${del_rsn[i].id}${tid}" index = "${i}">
@@ -90,7 +59,6 @@ function add_deletion(del_rsn, elem, tid, type:string){
   
   //delete button listener
   if (type === 'comment'){
-    elem.style.display = 'block'
     elem.classList.toggle("show");
   } else {
     elem.querySelector('.delete').addEventListener("click", () => {
@@ -184,7 +152,7 @@ function add_report(data, item, elem){
     report_elem.querySelector(".rank").setAttribute("style", `color: ${reporter.ranks.color}`)
   }
 }
-function add_task_comments(data, users_data, deletion_reasons){
+function add_comments(data, users_data, deletion_reasons, type:string, loopnum?){
   
   data.comments.forEach(element => {
     var result = users_data.filter(obj => {
@@ -193,76 +161,34 @@ function add_task_comments(data, users_data, deletion_reasons){
    
     if (!result[0].avatar){
       result = {0:{"avatar":{64:'https://brainly.com/img/avatars/100-ON.png'}}}
-    } 
-    let bgColor = 'white'
-    if (element.deleted){
-      bgColor = `#ffc7bf`
     }
-     
-        document.querySelector('.task-comments').insertAdjacentHTML('beforeend',`
-      <div style='background-color:${bgColor}; height:50px; margin-top: 5px;  margin-bottom: 7px;' class="sg-box sg-box--transparent sg-box--border-color-gray-20 sg-box--no-shadow sg-box--border-radius sg-box--border sg-box--padding-m sg-box--padding-m-border md:sg-box--padding-m-border lg:sg-box--padding-m-border xl:sg-box--padding-m-border sg-box--border-color-gray-20 md:sg-box--border-color-gray-20 lg:sg-box--border-color-gray-20 xl:sg-box--border-color-gray-20 task-comment">
-        <div class="comment-data" style='display:flex;'>
-          <div class="pfp"> <img src=${result[0].avatar[64]} alt=""></div>
-          <div class="sg-text sg-text--small comment-content" style='font-size: 12px; margin-top: -1.5%;'>${element.content}</div>
-          <div class="actions">
-              <div class="actionbut confirmComment" id='${element.id}' style="border-color: #60d399!important;"><div class="sg-icon sg-icon--dark sg-icon--x32" style="fill: #60d399;"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></div>
-              <div class="actionbut deleteComment" id='${element.id}'><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg" style='fill:red !important;'><use xlink:href="#icon-trash"></use></svg></div></div>
-            </div>
-        </div>
-      </div>
-           `)
-           let commentDelete = document.querySelectorAll('.deleteComment')
-           commentDelete.forEach(element => {
-             element.addEventListener('click', function(){
-              add_deletion(deletion_reasons, element.parentElement.parentElement.parentElement, element.id, "comment")
-             })
-           })     
-      
-      
-   
-  
-  })
-}
-function add_response_comments(data, a, users_data, deletion_reasons){
- 
-  data.comments.forEach(element => {
-  
-    var result = users_data.filter(obj => {
-      return obj.id === element.user_id
-    })
-   
-    if (!result[0].avatar){
-      result = {0:{"avatar":{64:'https://brainly.com/img/avatars/100-ON.png'}}}
-    } 
-    let bgColor = 'white'
-    if (element.deleted){
-      bgColor = `#ffc7bf`
-    }
-    document.querySelector('.response-comments'+a).insertAdjacentHTML('beforeend',`
-    <div style=' background-color:${bgColor};height:50px; margin-top: 5px;  margin-bottom: 7px;' class="sg-box sg-box--transparent sg-box--border-color-gray-20 sg-box--no-shadow sg-box--border-radius sg-box--border sg-box--padding-m sg-box--padding-m-border md:sg-box--padding-m-border lg:sg-box--padding-m-border xl:sg-box--padding-m-border sg-box--border-color-gray-20 md:sg-box--border-color-gray-20 lg:sg-box--border-color-gray-20 xl:sg-box--border-color-gray-20 response-comment">
-      <div class="comment-data" style='display:flex;'>
-      <div class="pfp"> <img src=${result[0].avatar[64]} alt=""></div>
-        <div class="sg-text sg-text--small comment-content" style='font-size: 12px; margin-top: -1.5%;'>${element.content}</div>
-        <div class="actions">
-              <div class="actionbut confirmComment" id='${element.id}' style="border-color: #60d399!important;"><div class="sg-icon sg-icon--dark sg-icon--x32" style="fill: #60d399;"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></div>
-              <div class="actionbut deleteComment" id='${element.id}'><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg" style='fill:red !important;'><use xlink:href="#icon-trash"></use></svg></div></div>
-            </div>
-      </div>
-    
-    </div>
-   
-      `)
-    
-      
-    
-  })
-  let commentDelete = document.querySelectorAll('.deleteComment')
-  commentDelete.forEach(element => {
-    element.addEventListener('click', function(){
-      add_deletion(deletion_reasons, element.parentElement.parentElement.parentElement, element.id, "comment")
-    
-     
-    })
+	let selector:string;
+	if(type === "task"){
+		selector = ".task-comments"
+	}
+	else{
+		selector = ".response-comments"+String(loopnum)
+	}
+	document.querySelector(selector).insertAdjacentHTML('beforeend',/*html*/`
+		<div class="comment">
+			<div class="comment-content">
+				<div class="comment-data">
+				<div class="pfp"> <img src=${result[0].avatar[64]} alt=""></div>
+				<div class="sg-text sg-text--small comment-content">${element.content}</div>
+				</div>
+				<div class="actions">
+					<div class="actionbut confirmComment" id='${element.id}'><div class="sg-icon sg-icon--dark sg-icon--x32" style="fill: #60d399;"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></div>
+					<div class="actionbut deleteComment" id='${element.id}'><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg" style='fill:red !important;'><use xlink:href="#icon-trash"></use></svg></div></div>
+				</div>
+			</div>
+		</div>
+	`)
+	let commentDelete = document.querySelectorAll('.deleteComment')
+	commentDelete.forEach(element => {
+		element.addEventListener('click', function(){
+			add_deletion(deletion_reasons, element.parentElement.parentElement.parentElement, element.id, "comment")
+		})
+	})     
   })
 }
 function add_attachments(item, elem){
@@ -310,88 +236,7 @@ function user_content_data(user, elem, item){
 }
 function add_answer(ans,res,a, basic_data, users_data){
   let answerer = res.users_data.find(({id}) => id === ans.user.id);
-  let answer_elem = /*html*/`
-  <div class = "content-item answer${a}">
-  <h1 class="sg-text-bit sg-text-bit--small sg-text-bit--peach-primary" style="display: flex;justify-content: center;line-height: 1.2rem;font-size: 1rem;color: #c3d1dd;align-items: center;">answer #${a+1}</h1>
-    <div class = "report">
-      <div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-report_flag"></use></svg></div>
-      <div class="text-rep">
-        <div class="user-info">
-          <a class="username sg-text sg-text--gray sg-text--bold sg-text--small rightdot">LoremIpsum</a>
-          <div class="rank sg-text sg-text--small">Helping Hand</div>
-        </div>
-        <div class="report-info">
-          <div class="sg-text">Reason</div>
-        </div>
-      </div>
-    </div>
-    <div class="adata">
-      <div class="user-info">
-        <div class="pfp"><div class="sg-avatar"><div class="sg-avatar__image sg-avatar__image--icon"><div class="sg-icon sg-icon--gray-light sg-icon--x32 sg-avatar__icon"><svg class="sg-icon__svg"><use xlink:href="#icon-profile"></use></svg></div></div></div></div>
-        <div class="adata-info-txt">
-          <div class="text-user">
-            <a class="username sg-text sg-text--gray sg-text--bold sg-text--small rightdot">username</a>
-            <div class="rank sg-text sg-text--small">Ambitious</div>
-          </div>
-          <div class="text-subj">
-            <div class = "sg-text sg-text--xsmall time rightdot">time</div>
-            <div class = "sg-text sg-text--xsmall">ansnum</div>
-          </div>
-        </div>
-      </div>
-      <div class="content sg-text">
-        Content
-      </div>
-      <div class="attachments">
-        <div class="attachment-tools">
-          <button class="newtab"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-open_in_new_tab"></use></svg></div></button>
-          <button class="rotate"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-rotate"></use></svg></div></button>
-        </div>
-      </div>
-      <div class="attach-list"></div>
-      <div class="actions">
-        <button class="actionbut adel one">1</button>
-        <button class="actionbut adel two">2</button>
-        <button class="actionbut adel three">3</button>
-        
-        <div class="actionbut confirm"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></div>
-        <div class="actionbut approve"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-verified"></use></svg></div></div>
-        <div class="actionbut delete"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-trash"></use></svg></div></div>
-      </div>
-      <div class="delmenu">
-              <div class="primary-items"></div>
-              <div class="secondary-items"></div>
-              <textarea placeholder="Reason" class=" deletion-reason sg-textarea sg-textarea--tall"></textarea>
-              <div class="sg-space-x-m del-options">
-                <div class="warnpts">
-                <label class="sg-checkbox" for="pts${a}">
-                    <input type="checkbox" class="sg-checkbox__element" id="pts${a}">
-                    <div class="sg-checkbox__ghost" aria-hidden="true">
-                      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-                    </div>
-                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">${Extension.buttons.takePoints}</span>
-                  </label>
-                  <label class="sg-checkbox" for="warn${a}">
-                    <input type="checkbox" class="sg-checkbox__element" id="warn${a}">
-                    <div class="sg-checkbox__ghost" aria-hidden="true">
-                      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-                    </div>
-                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">${Extension.buttons.warnUser}</span>
-                  </label>
-                </div>
-                <div class="confirmdel">
-                <button class="sg-button sg-button--m sg-button--outline"><span class="sg-button__text">${Extension.buttons.confirm}</span></button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-    </div>
-  </div>
-  <div class="sg-flex sg-flex--margin-bottom-m response-comments${a}" style='display:block;'>
-          
-  </div>
-  `
+  let answer_elem = AnswerElem(a)
   document.querySelector(".answers").insertAdjacentHTML("beforeend",answer_elem);
   let this_ans = document.querySelector(`.answer${a}`);
   let a_del_rsn = res.data.delete_reasons.response;
@@ -406,7 +251,7 @@ function add_answer(ans,res,a, basic_data, users_data){
 
   user_content_data(answerer, this_ans, ans);
   add_attachments(ans, this_ans);
-  add_response_comments(ans, a, users_data, res.data.delete_reasons.comment)
+  add_comments(ans, users_data, res.data.delete_reasons.comment, "response", a)
   add_report(res,ans,this_ans);
   add_deletion(a_del_rsn, this_ans, answer_id, "response");
   this_ans.querySelector(".confirm").addEventListener("click", function(){
@@ -436,7 +281,7 @@ async function add_question_data(res, d_reference, users_data){
   add_report(res, q_data, document.querySelector(".question"));
   user_content_data(asker, q_elem, q_data);
   add_attachments(q_data, q_elem);
-  add_task_comments(q_data, users_data, res.data.delete_reasons.comment);
+  add_comments(q_data, users_data, res.data.delete_reasons.comment, "task");
   let q_del_rsn = res.data.delete_reasons.task;
   let q_id = res.data.task.id;
   add_deletion(q_del_rsn, q_elem, q_id, "task");

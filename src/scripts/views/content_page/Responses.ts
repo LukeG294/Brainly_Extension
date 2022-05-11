@@ -11,19 +11,19 @@ import {
 let buttonArea = document.querySelector("#content-old > div:nth-child(3) > p")
 
 export function addResponseButtonsConfirm(){
-    buttonArea.insertAdjacentHTML('afterend', confirm_selected_answers())
+    buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', confirm_selected_answers())
     document.querySelector("#confirmSelectedAnswers").addEventListener("click",function(){confirmAnswers()})
 }
 export function addResponseButtonsApprove(){
-    buttonArea.insertAdjacentHTML('afterend', approve_selected())
+    buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', approve_selected())
     document.querySelector("#approveSelected").addEventListener("click",function(){approveAnswers()})
 }   
 export function addResponseButtonsUnverify(){
-    buttonArea.insertAdjacentHTML('afterend', unverify_selected())
+    buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', unverify_selected())
     document.querySelector("#unverify").addEventListener("click",function(){unverifyAnswers()})
 }
 export function addResponseButtonsFetchReported(){
-    buttonArea.insertAdjacentHTML('afterend', get_reported_content())
+    buttonArea.insertAdjacentHTML('beforeend', get_reported_content())
     let id = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
     document.querySelector("#fetchReported").addEventListener("click",async function(){
         await find_reported_content(id,"responses");
@@ -31,7 +31,7 @@ export function addResponseButtonsFetchReported(){
 }
 export function addResponseButtonsDelete(){
     buttonArea.insertAdjacentHTML('afterend', deletion_menu())
-    buttonArea.insertAdjacentHTML('afterend', delete_selected_answers())
+    buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', delete_selected_answers())
     document.querySelector("#deleteSelected").addEventListener("click", function(){showDelrsn("answers")})
     document.querySelector("#delete").addEventListener("click",function(){confirmDeletionAnswers()})
 }

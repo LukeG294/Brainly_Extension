@@ -92,7 +92,7 @@ export function ticket(){
             </div>
           </div>
         </div>
-        <div class="sg-flex sg-flex--margin-bottom-m task-comments" style='display:block;'>
+        <div class="sg-flex sg-flex--margin-bottom-m task-comments comments">
           
         </div>
         <div class = "answers">

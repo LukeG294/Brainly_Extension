@@ -287,9 +287,11 @@ function add_answer(ans,res,a, basic_data, users_data){
   let a_del_rsn = res.data.delete_reasons.response;
   let answer_id = res.data.responses[a].id;
   this_ans.querySelector(".commentvis .commentnum").innerHTML = basic_data.comments.count;
-  this_ans.querySelector(".commentvis").addEventListener("click", function(){
-    document.querySelector(".response-comments"+a).classList.toggle("open");
-  })
+  if(basic_data.comments.count > 0){
+    this_ans.querySelector(".commentvis").addEventListener("click", function(){
+      document.querySelector(".response-comments"+a).classList.toggle("open");
+    })
+  }
   if(basic_data.approved.approver !== null){
     this_ans.classList.add("approved");
   }
@@ -323,9 +325,11 @@ async function add_question_data(res, d_reference, users_data, basic_data){
   document.querySelector(".text-subj > div:nth-child(1)").innerHTML = get_time_diff(q_data.created);
   q_elem.querySelector(".ptsbox .text-points").innerHTML = "+" + q_data.points.ptsForResp;
   q_elem.querySelector(".commentvis .commentnum").innerHTML = basic_data.data.task.comments.count;
-  q_elem.querySelector(".commentvis").addEventListener("click", function(){
-    document.querySelector(".task-comments").classList.toggle("open");
-  })
+  if(basic_data.data.task.comments.count > 0){
+    q_elem.querySelector(".commentvis").addEventListener("click", function(){
+      document.querySelector(".task-comments").classList.toggle("open");
+    })
+  }
   let asker = res.users_data.find(({id}) => id === q_data.user.id);
   //let warnings = await get_warnings(asker.id)
   //console.log(warnings)

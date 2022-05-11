@@ -1,6 +1,6 @@
 
 import { delete_user, sendMessages, startCompanionManager } from "../../common/ModFunctions";
-import { showMessage, OpenDialog, ShowLoading } from "../../common/CommonFunctions";
+import { showMessage, OpenDialog, ShowLoading, UpdateLoading } from "../../common/CommonFunctions";
 import {macc_d, mcompu, mmContentModal, mmsg_s} from "../../HTML_exports/macc-d_exp"
 import Extension from "../../../locales/en/localization.json"
 import {CommentHandler, Question} from "../../common/Content"
@@ -267,7 +267,7 @@ export function reportedCommentsDeleter(){
             StoredToDelete.push(element.model_id)
         });
         fetchNextPage(OriginalLastId)
-        
+        ShowLoading("Fetched " + String(StoredToDelete.length)+ " comments...")
         //rest of pages
         async function fetchNextPage(last_id){
             let response = await fetch("https://brainly.com/api/28/moderation_new/get_comments_content", {
@@ -280,7 +280,8 @@ export function reportedCommentsDeleter(){
             let comments = response.data.items
             comments.forEach(async element => {
                 StoredToDelete.push(element.model_id)
-                ShowLoading("Fetched " + String(StoredToDelete.length)+ " comments...")
+             
+                UpdateLoading("Fetched " + String(StoredToDelete.length)+ " comments...")
                 document.getElementById('fetched-count').innerText = String(parseInt(document.getElementById('fetched-count').innerText)+1);
                 
                 //await commentObject.Delete(element.model_id, "Deleting all reported comments.", false);

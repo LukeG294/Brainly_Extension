@@ -138,4 +138,14 @@ export class CommentHandler{
           })
         return response
     }
+    async Confirm(id:string){
+        let response = await BrainlyAPI.Legacy(`POST`, 'moderation_new/accept', {
+            "model_id":id,
+            "model_type_id":45,
+            "schema":""
+            
+            
+          })
+        return response
+    }
 }

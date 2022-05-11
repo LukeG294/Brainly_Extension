@@ -111,8 +111,10 @@ function add_deletion(del_rsn, elem, tid, type:string){
       if((<HTMLInputElement>elem.querySelector("input[id ^= 'warn']")).checked){
         warnuser = true;
       }
-      if((<HTMLInputElement>elem.querySelector("input[id ^= 'pts']")).checked){
-        takepts = true;
+      if (type !== 'comment'){
+        if((<HTMLInputElement>elem.querySelector("input[id ^= 'pts']")).checked){
+          takepts = true;
+        }
       }
       if(type === "task"){
         let thisq = new Question();
@@ -126,9 +128,8 @@ function add_deletion(del_rsn, elem, tid, type:string){
         let thisc = new CommentHandler();
         thisc.Delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value, warnuser)
         elem.style.display = 'none';
-        elem.parentElement.parentElement.classList.add("deleted");
-        elem.parentElement.parentElement.style.backgroundColor = `#ffc7bf`
-      } else {
+        elem.parentElement.classList.add("deleted");
+       } else {
         elem.querySelector(".delmenu").classList.remove("show");
       }
       if(type === "response"){

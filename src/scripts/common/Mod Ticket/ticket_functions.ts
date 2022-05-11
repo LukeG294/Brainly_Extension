@@ -40,9 +40,13 @@ function add_log(log){
 }
 function add_deletion(del_rsn, elem, tid, type:string){
   //appending deletion reasons
-
+  
   if (type === 'comment'){
-    elem.insertAdjacentHTML("beforeend", DelMenu())
+    if (!elem.querySelector('.delmenu')){
+      elem.insertAdjacentHTML("beforeend", DelMenu())
+    } else {
+      elem.querySelector('.delmenu').remove();
+    }
     elem = elem.querySelector('.delmenu') 
   }
 
@@ -162,34 +166,44 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
     if (!result[0].avatar){
       result = {0:{"avatar":{64:'https://brainly.com/img/avatars/100-ON.png'}}}
     }
-	let selector:string;
-	if(type === "task"){
-		selector = ".task-comments"
-	}
-	else{
-		selector = ".response-comments"+String(loopnum)
-	}
-	document.querySelector(selector).insertAdjacentHTML('beforeend',/*html*/`
-		<div class="comment">
-			<div class="comment-content">
-				<div class="comment-data">
-				<div class="pfp"> <img src=${result[0].avatar[64]} alt=""></div>
-				<div class="sg-text sg-text--small comment-content">${element.content}</div>
-				</div>
-				<div class="actions">
-					<div class="actionbut confirmComment" id='${element.id}'><div class="sg-icon sg-icon--dark sg-icon--x32" style="fill: #60d399;"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></div>
-					<div class="actionbut deleteComment" id='${element.id}'><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg" style='fill:red !important;'><use xlink:href="#icon-trash"></use></svg></div></div>
-				</div>
-			</div>
-		</div>
-	`)
-	let commentDelete = document.querySelectorAll('.deleteComment')
-	commentDelete.forEach(element => {
-		element.addEventListener('click', function(){
-			add_deletion(deletion_reasons, element.parentElement.parentElement.parentElement, element.id, "comment")
-		})
-	})     
-  })
+    let selector:string;
+    if(type === "task"){
+      selector = ".task-comments"
+    }
+    else{
+      selector = ".response-comments"+String(loopnum)
+    }
+    
+    document.querySelector(selector).insertAdjacentHTML('beforeend',/*html*/`
+      <div class="comment">
+        <div class="comment-content">
+          <div class="comment-data">
+          <div class="pfp"> <img src=${result[0].avatar[64]} alt=""></div>
+          <div class="sg-text sg-text--small comment-content">${element.content}</div>
+          </div>
+          <div class="actions">
+            <div class="actionbut confirmComment" id='${element.id}'><div class="sg-icon sg-icon--dark sg-icon--x32" style="fill: #60d399;"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></div>
+            <div class="actionbut deleteComment" typeid ='${element.id}' id='${element.id}'><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg" style='fill:red !important;'><use xlink:href="#icon-trash"></use></svg></div></div>
+          </div>
+        </div>
+      </div>
+    `)
+     
+      let commentDelete = document.querySelector(`[typeid="${element.id}"]`)
+      if (element.deleted){commentDelete.parentElement.parentElement.parentElement.classList.add('deleted'); commentDelete.parentElement.remove();}
+      if (!commentDelete.classList.contains('delAdded')){
+        commentDelete.addEventListener('click', function(){
+          if (!commentDelete.querySelector('.delmenu')){
+            add_deletion(deletion_reasons, commentDelete.parentElement.parentElement.parentElement, element.id, "comment")
+            commentDelete.classList.add("delAdded")
+          }
+          
+        })
+      }
+      
+       
+    })
+    
 }
 function add_attachments(item, elem){
   if(item.attachments.length !== 0){
@@ -252,6 +266,7 @@ function add_answer(ans,res,a, basic_data, users_data){
   user_content_data(answerer, this_ans, ans);
   add_attachments(ans, this_ans);
   add_comments(ans, users_data, res.data.delete_reasons.comment, "response", a)
+  
   add_report(res,ans,this_ans);
   add_deletion(a_del_rsn, this_ans, answer_id, "response");
   this_ans.querySelector(".confirm").addEventListener("click", function(){

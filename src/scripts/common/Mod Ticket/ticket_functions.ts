@@ -158,6 +158,24 @@ function add_report(data, item, elem){
 }
 function add_comments(data, users_data, deletion_reasons, type:string, loopnum?){
   
+  if(type === "task"){
+    document.querySelector('.task-comments').insertAdjacentHTML("beforeend",`
+    <button style="margin-bottom:12px" class=" select-all sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue"><span class="sg-button__icon sg-button__icon--m">
+                          <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-heart-3qxpca" focusable="false"><text id="title-heart-3qxpca" hidden="">heart</text>
+                              <use xlink:href="#icon-add_more" aria-hidden="true"></use>
+                            </svg></div>
+                        </span><span class="sg-button__text">Select All Comments</span></button>`)
+    document.querySelector('.select-all').addEventListener('click',function(){
+      let boxes = document.querySelectorAll('.commentBoxes')
+      boxes.forEach(element => {
+        //@ts-expect-error
+        
+        if (element.checked){element.checked = false}else if (!element.checked){element.checked = true}
+      })
+    })
+  
+  }
+ 
   data.comments.forEach(element => {
     var result = users_data.filter(obj => {
       return obj.id === element.user_id
@@ -169,6 +187,7 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
     let selector:string;
     if(type === "task"){
       selector = ".task-comments"
+    
     }
     else{
       selector = ".response-comments"+String(loopnum)
@@ -185,13 +204,22 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
             <div class="actionbut confirmComment hidden" id='${element.id}'><div class="sg-icon sg-icon--dark sg-icon--x32" style="fill: #60d399;"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></div>
             <div class="actionbut deleteComment" typeid ='${element.id}' id='${element.id}'><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg" style='fill:red !important;'><use xlink:href="#icon-trash"></use></svg></div></div>
           </div>
+          <label class="sg-checkbox" for="6"><input type="checkbox" class="sg-checkbox__element commentBoxes" id="6">
+          <div class="sg-checkbox__ghost" aria-hidden="true">
+          <div class="sg-icon sg-icon--adaptive sg-icon--x16">
+              <svg class="sg-icon__svg" role="img" aria-labelledby="title-check-255xyo" focusable="false"><text id="title-check-255xyo" hidden="">check</text>
+              <use xlink:href="#icon-check" aria-hidden="true"></use></svg>
+          </div>
+          </div>
+          </label>
         </div>
+        
       </div>
     `)
-     
+      
       let commentDelete = document.querySelector(`[typeid="${element.id}"]`)
-      console.log(element)
-      if (element.deleted){commentDelete.parentElement.parentElement.parentElement.classList.add('deleted'); commentDelete.parentElement.remove();}
+     
+      if (element.deleted){commentDelete.parentElement.parentElement.parentElement.classList.add('deleted');  commentDelete.parentElement.parentElement.parentElement.querySelector('.sg-checkbox').remove(); commentDelete.parentElement.remove();}
       if (element.report){commentDelete.parentElement.parentElement.parentElement.classList.add('reported'); commentDelete.parentElement.querySelector('.confirmComment').classList.remove('hidden')}
       if (!commentDelete.classList.contains('delAdded')){
         commentDelete.addEventListener('click', function(){

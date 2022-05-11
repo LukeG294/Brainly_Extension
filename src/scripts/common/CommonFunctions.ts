@@ -97,13 +97,29 @@ export function OpenDialog(heading, content, confirmfn){
     confirmfn()
   });
 }
-export function ShowLoading(message:string){
-  document.querySelector("body").insertAdjacentHTML("afterbegin", /*html*/`
-      <div class="sg-label sg-label--blue-20" style = "position: fixed;right: 0;bottom: 0;margin: 24px;z-index: 999;">
-        <div class="sg-spinner sg-spinner--gray-70 sg-spinner--small" style="height: 16px;width: 16px;"></div>
-        <div class="sg-text sg-text--text-black sg-text--small sg-text--bold sg-label__text tabMessage" style="margin-left: 8px;">${message}</div>
-      </div>`)
+export function ShowLoading(message:string, type:string){
+  if (type === "fetching"){
+    document.querySelector("body").insertAdjacentHTML("afterbegin", /*html*/`
+    <div class="sg-label sg-label--blue-20 displayMessage" style = "position: fixed;right: 0;bottom: 0;margin: 24px;z-index: 999;">
+      <div class="sg-spinner sg-spinner--gray-70 sg-spinner--small" style="height: 16px;width: 16px;"></div>
+      <div class="sg-text sg-text--text-black sg-text--small sg-text--bold sg-label__text tabMessage" style="margin-left: 8px;">${message}</div>
+    </div>`)
+  }
+  if (type === "handling"){
+    document.querySelector("body").insertAdjacentHTML("afterbegin", /*html*/`
+    <div class="sg-label sg-label--indigo-20 displayMessage" style = "position: fixed;right: 0;bottom: 0;margin: 24px;z-index: 999;">
+      <div class="sg-spinner sg-spinner--gray-70 sg-spinner--small" style="height: 16px;width: 16px;"></div>
+      <div class="sg-text sg-text--text-black sg-text--small sg-text--bold sg-label__text tabMessage" style="margin-left: 8px;">${message}</div>
+    </div>`)
+  }
+ 
 }
-export function UpdateLoading(message:string){
-  document.querySelector('.tabMessage').innerHTML = message
+
+export function UpdateLoading(message:string, remove:boolean){
+  if (remove){
+    document.querySelector('.displayMessage').remove();
+  } else {
+    document.querySelector('.tabMessage').innerHTML = message
+  }
+  
 }

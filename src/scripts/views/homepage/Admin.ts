@@ -206,6 +206,36 @@ export function md_content(){
             }
            
         })
+        document.querySelector(".confirm-content").addEventListener("click", async function(){
+           
+            //@ts-expect-error
+            let linksArray = String(document.querySelector(".profile-links").value).split("\n")
+            let error = false
+            let usersToMsg = []
+            for (let index = 0; index < linksArray.length; index++) {
+                const element = linksArray[index];
+                let regexString = new RegExp(`https:\/\/brainly\.com\/question\/.*-.*`)
+                let qid = String(element).split("/")[4].split("?")[0]
+              
+                usersToMsg.push(qid)
+               
+            }
+            document.querySelector(".confirm-content .spinner-container").classList.add("show")
+            usersToMsg.forEach(async element => {
+                
+                let question = await new Question();
+                await question.Confirm(element)
+            });
+         
+            if (error){
+                document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
+            } else {
+                document.querySelector(".profile-links").classList.add("sg-textarea--valid")
+                document.querySelector(".confirm-content .spinner-container").classList.remove("show")
+                
+            }
+           
+        })
     })
 }
 

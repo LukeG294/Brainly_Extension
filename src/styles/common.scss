@@ -368,17 +368,24 @@
         }
       }
       .comments{
-        display: flex;
+        display:none!important;
         flex-direction: column;
         padding: 12px;
         width:100%;
         margin-top:0px!important;
         border: none!important;
+        &.open{
+          display:flex!important;
+        }
         .comment{
           border: 1px solid #ebf2f7;
           border-radius: 8px;
           padding: 8px;
           margin-bottom: 8px;
+          &.deleted{
+            border-color: #ff7968;
+            background: #fff1f0;
+          }
           .comment-content{
             display: flex;
             justify-content: space-between;
@@ -386,15 +393,21 @@
             .comment-data{
               display: flex;
               align-items: center;
+              .sg-checkbox{
+                margin-right:8px;
+              }
             }
             .actions{
               margin-top:0px!important;
+              display:flex;
+              align-items: center;
+              justify-content: space-between;
               .actionbut{
                 display:flex;
                 align-items: center;
                 justify-content: center;
-                .confirmComment{
-                  display:none;
+                &.confirmComment{
+                  display:none!important;
                 }
                 .sg-icon{
                   height:21px;
@@ -435,8 +448,24 @@
           }
         }
         .actions{
-          display: flex;
-          justify-content: flex-end;
+          display:flex;
+          align-items: center;
+          justify-content: space-between;
+          .access{
+            display:flex;
+            .commentvis{
+              display:flex;
+              align-items: center;
+              .sg-icon{
+                color: #323c45;
+                margin-right: 4px;
+              }
+              .commentnum{
+                font-weight: 600;
+                color: #323c45;
+              }
+            }
+          }
           .actionbut{
             width: 40px;
             cursor: pointer;

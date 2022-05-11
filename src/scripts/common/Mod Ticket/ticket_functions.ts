@@ -197,21 +197,21 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
       <div class="comment">
         <div class="comment-content">
           <div class="comment-data">
-          <div class="pfp"> <img src=${result[0].avatar[64]} alt=""></div>
-          <div class="sg-text sg-text--small comment-content">${element.content}</div>
+            <label class="sg-checkbox" for="6"><input type="checkbox" class="sg-checkbox__element commentBoxes" id="6">
+              <div class="sg-checkbox__ghost" aria-hidden="true">
+              <div class="sg-icon sg-icon--adaptive sg-icon--x16">
+                  <svg class="sg-icon__svg" role="img" aria-labelledby="title-check-255xyo" focusable="false"><text id="title-check-255xyo" hidden="">check</text>
+                  <use xlink:href="#icon-check" aria-hidden="true"></use></svg>
+              </div>
+              </div>
+            </label>
+            <div class="pfp"> <img src=${result[0].avatar[64]} alt=""></div>
+            <div class="sg-text sg-text--small comment-content">${element.content}</div>
           </div>
           <div class="actions">
             <div class="actionbut confirmComment hidden" id='${element.id}'><div class="sg-icon sg-icon--dark sg-icon--x32" style="fill: #60d399;"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></div>
             <div class="actionbut deleteComment" typeid ='${element.id}' id='${element.id}'><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg" style='fill:red !important;'><use xlink:href="#icon-trash"></use></svg></div></div>
           </div>
-          <label class="sg-checkbox" for="6"><input type="checkbox" class="sg-checkbox__element commentBoxes" id="6">
-          <div class="sg-checkbox__ghost" aria-hidden="true">
-          <div class="sg-icon sg-icon--adaptive sg-icon--x16">
-              <svg class="sg-icon__svg" role="img" aria-labelledby="title-check-255xyo" focusable="false"><text id="title-check-255xyo" hidden="">check</text>
-              <use xlink:href="#icon-check" aria-hidden="true"></use></svg>
-          </div>
-          </div>
-          </label>
         </div>
         
       </div>
@@ -309,7 +309,7 @@ function add_answer(ans,res,a, basic_data, users_data){
     this_ans.classList.remove("reported")
   })
 }
-async function add_question_data(res, d_reference, users_data){
+async function add_question_data(res, d_reference, users_data, basic_data){
   let q_data = res.data.task;
   let q_elem = document.querySelector(".qdata");
   console.log(res);
@@ -317,6 +317,10 @@ async function add_question_data(res, d_reference, users_data){
   document.querySelector(".text-subj > div:nth-child(2)").innerHTML = d_reference.data.subjects.find(({id}) => id === q_data.subject_id).name;
   document.querySelector(".text-subj > div:nth-child(1)").innerHTML = get_time_diff(q_data.created);
   q_elem.querySelector(".ptsbox .text-points").innerHTML = "+" + q_data.points.ptsForResp;
+  q_elem.querySelector(".commentvis .commentnum").innerHTML = basic_data.data.task.comments.count;
+  q_elem.querySelector(".commentvis").addEventListener("click", function(){
+    document.querySelector(".task-comments").classList.toggle("open");
+  })
   let asker = res.users_data.find(({id}) => id === q_data.user.id);
   //let warnings = await get_warnings(asker.id)
   //console.log(warnings)
@@ -357,7 +361,7 @@ export async function ticket_data(id, res, butspinner){
   document.querySelector(".blockint").remove();
   butspinner.classList.remove("show");
   let users_data = log.users_data
-  await add_question_data(res,d_reference,users_data);
+  await add_question_data(res,d_reference,users_data, basic_data);
   
   if(res.data.responses.length !== 0){
       document.querySelector(".answers").innerHTML = '';

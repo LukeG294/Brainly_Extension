@@ -379,13 +379,29 @@
           display:flex!important;
         }
         .comment{
-          border: 1px solid #ebf2f7;
+          border: 2px solid #ebf2f7;
           border-radius: 8px;
           padding: 8px;
           margin-bottom: 8px;
           &.deleted{
             border-color: #ff7968;
             background: #fff1f0;
+          }
+          &.reported{
+            border-color: #ff7968;
+            .rep-flag{
+              color: #ff341a;
+              height: 26px;
+              width: 26px;
+              display:block;
+            }
+            .confirmComment{
+              display:flex!important;
+            }
+            
+          }
+          .rep-flag{
+            display:none;
           }
           .comment-content{
             display: flex;

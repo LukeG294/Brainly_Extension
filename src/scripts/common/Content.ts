@@ -96,18 +96,25 @@ export class Question{
 
 export class CommentHandler{
     async Delete(id:string, reason:string, warn:boolean){
-       try {
-            await BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_comment_content', {
-                "reason_id":34,
-                "reason":reason,
-                "give_warning":warn,
-                "model_type_id":45,
-                "model_id":id,
+      
+        try {
+            let resp = await BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_comment_content', {
+            "reason_id":34,
+            "reason":reason,
+            "give_warning":warn,
+            "model_type_id":45,
+            "model_id":id,
             })
-       } catch(err){
-           //pass
-       }
-        
+            return resp
+   
+        } catch(err){
+            if (String(err).includes('another moderator')){
+                return {'error':"reserved"}
+            } else if (String(err).includes('no such')){
+                return {'error':"cached"}
+            }
+            
+        }
        
     }
     async GetAllReported(last_id:string){

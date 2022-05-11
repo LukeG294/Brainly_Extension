@@ -248,11 +248,20 @@ export function reportedCommentsDeleter(){
 
     document.querySelector(".reported-comments-deleter").addEventListener("click", function(){
        async function removeComments(){
-
+            document.querySelector('.brn-moderation-panel__list').insertAdjacentHTML("beforeend",`
+            <div class='info' style='border-top: 1px solid #c3d1dd;'>
+            <h2 class="sg-headline sg-headline--small sg-headline--no-bold" style=' margin-top:10px;'>Report Comments Deletion</h2>
+            <h2 class="sg-headline sg-headline--xsmall sg-headline--no-bold" style=" margin-top:10px;color: #FF7968;">Deleted: <div id='deleted-count' style="display: inline;">0</div></h2>
+            <h2 class="sg-headline sg-headline--xsmall sg-headline--no-bold" style="color: #6D83F3;"> Fetched: <div id='fetched-count' style="display: inline;">0</div> </h2>
+            <h2 class="sg-headline sg-headline--xsmall sg-headline--no-bold" style="color: #FBBE2E;">Stuck in Queue (cached): <div id='stuck-count' style="display: inline;">0</div></h2>
+            <h2 class="sg-headline sg-headline--xsmall sg-headline--no-bold" style="color: #4FB3F6;" >Tickets Reserved: <div id='reserved-count' style="display: inline;">0</div></h2>
+            </div>
+            
+        `)
+           
             let StoredToDelete = []
             //first page
-            let finalCount = 0
-            let totalCount = 0
+           
             let OriginalResponse = await fetch("https://brainly.com/api/28/moderation_new/get_comments_content", {
                 "body": `{\"subject_id\":0,\"category_id\":998,\"schema\":\"moderation.index\"}`,
                 "method": "POST",
@@ -268,7 +277,7 @@ export function reportedCommentsDeleter(){
             FirstPageComments.forEach(async element => {
                 let commentObject = new CommentHandler()
                 StoredToDelete.push(element.model_id)
-                totalCount +=1
+               
                 
               
             });
@@ -291,10 +300,11 @@ export function reportedCommentsDeleter(){
                 comments.forEach(async element => {
                     let commentObject = new CommentHandler()
                     StoredToDelete.push(element.model_id)
+                    document.getElementById('fetched-count').innerText = String(parseInt(document.getElementById('fetched-count').innerText)+1)
                     //await commentObject.Delete(element.model_id, "Deleting all reported comments.", false);
                     
                    
-                    totalCount+=1
+                   
                 });
                
                 if (response.data.last_id !== 0){
@@ -306,16 +316,29 @@ export function reportedCommentsDeleter(){
                         let commentObject = new CommentHandler()
                         const delay = ms => new Promise(res => setTimeout(res, ms));
                         
-                        try{
-                            await commentObject.Delete(StoredToDelete[i], "Deleting all reported comments.", false);
-                            finalCount+=1
-                        } catch(err){
-                            //pass
-                        }
+                     
+                            let resp = await commentObject.Delete(StoredToDelete[i], "Deleting all reported comments.", false)
+                            
+                           
+                          
+                                console.log(resp)
+                                 //@ts-expect-error
+                                if (resp.error === 'cached'){
+                                    document.getElementById('stuck-count').innerText = String(parseInt(document.getElementById('stuck-count').innerText)+1)
+                                //@ts-expect-error
+                                } else if (resp.error === 'reserved'){
+                                    document.getElementById('reserved-count').innerText = String(parseInt(document.getElementById('reserved-count').innerText)+1)
+                                } else {
+                                    document.getElementById('deleted-count').innerText = String(parseInt(document.getElementById('deleted-count').innerText)+1)
+                                }
+                                
+                             
+                           
+                        
                         
                        // await commentObject.Delete(StoredToDelete[i], "Deleting all reported comments.", false);
                     }
-                    showMessage(`Mod all comments cleared! ${finalCount}/${totalCount} were deleted.`,"success")
+                    
                 }
             }
 

@@ -23,7 +23,7 @@ export function addResponseButtonsUnverify(){
     document.querySelector("#unverify").addEventListener("click",function(){unverifyAnswers()})
 }
 export function addResponseButtonsFetchReported(){
-    buttonArea.insertAdjacentHTML('beforeend', get_reported_content())
+    buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', get_reported_content())
     let id = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
     document.querySelector("#fetchReported").addEventListener("click",async function(){
         await find_reported_content(id,"responses");

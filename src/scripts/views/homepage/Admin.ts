@@ -1,6 +1,6 @@
 
 import { delete_user, sendMessages, startCompanionManager } from "../../common/ModFunctions";
-import { showMessage, OpenDialog } from "../../common/CommonFunctions";
+import { showMessage, OpenDialog, ShowLoading } from "../../common/CommonFunctions";
 import {macc_d, mcompu, mmContentModal, mmsg_s} from "../../HTML_exports/macc-d_exp"
 import Extension from "../../../locales/en/localization.json"
 import {CommentHandler, Question} from "../../common/Content"
@@ -19,7 +19,6 @@ async function sendmsg(userLink){
 ###### **Moderator**: ${mod_name}`
     Ryver.Message('1291498', message, "workrooms")
 }
-
 export function mass_accdel(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
     <li class="sg-menu-list__element macc-d">   
@@ -125,8 +124,6 @@ export function mass_msg(){
         })
     })
 }
-
-
 export function usr_mgmt(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
     <li class="sg-menu-list__element mcomp-u">   
@@ -142,8 +139,6 @@ export function usr_mgmt(){
         
     })
 }
-
-
 export function verification_queue(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
         <li class="sg-menu-list__element verification-queue">   
@@ -151,9 +146,6 @@ export function verification_queue(){
         </li>
     `)
 }
-
-
-
 export function md_content(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
     <li class="sg-menu-list__element mm-content">   
@@ -238,7 +230,6 @@ export function md_content(){
         })
     })
 }
-
 export function reportedCommentsDeleter(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
     <li class="sg-menu-list__element reported-comments-deleter">   
@@ -259,92 +250,66 @@ export function reportedCommentsDeleter(){
             
         `)
            
-            let StoredToDelete = []
-            //first page
-           
-            let OriginalResponse = await fetch("https://brainly.com/api/28/moderation_new/get_comments_content", {
-                "body": `{\"subject_id\":0,\"category_id\":998,\"schema\":\"moderation.index\"}`,
+        let StoredToDelete = []
+        //first page
+        
+        let OriginalResponse = await fetch("https://brainly.com/api/28/moderation_new/get_comments_content", {
+            "body": `{\"subject_id\":0,\"category_id\":998,\"schema\":\"moderation.index\"}`,
+            "method": "POST",
+            "mode": "cors",
+            "credentials": "include"
+            }).then(data => data.json())
+        
+        let OriginalLastId = OriginalResponse.data.last_id
+        let FirstPageComments = OriginalResponse.data.items
+        
+        FirstPageComments.forEach(async element => {
+            StoredToDelete.push(element.model_id)
+        });
+        fetchNextPage(OriginalLastId)
+        
+        //rest of pages
+        async function fetchNextPage(last_id){
+            let response = await fetch("https://brainly.com/api/28/moderation_new/get_comments_content", {
+                "body": `{\"subject_id\":0,\"category_id\":998,\"schema\":\"moderation.index\",\"last_id\":${last_id}}`,
                 "method": "POST",
                 "mode": "cors",
                 "credentials": "include"
-                }).then(data => data.json())
-            
-           
-         
-            let OriginalLastId = OriginalResponse.data.last_id
-            let FirstPageComments = OriginalResponse.data.items
-           
-            FirstPageComments.forEach(async element => {
-                let commentObject = new CommentHandler()
+                }).then(data => data.json());
+            let count = response.data.items.length
+            let comments = response.data.items
+            comments.forEach(async element => {
                 StoredToDelete.push(element.model_id)
-               
+                ShowLoading("Fetched " + String(StoredToDelete.length)+ " comments...")
+                document.getElementById('fetched-count').innerText = String(parseInt(document.getElementById('fetched-count').innerText)+1);
                 
-              
+                //await commentObject.Delete(element.model_id, "Deleting all reported comments.", false);
             });
-            fetchNextPage(OriginalLastId)
-           
-            //rest of pages
-            async function fetchNextPage(last_id){
-                function sleep(ms) {
-                    return new Promise(resolve => setTimeout(resolve, ms));
-                  }
-               
-                let response = await fetch("https://brainly.com/api/28/moderation_new/get_comments_content", {
-                    "body": `{\"subject_id\":0,\"category_id\":998,\"schema\":\"moderation.index\",\"last_id\":${last_id}}`,
-                    "method": "POST",
-                    "mode": "cors",
-                    "credentials": "include"
-                    }).then(data => data.json());
-                let count = response.data.items.length
-                let comments = response.data.items
-                comments.forEach(async element => {
+            
+            if (response.data.last_id !== 0){
+                fetchNextPage(response.data.last_id)
+                
+            } else {
+                for (let i = 0; i < StoredToDelete.length; i++) {
                     let commentObject = new CommentHandler()
-                    StoredToDelete.push(element.model_id)
-                    document.getElementById('fetched-count').innerText = String(parseInt(document.getElementById('fetched-count').innerText)+1)
-                    //await commentObject.Delete(element.model_id, "Deleting all reported comments.", false);
                     
-                   
-                   
-                });
-               
-                if (response.data.last_id !== 0){
-                    fetchNextPage(response.data.last_id)
-                } else {
-                   
-                  
-                    for (let i = 0; i < StoredToDelete.length; i++) {
-                        let commentObject = new CommentHandler()
-                        const delay = ms => new Promise(res => setTimeout(res, ms));
-                        
-                     
-                            let resp = await commentObject.Delete(StoredToDelete[i], "Deleting all reported comments.", false)
-                            
-                           
-                          
-                                console.log(resp)
-                                 //@ts-expect-error
-                                if (resp.error === 'cached'){
-                                    document.getElementById('stuck-count').innerText = String(parseInt(document.getElementById('stuck-count').innerText)+1)
-                                //@ts-expect-error
-                                } else if (resp.error === 'reserved'){
-                                    document.getElementById('reserved-count').innerText = String(parseInt(document.getElementById('reserved-count').innerText)+1)
-                                } else {
-                                    document.getElementById('deleted-count').innerText = String(parseInt(document.getElementById('deleted-count').innerText)+1)
-                                }
-                                
-                             
-                           
-                        
-                        
-                       // await commentObject.Delete(StoredToDelete[i], "Deleting all reported comments.", false);
+                    let resp = await commentObject.Delete(StoredToDelete[i], "Deleting all reported comments.", false)
+                    console.log(resp)
+                        //@ts-expect-error
+                    if (resp.error === 'cached'){
+                        document.getElementById('stuck-count').innerText = String(parseInt(document.getElementById('stuck-count').innerText)+1)
+                    //@ts-expect-error
+                    } else if (resp.error === 'reserved'){
+                        document.getElementById('reserved-count').innerText = String(parseInt(document.getElementById('reserved-count').innerText)+1)
+                    } else {
+                        document.getElementById('deleted-count').innerText = String(parseInt(document.getElementById('deleted-count').innerText)+1)
                     }
-                    
+                    // await commentObject.Delete(StoredToDelete[i], "Deleting all reported comments.", false);
                 }
+                
             }
-
-           
-           
-       }
+        }
+    }
 
        OpenDialog("Delete all reported comments", "Are you sure you want to delete all reported comments in the moderate all queue? Clicking on 'Proceed' will start the process. Please make sure you don't close the tab until you are notified, or else the reported comments will be partially removed.", removeComments);
     });

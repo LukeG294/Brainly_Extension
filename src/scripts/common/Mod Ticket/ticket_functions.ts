@@ -182,7 +182,7 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
           <div class="sg-text sg-text--small comment-content">${element.content}</div>
           </div>
           <div class="actions">
-            <div class="actionbut confirmComment" id='${element.id}'><div class="sg-icon sg-icon--dark sg-icon--x32" style="fill: #60d399;"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></div>
+            <div class="actionbut confirmComment hidden" id='${element.id}'><div class="sg-icon sg-icon--dark sg-icon--x32" style="fill: #60d399;"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></div>
             <div class="actionbut deleteComment" typeid ='${element.id}' id='${element.id}'><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg" style='fill:red !important;'><use xlink:href="#icon-trash"></use></svg></div></div>
           </div>
         </div>
@@ -190,7 +190,9 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
     `)
      
       let commentDelete = document.querySelector(`[typeid="${element.id}"]`)
+      console.log(element)
       if (element.deleted){commentDelete.parentElement.parentElement.parentElement.classList.add('deleted'); commentDelete.parentElement.remove();}
+      if (element.report){commentDelete.parentElement.parentElement.parentElement.classList.add('reported'); commentDelete.parentElement.querySelector('.confirmComment').classList.remove('hidden')}
       if (!commentDelete.classList.contains('delAdded')){
         commentDelete.addEventListener('click', function(){
           if (!commentDelete.querySelector('.delmenu')){

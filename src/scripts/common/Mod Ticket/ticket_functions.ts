@@ -285,6 +285,10 @@ function add_answer(ans,res,a, basic_data, users_data){
   let this_ans = document.querySelector(`.answer${a}`);
   let a_del_rsn = res.data.delete_reasons.response;
   let answer_id = res.data.responses[a].id;
+  this_ans.querySelector(".commentvis .commentnum").innerHTML = basic_data.comments.count;
+  this_ans.querySelector(".commentvis").addEventListener("click", function(){
+    document.querySelector(".response-comments"+a).classList.toggle("open");
+  })
   if(basic_data.approved.approver !== null){
     this_ans.classList.add("approved");
   }
@@ -356,6 +360,7 @@ export async function ticket_data(id, res, butspinner){
   let log = await fetch(`https://brainly.com/api/28/api_task_lines/big/${id}`, {method: "GET"}).then(data => data.json());
 
   console.log(log)
+  console.log(basic_data)
   show_ticket(id);
 
   document.querySelector(".blockint").remove();

@@ -64,13 +64,21 @@ export function AnswerElem(a) {
         </div>
         <div class="attach-list"></div>
         <div class="actions">
-          <button class="actionbut adel one">1</button>
-          <button class="actionbut adel two">2</button>
-          <button class="actionbut adel three">3</button>
-          
-          <div class="actionbut confirm"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></div>
-          <div class="actionbut approve"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-verified"></use></svg></div></div>
-          <div class="actionbut delete"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-trash"></use></svg></div></div>
+          <div class="access">
+            <div class="commentvis">
+              <div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-comment"></use></svg></div>
+              <div class="sg-text sg-text--small sg-text--gray-secondary commentnum">-</div>
+            </div>
+          </div>
+          <div class="mod">
+            <button class="actionbut adel one">1</button>
+            <button class="actionbut adel two">2</button>
+            <button class="actionbut adel three">3</button>
+            
+            <div class="actionbut confirm"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></div>
+            <div class="actionbut approve"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-verified"></use></svg></div></div>
+            <div class="actionbut delete"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-trash"></use></svg></div></div>
+          </div>
         </div>
         <div class="delmenu">
                 <div class="primary-items"></div>

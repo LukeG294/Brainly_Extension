@@ -271,7 +271,7 @@ export function reportedCommentsDeleter(){
             comments.forEach(async element => {
                 StoredToDelete.push(element.model_id)
              
-                UpdateLoading("Fetched " + String(StoredToDelete.length)+ " comments...",false)
+                UpdateLoading("Fetched " + String(StoredToDelete.length)+ " reported comments...",false)
                
                 
                 //await commentObject.Delete(element.model_id, "Deleting all reported comments.", false);

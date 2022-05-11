@@ -394,6 +394,7 @@
               height: 26px;
               width: 26px;
               display:block;
+              margin-right:4px;
             }
             .confirmComment{
               display:flex!important;
@@ -424,7 +425,7 @@
                 align-items: center;
                 justify-content: center;
                 &.confirmComment{
-                  display:none!important;
+                  display:none;
                 }
                 .sg-icon{
                   height:21px;

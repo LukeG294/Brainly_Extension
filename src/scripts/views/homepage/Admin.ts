@@ -224,7 +224,7 @@ export function md_content(){
             usersToMsg.forEach(async element => {
                 
                 let question = await new Question();
-                await question.Confirm(element)
+                await question.Confirm(parseInt(element))
             });
          
             if (error){

@@ -61,10 +61,10 @@ export class Answer{
 
 export class Question{
     Confirm(id:number) {
-        BrainlyAPI.Legacy(`POST`, "api_content_quality/confirm", {
+        BrainlyAPI.Legacy(`POST`, "moderation_new/accept", {
             "model_type_id":1,
             "model_id":id,
-            "schema":"moderation.content.ok"
+            "schema":""
         })
     }
 

@@ -276,6 +276,13 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
 function add_attachments(item, elem){
   if(item.attachments.length !== 0){
     let rotation = 0;
+    elem.querySelector(".deleteAttachment").addEventListener("click", function(){
+      let aID = elem.querySelector(".deleteAttachment").parentElement.parentElement.querySelector('img')
+      let question = new Question();
+      //@ts-expect-error
+      question.DeleteAttachment(document.querySelector('.qlink').innerText.replace('#',''), aID.id)
+      aID.parentElement.classList.add("deleted")
+    })
     elem.querySelector(".rotate").addEventListener("click", function(){
       elem.querySelector(".attachments > img").setAttribute("style", `transform: rotate(${rotation+90}deg)`)
       rotation += 90;
@@ -287,12 +294,12 @@ function add_attachments(item, elem){
     if(item.attachments[0].extension === "png" || item.attachments[0].extension === "jpg" || item.attachments[0].extension === "jpeg"){
       elem.querySelector(".attachments").classList.add("show");
     elem.querySelector(".attachments").insertAdjacentHTML("beforeend",/*html*/`
-    <img src=${JSON.stringify(item.attachments[0].full)}>
+    <img src=${JSON.stringify(item.attachments[0].full)} id=${item.attachments[0].id}>
     `)
     if(item.attachments.length > 1){
       for(let i = 0; i < item.attachments.length; i++){
         elem.querySelector(".attach-list").insertAdjacentHTML("beforeend",/*html*/`
-          <img class = "attachimg${i}" src=${JSON.stringify(item.attachments[i].thumbnail)} id = "img${i}">
+          <img class = "attachimg${i}" id=${item.attachments[i].id} src=${JSON.stringify(item.attachments[i].thumbnail)} id = "img${i}">
         `)
         elem.querySelector(`img.attachimg${i}`).addEventListener("click", function(){
           elem.querySelector(".attachments > img").setAttribute("src", `${item.attachments[i].full}`)

@@ -210,7 +210,6 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
     let selector:string;
     if(type === "task"){
       selector = ".task-comments"
-    
     }
     else{
       selector = ".response-comments"+String(loopnum)

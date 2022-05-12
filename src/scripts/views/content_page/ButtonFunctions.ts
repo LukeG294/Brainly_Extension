@@ -10,6 +10,7 @@ import { parseQuestionLink } from "configs/config"
 import {getCookie} from "../../common/CommonFunctions"
 import Notify from "../../common/Notifications/Notify"
 import {Answer, Question} from "../../common/Content"
+import Extension from "../../../locales/en/localization.json"
 
 export function selectAll(){
     let checkBoxes = document.getElementsByClassName("contentCheckboxes")
@@ -87,10 +88,10 @@ export async function showDelrsn(type:string){
     document.querySelector(".primary-items").innerHTML = '';
     let id = document.querySelector("tbody a").getAttribute("href").replace("/question/","");
     document.querySelector("#deleteSelected .spinner-container").classList.add("show");
-    let res = await fetch(`https://brainly.com/api/28/moderation_new/get_content`, { method: "POST",body: (`{"model_type_id":1,"model_id":${id},"schema":"moderation.content.get"}`)}).then(data => data.json());
+    let res = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/moderation_new/get_content`, { method: "POST",body: (`{"model_type_id":1,"model_id":${id},"schema":"moderation.content.get"}`)}).then(data => data.json());
     document.querySelector("#deleteSelected .spinner-container").classList.remove("show");
     document.querySelector(".delmenu").classList.toggle("show");
-    fetch(`https://brainly.com/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${id},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
+    fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${id},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
     let del_reasons;
     if(type === "questions"){
       del_reasons = res.data.delete_reasons.task;
@@ -443,7 +444,7 @@ export async function find_reported_content(id,type){
   for(let p=1; p<pagenum; p++){
 
     
-    let content_page = await fetch(`https://brainly.com/users/user_content/${id}/${type}/${p}/0`, {
+    let content_page = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/users/user_content/${id}/${type}/${p}/0`, {
       method:"GET",
       headers:{
         "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
@@ -465,7 +466,7 @@ export async function find_reported_content(id,type){
         xhr.withCredentials = true;
   
         contentlink.children[1].classList.add("iconcell");
-        let qid = contentlink.querySelector("a").href.replace("https://brainly.com/question/", "");
+        let qid = contentlink.querySelector("a").href.replace(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/question/`, "");
   
         xhr.addEventListener("readystatechange", function() {
           if(this.readyState === 4) {
@@ -478,7 +479,7 @@ export async function find_reported_content(id,type){
 
              if (type === "responses"){
                   let r = JSON.parse(this.responseText);
-                  let userId = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
+                  let userId = window.location.href.replace(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/users/user_content/`,"").split("/")[0]
                 let response = r.data.responses.find(res => String(res.user_id) === String(userId));
                 
                   if(response.settings.is_marked_abuse === true){
@@ -488,7 +489,7 @@ export async function find_reported_content(id,type){
               }
           }
         });
-        xhr.open("POST", `https://brainly.com/api/28/api_tasks/main_view/${qid}?accept=application/json`);
+        xhr.open("POST", `https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/api_tasks/main_view/${qid}?accept=application/json`);
         xhr.send();
       });
     } 

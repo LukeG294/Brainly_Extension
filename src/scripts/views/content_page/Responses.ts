@@ -7,6 +7,7 @@ import {
     confirm_selected_answers,
     get_reported_content
 } from "./ContentPageButtons"
+import Extension from "../../../locales/en/localization.json"
 
 let buttonArea = document.querySelector("#content-old > div:nth-child(3) > p")
 
@@ -24,7 +25,7 @@ export function addResponseButtonsUnverify(){
 }
 export function addResponseButtonsFetchReported(){
     buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', get_reported_content())
-    let id = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
+    let id = window.location.href.replace(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/users/user_content/`,"").split("/")[0]
     document.querySelector("#fetchReported").addEventListener("click",async function(){
         await find_reported_content(id,"responses");
     })

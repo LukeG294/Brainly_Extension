@@ -3,10 +3,11 @@ import type {
     GetQuestionResponse,
     User
 } from "../../typings/brainly"
+import Extension from "../../locales/en/localization.json"
 
 export default new class BrainlyAPI {
-    private legacyURL = 'https://brainly.com/api/28';
-    private graphURL = 'https://brainly.com/graphql/us';
+    private legacyURL = `https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28`;
+    private graphURL = `https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/graphql/us`;
     private tokenLong: string;
 
     constructor() {

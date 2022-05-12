@@ -4,6 +4,7 @@ import {Answer, CommentHandler, Question} from "../Content"
 import {get_time_diff} from "../CommonFunctions"
 import BrainlyAPI from "../BrainlyAPI"
 import {DelMenu, AnswerElem} from "../../HTML_exports/Snippets"
+import Extension from "../../../locales/en/localization.json"
 
 function add_log(log){
   let ThisDate;
@@ -139,7 +140,7 @@ function add_deletion(del_rsn, elem, tid, type:string){
         document.querySelector(".question").classList.add("deleted");
         setTimeout(async () => {
           document.querySelector(".modal_back").remove()
-          await fetch(`https://brainly.com/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${tid},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
+          await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${tid},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
         }, 1000);
       }
     });
@@ -183,7 +184,7 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
     })
    
     if (!result[0].avatar){
-      result = {0:{"avatar":{64:'https://brainly.com/img/avatars/100-ON.png'}}}
+      result = {0:{"avatar":{64:'https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/img/avatars/100-ON.png'}}}
     }
     let selector:string;
     if(type === "task"){
@@ -288,7 +289,7 @@ function user_content_data(user, elem, item){
   }
 
   elem.querySelector(".text-user .username").innerHTML = user.nick;
-  elem.querySelector(".text-user .username").setAttribute("href", `https://brainly.com/profile/${user.nick}-${user.id}`);
+  elem.querySelector(".text-user .username").setAttribute("href", `https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/profile/${user.nick}-${user.id}`);
   elem.querySelector(".text-user .username").setAttribute("target", `_blank`);
   elem.querySelector(".text-user .rank").innerHTML = user.ranks.names[0];
   elem.querySelector(".text-user .rank").setAttribute("style", `color: ${user.ranks.color}`)
@@ -370,14 +371,14 @@ function show_ticket(qid:string){
 
       document.querySelector(".modal_close").addEventListener("click", async function(){
         document.querySelector(".modal_back").remove()
-        await fetch(`https://brainly.com/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${qid},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
+        await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${qid},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
       });
 }
 export async function ticket_data(id, res, butspinner){
 
   let basic_data = await BrainlyAPI.GetQuestion(id)
-  let d_reference = await fetch('https://brainly.com/api/28/api_config/desktop_view', {method: "GET"}).then(data => data.json());
-  let log = await fetch(`https://brainly.com/api/28/api_task_lines/big/${id}`, {method: "GET"}).then(data => data.json());
+  let d_reference = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/api_config/desktop_view`, {method: "GET"}).then(data => data.json());
+  let log = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/api_task_lines/big/${id}`, {method: "GET"}).then(data => data.json());
 
   console.log(log)
   console.log(basic_data)

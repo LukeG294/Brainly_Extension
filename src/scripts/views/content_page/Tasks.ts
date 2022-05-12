@@ -12,6 +12,7 @@ import {
     find_reported_content
 } from "./ButtonFunctions"
 import { pageElement, pageElementAll } from "configs/config"
+import Extension from "../../../locales/en/localization.json"
 
 export function addOnlyChecks(){
     let buttonArea = pageElement("#content-old > div:nth-child(3) > p")
@@ -48,7 +49,7 @@ export function addTaskButtonsConfirmation(){
 export function addTaskButtonsReportedContent(){
 
     buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', get_reported_content())
-    let id = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
+    let id = window.location.href.replace(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/users/user_content/`,"").split("/")[0]
     pageElement("#fetchReported").addEventListener("click", async function(){
         await find_reported_content(id,"tasks");
         add_icons()

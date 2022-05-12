@@ -32,7 +32,7 @@
       "manageUsers":"Manage Users",
       "verificationQueue":"Verification Queue",
       "massMessageUsers":"Message Users",
-      "questionContent":"Question Content",
+      "questionContent":"Moderation Ticket",
       "question":"question"
     }, 
     "buttons": {

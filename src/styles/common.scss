@@ -20,6 +20,25 @@
 #html h1, #html h2{
   font-weight:900!important;
 }
+.scrollfade{
+  padding-bottom:0px!important;
+  position:relative;
+  &:last-child{
+    margin-bottom:25px;
+  }
+  &::after{
+    height: 40px;
+    background: linear-gradient(180deg, #fff0 0, #fff);
+    position: absolute;
+    display: block;
+    left: 0;
+    width: 100%;
+    content: "";
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    bottom: 0;
+  }
+}
 .modal_mcomp_u{
   display: flex;
   flex-direction: column;
@@ -291,15 +310,17 @@
     background:white;
     border-radius:10px;
     max-height:95%;
-    width:600px;
+    width:800px;
     padding:24px;
     position:relative;
     display: flex;
-    overflow-y: auto;
     flex-direction: column;
-    >h1{
-      line-height: 1.5rem;
-      font-size: 1.5rem;
+    .title{
+      display:flex;
+      h1{
+        line-height: 1.5rem;
+        font-size: 1.5rem;
+      }
     }
     .modal_close {
       z-index:900;
@@ -319,6 +340,7 @@
       display:flex;
       flex-direction: column;
       flex:1;
+      overflow-y:auto;
       position:relative;
       .removedq{
         display: flex;

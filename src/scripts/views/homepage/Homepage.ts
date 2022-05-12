@@ -13,12 +13,14 @@ async function homeperms(){
   if (perms.includes("1") || perms.includes("2") || perms.includes("3") || perms.includes("4")){
     ModObserver()
   }
+  if (perms.includes("3") || perms.includes("4")){
+    md_content()
+    reportedCommentsDeleter()
+  }
   if(perms.includes("4")){
     mass_msg()
     mass_accdel()
     usr_mgmt()
-    md_content()
-    reportedCommentsDeleter()
   }
   if(perms.includes("5") || perms.includes("4")){
     verification_queue()

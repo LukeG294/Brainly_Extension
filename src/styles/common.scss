@@ -1,7 +1,7 @@
 *{
   --primary-color: #6d83f3;
 }
-[class ^= 'Header-module'], div[class ^= 'brn-header-placeholder'], .brn-footer, #html .mint .mint-header, #moderate-functions-panel .covering-text, footer[data-testid = 'footer_layout']{
+[class ^= 'Header-module'], div[class ^= 'brn-header-placeholder'], .brn-footer, #html .mint .mint-header, #moderate-functions-panel .covering-text, footer[data-testid = 'footer_layout'],.brn-header-placeholder{
   background-color:var(--primary-color)!important;
   border-bottom-color: var(--primary-color)!important;
 }

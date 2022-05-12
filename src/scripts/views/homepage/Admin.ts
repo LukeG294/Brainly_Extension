@@ -260,7 +260,7 @@ export function reportedCommentsDeleter(){
             StoredToDelete.push(element.model_id)
         });
         fetchNextPage(OriginalLastId)
-        Label.Show("Fetched " + String(StoredToDelete.length)+ "reported comments...", "blue")
+        Label.Show("Fetched " + String(StoredToDelete.length)+ " reported comments...", "blue", true)
         //rest of pages
         async function fetchNextPage(last_id){
             let response = await fetch("https://brainly.com/api/28/moderation_new/get_comments_content", {
@@ -273,14 +273,14 @@ export function reportedCommentsDeleter(){
             let comments = response.data.items
             comments.forEach(async element => {
                 StoredToDelete.push(element.model_id)
-                Label.Update("Fetched " + String(StoredToDelete.length)+ " reported comments...","indigo", true)
+                Label.Update("Fetched " + String(StoredToDelete.length)+ " reported comments...","blue", true)
             });
             
             if (response.data.last_id !== 0){
                 fetchNextPage(response.data.last_id)
                 
             } else {
-                Label.Update(`0 deleted / 0 reserved / 0 cached / ${String(StoredToDelete.length)} fetched`, "indigo", true)
+                Label.Update(`0 deleted / 0 reserved / 0 cached / ${String(StoredToDelete.length)} fetched`, "red", true)
 
                 let deleted = 0
                 let cached = 0

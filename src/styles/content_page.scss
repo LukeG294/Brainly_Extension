@@ -23,6 +23,10 @@ button#selectAll::after {
   width: 100%;
   z-index: 800;
   padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 .primary-items, .secondary-items, .warnpts{ 
     margin-top:8px;

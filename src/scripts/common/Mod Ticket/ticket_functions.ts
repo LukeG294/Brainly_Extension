@@ -281,7 +281,7 @@ function add_attachments(item, elem){
       let question = new Question();
       //@ts-expect-error
       question.DeleteAttachment(document.querySelector('.qlink').innerText.replace('#',''), aID.id)
-      aID.parentElement.classList.add("deleted")
+      aID.parentElement.querySelector("img").classList.add("deleted")
     })
     elem.querySelector(".rotate").addEventListener("click", function(){
       elem.querySelector(".attachments > img").setAttribute("style", `transform: rotate(${rotation+90}deg)`)
@@ -365,7 +365,7 @@ async function add_question_data(res, d_reference, users_data, basic_data){
   let q_elem = document.querySelector(".qdata");
   console.log(res);
   document.querySelector(".modal .title").insertAdjacentHTML("beforeend", /*html*/`
-  <a href="//${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/question/${q_data.id}" class="qlink" target = "_blank">#${q_data.id}</a>
+  <a href="https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/question/${q_data.id}" class="qlink" target = "_blank">#${q_data.id}</a>
   `);
   document.querySelector(".text-subj > div:nth-child(3)").innerHTML = d_reference.data.grades.find(({id}) => id === q_data.grade_id).name;
   document.querySelector(".text-subj > div:nth-child(2)").innerHTML = d_reference.data.subjects.find(({id}) => id === q_data.subject_id).name;

@@ -332,10 +332,10 @@
     .modal_close {
       z-index:900;
       > div{
-        background: #f5f8fa;
         border-radius: 100%;
         padding: 8px;
-        top:-50px;
+        top:12px;
+        right:24px;
       }
       svg{
         fill:#323c45;
@@ -612,6 +612,9 @@
           max-height: 350px;
           max-width:350px;
           border-radius: 10px;
+          &.deleted{
+            border: 2px solid #ff7968;
+          }
         }
       }
       .attachment-tools{

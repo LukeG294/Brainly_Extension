@@ -303,6 +303,9 @@
     display: flex;
     flex-direction: column;
     padding-bottom:0px!important;
+    .mass-actions{
+      display:none!important;
+    }
     &::after{
       height: 40px;
       background: linear-gradient(180deg, #fff0 0, #fff);
@@ -318,11 +321,14 @@
     }
     .title{
       display:flex;
+      align-items: center;
       h1{
         line-height: 1.5rem;
         font-size: 1.5rem;
+        margin-bottom:8px;
       }
       .qlink{
+        margin-bottom:8px;
         font-size: 1.5rem;
         margin-left: 8px;
         font-weight: 900;

@@ -9,6 +9,11 @@
       
       
     },
+    "marketConfigs":{
+      "siteName" : "brainly",
+      "siteEnding" : "com",
+      "country":"United States"
+    },
     "ryver": {
         "ryverLogin" : "Login With Ryver",
         "username": "username",

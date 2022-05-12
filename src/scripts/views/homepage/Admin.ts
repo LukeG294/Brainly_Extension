@@ -145,7 +145,7 @@ export function usr_mgmt(){
 export function verification_queue(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
         <li class="sg-menu-list__element verification-queue">   
-            <a class = "sg-menu-list__link" href = "https://brainly.com/companion/verification">${Extension.titles.verificationQueue}</a>
+            <a class = "sg-menu-list__link" href = "https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/companion/verification">${Extension.titles.verificationQueue}</a>
         </li>
     `)
 }
@@ -246,7 +246,7 @@ export function reportedCommentsDeleter(){
         let StoredToDelete = []
         //first page
         
-        let OriginalResponse = await fetch("https://brainly.com/api/28/moderation_new/get_comments_content", {
+        let OriginalResponse = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/moderation_new/get_comments_content`, {
             "body": `{\"subject_id\":0,\"category_id\":998,\"schema\":\"moderation.index\"}`,
             "method": "POST",
             "mode": "cors",
@@ -263,7 +263,7 @@ export function reportedCommentsDeleter(){
         Label.Show("Fetched " + String(StoredToDelete.length)+ " reported comments...", "blue", true)
         //rest of pages
         async function fetchNextPage(last_id){
-            let response = await fetch("https://brainly.com/api/28/moderation_new/get_comments_content", {
+            let response = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/moderation_new/get_comments_content`, {
                 "body": `{\"subject_id\":0,\"category_id\":998,\"schema\":\"moderation.index\",\"last_id\":${last_id}}`,
                 "method": "POST",
                 "mode": "cors",

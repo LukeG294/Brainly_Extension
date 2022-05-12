@@ -74,7 +74,7 @@ function check_deletion(uid:string):any{
               return (htmldoc.querySelector("title").innerHTML.split("-")[1] === " User's profile :deleted" ? true : false)
           }
         });
-    xhr.open("GET","https://brainly.com/profile/user-"+uid);
+    xhr.open("GET",`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/profile/user-`+uid);
     xhr.send()
 }
 function preset_delrsn(){

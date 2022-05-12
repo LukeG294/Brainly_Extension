@@ -26,8 +26,8 @@ export async function startCompanionManager(){
         const element = txt[index].data;
         let databaseId = txt[index].ref["@ref"].id
        
-        if (element.avatar === "https://brainly.com/img/"){
-            element.avatar = "https://brainly.com/img/avatars/100-ON.png"
+        if (element.avatar === `https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/img/`){
+            element.avatar = `https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/img/avatars/100-ON.png`
         }
        
         modal.querySelector(".users").insertAdjacentHTML("afterbegin",/*html*/`
@@ -151,7 +151,7 @@ export async function startCompanionManager(){
                 // Make a new timeout set to go off in 1000ms (1 second)
                 timeout = setTimeout( async function () {
                     //@ts-expect-error
-                    let searchFind = await fetch("https://brainly.com/users/search/"+input.value).then(data => data.text());
+                    let searchFind = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/users/search/`+input.value).then(data => data.text());
                     let DOMparse = new DOMParser();
                     let searchPage = DOMparse.parseFromString(searchFind, 'text/html');
                    
@@ -203,8 +203,8 @@ export async function startCompanionManager(){
                                     .then(result => console.log(result))
                                     .catch(error => console.log('error', error));
                                     this.querySelector(".spinner-container").classList.remove("show")
-                                    if (avatar === `https://brainly.com/img/`){
-                                        avatar = "https://brainly.com/img/avatars/100-ON.png"
+                                    if (avatar === `https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/img/`){
+                                        avatar = `https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/img/avatars/100-ON.png`
                                     }
                                     let modal = document.querySelector(".modal_mcomp_u")
                                     modal.querySelector(".users").insertAdjacentHTML("afterbegin",/*html*/`

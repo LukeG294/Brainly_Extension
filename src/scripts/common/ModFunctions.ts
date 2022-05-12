@@ -1,6 +1,7 @@
 import {ticket_data} from "./Mod Ticket/ticket_functions"
 import Notify from "./Notifications/Notify"
 import BrainlyAPI from "./BrainlyAPI"
+import Extension from "../../locales/en/localization.json"
 
 function noclick(){
     document.querySelector("body").insertAdjacentHTML("afterbegin",/*html*/`
@@ -60,7 +61,7 @@ export async function sendMessages(users_ids, content){
        
   
           
-        xhr.open("POST", "https://brainly.com/api/28/api_messages/send");
+        xhr.open("POST", `https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/api_messages/send`);
         xhr.setRequestHeader("authority", "brainly.com");
         xhr.setRequestHeader("sec-ch-ua", "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"98\", \"Google Chrome\";v=\"98\"");
         xhr.setRequestHeader("sec-ch-ua-mobile", "?0");
@@ -75,7 +76,7 @@ export async function sendMessages(users_ids, content){
         }
     });
     
-    xhr.open("POST", "https://brainly.com/api/28/api_messages/check");
+    xhr.open("POST", `https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/api_messages/check`);
     xhr.setRequestHeader("authority", "brainly.com");
     
     xhr.setRequestHeader("content-type", "application/json");

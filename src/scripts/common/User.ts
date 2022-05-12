@@ -1,9 +1,10 @@
 import BrainlyAPI from "./BrainlyAPI"
 import {getCookie} from "./CommonFunctions"
+import Extension from "../../locales/en/localization.json"
 
 export default new class User{
     async Delete(uid:string){
-        await fetch("https://brainly.com/admin/users/delete/"+uid, {
+        await fetch(`"https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/admin/users/delete/`+uid, {
         headers: {
             Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
             "Content-Type": "application/x-www-form-urlencoded",
@@ -14,7 +15,7 @@ export default new class User{
     }
     async Warnings(user:string){
         let warn_arr = [];
-        let txt = await fetch("https://brainly.com/users/view_user_warns/" + user).then(data => data.text());
+        let txt = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/users/view_user_warns/` + user).then(data => data.text());
         let parser = new DOMParser();
         let warnPage = parser.parseFromString(txt, 'text/html');
         let warns = warnPage.querySelectorAll("#content-old tr");

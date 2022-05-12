@@ -20,25 +20,6 @@
 #html h1, #html h2{
   font-weight:900!important;
 }
-.scrollfade{
-  padding-bottom:0px!important;
-  position:relative;
-  &:last-child{
-    margin-bottom:25px;
-  }
-  &::after{
-    height: 40px;
-    background: linear-gradient(180deg, #fff0 0, #fff);
-    position: absolute;
-    display: block;
-    left: 0;
-    width: 100%;
-    content: "";
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    bottom: 0;
-  }
-}
 .modal_mcomp_u{
   display: flex;
   flex-direction: column;
@@ -315,11 +296,31 @@
     position:relative;
     display: flex;
     flex-direction: column;
+    padding-bottom:0px!important;
+    &::after{
+      height: 40px;
+      background: linear-gradient(180deg, #fff0 0, #fff);
+      position: absolute;
+      display: block;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      content: "";
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      bottom: 0;
+    }
     .title{
       display:flex;
       h1{
         line-height: 1.5rem;
         font-size: 1.5rem;
+      }
+      .qlink{
+        font-size: 1.5rem;
+        margin-left: 8px;
+        font-weight: 900;
+        color: #08c!important;
       }
     }
     .modal_close {
@@ -367,6 +368,7 @@
         }
       }
       .log{
+        margin-bottom:24px;
         .log-item{
           display:flex;
           justify-content: space-between;

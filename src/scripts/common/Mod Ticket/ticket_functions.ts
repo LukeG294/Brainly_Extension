@@ -203,7 +203,7 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
     })
    
     if (!result[0].avatar){
-      result = {0:{"avatar":{64:'https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/img/avatars/100-ON.png'}}}
+      result = {0:{"avatar":{64:`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/img/avatars/100-ON.png`}}}
     }
     let selector:string;
     if(type === "task"){
@@ -355,6 +355,9 @@ async function add_question_data(res, d_reference, users_data, basic_data){
   let q_data = res.data.task;
   let q_elem = document.querySelector(".qdata");
   console.log(res);
+  document.querySelector(".modal .title").insertAdjacentHTML("beforeend", /*html*/`
+  <a href="question/${q_data.id}" class="qlink" target = "_blank">#${q_data.id}</a>
+  `);
   document.querySelector(".text-subj > div:nth-child(3)").innerHTML = d_reference.data.grades.find(({id}) => id === q_data.grade_id).name;
   document.querySelector(".text-subj > div:nth-child(2)").innerHTML = d_reference.data.subjects.find(({id}) => id === q_data.subject_id).name;
   document.querySelector(".text-subj > div:nth-child(1)").innerHTML = get_time_diff(q_data.created);

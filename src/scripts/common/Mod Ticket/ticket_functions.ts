@@ -281,7 +281,7 @@ function add_attachments(item, elem){
       let question = new Question();
       //@ts-expect-error
       question.DeleteAttachment(document.querySelector('.qlink').innerText.replace('#',''), aID.id)
-      aID.parentElement.classList.add("deleted")
+      aID.parentElement.querySelector("img").classList.add("deleted")
     })
     elem.querySelector(".rotate").addEventListener("click", function(){
       elem.querySelector(".attachments > img").setAttribute("style", `transform: rotate(${rotation+90}deg)`)

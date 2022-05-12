@@ -612,6 +612,9 @@
           max-height: 350px;
           max-width:350px;
           border-radius: 10px;
+          &.deleted{
+            border: 2px solid #ff7968;
+          }
         }
       }
       .attachment-tools{

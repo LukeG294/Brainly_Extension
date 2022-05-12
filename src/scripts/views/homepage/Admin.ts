@@ -260,7 +260,7 @@ export function reportedCommentsDeleter(){
             StoredToDelete.push(element.model_id)
         });
         fetchNextPage(OriginalLastId)
-        Label.Show("Fetched " + String(StoredToDelete.length)+ " comments...", "blue")
+        Label.Show("Fetched " + String(StoredToDelete.length)+ "reported comments...", "blue")
         //rest of pages
         async function fetchNextPage(last_id){
             let response = await fetch("https://brainly.com/api/28/moderation_new/get_comments_content", {

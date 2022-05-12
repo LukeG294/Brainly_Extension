@@ -425,7 +425,9 @@
                 align-items: center;
                 justify-content: center;
                 &.confirmComment{
-                  display:none;
+                  &.hidden{
+                    display:none!important;
+                  }
                 }
                 .sg-icon{
                   height:21px;

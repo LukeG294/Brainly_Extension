@@ -358,7 +358,7 @@ async function add_question_data(res, d_reference, users_data, basic_data){
   let q_elem = document.querySelector(".qdata");
   console.log(res);
   document.querySelector(".modal .title").insertAdjacentHTML("beforeend", /*html*/`
-  <a href="question/${q_data.id}" class="qlink" target = "_blank">#${q_data.id}</a>
+  <a href="//${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/question/${q_data.id}" class="qlink" target = "_blank">#${q_data.id}</a>
   `);
   document.querySelector(".text-subj > div:nth-child(3)").innerHTML = d_reference.data.grades.find(({id}) => id === q_data.grade_id).name;
   document.querySelector(".text-subj > div:nth-child(2)").innerHTML = d_reference.data.subjects.find(({id}) => id === q_data.subject_id).name;

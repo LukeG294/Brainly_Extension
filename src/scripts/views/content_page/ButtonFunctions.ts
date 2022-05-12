@@ -7,7 +7,8 @@ import {
   toggle_selected
 } from "./ContentPageButtons"
 import { parseQuestionLink } from "configs/config"
-import {getCookie, showMessage} from "../../common/CommonFunctions"
+import {getCookie} from "../../common/CommonFunctions"
+import Notify from "../../common/Notifications/Notify"
 import {Answer, Question} from "../../common/Content"
 
 export function selectAll(){
@@ -160,8 +161,7 @@ export async function confirmDeletionQuestions(){
  
   } 
   });
-  showMessage("Selected questions removed successfully.","success")
-
+  Notify.Flash("Selected questions removed successfully.","success");
   document.querySelector("#delete  .spinner-container").classList.remove("show");
 }
 export function addticket(){
@@ -407,9 +407,7 @@ export async function confirmAnswers(){
       
   } 
   });
-  showMessage("Confirmed selected answers!","success")
-  
-  
+  Notify.Flash("Confirmed selected answers!","success");
   document.querySelector("#confirmSelectedAnswers  .spinner-container").classList.remove("show");
   
 }

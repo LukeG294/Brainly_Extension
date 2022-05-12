@@ -1,4 +1,4 @@
-import {User} from "../../common/User"
+import User from "../../common/User"
 import Extension from "../../../locales/en/localization.json"
 let warn_area = /*html*/`
 <div class="warnbox">
@@ -56,8 +56,7 @@ function shorten_warnrsn(warning){
     return warning
 }
 export async function show_recent_warnings(uid){
-    let user = new User();
-    let warns = await user.Warnings(uid);
+    let warns = await User.Warnings(uid);
     if(warns.length !==0){
         document.querySelector("#main-right").insertAdjacentHTML("beforeend", warn_area)
         for(let i=0; i<warns.length; i++){

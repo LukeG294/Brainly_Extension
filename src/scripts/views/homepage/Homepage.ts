@@ -3,7 +3,7 @@ import {login_run} from "../../common/Ryver/RyverLogin"
 import { ModObserver, AnsObserver } from "./Exports";
 //import {subscribe, setAuth} from "../common/livemod"
 import { mass_msg, mass_accdel, usr_mgmt, verification_queue, md_content, reportedCommentsDeleter } from "./Admin";
-import { showMessage } from "../../common/CommonFunctions";
+import Notify from "../../common/Notifications/Notify";
 import Extension from "../../../locales/en/localization.json"
 
 //@ts-ignore
@@ -33,7 +33,7 @@ if(localStorage.canUse === "true"){
   homeperms()
 }
 else{
-  showMessage(Extension.common.unauthorized, "error")
+  Notify.Flash(Extension.common.unauthorized, "error")
 }
 
 //if user does not have username and password in local storage

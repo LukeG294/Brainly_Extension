@@ -1,7 +1,7 @@
 import BrainlyAPI from "./BrainlyAPI"
 import {getCookie} from "./CommonFunctions"
 
-export class User{
+export default new class User{
     async Delete(uid:string){
         await fetch("https://brainly.com/admin/users/delete/"+uid, {
         headers: {

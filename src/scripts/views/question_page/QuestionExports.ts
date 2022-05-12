@@ -1,7 +1,7 @@
 import { extension_server_url, pageElement, pageElementAll } from "configs/config";
-import { showMessage } from "../../common/CommonFunctions"
+import Notify from "../../common/Notifications/Notify"
 import {Answer} from "../../common/Content"
-import {User} from "../../common/User"
+import User from "../../common/User"
 import Extension from "../../../locales/en/localization.json"
 
 export function confirmButton(){
@@ -32,9 +32,9 @@ export async function removeAnswer(id){
   let resp = await fetch(`${extension_server_url()}/answers/`+id,{method: "DELETE"})
   .then(response => response.json())
   if (resp.code){
-    showMessage("Could not delete: "+resp.message, "error")
+    Notify.Flash("Could not delete: "+resp.message, "error")
   } else {
-    showMessage("Cancelled the request for verification.")
+    Notify.Flash("Cancelled the request for verification.", "error")
   }
 }
 
@@ -57,8 +57,7 @@ export async function requestApproval(){
       let requesterID = JSON.parse(pageElement("meta[name='user_data']").content).id
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      let usr = new User()
-      let user = await usr.Data(thisResponse.userId)
+      let user = await User.Data(thisResponse.userId)
       console.log(user)
       var raw = JSON.stringify({
         "settings": thisResponse,
@@ -68,7 +67,6 @@ export async function requestApproval(){
         "subject":pageElement("a[data-testid = 'question_box_subject']").innerHTML,
         "user": user,
         "requesterId":requesterID
-        
       });
     
       var requestOptions = {
@@ -83,7 +81,7 @@ export async function requestApproval(){
         //@ts-ignore
         
         if (!serverResponse.message){
-          showMessage("The answer has been added to the verification queue.","success")
+          Notify.Flash("The answer has been added to the verification queue.","success")
           pageElement(".request-verification .spinner-container").classList.remove("show");
           pageElement(".request-verification").remove();
           answers[i].insertAdjacentHTML("afterbegin",/*html*/` 
@@ -116,7 +114,7 @@ export async function requestApproval(){
                 })
 
         } else {
-          showMessage(Extension.common.verificationQueueError + serverResponse.message,"error")
+          Notify.Flash(Extension.common.verificationQueueError + serverResponse.message,"error")
         }
         
     })

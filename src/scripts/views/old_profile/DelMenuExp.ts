@@ -1,4 +1,4 @@
-import { delete_user } from "../../common/ModFunctions";
+import User from "../../common/User"
 import Extension from "../../../locales/en/localization.json"
 export function add_del_menu(){
     return /*html*/`
@@ -87,7 +87,7 @@ function deletion_listener(){
     document.querySelector(".modal-accdel .delete-acc").addEventListener("click", async function(){
         let uid = document.querySelector("#main-left > div.personal_info > div.header > div.info > div.info_top > span.ranking > h2 > a").getAttribute("href").split("-")[1]
         document.querySelector(".modal-accdel .spinner-container").classList.add("show");
-        await delete_user(uid);
+            await User.Delete(uid)
             await sendmsg();
         document.querySelector(".modal-accdel .spinner-container").classList.remove("show");
     })

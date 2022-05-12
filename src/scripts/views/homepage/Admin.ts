@@ -1,6 +1,9 @@
 
-import { delete_user, sendMessages, startCompanionManager } from "../../common/ModFunctions";
-import { showMessage, OpenDialog, ShowLoading, UpdateLoading } from "../../common/CommonFunctions";
+import { sendMessages } from "../../common/ModFunctions";
+import User from "../../common/User"
+import { startCompanionManager } from "../../common/Management";
+import Notify from "../../common/Notifications/Notify";
+import Label from "../../common/Notifications/Status"
 import {macc_d, mcompu, mmContentModal, mmsg_s} from "../../HTML_exports/macc-d_exp"
 import Extension from "../../../locales/en/localization.json"
 import {CommentHandler, Question} from "../../common/Content"
@@ -44,7 +47,7 @@ export function mass_accdel(){
                 let regexString = new RegExp(`https:\/\/brainly\.com\/profile\/.*-.*`)
                 if (regexString.test(element)) {
                     let uid = String(element).split("/")[4].split("-")[1]
-                    await delete_user(uid)
+                    User.Delete(uid);
                     await sendmsg(element);
                 } else { error = true }
             })
@@ -257,7 +260,7 @@ export function reportedCommentsDeleter(){
             StoredToDelete.push(element.model_id)
         });
         fetchNextPage(OriginalLastId)
-        ShowLoading("Fetched " + String(StoredToDelete.length)+ " comments...","fetching")
+        Label.Show("Fetched " + String(StoredToDelete.length)+ " comments...", "blue")
         //rest of pages
         async function fetchNextPage(last_id){
             let response = await fetch("https://brainly.com/api/28/moderation_new/get_comments_content", {
@@ -270,19 +273,15 @@ export function reportedCommentsDeleter(){
             let comments = response.data.items
             comments.forEach(async element => {
                 StoredToDelete.push(element.model_id)
-             
-                UpdateLoading("Fetched " + String(StoredToDelete.length)+ " reported comments...",false)
-               
-                
-                //await commentObject.Delete(element.model_id, "Deleting all reported comments.", false);
+                Label.Update("Fetched " + String(StoredToDelete.length)+ " reported comments...","indigo", true)
             });
             
             if (response.data.last_id !== 0){
                 fetchNextPage(response.data.last_id)
                 
             } else {
-                UpdateLoading("",true)
-                ShowLoading(`0 deleted / 0 reserved / 0 cached / ${String(StoredToDelete.length)} fetched`,"handling")
+                Label.Update(`0 deleted / 0 reserved / 0 cached / ${String(StoredToDelete.length)} fetched`, "indigo", true)
+
                 let deleted = 0
                 let cached = 0
                 let reserved = 0
@@ -306,7 +305,7 @@ export function reportedCommentsDeleter(){
                        
                         deleted += 1
                     }
-                    UpdateLoading(`${deleted} deleted / ${reserved} reserved / ${cached} cached / ${String(StoredToDelete.length)} fetched`, false)
+                    Label.Update(`${deleted} deleted / ${reserved} reserved / ${cached} cached / ${String(StoredToDelete.length)} fetched`,"indigo", true)
                     // await commentObject.Delete(StoredToDelete[i], "Deleting all reported comments.", false);
                 }
                 
@@ -314,6 +313,6 @@ export function reportedCommentsDeleter(){
         }
     }
 
-       OpenDialog("Delete all reported comments", "Are you sure you want to delete all reported comments in the moderate all queue? Clicking on 'Proceed' will start the process. Please make sure you don't close the tab until you are notified, or else the reported comments will be partially removed.", removeComments);
+    Notify.Dialog("Delete all reported comments", "Are you sure you want to delete all reported comments in the moderate all queue? Clicking on 'Proceed' will start the process. Please make sure you don't close the tab until you are notified, or else the reported comments will be partially removed.", removeComments)
     });
 }

@@ -1,5 +1,5 @@
 
-import {confirmButton, requestApproval} from "./QuestionExports"
+import {confirmButton, newTickets, requestApproval} from "./QuestionExports"
 //@ts-ignore
 import Extension from "../../../locales/en/localization.json"
 async function questionPage(){
@@ -7,7 +7,8 @@ async function questionPage(){
   
   if (perms.includes("1") || perms.includes("2") || perms.includes("3") || perms.includes("4")){
     window.onload = function(){
-      confirmButton()
+      //confirmButton()
+      newTickets()
     }
     
   }

@@ -305,7 +305,7 @@ export function reportedCommentsDeleter(){
                        
                         deleted += 1
                     }
-                    Label.Update(`${deleted} deleted / ${reserved} reserved / ${cached} cached / ${String(StoredToDelete.length)} fetched`,"indigo", true)
+                    Label.Update(`${deleted} deleted / ${reserved} reserved / ${cached} cached / ${String(StoredToDelete.length)} fetched`,"red", true)
                     // await commentObject.Delete(StoredToDelete[i], "Deleting all reported comments.", false);
                 }
                 

@@ -1,4 +1,4 @@
-import {showMessage} from "../CommonFunctions"
+import Notify from "../Notifications/Notify"
 import {extension_server_url} from "../../../configs/config"
 
 export async function getPermissions(username,password){   
@@ -171,6 +171,6 @@ export async function addUser(profileLink){
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
   } else {
-      showMessage("That's not a valid profile link.","error")
+    Notify.Flash("That's not a valid profile link.","error")
   }
 }

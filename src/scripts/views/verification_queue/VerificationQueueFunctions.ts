@@ -1,5 +1,5 @@
 import { extension_server_url } from "configs/config";
-import {showMessage} from "../../common/CommonFunctions"
+import Notify from "../../common/Notifications/Notify"
 import {Answer} from "../../common/Content"
 export async function removeAnswer(id, button){
   
@@ -15,7 +15,7 @@ export async function removeAnswer(id, button){
     item.style.pointerEvents = 'none'
     
   } else {
-    showMessage(resp.message,"error")
+    Notify.Flash(resp.message,"error")
   }
     
 }
@@ -36,7 +36,7 @@ export async function approveAnswer(id, answerId, button){
     item.style.pointerEvents = 'none'
     
   } else {
-    showMessage(resp.message,"error")
+    Notify.Flash(resp.message,"error")
   }
   
 }

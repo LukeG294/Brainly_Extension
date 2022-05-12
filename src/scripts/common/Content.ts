@@ -92,6 +92,15 @@ export class Question{
         })
         return data
     }
+    async DeleteAttachment(taskID:string, attachmentID:string){
+        await BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_attachment', {
+            "task_id":taskID,
+            "attachment_id":attachmentID,
+            "model_id": taskID,
+            "model_type_id": 1,
+            "schema": "moderation.attachment.delete.req",
+        })
+    }
 }
 
 export class CommentHandler{

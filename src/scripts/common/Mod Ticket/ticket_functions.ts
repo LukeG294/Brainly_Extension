@@ -275,13 +275,15 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
 function add_attachments(item, elem){
   if(item.attachments.length !== 0){
     let rotation = 0;
-    elem.querySelector(".deleteAttachment").addEventListener("click", function(){
-      let aID = elem.querySelector(".deleteAttachment").parentElement.parentElement.querySelector('img')
-      let question = new Question();
-      //@ts-expect-error
-      question.DeleteAttachment(document.querySelector('.qlink').innerText.replace('#',''), aID.id)
-      aID.parentElement.querySelector("img").classList.add("deleted")
-    })
+    if (elem.querySelector('.deleteAttachment')){
+      elem.querySelector(".deleteAttachment").addEventListener("click", function(){
+        let aID = elem.querySelector(".deleteAttachment").parentElement.parentElement.querySelector('img')
+        let question = new Question();
+        //@ts-expect-error
+        question.DeleteAttachment(document.querySelector('.qlink').innerText.replace('#',''), aID.id)
+        aID.parentElement.querySelector("img").classList.add("deleted")
+      })
+    }
     elem.querySelector(".rotate").addEventListener("click", function(){
       elem.querySelector(".attachments > img").setAttribute("style", `transform: rotate(${rotation+90}deg)`)
       rotation += 90;

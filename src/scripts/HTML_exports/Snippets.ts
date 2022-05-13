@@ -50,6 +50,7 @@ export function AnswerElem(a) {
           <div class="adata-info-txt">
             <div class="text-user">
               <a class="username sg-text sg-text--gray sg-text--bold sg-text--small rightdot">username</a>
+              <div class="warns sg-text sg-text--small rightdot"></div>
               <div class="rank sg-text sg-text--small">Ambitious</div>
             </div>
             <div class="text-subj">

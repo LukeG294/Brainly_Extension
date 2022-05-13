@@ -15,6 +15,10 @@ button#selectAll::after {
   position: absolute;
   right: -14px;
 }
+a[style = "color: #3366cc"]{
+  color:black;
+  font-size: 1rem;
+}
 .mass-actions{
   position: fixed;
   bottom: 0;

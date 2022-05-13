@@ -298,7 +298,7 @@ function add_attachments(item, elem){
       window.open(elem.querySelector(".attachments > img").getAttribute("src"),"_blank");
     });
     
-    if(item.attachments[0].extension === "png" || item.attachments[0].extension === "jpg" || item.attachments[0].extension === "jpeg"){
+    if(item.attachments[0].extension === "png" || item.attachments[0].extension === "jpg" || item.attachments[0].extension === "jpeg" || item.attachments[0].extension === "gif"){
       elem.querySelector(".attachments").classList.add("show");
     elem.querySelector(".attachments").insertAdjacentHTML("beforeend",/*html*/`
     <img src=${JSON.stringify(item.attachments[0].full)} id=${item.attachments[0].id}>
@@ -347,6 +347,7 @@ function add_answer(ans,res,a, basic_data, users_data){
       ansobj.AllowCorrection((<HTMLInputElement>this_ans.querySelector(".afc textarea")).value, answer_id)
     })
   })
+  this_ans.querySelector(".warns").innerHTML = `[${ans.user.warnings_count}]`
   this_ans.querySelector(".commentvis .commentnum").innerHTML = basic_data.comments.count;
   if(basic_data.comments.count > 0){
     this_ans.querySelector(".commentvis").addEventListener("click", function(){
@@ -390,6 +391,8 @@ async function add_question_data(res, d_reference, users_data, basic_data){
   document.querySelector(".text-subj > div:nth-child(3)").innerHTML = d_reference.data.grades.find(({id}) => id === q_data.grade_id).name;
   document.querySelector(".text-subj > div:nth-child(2)").innerHTML = d_reference.data.subjects.find(({id}) => id === q_data.subject_id).name;
   document.querySelector(".text-subj > div:nth-child(1)").innerHTML = get_time_diff(q_data.created);
+
+  q_elem.querySelector(".warns").innerHTML = `[${q_data.user.warnings_count}]`
   q_elem.querySelector(".ptsbox .text-points").innerHTML = "+" + q_data.points.ptsForResp;
   q_elem.querySelector(".commentvis .commentnum").innerHTML = basic_data.data.task.comments.count;
   if(basic_data.data.task.comments.count > 0){

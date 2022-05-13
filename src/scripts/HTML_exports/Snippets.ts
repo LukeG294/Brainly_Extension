@@ -77,8 +77,17 @@ export function AnswerElem(a) {
             
             <div class="actionbut confirm"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div></div>
             <div class="actionbut approve"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-verified"></use></svg></div></div>
+            <div class="actionbut correction"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-pencil"></use></svg></div></div>
             <div class="actionbut delete"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-trash"></use></svg></div></div>
           </div>
+        </div>
+        <div class="afc">
+          <textarea placeholder="Reason" class=" deletion-reason sg-textarea sg-textarea--tall"></textarea>
+          <div class="sg-space-x-m del-options">
+          <div class="confirmafc">
+            <button class="sg-button sg-button--m sg-button--outline"><span class="sg-button__text">Ask for correction</span></button>
+          </div>
+        </div>
         </div>
         <div class="delmenu">
                 <div class="primary-items"></div>

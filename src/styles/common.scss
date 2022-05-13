@@ -546,6 +546,14 @@
             }
           
           }
+          .correction{
+            border: 2px solid #4fc3f6;
+            >div{
+              fill: #4fc3f6;
+              height: 26px;
+              width: 26px;
+            }
+          }
           
           .confirm{
             border:2px solid #60d399;
@@ -806,6 +814,17 @@
   align-items: center;
   &.show{
     display:flex!important;
+  }
+}
+.afc{
+  display:none;
+  &.show{
+    display:flex!important;
+    flex-direction: column;
+  }
+  textarea{
+    width:100%;
+    margin:8px 0px;
   }
 }
 .delmenu{

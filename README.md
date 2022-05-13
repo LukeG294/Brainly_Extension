@@ -14,4 +14,4 @@ UNDER DEVELOPMENT, DO NOT INSTALL UNLESS ASKED TO
 
 - Visit chrome://extensions
 - Turn on developer mode in the top right
-- Drag the dist folder into the site
+- Drag the dist folder into the webpage

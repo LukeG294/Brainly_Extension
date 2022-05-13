@@ -207,12 +207,13 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
   }
  
   data.comments.forEach(element => {
+    let commentpfp;
     var result = users_data.filter(obj => {
       return obj.id === element.user_id
     })
    
     if (!result[0].avatar){
-      result = {0:{"avatar":{64:`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/img/avatars/100-ON.png`}}}
+      commentpfp = {0:{"avatar":{64:`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/img/avatars/100-ON.png`}}}
     }
     let selector:string;
     if(type === "task"){
@@ -234,7 +235,7 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
               </div>
               </div>
             </label>
-            <div class="pfp"> <a href='https://brainly.com/profile/${result[0].nick}-${result[0].id}' target="_blank"> <img src=${result[0].avatar[64]} alt=""></a></div>
+            <div class="pfp"> <a href='https://brainly.com/profile/${result[0].nick}-${result[0].id}' target="_blank"> <img src=${commentpfp[0].avatar[64]} alt=""></a></div>
             <div class="sg-text sg-text--small comment-content">${element.content}</div>
           </div>
           <div class="actions">

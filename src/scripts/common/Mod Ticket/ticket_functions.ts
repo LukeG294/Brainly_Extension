@@ -213,7 +213,10 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
     })
    
     if (!result[0].avatar){
-      commentpfp = {0:{"avatar":{64:`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/img/avatars/100-ON.png`}}}
+      commentpfp = `https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/img/avatars/100-ON.png`
+    }
+    else{
+      commentpfp = result[0].avatar[64];
     }
     let selector:string;
     if(type === "task"){
@@ -235,7 +238,7 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
               </div>
               </div>
             </label>
-            <div class="pfp"> <a href='https://brainly.com/profile/${result[0].nick}-${result[0].id}' target="_blank"> <img src=${commentpfp[0].avatar[64]} alt=""></a></div>
+            <div class="pfp"> <a href='https://brainly.com/profile/${result[0].nick}-${result[0].id}' target="_blank"> <img src=${commentpfp} alt=""></a></div>
             <div class="sg-text sg-text--small comment-content">${element.content}</div>
           </div>
           <div class="actions">

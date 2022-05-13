@@ -214,7 +214,6 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
     else{
       selector = ".response-comments"+String(loopnum)
     }
-    
     document.querySelector(selector).insertAdjacentHTML('beforeend',/*html*/`
       <div class="comment">
         <div class="comment-content">
@@ -228,7 +227,7 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
               </div>
               </div>
             </label>
-            <div class="pfp"> <img src=${result[0].avatar[64]} alt=""></div>
+            <div class="pfp"> <a href='https://brainly.com/profile/${result[0].nick}-${result[0].id}' target="_blank"> <img src=${result[0].avatar[64]} alt=""></a></div>
             <div class="sg-text sg-text--small comment-content">${element.content}</div>
           </div>
           <div class="actions">

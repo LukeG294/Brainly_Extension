@@ -44,8 +44,7 @@ export class Answer{
           "model_type": 2,
           "model_id": id
         });
-  }
-
+    }
     async Delete(id:string, reason:string, warn:boolean, take_point:boolean){
         BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_response_content', {
             "reason_id":2,
@@ -56,7 +55,15 @@ export class Answer{
             "model_type_id":2,
             "model_id":id,
           })
-        }
+    }
+    async AllowCorrection(reason:string, answerID:string){
+        await BrainlyAPI.Legacy(`POST`, 'moderation_new/wrong_report', {
+            "model_id":answerID,
+            "model_type_id":2,
+            "reason": reason,
+            "schema": "",
+        })
+    }
 }
 
 export class Question{

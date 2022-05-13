@@ -67,6 +67,7 @@ function add_deletion(del_rsn, elem, tid, type:string){
     elem.classList.toggle("show");
   } else {
     elem.querySelector('.delete').addEventListener("click", () => {
+      type === 'response' ? elem.querySelector(".afc").classList.remove("show") : {};
       elem.querySelector(".delmenu").classList.toggle("show");
     })
   }
@@ -326,10 +327,20 @@ function user_content_data(user, elem, item){
 function add_answer(ans,res,a, basic_data, users_data){
   let answerer = res.users_data.find(({id}) => id === ans.user.id);
   let answer_elem = AnswerElem(a)
+  let ansobj = new Answer()
+
   document.querySelector(".answers").insertAdjacentHTML("beforeend",answer_elem);
   let this_ans = document.querySelector(`.answer${a}`);
   let a_del_rsn = res.data.delete_reasons.response;
   let answer_id = res.data.responses[a].id;
+  this_ans.querySelector(".correction").addEventListener("click", function(){
+    this_ans.querySelector(".delmenu").classList.remove("show");
+    this_ans.querySelector(".afc").classList.add("show");
+
+    this_ans.querySelector(".afc .confirmafc button").addEventListener("click", function(){
+      ansobj.AllowCorrection((<HTMLInputElement>this_ans.querySelector(".correction textarea")).value, answer_id)
+    })
+  })
   this_ans.querySelector(".commentvis .commentnum").innerHTML = basic_data.comments.count;
   if(basic_data.comments.count > 0){
     this_ans.querySelector(".commentvis").addEventListener("click", function(){
@@ -341,8 +352,6 @@ function add_answer(ans,res,a, basic_data, users_data){
   }
   this_ans.querySelector(".text-subj > div:nth-child(2)").innerHTML =  `${answerer.stats.answers} Answers`
   this_ans.querySelector(".time").innerHTML = get_time_diff(res.data.responses[a].created)
-
-  let ansobj = new Answer()
 
   user_content_data(answerer, this_ans, ans);
   add_attachments(ans, this_ans);

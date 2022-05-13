@@ -147,16 +147,22 @@ function add_deletion(del_rsn, elem, tid, type:string){
     });
   });
 }
-function add_report(data, item, elem){
-  if(item.report){
+function add_report(data, item, elem, type){
+  if(item.report && type === 'UserReport'){
     let report_elem = elem.querySelector(".report")
     let reporter = data.users_data.find(({id}) => id === item.report.user.id)
     report_elem.querySelector(".report-info div").innerHTML = item.report?.abuse.name; 
     elem.classList.add("reported");
-
     report_elem.querySelector(".username").innerHTML = reporter.nick;
     report_elem.querySelector(".rank").innerHTML = reporter.ranks.names[0];
     report_elem.querySelector(".rank").setAttribute("style", `color: ${reporter.ranks.color}`)
+  } else if (type === 'AFCReport') {
+    let report_elem = elem.querySelector(".report")
+    report_elem.querySelector(".report-info div").innerHTML = data.reason; 
+    elem.classList.add("AFCreported");
+    report_elem.querySelector(".username").innerHTML = data.user.id
+    report_elem.querySelector(".rank").innerHTML = data.reported
+    
   }
 }
 function add_comments(data, users_data, deletion_reasons, type:string, loopnum?){
@@ -350,6 +356,9 @@ function add_answer(ans,res,a, basic_data, users_data){
   if(basic_data.approved.approver !== null){
     this_ans.classList.add("approved");
   }
+  if (res.data.responses[a].wrong_report){
+    add_report(res.data.responses[a].wrong_report,basic_data, this_ans, "AFCReport")
+  }
   this_ans.querySelector(".text-subj > div:nth-child(2)").innerHTML =  `${answerer.stats.answers} Answers`
   this_ans.querySelector(".time").innerHTML = get_time_diff(res.data.responses[a].created)
 
@@ -357,7 +366,7 @@ function add_answer(ans,res,a, basic_data, users_data){
   add_attachments(ans, this_ans);
   add_comments(ans, users_data, res.data.delete_reasons.comment, "response", a)
   
-  add_report(res,ans,this_ans);
+  add_report(res,ans,this_ans,'UserReport');
   add_deletion(a_del_rsn, this_ans, answer_id, "response");
   this_ans.querySelector(".confirm").addEventListener("click", function(){
     ansobj.Confirm(answer_id);
@@ -392,7 +401,7 @@ async function add_question_data(res, d_reference, users_data, basic_data){
 
   let qobj = new Question()
 
-  add_report(res, q_data, document.querySelector(".question"));
+  add_report(res, q_data, document.querySelector(".question"),"UserReport");
   user_content_data(asker, q_elem, q_data);
   add_attachments(q_data, q_elem);
   add_comments(q_data, users_data, res.data.delete_reasons.comment, "task");
@@ -421,12 +430,13 @@ export async function ticket_data(id, res, butspinner){
   let log = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/api_task_lines/big/${id}`, {method: "GET"}).then(data => data.json());
 
   console.log(log)
-  console.log(basic_data)
+  
   show_ticket(id);
-
+ 
   document.querySelector(".blockint").remove();
   butspinner.classList.remove("show");
   let users_data = log.users_data
+  
   await add_question_data(res,d_reference,users_data, basic_data);
   
   if(res.data.responses.length !== 0){
@@ -434,7 +444,6 @@ export async function ticket_data(id, res, butspinner){
       for(let a = 0; a < res.data.responses.length; a++){
           console.log(a);
           let this_ans_data = basic_data.data.responses[a];
-          console.log(this_ans_data)
           add_answer(res.data.responses[a],res, a, this_ans_data, log.users_data);
       }
   }

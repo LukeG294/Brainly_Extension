@@ -335,10 +335,10 @@ function add_answer(ans,res,a, basic_data, users_data){
   let answer_id = res.data.responses[a].id;
   this_ans.querySelector(".correction").addEventListener("click", function(){
     this_ans.querySelector(".delmenu").classList.remove("show");
-    this_ans.querySelector(".afc").classList.add("show");
+    this_ans.querySelector(".afc").classList.toggle("show");
 
     this_ans.querySelector(".afc .confirmafc button").addEventListener("click", function(){
-      ansobj.AllowCorrection((<HTMLInputElement>this_ans.querySelector(".correction textarea")).value, answer_id)
+      ansobj.AllowCorrection((<HTMLInputElement>this_ans.querySelector(".afc textarea")).value, answer_id)
     })
   })
   this_ans.querySelector(".commentvis .commentnum").innerHTML = basic_data.comments.count;

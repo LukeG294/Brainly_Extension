@@ -371,11 +371,13 @@ function add_answer(ans,res,a, basic_data, users_data){
   this_ans.querySelector(".confirm").addEventListener("click", function(){
     ansobj.Confirm(answer_id);
     this_ans.classList.remove("reported");
+    this_ans.classList.remove("AFCreported")
   })
   this_ans.querySelector(".approve").addEventListener("click", function(){
     ansobj.Approve(answer_id);
     this_ans.classList.add("approved")
     this_ans.classList.remove("reported")
+    this_ans.classList.remove("AFCreported")
   })
 }
 async function add_question_data(res, d_reference, users_data, basic_data){

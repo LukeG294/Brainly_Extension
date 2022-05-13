@@ -302,7 +302,6 @@
     position:relative;
     display: flex;
     flex-direction: column;
-    padding-bottom:0px!important;
     .mass-actions{
       display:none!important;
     }
@@ -317,7 +316,7 @@
       content: "";
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
-      bottom: 0;
+      bottom: 24px;
     }
     .title{
       display:flex;
@@ -475,16 +474,28 @@
       .content-item{
         margin-bottom:8px;
         border:1px solid #e1eaf1;
-        border-radius:5px;
-        padding:8px;
+        border-radius:8px;
+        padding:0px;
         width:100%;
         height:max-content;
-        &.reported{
+        >h1{margin-top:8px;}
+        .verifiedheader{
+          display:none;
+        }
+        &.reported, &.AFCreported{
           .report{
             display:flex;
             .report-info>div{
               font-size:1rem;
               line-height:1.2rem;
+            }
+          }
+          &.AFCreported{
+            .report{
+              border-color: #4fc3f6!important;
+              .sg-icon{
+                fill:#4fc3f6!important;
+              }
             }
           }
           .confirm{
@@ -496,9 +507,11 @@
         }
         &.approved{
           border: 2px solid #60d399;
-          background: #f0faf5;
           .mod{
             display:none!important;
+          }
+          .verifiedheader{
+            display:flex;
           }
         }
         .actions{
@@ -597,10 +610,11 @@
           margin-right:8px;
         }
       }
-      .qdata,.adata{
-        border-radius:5px;
-        padding:8px;
-        overflow-x:hidden;
+      .adata, .qdata{
+        padding: 24px;
+        padding-top: 8px;
+        border-radius:8px;
+        overflow-x: hidden;
       }
 
       .content{

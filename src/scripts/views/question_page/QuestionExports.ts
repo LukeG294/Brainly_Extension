@@ -41,8 +41,9 @@ export async function removeAnswer(id){
 export async function newTickets(){
   let oldTickets = document.querySelectorAll('[data-testid="options_list"]')
   oldTickets.forEach(element => {
-    element.parentElement.insertAdjacentHTML("beforeend",/*html*/`
-    <button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue openTicketQuestionPage">
+    element.insertAdjacentHTML("afterbegin",/*html*/`
+    <div class = "sg-flex sg-flex--margin-left-xxs">
+    <button class="openTicketQuestionPage">
     <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
       <span class="sg-button__icon sg-button__icon--m">
         <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">filter filled</text>

@@ -84,6 +84,7 @@ function add_deletion(del_rsn, elem, tid, type:string){
     //finds selected item and links it to the object
     let selected_index = elem.querySelector(".primary-items input:checked").getAttribute("index");
     let selected_subcats = del_rsn[selected_index].subcategories;
+
     console.log(selected_subcats);
 
     //clears subcat elem before appending
@@ -106,10 +107,12 @@ function add_deletion(del_rsn, elem, tid, type:string){
       console.log(selected_reason);
       
       (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value = selected_reason.text;
+      console.log(<HTMLInputElement>elem.querySelector("textarea.deletion-reason").value)
     });
     elem.querySelector(".confirmdel button").addEventListener("click", function(){
       let warnuser = false;
       let takepts = false;
+      let respts = true;
       if((<HTMLInputElement>elem.querySelector("input[id ^= 'warn']")).checked){
         warnuser = true;
       }
@@ -120,10 +123,14 @@ function add_deletion(del_rsn, elem, tid, type:string){
       }
       if(type === "task"){
         let thisq = new Question();
-        thisq.Delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value, warnuser, takepts)
+        if((<HTMLInputElement>elem.querySelector("input[id ^= 'res-pts']").checked)){
+          respts = false
+        }
+        thisq.Delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value, warnuser, takepts, respts)
       }
       if(type === "response"){
         let thisa = new Answer();
+        console.log(elem.querySelector("textarea.deletion-reason"))
         thisa.Delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value, warnuser, takepts)
       }
       if (type === "comment"){

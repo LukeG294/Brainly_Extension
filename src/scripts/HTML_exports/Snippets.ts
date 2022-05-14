@@ -89,17 +89,17 @@ export function AnswerElem(a) {
           </div>
         </div>
         <div class="afc">
-          <textarea placeholder="Reason" class=" deletion-reason sg-textarea sg-textarea--tall"></textarea>
+          <textarea placeholder="Reason" class=" afc-reason sg-textarea sg-textarea--tall"></textarea>
           <div class="sg-space-x-m del-options">
-          <div class="confirmafc">
-            <button class="sg-button sg-button--m sg-button--outline"><span class="sg-button__text">Ask for correction</span></button>
+            <div class="confirmafc">
+              <button class="sg-button sg-button--m sg-button--outline"><span class="sg-button__text">Ask for correction</span></button>
+            </div>
           </div>
-        </div>
         </div>
         <div class="delmenu">
                 <div class="primary-items"></div>
                 <div class="secondary-items"></div>
-                <textarea placeholder="Reason" class=" deletion-reason sg-textarea sg-textarea--tall"></textarea>
+                <textarea placeholder="Reason" class="deletion-reason sg-textarea sg-textarea--tall"></textarea>
                 <div class="sg-space-x-m del-options">
                   <div class="warnpts">
                   <label class="sg-checkbox" for="pts${a}">

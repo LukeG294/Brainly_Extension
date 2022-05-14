@@ -147,6 +147,7 @@ function add_deletion(del_rsn, elem, tid, type:string){
     });
   });
 }
+
 function add_report(data, item, elem, type){
   if(item.report && type === 'UserReport'){
     let report_elem = elem.querySelector(".report")

@@ -107,6 +107,7 @@ function add_deletion(del_rsn, elem, tid, type:string){
       console.log(selected_reason);
       
       (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value = selected_reason.text;
+      console.log(<HTMLInputElement>elem.querySelector("textarea.deletion-reason").value)
     });
     elem.querySelector(".confirmdel button").addEventListener("click", function(){
       let warnuser = false;
@@ -129,6 +130,7 @@ function add_deletion(del_rsn, elem, tid, type:string){
       }
       if(type === "response"){
         let thisa = new Answer();
+        console.log(elem.querySelector("textarea.deletion-reason"))
         thisa.Delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value, warnuser, takepts)
       }
       if (type === "comment"){

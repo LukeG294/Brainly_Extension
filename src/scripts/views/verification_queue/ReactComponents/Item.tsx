@@ -16,7 +16,12 @@ interface Item{
 }
 
 export default function Item({ content, thanks, rating, created, ansdata, faunadbid, answerer}: Item) {
-    console.log(ansdata)
+    let av = ''
+    if (ansdata.user.data.userById.avatar){
+        av = ansdata.user.data.userById.avatar.url
+    } else {
+        av = 'https://brainly.com/img/avatars/100-ON.png'
+    }
     return(
         <div className = "item" datatype = {ansdata.settings.id}>
             <div className="spinner-container"><Spinner /></div>
@@ -55,7 +60,7 @@ export default function Item({ content, thanks, rating, created, ansdata, faunad
             </div>
             <div className="options">
                 <div className="user">
-                    <Avatar imgSrc={ansdata.user.data.userById.avatar.url} />
+                    <Avatar imgSrc={av} />
                 </div>
                 <div className="actions">
                 

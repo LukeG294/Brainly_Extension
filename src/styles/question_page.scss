@@ -8,6 +8,23 @@
         }
     }
 }
+.openTicketQuestionPage{
+    padding: 0px;
+    width: 40px;
+    display: flex;
+    position:relative;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: none;
+    >span{
+        margin-right: 0px;
+        margin-left: 0px;
+        .sg-icon{
+            color:#687b86!important;
+        }
+    }
+}
 .cancel-request{
     padding:0px 10px!important;
     background:transparent!important;

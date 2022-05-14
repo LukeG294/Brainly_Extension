@@ -185,11 +185,13 @@ export function md_content(){
                 //@ts-ignore
                 let warnUser = document.getElementById("warn").checked
                  //@ts-ignore
-                let takePts = document.getElementById("pts").checked
+                let takePts = document.getElementById("pts").checked;
+                let givePts = true;
+                //let givePts = (<HTMLInputElement>document.getElementById("res-pts")).checked;
                  //@ts-ignore
                 let reason = document.querySelector(".message-content").value
                 
-                await question.Delete(element, reason, warnUser, takePts)
+                await question.Delete(element, reason, warnUser, takePts, givePts)
             });
          
             if (error){

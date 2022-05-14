@@ -155,9 +155,10 @@ export async function confirmDeletionQuestions(){
       //@ts-expect-error
       let warn = document.querySelector("#warn").checked
       //@ts-expect-error
-      let take_point = document.querySelector("#pts").checked
+      let take_point = document.querySelector("#pts").checked;
+      let givePts = (<HTMLInputElement>document.querySelector("#res-pts")).checked;
       let questionObj = new Question()
-      questionObj.Delete(id,reason,warn,take_point)
+      questionObj.Delete(id,reason,warn,take_point, givePts)
       element.closest("tr").getElementsByTagName('a')[0].parentElement.parentElement.style.backgroundColor = `#ffc7bf`
  
   } 

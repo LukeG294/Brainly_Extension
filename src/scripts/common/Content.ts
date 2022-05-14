@@ -75,7 +75,7 @@ export class Question{
         })
     }
 
-    async Delete(id:string, reason:string, warn:boolean, take_point:boolean){
+    async Delete(id:string, reason:string, warn:boolean, take_point:boolean, give_points:Boolean){
         await BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_task_content', {
             "reason_id":2,
             "reason":reason,
@@ -84,6 +84,7 @@ export class Question{
             "schema":`moderation.task.delete`,
             "model_type_id":1,
             "model_id":id,
+            "give_points": give_points
           })
     }
     async Get(id:string){

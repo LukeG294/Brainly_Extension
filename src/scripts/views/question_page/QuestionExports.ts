@@ -41,7 +41,7 @@ export async function removeAnswer(id){
 export async function newTickets(){
   let oldTickets = document.querySelectorAll('[title="moderate"]')
   oldTickets.forEach(element => {
-    element.outerHTML = /*html*/`
+    element.insertAdjacentHTML("beforeend",/*html*/`
     <button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue openTicketQuestionPage">
     <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
       <span class="sg-button__icon sg-button__icon--m">
@@ -50,7 +50,7 @@ export async function newTickets(){
           </svg></div>
       </span><span class="sg-button__text">moderate</span>
     </button>
-    `
+    `)
   });
   let id = window.location.href.split('/')[4].split("?")[0]
     let openTicketButtons = document.querySelectorAll('.openTicketQuestionPage')

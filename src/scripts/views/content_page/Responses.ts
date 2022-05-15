@@ -45,6 +45,7 @@ export function addResponseButtonsFetchReported() {
 }
 export function addResponseButtonsDelete() {
     buttonArea.insertAdjacentHTML('afterend', deletion_menu())
+    document.querySelector(".delmenu").classList.add("resp")
     buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', delete_selected_answers())
     document.querySelector("#deleteSelected").addEventListener("click", function() {
         showDelrsn("answers")

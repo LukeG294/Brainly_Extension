@@ -14,8 +14,8 @@ function getCookie(name) {
     if (parts.length === 2) return parts.pop().split(';').shift();
 }
 export async function insert_ticket(id, butspinner){
-    butspinner.classList.add("show");
     noclick()
+    butspinner.classList.add("show");
     try{
         let res = await BrainlyAPI.Legacy("POST", "moderation_new/get_content", ({
             "model_type_id":1,

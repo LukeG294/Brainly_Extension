@@ -11,16 +11,19 @@ import {
     confirmQuestions,
     find_reported_content
 } from "./ButtonFunctions"
-import { pageElement, pageElementAll } from "configs/config"
+import {
+    pageElement,
+    pageElementAll
+} from "configs/config"
 import Extension from "../../../locales/en/localization.json"
 
-export function addOnlyChecks(){
+export function addOnlyChecks() {
     let buttonArea = pageElement("#content-old > div:nth-child(3) > p")
     let content = pageElementAll("#content-old > div:nth-child(2) > div:nth-child(25) > table > tbody > tr")
     document.querySelector("thead tr").insertAdjacentHTML("afterbegin", "<th style = 'width: 5%'></th>")
     for (let i = 0; i < content.length; i++) {
         content[i].children[1].classList.add("iconcell")
-        content[i].insertAdjacentHTML('afterbegin', /*html*/`
+        content[i].insertAdjacentHTML('afterbegin', /*html*/ `
         <td class="sg-space-x-m" style = "padding-left: 8px">
             <label class="sg-checkbox" for="${i}"><input type="checkbox" class="sg-checkbox__element contentCheckboxes" id="${i}">
             <div class="sg-checkbox__ghost" aria-hidden="true">
@@ -32,26 +35,32 @@ export function addOnlyChecks(){
             </label>
         </td>
     `)
-  }
+    }
 }
 let buttonArea = document.querySelector("#content-old > div:nth-child(3) > p")
 
-export function addTaskButtonsDeletion(){
+export function addTaskButtonsDeletion() {
     buttonArea.insertAdjacentHTML('afterend', deletion_menu())
     buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', delete_selected_questions())
-    pageElement("#deleteSelected").addEventListener("click", function(){showDelrsn("questions")})
-    pageElement("#delete").addEventListener("click",function(){confirmDeletionQuestions()})
+    pageElement("#deleteSelected").addEventListener("click", function() {
+        showDelrsn("questions")
+    })
+    pageElement("#delete").addEventListener("click", function() {
+        confirmDeletionQuestions()
+    })
 }
-export function addTaskButtonsConfirmation(){
+export function addTaskButtonsConfirmation() {
     buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', confirm_selected_questions())
-    pageElement("#confirmSelectedQuestions").addEventListener("click",function(){confirmQuestions()})
+    pageElement("#confirmSelectedQuestions").addEventListener("click", function() {
+        confirmQuestions()
+    })
 }
-export function addTaskButtonsReportedContent(){
+export function addTaskButtonsReportedContent() {
 
     buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', get_reported_content())
-    let id = window.location.href.replace(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/users/user_content/`,"").split("/")[0]
-    pageElement("#fetchReported").addEventListener("click", async function(){
-        await find_reported_content(id,"tasks");
+    let id = window.location.href.replace(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/users/user_content/`, "").split("/")[0]
+    pageElement("#fetchReported").addEventListener("click", async function() {
+        await find_reported_content(id, "tasks");
         add_icons()
     })
 }

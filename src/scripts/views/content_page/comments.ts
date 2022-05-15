@@ -1,6 +1,5 @@
 import {
     approve_selected,
-    
     copy_links,
     delete_selected_comments,
     select_all,
@@ -38,7 +37,7 @@ window.addEventListener("load", function() {
 
 
 
-   // buttonArea.insertAdjacentHTML('afterend', delete_selected_comments())
+    // buttonArea.insertAdjacentHTML('afterend', delete_selected_comments())
     buttonArea.insertAdjacentHTML('afterend', copy_links())
     buttonArea.insertAdjacentHTML('afterend', toggle_selected())
     buttonArea.insertAdjacentHTML('afterend', select_all())

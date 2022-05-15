@@ -16,20 +16,26 @@ export async function getPermissions(username,password){
     };
     let txt = await fetch(`${extension_server_url()}/login`, requestOptions)
     .then(data => data.text())
+    
     if (txt){
-      let secret = JSON.parse(txt).secret.secret;
-      let responseJSON = JSON.parse(txt)
-      let documentID = responseJSON.secret.instance["@ref"].id
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("fauna-secret", secret);
-      var request = {
-        method: 'GET',
-        headers: myHeaders,
-      };
-      let resp = await fetch(`${extension_server_url()}/users/`+documentID,request).then(data => data.text());
-      let permissionsResponseJSON = JSON.parse(resp)
-      return permissionsResponseJSON["data"]["permissions"]
+      if (JSON.parse(txt).statusCode === 401){
+        return ''
+      } else {
+        let secret = JSON.parse(txt).secret.secret;
+        let responseJSON = JSON.parse(txt)
+        let documentID = responseJSON.secret.instance["@ref"].id
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("fauna-secret", secret);
+        var request = {
+          method: 'GET',
+          headers: myHeaders,
+        };
+        let resp = await fetch(`${extension_server_url()}/users/`+documentID,request).then(data => data.text());
+        let permissionsResponseJSON = JSON.parse(resp)
+        return permissionsResponseJSON["data"]["permissions"]
+      }
+      
     }
 }
 

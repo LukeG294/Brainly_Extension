@@ -1,7 +1,7 @@
 import Extension from "../../locales/en/localization.json"
 
-export function macc_d(){
-    return(/*html*/`
+export function macc_d() {
+    return ( /*html*/ `
     <div class="modal_back">
         <div class="modal_accdel">
             <h1 class="sg-text-bit--gray-secondary sg-headline sg-headline--xlarge sg-headline--extra-bold" style = "color:#323c45;">${Extension.titles.massAccountDeleter}</h1>
@@ -36,8 +36,8 @@ export function macc_d(){
     `)
 }
 
-export function mmsg_s(){
-    return(/*html*/`
+export function mmsg_s() {
+    return ( /*html*/ `
     <div class="modal_back">
         <div class="modal_mmsg_s">
             <h1 class="sg-text-bit--gray-secondary sg-headline sg-headline--xlarge sg-headline--extra-bold" style = "color:#323c45;">Mass Message Sender</h1>
@@ -67,8 +67,8 @@ export function mmsg_s(){
     `)
 }
 
-export function mcompu(){
-    return(/*html*/`
+export function mcompu() {
+    return ( /*html*/ `
     <div class="modal_back">
 
         <div class="modal_mcomp_u">
@@ -87,8 +87,8 @@ export function mcompu(){
     `)
 }
 
-export function mmContentModal(){
-    return(/*html*/`
+export function mmContentModal() {
+    return ( /*html*/ `
     <div class="modal_back">
         <div class="modal_mass_content">
             <h1 class="sg-text-bit--gray-secondary sg-headline sg-headline--xlarge sg-headline--extra-bold" style = "color:#323c45;">Mass Content Handler</h1>

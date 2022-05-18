@@ -14,6 +14,37 @@
 .brn-placeholder__animation{
   background:none!important;
 }
+.user-mgmt{
+  display:flex;
+  justify-content:space-evenly;
+  .panbut{
+    margin: 0px 2px;
+    background: transparent;
+    border: 2px solid;
+    border-radius: 100%;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    >div{
+      height:16px!important;
+      width:16px!important;
+    }
+    &.mass-msg{
+      border-color:#687b86!important;
+      >div{
+        color:#687b86!important;
+      }
+    }
+    &.mass-accdel{
+      border-color: #ff7968!important;
+      >div{
+        color: #ff7968!important;
+      }
+    }
+  }
+}
 #moderate-functions-panel .text{
   color:white!important;
 }

@@ -10,7 +10,27 @@ import {CommentHandler, Question} from "../../common/Content"
 import Ryver from "../../common/Ryver/Ryver";
 
 //@ts-ignore
-
+export default new class AdminPanel{
+    constructor(){
+        document.querySelector(".brn-moderation-panel__content .sg-content-box__title").insertAdjacentHTML("afterend", `<div class = "user-mgmt"></div>`)
+    }
+    MassMsg(){
+        document.querySelector(".user-mgmt").insertAdjacentHTML("afterbegin", /*html*/`
+            <button class = "mass-msg panbut">
+                <div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-messages"></use></svg></div>
+            </button>
+        `);
+        document.querySelector(".mass-msg").addEventListener("click", function(){mass_msg()})
+    }
+    Accdel(){
+        document.querySelector(".user-mgmt").insertAdjacentHTML("afterbegin", /*html*/`
+            <button class = "mass-accdel panbut">
+            <div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-profile_view"></use></svg></div>
+            </button>
+        `);
+        document.querySelector(".mass-accdel").addEventListener("click", function(){mass_accdel()})
+    }
+}
 async function sendmsg(userLink){
     let del_reason = (<HTMLInputElement>document.querySelector(".deletion-reason")).value;
     if(del_reason === ''){del_reason = "Not Provided"};
@@ -23,53 +43,37 @@ async function sendmsg(userLink){
     Ryver.Message('1291498', message, "workrooms")
 }
 export function mass_accdel(){
-    document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
-    <li class="sg-menu-list__element macc-d">   
-        <a class = "sg-menu-list__link">${Extension.titles.massAccountDeleter}</a>
-    </li>
+    document.querySelector("body").insertAdjacentHTML("afterbegin", macc_d());
+    document.querySelector(".modal_close").addEventListener("click", function(){document.querySelector(".modal_back").remove()})
     
-    `)
-    document.querySelector(".macc-d").addEventListener("click", function(){
-        document.querySelector("body").insertAdjacentHTML("afterbegin", macc_d());
-        document.querySelector(".modal_close").addEventListener("click", function(){document.querySelector(".modal_back").remove()})
-        
-        document.querySelector(".presets").addEventListener("change", function(){
-            let rsn = document.querySelector(".presets input:checked").getAttribute("reason");
-            (<HTMLInputElement>document.querySelector(".deletion-reason")).value = rsn;
-        });
+    document.querySelector(".presets").addEventListener("change", function(){
+        let rsn = document.querySelector(".presets input:checked").getAttribute("reason");
+        (<HTMLInputElement>document.querySelector(".deletion-reason")).value = rsn;
+    });
 
-        document.querySelector(".delete-acc").addEventListener("click", async function(){
-           
-            //@ts-expect-error
-            let linksArray = String(document.querySelector(".profile-links").value).split("\n")
-            let error = false
-            linksArray.forEach(async element => {
-                let regexString = new RegExp(`https:\/\/brainly\.com\/profile\/.*-.*`)
-                if (regexString.test(element)) {
-                    let uid = String(element).split("/")[4].split("-")[1]
-                    User.Delete(uid);
-                    await sendmsg(element);
-                } else { error = true }
-            })
-            if (error){
-                document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
-            } else {
-                document.querySelector(".profile-links").classList.add("sg-textarea--valid")
-                
-            }
-          
+    document.querySelector(".delete-acc").addEventListener("click", async function(){
+        
+        //@ts-expect-error
+        let linksArray = String(document.querySelector(".profile-links").value).split("\n")
+        let error = false
+        linksArray.forEach(async element => {
+            let regexString = new RegExp(`https:\/\/brainly\.com\/profile\/.*-.*`)
+            if (regexString.test(element)) {
+                let uid = String(element).split("/")[4].split("-")[1]
+                User.Delete(uid);
+                await sendmsg(element);
+            } else { error = true }
         })
+        if (error){
+            document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
+        } else {
+            document.querySelector(".profile-links").classList.add("sg-textarea--valid")
+            
+        }
+        
     })
 }
 export function mass_msg(){
-    document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
-    <li class="sg-menu-list__element mmsg-s">   
-    <a class = "sg-menu-list__link">${Extension.titles.massMessageUsers}</a>
-    </li>
-    
-    `)
-
-    document.querySelector(".mmsg-s").addEventListener("click", function(){
         document.querySelector("body").insertAdjacentHTML("afterbegin", mmsg_s());
         document.querySelector(".modal_close").addEventListener("click", function(){document.querySelector(".modal_back").remove()})
         
@@ -125,7 +129,6 @@ export function mass_msg(){
             }
            
         })
-    })
 }
 export function usr_mgmt(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`

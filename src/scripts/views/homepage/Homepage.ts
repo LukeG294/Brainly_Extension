@@ -3,6 +3,7 @@ import {login_run} from "../../common/Ryver/RyverLogin"
 import { ModObserver, AnsObserver } from "./Exports";
 //import {subscribe, setAuth} from "../common/livemod"
 import { mass_msg, mass_accdel, usr_mgmt, verification_queue, md_content, reportedCommentsDeleter } from "./Admin";
+import AdminPanel from "./Admin"
 import Notify from "../../common/Notifications/Notify";
 import Extension from "../../../locales/en/localization.json"
 
@@ -18,8 +19,8 @@ async function homeperms(){
     reportedCommentsDeleter()
   }
   if(perms.includes("4")){
-    mass_msg()
-    mass_accdel()
+    AdminPanel.MassMsg()
+    AdminPanel.Accdel()
     usr_mgmt()
   }
   if(perms.includes("5") || perms.includes("4")){

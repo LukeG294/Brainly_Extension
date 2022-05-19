@@ -11,7 +11,6 @@ class LiveMod {
       await this.connect();
     }
     async connect() {
-      console.log("connect()")
       let socketToken = await this.getToken();
       if(!socketToken) return console.debug('Error getting token [WebSocket]');
       socketToken = socketToken.replace(/:.*/, '');
@@ -21,7 +20,6 @@ class LiveMod {
       this.authorized = false;
   
       this.socket.onmessage = async(message) => await this.handleMessage(message);
-      console.log("beforeclose")
       this.socket.onclose = (closeEvent) => console.debug("Websocket connection closed\n" + JSON.stringify(closeEvent));
     }
     async handleMessage(msg) {
@@ -36,16 +34,14 @@ class LiveMod {
         } else if (json.name === "pubsub.news" && json.args[0].event == "moderation.begin") {
           let taskId = json.args[0].channel.replace('moderation.task.', '');
           let item = document.querySelector(`[id = "${taskId}"]`);
-          console.log(item);
           if(!item) return;
           
           if(!item.classList.contains('ticket_reserved')) item.classList.add('ticket_reserved');
           if(item.querySelector(".ticket_reserved_mod_box")){
-            console.log("remove mod from ticket")
             item.querySelector(".ticket_reserved_mod_box").remove();
           }
   
-          item.insertAdjacentHTML("beforeend", `<div title="${json.args[0].payload.user_data.nick} модерирует" class="ticket_reserved_mod_box">
+          item.insertAdjacentHTML("beforeend", `<div title="${json.args[0].payload.user_data.nick}" class="ticket_reserved_mod_box">
             ${this.meUserId !== +json.args[0].payload.user_data.id?`<img class="sg-avatar sg-avatar--l" src="${json.args[0].payload.user_data.avatar ?? '/img/avatars/100-ON.png'}">`:""}
           </div>`);
         }
@@ -86,7 +82,7 @@ class LiveMod {
     }
   }
 export async function setAuth(){
-  let medata = await fetch(`https://brainly.com/api/28api_users/me`).then(data => data.json());
+  let medata = await fetch(`https://brainly.com/api/28/api_users/me`).then(data => data.json());
   storage.local.set({
     user: {
       id: medata.data.user.id,
@@ -114,6 +110,5 @@ export const queue_subscribe = function() {
     let taskId = parseInt(modItems[k].id);
     taskIds.push(taskId);
   }
-  console.log(taskIds)
   new LiveMod().subscribe(taskIds);
 }

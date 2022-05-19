@@ -20,6 +20,7 @@ const config = {
     ...MakeEntries("./src/scripts/views/old_profile/*.ts", "content-scripts/js", "old_profile"),
     ...MakeEntries("./src/scripts/views/question_page/QuestionPage.ts", "content-scripts/js", "question_page"),
     ...MakeEntries("./src/scripts/views/content_page/Index.ts", "content-scripts/js", "content_page"),
+    ...MakeEntries("./src/scripts/views/mod_all/Index.ts", "content-scripts/js", "mod_all"),
     //react
     ...MakeEntries("./src/scripts/views/verification_queue/Index.ts", "content-scripts/js", "verification_queue")
 

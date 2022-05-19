@@ -2,7 +2,7 @@
   "name": "Brainly Companion (Beta)",
   "description": "A tool in it's beta version to help Brainly Volunteers perform their tasks actions more efficiently.",
   "manifest_version": 3,
-  "version":"1.6.1",
+  "version":"1.6.2",
   "icons": {
     "128": "resources/icon.png"
   },
@@ -31,18 +31,19 @@
    
     {
       "matches": ["*://brainly.com/*"],
-      "exclude_globs": ["*://brainly.com/profile/*","*://brainly.com/companion/verification*","*://brainly.com/users/*","*://brainly.com/tools/*"],
+      "exclude_globs": ["*://brainly.com/profile/*","*://brainly.com/companion/verification*","*://brainly.com/users/*","*://brainly.com/tools/*","*://brainly.com/tasks/archive_mod*"],
       "js": ["content-scripts/js/panel.js"]
     },
     {
       "matches": ["*://brainly.com/*"],
-      "exclude_globs": ["*://brainly.com/question/*","*://brainly.com/profile/*","*://brainly.com/companion/verification*","*://brainly.com/users/*","*://brainly.com/tools/*"],
+      "exclude_globs": ["*://brainly.com/question/*","*://brainly.com/profile/*","*://brainly.com/companion/verification*","*://brainly.com/users/*","*://brainly.com/tools/*","*://brainly.com/tasks/archive_mod*"],
       "js": ["content-scripts/js/homepage.js"],
       "css": ["content-scripts/css/homepage.css"]
     },
     {
-      "matches": ["*://brainly.com/tasks/archive_mod"],
-      "css": ["content-scripts/css/mod_all.css"]
+      "matches": ["*://brainly.com/tasks/archive_mod*"],
+      "css": ["content-scripts/css/mod_all.css"],
+      "js": ["content-scripts/js/mod_all.js"]
     },
     {
       "matches": ["*://brainly.com/profile/*"],

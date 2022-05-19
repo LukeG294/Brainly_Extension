@@ -62,9 +62,12 @@
             height: 100%;
             width: 100%;
             position: absolute;
-            display: flex;
             align-items: center;
             justify-content: center;
+            display:none;
+            &.show{
+                display:flex;
+            }
             >img{
                 width:80%;
             }

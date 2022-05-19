@@ -13,6 +13,7 @@ export default function App() {
             document.querySelector(".spinner-container").classList.add("show");
             let items = await fetch(`${extension_server_url()}/get_next_page/0`).then(data => data.json());
             document.querySelector(".spinner-container").classList.remove("show");
+            if(items.length === 0){document.querySelector(".empty").classList.add("show")}
             console.log(items);
             setItems(items);
         }
@@ -28,7 +29,7 @@ export default function App() {
         
     }
     const prevPage = async () => {
-        //fetch next page of items from server, runs on next page button click
+        //fetch previous page of items from server, runs on previous page button click
         document.querySelector(".spinner-container").classList.add("show");
         let newdata = await loadPrevPage();
         document.querySelector(".spinner-container").classList.remove("show");

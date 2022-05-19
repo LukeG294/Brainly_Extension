@@ -5,12 +5,12 @@ import App from "./App";
 export async function InjectReactApp() {
   const root = ReactDOM.createRoot(document.getElementById("app"));
   let perms = localStorage.userPerms.split(",")
-  let user = await fetch(`https://brainly.com/api/28/api_users/me`).then(data => data.json())
-  let num = user.data.user.mod_actions_count
+  //let user = await fetch(`https://brainly.com/api/28/api_users/me`).then(data => data.json())
+  //let num = user.data.user.mod_actions_count
  
-  if (perms.includes("5") && num || perms.includes("4") && num || perms.includes("5") && num === 0 || perms.includes("4") && num === 0){
+  if (perms.includes("4")  || perms.includes("5")){
+    document.title = 'Brainly Companion';
     root.render(<App />);
-   
   } else {
     window.location.href = '/'
   }

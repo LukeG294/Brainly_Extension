@@ -1,5 +1,5 @@
 export function extension_server_url(){
-    return 'https://2d3c-2603-8001-3203-e8da-99e-58ea-6d10-b7e3.ngrok.io'
+    return 'https://server.grayson03.repl.co'
 }
 export function parseProfileLink(link: string){
     return link.split("/")[4].split("-")[1]

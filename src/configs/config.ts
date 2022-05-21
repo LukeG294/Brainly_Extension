@@ -1,5 +1,5 @@
 export function extension_server_url(){
-    return 'https://server.grayson03.repl.co'
+    return 'https://server.[redacted].repl.co'
 }
 export function parseProfileLink(link: string){
     return link.split("/")[4].split("-")[1]

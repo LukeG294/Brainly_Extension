@@ -71,7 +71,11 @@ export async function requestApproval(){
       let answerPreview = thisResponse.content
       let qinfo = JSON.parse(pageElement("article").getAttribute("data-z"))
       //@ts-ignore
-      let requesterAv = JSON.parse(pageElement("meta[name='user_data']").content).id
+      let requesterID = JSON.parse(pageElement("meta[name='user_data']").content).id
+      //@ts-ignore
+      
+      let requesterAv = JSON.parse(pageElement("meta[name='user_data']").content).avatar
+     
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       let user = await User.Data(thisResponse.userId)
@@ -83,7 +87,8 @@ export async function requestApproval(){
         "qid": qinfo.id,
         "subject":pageElement("a[data-testid = 'question_box_subject']").innerHTML,
         "user": user,
-        "requesterId":requesterAv
+        "requesterId":requesterID,
+        "requesterAv":requesterAv
       });
     
       var requestOptions = {

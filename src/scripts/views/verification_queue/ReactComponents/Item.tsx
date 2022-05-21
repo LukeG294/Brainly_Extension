@@ -12,13 +12,15 @@ interface Item{
     created: string;
     ansdata
     faunadbid:string;
-    answerer
+    answerer,
+    requesterAv:string;
 }
 
-export default function Item({ content, thanks, rating, created, ansdata, faunadbid, answerer}: Item) {
+export default function Item({ content, thanks, rating, created, ansdata, faunadbid, answerer, requesterAv}: Item) {
     let av = ''
-    if (ansdata.user.data.userById.avatar){
-        av = ansdata.user.data.userById.avatar.url
+    
+    if (requesterAv !== '' && requesterAv !== undefined){
+        av = requesterAv
     } else {
         av = 'https://brainly.com/img/avatars/100-ON.png'
     }

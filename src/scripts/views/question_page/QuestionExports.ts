@@ -39,10 +39,6 @@ export async function removeAnswer(id){
   }
 }
 export async function newTickets(){
-  let oldTickets = document.querySelectorAll('[title="moderate"]')
-  oldTickets.forEach(element => {
-    element.parentElement.insertAdjacentHTML("beforeend")
-  });
   let id = window.location.href.split('/')[4].split("?")[0]
     let openTicketButtons = document.querySelectorAll('.openTicketQuestionPage')
     openTicketButtons.forEach(element => {
@@ -56,14 +52,12 @@ export async function newTickets(){
     });
 }
 export async function requestApproval(){
-
-  function requestVerificationButton(i){
+  async function requestVerificationButton(i){
     let requestButtons = pageElementAll(".request-verification")
-     
-         
     const element = requestButtons[i];
     
     element.addEventListener("click", async function(){
+      let d_reference = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/api_config/desktop_view`, {method: "GET"}).then(data => data.json());
       pageElement(".request-verification .spinner-container").classList.add("show");
       let thisResponse = responses[i]
     
@@ -85,7 +79,7 @@ export async function requestApproval(){
         "answerDBid":databaseId,
         "content":answerPreview,
         "qid": qinfo.id,
-        "subject":pageElement("a[data-testid = 'question_box_subject']").innerHTML,
+        "subject":d_reference.find(({id}) => id === qinfo.subject_id).name,
         "user": user,
         "requesterId":requesterID,
         "requesterAv":requesterAv
@@ -98,7 +92,7 @@ export async function requestApproval(){
     
       };
 
-        let serverResponse = await fetch(`${extension_server_url()}/request-verify-add`, requestOptions).then(response => response.json())
+      let serverResponse = await fetch(`${extension_server_url()}/request-verify-add`, requestOptions).then(response => response.json())
       
         //@ts-ignore
         

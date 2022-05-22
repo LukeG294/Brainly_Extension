@@ -1,5 +1,5 @@
 *{
-  --primary-color: #BDC7FB;
+  --primary-color: #bdc7fb;
 }
 [class ^= 'Header-module'], div[class ^= 'brn-header-placeholder'], .brn-footer, #html .mint .mint-header, #moderate-functions-panel .covering-text, footer[data-testid = 'footer_layout'],.brn-header-placeholder, #footer{
   background-color:var(--primary-color)!important;
@@ -13,6 +13,12 @@
 }
 .brn-placeholder__animation{
   background:none!important;
+}
+.sg-button--solid-blue{
+  background-color: #bdc7fb!important;
+  &:hover{
+    filter:brightness(95%)!important;
+  }
 }
 .user-mgmt{
   display:flex;

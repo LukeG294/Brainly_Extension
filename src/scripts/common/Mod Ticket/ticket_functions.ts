@@ -290,7 +290,7 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
    
     
 }
-function add_attachments(item, elem){
+export function add_attachments(item, elem){
   if(item.attachments.length !== 0){
     let rotation = 0;
     if (elem.querySelector('.deleteAttachment')){
@@ -315,6 +315,7 @@ function add_attachments(item, elem){
     elem.querySelector(".attachments").insertAdjacentHTML("beforeend",/*html*/`
     <img src=${JSON.stringify(item.attachments[0].full)} id=${item.attachments[0].id}>
     `)
+    
     if(item.attachments.length > 1){
       for(let i = 0; i < item.attachments.length; i++){
         elem.querySelector(".attach-list").insertAdjacentHTML("beforeend",/*html*/`
@@ -446,7 +447,7 @@ export async function ticket_data(id, res, butspinner){
   let d_reference = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/api_config/desktop_view`, {method: "GET"}).then(data => data.json());
   let log = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/api_task_lines/big/${id}`, {method: "GET"}).then(data => data.json());
 
-  console.log(log)
+  console.log(basic_data)
   
   show_ticket(id);
  

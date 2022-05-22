@@ -144,6 +144,7 @@ export interface QuestionLogEntry {
     nick: string;
     gender: 1 | 2;
     is_deleted: boolean;
+    avatar: string;
     stats: {
       questions: number;
       answers: number;
@@ -193,7 +194,11 @@ export interface QuestionLogEntry {
     }[];
   }>;
   
-  export type GetQuestionResponse = CommonResponse<QuestionData>;
+  export type GetQuestionResponse = CommonResponse<{
+    task: Task;
+    responses: Response[];
+    users_data: User[];
+  }>
   
   export type GetQuestionLogResponse = CommonResponse<QuestionLogEntry[]>;
   

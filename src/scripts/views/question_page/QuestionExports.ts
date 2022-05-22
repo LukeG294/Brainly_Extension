@@ -39,19 +39,9 @@ export async function removeAnswer(id){
   }
 }
 export async function newTickets(){
-  let oldTickets = document.querySelectorAll('[data-testid="options_list"]')
+  let oldTickets = document.querySelectorAll('[title="moderate"]')
   oldTickets.forEach(element => {
-    element.insertAdjacentHTML("afterbegin",/*html*/`
-    <div class = "sg-flex sg-flex--margin-left-xxs">
-    <button class="openTicketQuestionPage">
-    <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
-      <span class="sg-button__icon sg-button__icon--m">
-        <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">filter filled</text>
-            <use xlink:href="#icon-shield" aria-hidden="true"></use>
-          </svg></div>
-    </button>
-    </div>
-    `)
+    element.parentElement.insertAdjacentHTML("beforeend")
   });
   let id = window.location.href.split('/')[4].split("?")[0]
     let openTicketButtons = document.querySelectorAll('.openTicketQuestionPage')
@@ -81,7 +71,11 @@ export async function requestApproval(){
       let answerPreview = thisResponse.content
       let qinfo = JSON.parse(pageElement("article").getAttribute("data-z"))
       //@ts-ignore
-      let requesterInfo = JSON.parse(pageElement("meta[name='user_data']").content)
+      let requesterID = JSON.parse(pageElement("meta[name='user_data']").content).id
+      //@ts-ignore
+      
+      let requesterAv = JSON.parse(pageElement("meta[name='user_data']").content).avatar
+     
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       let user = await User.Data(thisResponse.userId)
@@ -93,7 +87,8 @@ export async function requestApproval(){
         "qid": qinfo.id,
         "subject":pageElement("a[data-testid = 'question_box_subject']").innerHTML,
         "user": user,
-        "requester":requesterInfo
+        "requesterId":requesterID,
+        "requesterAv":requesterAv
       });
     
       var requestOptions = {

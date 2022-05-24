@@ -10,14 +10,13 @@ export default function App() {
 
 
     const [items, setItems] = React.useState([]);
-    const [spin, setSpin] = React.useState([]);
+    const [spin, setSpin] = React.useState("show");
 
     useEffect(() => {
         //fetch items from server, runs on page render
         const fetchItems = async () => {
-            document.querySelector(".spinner-container").classList.add("show");
             let items = await fetch(`${extension_server_url()}/get_next_page/0`).then(data => data.json());
-            document.querySelector(".spinner-container").classList.remove("show");
+            setSpin('')
             if(items.length === 0){document.querySelector(".empty").classList.add("show")}
             console.log(items);
             setItems(items);
@@ -29,7 +28,7 @@ export default function App() {
             <Head setItems = {setItems} />
             <Flex className="container">
                 <div className="flash-messages-container"></div>
-                <div className="spinner-container"> <Spinner /> </div>
+                <div className={`spinner-container ${spin}`}> <Spinner /> </div>
                     <List obj = {items} />
             </Flex>
         </>

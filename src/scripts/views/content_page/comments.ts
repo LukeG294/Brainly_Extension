@@ -8,18 +8,6 @@ import {
 } from "./ContentPageButtons"
 
 window.addEventListener("load", function() {
-    function getPageType() {
-        let type = String(window.location.href.split("/")[6])
-        if (type === "tasks") {
-            return "task"
-        } else if (type === "responses") {
-            return "response"
-        } else if (type === "comments_tr") {
-            return "comment"
-        } else {
-            return "task"
-        }
-    }
     let content = document.querySelectorAll("#content-old > div:nth-child(2) > div:nth-child(25) > table > tbody > tr")
 
     for (let i = 0; i < content.length; i++) {
@@ -33,63 +21,9 @@ window.addEventListener("load", function() {
     }
 
     let buttonArea = document.querySelector("#content-old > div:nth-child(3) > p")
-        //if you want to add permissions for each button later, do it here (below)
+    //if you want to add permissions for each button later, do it here (below)
 
-
-
-    // buttonArea.insertAdjacentHTML('afterend', delete_selected_comments())
     buttonArea.insertAdjacentHTML('afterend', copy_links())
     buttonArea.insertAdjacentHTML('afterend', toggle_selected())
     buttonArea.insertAdjacentHTML('afterend', select_all())
-    document.getElementById("selectAll").addEventListener("click", function() {
-        let checkBoxes = document.getElementsByClassName("contentCheckboxes")
-        for (let i = 0; i < checkBoxes.length; i++) {
-            // @ts-ignore
-            checkBoxes[i].checked = 'true'
-        }
-    })
-    document.getElementById("toggleSelected").addEventListener("click", function() {
-        let checkBoxes = document.getElementsByClassName("contentCheckboxes")
-        for (let i = 0; i < checkBoxes.length; i++) {
-
-            //@ts-ignore
-            if (String(checkBoxes[i].checked) === "true") {
-                //@ts-ignore
-                checkBoxes[i].checked = false
-            } else {
-                //@ts-ignore
-                checkBoxes[i].checked = true
-            }
-
-
-        }
-    })
-    document.getElementById("copyLinks").addEventListener("click", function() {
-        let checkBoxes = document.getElementsByClassName("sg-checkbox__element")
-        let links = []
-        for (let i = 0; i < checkBoxes.length; i++) {
-
-            //@ts-ignore
-            if (String(checkBoxes[i].checked) === "true") {
-                links.push(checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href)
-            }
-
-
-
-
-        }
-        let joinLinks = links.join("\n")
-        navigator.clipboard.writeText(joinLinks)
-            .then(() => {
-                // Success!
-            })
-            .catch(err => {
-                console.log('Something went wrong', err);
-            });
-        links = []
-    })
-
-
-
-
 })

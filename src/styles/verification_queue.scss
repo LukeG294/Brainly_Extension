@@ -2,6 +2,15 @@
 *{
     font-family: "ProximaNova","Helvetica","Arial",sans-serif!important;
 }
+.content::-webkit-scrollbar {
+    width: 2px;
+}
+ 
+.content::-webkit-scrollbar-thumb {
+  background-color: #c3d1dd;
+  border-radius: 4px;
+  outline: 1px solid #c3d1dd;
+}
 #app{
     height:100vh;
     display: flex;
@@ -127,7 +136,8 @@
             }
             .content{
                 flex:1;
-                overflow:scroll;
+                overflow:auto;
+                overflow-x: hidden;
             }
             .stats{
                 display:flex;

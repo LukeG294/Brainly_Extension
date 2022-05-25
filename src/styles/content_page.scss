@@ -167,3 +167,15 @@ div#content-old a{
   font-weight: 900;
   font-size: 2rem;
 }
+tbody{
+  >tr.modified {
+    > td{
+      &:nth-child(2){
+        text-align: center!important;
+      }
+    }
+  }
+}
+thead > th:nth-child(2){
+  text-align:center!important;
+}

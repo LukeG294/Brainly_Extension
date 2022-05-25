@@ -1,21 +1,32 @@
 import BasicFn from "./BasicFn";
 import ModFn from "./ModFn"
 
-export default new class Panel{
+export default class Panel{
+    buttonArea;
+    userId;
+    constructor(){
+        this.userId = (<string>window.location.href).replace("https://brainly.com/users/user_content/","").split("/")[0];
+        document.querySelector("#content-old > div:nth-child(3)").insertAdjacentHTML("beforeend", '<div class = "mass-actions">');
+        this.buttonArea = document.querySelector(".mass-actions") 
+    }
 
     Basic(){
-        BasicFn.copyLinks();
-        BasicFn.selectAll();
-        BasicFn.toggleSelection();
         BasicFn.addticket();
+        BasicFn.checkboxes();
+        BasicFn.copyLinks(this.buttonArea);
+        BasicFn.toggleSelection(this.buttonArea);
+        BasicFn.selectAll(this.buttonArea);
     }
     Ans(){
-        ModFn.approveAnswers();
-        ModFn.confirmAnswers();
-        ModFn.find_reported_content(window.location.href.split("-")[1].split("/")[0], "response");
+        ModFn.delete(this.buttonArea, "answers");
+        ModFn.approveAnswers(this.buttonArea);
+        ModFn.confirmAnswers(this.buttonArea);
+        ModFn.unverifyAnswers(this.buttonArea);
+        ModFn.find_reported_content(this.userId, "response", this.buttonArea);
     }
     Ques(){
-        ModFn.confirmQuestions();
-        ModFn.find_reported_content(window.location.href.split("-")[1].split("/")[0], "task");
+        ModFn.delete(this.buttonArea, "questions")
+        ModFn.confirmQuestions(this.buttonArea);
+        ModFn.find_reported_content(this.userId, "task", this.buttonArea);
     }
 }

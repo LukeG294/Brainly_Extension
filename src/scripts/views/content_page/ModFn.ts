@@ -1,13 +1,11 @@
 import {
     add_icons,
-    confirm_selected_questions,
-    delete_selected_questions,
     deletion_menu,
     get_reported_content,
     approve_selected,
-    delete_selected_answers,
+    delete_selected,
     unverify_selected,
-    confirm_selected_answers
+    confirm_selected
 } from "./ContentPageButtons"
 import{
     addticket,
@@ -19,6 +17,7 @@ import {
 import {
     getCookie
 } from "../../common/CommonFunctions"
+import { showDelrsn, confirmDeletion } from "./ButtonFunctions"
 import Notify from "../../common/Notifications/Notify"
 import {
     Answer,
@@ -31,75 +30,10 @@ import {
 } from "configs/config"
 
 export default new class ModFn{
-    buttonArea = document.querySelector("#content-old > div:nth-child(3) > p");
 
-    async confirmDeletion(type: "questions" | "answers") {
-        this.buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', delete_selected_answers())
-        
-        document.querySelector("#delete  .spinner-container").classList.add("show");
-        let checkBoxes = document.getElementsByClassName("contentCheckboxes")
-        let checkBoxesArr = Array.from(checkBoxes)
-        checkBoxesArr.forEach(element => {
-            //@ts-ignore
-            if (String(element.checked) === "true") {
-                //@ts-ignore
-                let link = element.closest("tr").getElementsByTagName('a')[0].href
-                let id = parseQuestionLink(link)
-                    //@ts-expect-error
-                let reason = document.querySelectorAll(".deletion-reason")[0].value
-                    //@ts-expect-error
-                let warn = document.querySelector("#warn").checked
-                    //@ts-expect-error
-                let take_point = document.querySelector("#pts").checked;
-    
-                if(type === "questions"){
-                    let givePts = ( < HTMLInputElement > document.querySelector("#res-pts")).checked;
-                    let questionObj = new Question()
-                    questionObj.Delete(id, reason, warn, take_point, givePts)
-                }
-                if(type === "answers"){
-                    let idsToDelete = []
-                    for (let i = 0; i < checkBoxes.length; i++) {
-                        //@ts-ignore
-                        if (String(checkBoxes[i].checked) === "true") {
-                            //@ts-ignore
-                            let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
-                            let id = parseQuestionLink(link)
-                            idsToDelete.push(id)
-                            checkBoxes[i].closest("tr").getElementsByTagName('a')[0].parentElement.parentElement.style.backgroundColor = `#ffc7bf`
-                        }
-                    }
-                    idsToDelete.forEach(async elem => {
-                        let questionID = elem
-                        let qObj = new Question()
-                        let res = await qObj.Get(questionID)
-                            //@ts-expect-error
-                        let answers = res.data.responses
-                        let times = 0
-    
-    
-                        if (answers.length === 1) {
-                            times = 1
-                        } else {
-                            times = 2
-                        }
-                        for (let x = 0; x < times; x++) {
-                            let user = String(answers[x]["user_id"])
-                            if (user === String(window.location.href.split("/")[5])) {
-                                
-                                
-                            }
-                        }
-                    })
-                }
-                element.closest("tr").style.backgroundColor = `#ffc7bf`
-            }
-        });
-        Notify.Flash(`Selected ${type} removed successfully.`, "success");
-        document.querySelector("#delete  .spinner-container").classList.remove("show");
-    }
-    async approveAnswers() {
-        this.buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', approve_selected())
+    async approveAnswers(elem) {
+        elem.insertAdjacentHTML('beforeend', approve_selected())
+        document.querySelector("#approveSelected").addEventListener("click", function(){
         document.querySelector("#approveSelected  .spinner-container").classList.add("show");
         let checkBoxes = document.getElementsByClassName("contentCheckboxes")
         let idsToVerify = []
@@ -140,9 +74,11 @@ export default new class ModFn{
     
         Notify.Flash("Approved Selected Answers!", "success")
         document.querySelector("#approveSelected  .spinner-container").classList.remove("show");
+    });
     }
-    unverifyAnswers() {
-        this.buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', unverify_selected())
+    unverifyAnswers(elem) {
+        elem.insertAdjacentHTML('beforeend', unverify_selected());
+        document.querySelector("#unverify").addEventListener("click", function(){
         document.querySelector("#unverify  .spinner-container").classList.add("show");
         let checkBoxes = document.getElementsByClassName("contentCheckboxes")
         let idsToUnverify = []
@@ -184,23 +120,15 @@ export default new class ModFn{
         let success = 0
         let fail = 0
     
-        let banner = document.createElement('div')
-        document.querySelector("#flash-msg").appendChild(banner)
-        banner.outerHTML = `<div aria-live="assertive" class="sg-flash" role="alert">
-                    <div class="sg-flash__message sg-flash__message--error">
-                    <div class="sg-text sg-text--small sg-text--bold sg-text--to-center">${success} unapproved, ${fail} had an error. Do you have Super Moderator permissions?</div>
-                    </div>
-                </div>`
-        document.querySelector(".sg-flash").addEventListener("click", function() {
-            this.remove();
-        })
+        Notify.Flash(`${success} unapproved, ${fail} had an error. Do you have Super Moderator permissions?`, "success")
     
         document.querySelector("#unverify  .spinner-container").classList.remove("show");
+        });
     }
-    confirmAnswers() {
-        this.buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', confirm_selected_answers())
-
-        document.querySelector("#confirmSelectedAnswers  .spinner-container").classList.add("show");
+    confirmAnswers(elem) {
+        elem.insertAdjacentHTML('beforeend', confirm_selected())
+        document.querySelector("#confirmSelected").addEventListener("click", function(){
+        document.querySelector("#confirmSelected .spinner-container").classList.add("show");
         let checkBoxes = document.getElementsByClassName("contentCheckboxes")
     
         let checkBoxesArr = Array.from(checkBoxes)
@@ -229,7 +157,7 @@ export default new class ModFn{
     
                         let user = String(answers[x]["user_id"])
                         if (user === String(window.location.href.split("/")[5])) {
-                            let ansObj = await new Answer()
+                            let ansObj = new Answer()
                             ansObj.Confirm(answers[x]["id"])
                         }
                     }
@@ -240,12 +168,13 @@ export default new class ModFn{
             }
         });
         Notify.Flash("Confirmed selected answers!", "success");
-        document.querySelector("#confirmSelectedAnswers  .spinner-container").classList.remove("show");
-    
+        document.querySelector("#confirmSelected  .spinner-container").classList.remove("show");
+        });
     }
-    confirmQuestions() {
-        this.buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', confirm_selected_questions())
-        document.querySelector("#confirmSelectedQuestions  .spinner-container").classList.add("show");
+    confirmQuestions(elem) {
+        elem.insertAdjacentHTML('beforeend', confirm_selected())
+        document.querySelector("#confirmSelected").addEventListener("click", function(){
+        document.querySelector("#confirmSelected  .spinner-container").classList.add("show");
         let checkBoxes = document.getElementsByClassName("contentCheckboxes")
         let idsToConfirm = []
         for (let i = 0; i < checkBoxes.length; i++) {
@@ -261,15 +190,23 @@ export default new class ModFn{
         let myToken = getCookie("Zadanepl_cookie[Token][Long]")
         idsToConfirm.forEach(async element => {
             let ansObj = new Answer();
-            await ansObj.Confirm(element)
+            ansObj.Confirm(element)
         });
     
     
-        document.querySelector("#confirmSelectedQuestions  .spinner-container").classList.remove("show");
-        window.location.reload();
+        document.querySelector("#confirmSelected  .spinner-container").classList.remove("show");
+        Notify.Flash("Questions confirmed successfully!", "success")
+        });
     }
-    async find_reported_content(id, type) {
-        this.buttonArea.querySelector(".mass-actions").insertAdjacentHTML('beforeend', get_reported_content())
+    delete(elem, type){
+        elem.insertAdjacentHTML("afterend", deletion_menu());
+        elem.insertAdjacentHTML("beforeend", delete_selected());
+        document.querySelector("#deleteSelected").addEventListener("click", function(){showDelrsn(type)})
+        document.querySelector(".confirmdel").addEventListener("click", function(){confirmDeletion(type)})
+    }
+    async find_reported_content(id, type, elem) {
+        elem.insertAdjacentHTML('beforeend', get_reported_content())
+        document.querySelector("#fetchReported").addEventListener("click", async function(){
         const foundReported = []
         let pagenum = document.querySelector("#content-old > div:nth-child(3) > p").children.length - 2;
     
@@ -436,6 +373,7 @@ export default new class ModFn{
         addOnlyChecks()
         addticket()
         document.querySelector("#fetchReported  .spinner-container").classList.remove("show");
+    });
     }
 }
 export function addOnlyChecks() {

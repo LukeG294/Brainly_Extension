@@ -64,7 +64,8 @@
     {
       "matches": ["*://brainly.com/users/user_content/*/*","*://brainly.com/users/user_content/*"],
       "js": ["content-scripts/js/content_page.js"],
-      "css": ["content-scripts/css/content_page.css"]
+      "css": ["content-scripts/css/content_page.css"],
+      "run_at": "document_start"
     }
 ]
 }

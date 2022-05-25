@@ -20,7 +20,7 @@ import {
 } from "../../common/Content"
 import Extension from "../../../locales/en/localization.json"
 
-export async function showDelrsn(type: string) {
+export async function showDelrsn(type: "questions" | "answers") {
     if (document.querySelector(".delmenu").classList.contains("show")) {
         document.querySelector(".delmenu").classList.remove("show");
 
@@ -107,4 +107,69 @@ export function addticket() {
             insert_ticket(qid, row.querySelector(".modticket > .sg-spinner-container__overlay"));
         });
     }
+}
+export async function confirmDeletion(type: "questions" | "answers") {
+    
+    document.querySelector("#deleteSelected  .spinner-container").classList.add("show");
+    let checkBoxes = document.getElementsByClassName("contentCheckboxes")
+    let checkBoxesArr = Array.from(checkBoxes)
+    checkBoxesArr.forEach(element => {
+        //@ts-ignore
+        if (String(element.checked) === "true") {
+            //@ts-ignore
+            let link = element.closest("tr").getElementsByTagName('a')[0].href
+            let id = parseQuestionLink(link)
+                //@ts-expect-error
+            let reason = document.querySelectorAll(".deletion-reason")[0].value
+                //@ts-expect-error
+            let warn = document.querySelector("#warn").checked
+                //@ts-expect-error
+            let take_point = document.querySelector("#pts").checked;
+
+            if(type === "questions"){
+                let givePts = ( < HTMLInputElement > document.querySelector("#res-pts")).checked;
+                let questionObj = new Question()
+                questionObj.Delete(id, reason, warn, take_point, givePts)
+            }
+            if(type === "answers"){
+                let idsToDelete = []
+                for (let i = 0; i < checkBoxes.length; i++) {
+                    //@ts-ignore
+                    if (String(checkBoxes[i].checked) === "true") {
+                        //@ts-ignore
+                        let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
+                        let id = parseQuestionLink(link)
+                        idsToDelete.push(id)
+                        checkBoxes[i].closest("tr").style.backgroundColor = `#ffc7bf`
+                    }
+                }
+                idsToDelete.forEach(async elem => {
+                    let questionID = elem
+                    let qObj = new Question()
+                    let res = await qObj.Get(questionID)
+                        //@ts-expect-error
+                    let answers = res.data.responses
+                    let times = 0
+
+
+                    if (answers.length === 1) {
+                        times = 1
+                    } else {
+                        times = 2
+                    }
+                    for (let x = 0; x < times; x++) {
+                        let user = String(answers[x]["user_id"])
+                        if (user === String(window.location.href.split("/")[5])) {
+                            let ansobj = new Answer();
+                            ansobj.Delete(answers[x].id, reason,warn, take_point)
+                            
+                        }
+                    }
+                })
+            }
+            element.closest("tr").style.backgroundColor = `#ffc7bf`
+        }
+    });
+    Notify.Flash(`Selected ${type} removed successfully.`, "success");
+    document.querySelector("#deleteSelected  .spinner-container").classList.remove("show");
 }

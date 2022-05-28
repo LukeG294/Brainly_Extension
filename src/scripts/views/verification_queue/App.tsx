@@ -1,5 +1,5 @@
 import React, {useEffect} from "react"
-import { Flex, Spinner, Button , Icon} from "brainly-style-guide"
+import { Flex, Spinner, Button , Icon, Dropdown} from "brainly-style-guide"
 import {loadNextPage, loadPrevPage} from "./VerificationQueueFunctions"
 import {List} from "./ReactComponents/ItemList"
 import Head from "./ReactComponents/Header"
@@ -25,6 +25,7 @@ export default function App() {
     return (
         <>
             <Head setItems = {setItems} />
+            <Dropdown name={""} links={[{"label":'s', 'url':'https://www.google.com'}]} fullWidth={false}></Dropdown>
             <Flex className="container">
                 <div className="flash-messages-container"></div>
                 <div className={`spinner-container ${spin}`}> <Spinner /> </div>

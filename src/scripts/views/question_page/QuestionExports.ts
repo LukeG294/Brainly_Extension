@@ -67,6 +67,7 @@ export async function newTickets(){
 }
 export async function requestApproval(){
   async function requestVerificationButton(i){
+    
     let d_reference = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/api_config/desktop_view`, {method: "GET"}).then(data => data.json());
     let requestButtons = pageElementAll(".request-verification")
     const element = requestButtons[i];

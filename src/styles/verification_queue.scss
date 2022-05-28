@@ -210,3 +210,19 @@
         }
     }
 }
+.sg-dropdown__items{
+    bottom: auto !important;
+    z-index: 1 !important;
+    top: 48px !important;
+}
+.sg-dropdown{
+    width:500px !important;
+    color:black;
+    margin: 1%;
+    visibility: visible !important;
+    margin-top:5% !important;
+}
+.outerButton{
+    visibility:hidden;
+    width:525px !important;
+}

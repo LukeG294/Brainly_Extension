@@ -2,7 +2,7 @@ import React from 'react';
 import { Button , Icon} from "brainly-style-guide"
 import {getQueueInfo, loadNextPage, loadPrevPage} from "../VerificationQueueFunctions"
 
-export default function Head({setItems}){
+export default function Head({setItems, setSubjects}){
     const nextPage = async () =>{
         //fetch next page of items from server, runs on next page button click
         document.querySelector(".spinner-container").classList.add("show");

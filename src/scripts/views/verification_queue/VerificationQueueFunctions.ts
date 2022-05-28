@@ -81,7 +81,7 @@ export async function loadPrevPage(){
           
         } 
         //@ts-ignore
-        document.querySelector(".pagenum").innerHTML = parseInt(currentPageDisplay) - 1
+        document.querySelector(".pagenum").innerHTML = `<div class='literalNum'> ${parseInt(currentPageDisplay) - 1} </div>`
         //@ts-ignore
         document.querySelector(".pagination").style.opacity = "1"
         return prevData
@@ -112,6 +112,7 @@ export async function subjectFilterHandler(){
             //@ts-expect-error
             document.querySelector('.sg-dropdown').children[0].innerText = element.innerText
             let toRender = await get_items_by_subject(subject.icon)
+            console.log(toRender)
           })
         }
         

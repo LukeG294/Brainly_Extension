@@ -140,7 +140,23 @@ export async function HomeMod() {
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Verification Subteam</span>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">VT Answerer</span>
+    </label>
+    
+    <label class="sg-checkbox permission"  >
+    <input type="checkbox" class="sg-checkbox__element perm5" id="6">
+    <div class="sg-checkbox__ghost" aria-hidden="true">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+    </div>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">VT Moderator</span>
+    </label>
+
+    <label class="sg-checkbox permission"  >
+    <input type="checkbox" class="sg-checkbox__element perm5" id="7">
+    <div class="sg-checkbox__ghost" aria-hidden="true">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+    </div>
+    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">VT Admin</span>
     </label>
 
     <button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue submit-permissions">

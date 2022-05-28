@@ -18,7 +18,6 @@ export default function App() {
             let items = await fetch(`${extension_server_url()}/get_next_page/0`).then(data => data.json());
             setSpin('')
             if(items.length === 0){document.querySelector(".empty").classList.add("show")}
-            console.log(items);
             setItems(items);
         }
         fetchItems();

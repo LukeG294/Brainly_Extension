@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button , Icon} from "brainly-style-guide"
-import {loadNextPage, loadPrevPage} from "../VerificationQueueFunctions"
+import {getQueueInfo, loadNextPage, loadPrevPage} from "../VerificationQueueFunctions"
 
 export default function Head({setItems}){
     const nextPage = async () =>{
@@ -40,7 +40,7 @@ export default function Head({setItems}){
                     type="transparent"
                 
                 />
-                <p className = "pagenum">1</p>
+                <p className = "pagenum"><div className='literalNum'>1</div></p>
                 <Button
                     onClick={async function(){await nextPage()}}
                     icon={<Icon color="adaptive" type="arrow_right"/>}

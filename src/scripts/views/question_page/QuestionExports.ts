@@ -93,7 +93,7 @@ export async function requestApproval(){
         "answerDBid":databaseId,
         "content":answerPreview,
         "qid": qinfo.id,
-        "subject":d_reference.find(({id}) => id === qinfo.subject_id).name,
+        "subject":d_reference.data.subjects.find(({id}) => id === qinfo.subject_id).icon,
         "user": user,
         "requesterId":requesterID,
         "requesterAv":requesterAv

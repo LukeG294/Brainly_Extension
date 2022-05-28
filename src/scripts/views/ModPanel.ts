@@ -15,6 +15,11 @@ function newperms(){
     if(perms.includes("5") || perms.includes("4")){
         verification_queue()
     }
+    if (perms.includes("6")){
+       
+        document.querySelector(`a[href='/moderating_functions/index']`).parentElement.remove()
+        document.querySelector(`a[href='/moderation/confirmed']`).parentElement.remove()
+    }
 }
 if(localStorage.getItem("canUse") === "true"){
     newperms()

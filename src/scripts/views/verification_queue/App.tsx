@@ -41,12 +41,14 @@ export default function App() {
     return (
         <>
             <Head setItems = {setItems} setSubjects = {setSubjects}/>
-            <Button type='solid' className={"outerButton"} onClick={() => subjectFilterHandler()}> <Dropdown name={"Subject"} links={subArr}></Dropdown></Button>
-            <Flex className="container">
-                <div className="flash-messages-container"></div>
-                <div className={`spinner-container ${spin}`}> <Spinner /> </div>
-                    <List obj = {items} />
-            </Flex>
+            <div className="content">
+                <Button type='solid' className={"outerButton"} onClick={() => subjectFilterHandler(setItems)}> <Dropdown name={"Subject"} links={subArr}></Dropdown></Button>
+                <Flex className="container">
+                    <div className="flash-messages-container"></div>
+                    <div className={`spinner-container ${spin}`}> <Spinner /> </div>
+                        <List obj = {items} />
+                </Flex>
+            </div>
             
         </>
     )

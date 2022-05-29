@@ -54,8 +54,20 @@
             }
         }
     }
+    .content{
+        position:relative;
+        overflow-y:auto;
+        .outerButton{
+            width: 200px!important;
+            margin: 12px 12px 0px 24px;
+            >span{
+                width:200px;
+            }
+        }
     .flash-messages-container{top:0!important; z-index:999;}
     .spinner-container{
+        position: fixed;
+        top: 64px;
         &.show{
             display:flex!important;
         }
@@ -63,11 +75,8 @@
 
     .container{
         flex:1;
-        position:relative;
-        overflow-y: auto;
         padding:24px;
         display:grid!important;
-        position:relative;
         grid-template-rows: repeat(auto-fit, minmax(300px, 300px));
         grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
         grid-gap:8px;
@@ -209,6 +218,7 @@
             }
         }
     }
+}
 }
 .sg-dropdown__items{
     bottom: auto !important;

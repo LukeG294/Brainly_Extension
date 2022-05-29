@@ -1,6 +1,8 @@
 import { extension_server_url } from "configs/config";
 import Notify from "../../common/Notifications/Notify"
 import {Answer} from "../../common/Content"
+import Extension from "../../../locales/en/localization.json"
+
 export async function removeAnswer(id, button){
   
   button.classList.add("show");
@@ -79,7 +81,7 @@ export async function loadPrevPage(){
           
         } 
         //@ts-ignore
-        document.querySelector(".pagenum").innerHTML = parseInt(currentPageDisplay) - 1
+        document.querySelector(".pagenum").innerHTML = `<div class='literalNum'> ${parseInt(currentPageDisplay) - 1} </div>`
         //@ts-ignore
         document.querySelector(".pagination").style.opacity = "1"
         return prevData
@@ -92,4 +94,28 @@ export async function loadPrevPage(){
 export async function getQueueInfo(){
   let total = await fetch(`${extension_server_url()}/queue_fetch_info`).then(data => data.json());
   return total.count
+}
+export async function get_items_by_subject(subject_icon_name){
+  let data = await fetch(`${extension_server_url()}/get_data_by_subject/${subject_icon_name}`).then(data => data.json());
+  return data
+}
+export async function subjectFilterHandler(){
+  
+    let d_reference = await fetch(`https://brainly.com/api/28/api_config/desktop_view`, {method: "GET"}).then(data => data.json());
+    let subjects = d_reference.data.subjects 
+    subjects.forEach( async subject => {
+        let element = document.querySelector(`a[href="subject-${subject.icon}"]`)
+       
+        if (element){
+          element.removeAttribute("href")
+          element.addEventListener("click", async function(){
+            //@ts-expect-error
+            document.querySelector('.sg-dropdown').children[0].innerText = element.innerText
+            let toRender = await get_items_by_subject(subject.icon)
+            console.log(toRender)
+          })
+        }
+        
+    })
+  
 }

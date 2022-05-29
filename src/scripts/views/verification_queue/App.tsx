@@ -1,6 +1,5 @@
 import React, {useEffect} from "react"
-import { Flex, Spinner, Button , Icon, Dropdown} from "brainly-style-guide"
-import {loadNextPage, loadPrevPage} from "./VerificationQueueFunctions"
+import { Flex, Spinner, Dropdown} from "brainly-style-guide"
 import {List} from "./ReactComponents/ItemList"
 import Head from "./ReactComponents/Header"
 import { extension_server_url } from "configs/config";

@@ -12,7 +12,7 @@ function newperms(){
         AdminPanel.Accdel()
         usr_mgmt()
     }
-    if(perms.includes("5") || perms.includes("4")){
+    if(perms.includes("6") || perms.includes("4") || perms.includes("7")){
         verification_queue()
     }
     if (perms.includes("6")){

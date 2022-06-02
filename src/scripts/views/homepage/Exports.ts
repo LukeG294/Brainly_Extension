@@ -144,7 +144,7 @@ export async function HomeMod() {
     </label>
     
     <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element perm5" id="6">
+    <input type="checkbox" class="sg-checkbox__element perm6" id="6">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>
@@ -152,7 +152,7 @@ export async function HomeMod() {
     </label>
 
     <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element perm5" id="7">
+    <input type="checkbox" class="sg-checkbox__element perm7" id="7">
     <div class="sg-checkbox__ghost" aria-hidden="true">
       <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
     </div>

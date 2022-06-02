@@ -22,11 +22,11 @@ export default class Panel{
         ModFn.approveAnswers(this.buttonArea);
         ModFn.confirmAnswers(this.buttonArea);
         ModFn.unverifyAnswers(this.buttonArea);
-        ModFn.find_reported_content(this.userId, "response", this.buttonArea);
+        ModFn.find_reported_content(this.userId, "responses", this.buttonArea);
     }
     Ques(){
         ModFn.delete(this.buttonArea, "questions")
         ModFn.confirmQuestions(this.buttonArea);
-        ModFn.find_reported_content(this.userId, "task", this.buttonArea);
+        ModFn.find_reported_content(this.userId, "tasks", this.buttonArea);
     }
 }

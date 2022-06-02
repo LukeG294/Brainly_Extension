@@ -66,9 +66,8 @@ export async function newTickets(){
     });
 }
 export async function requestApproval(){
+  let d_reference = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/api_config/desktop_view`, {method: "GET"}).then(data => data.json());
   async function requestVerificationButton(i){
-    
-    let d_reference = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/api_config/desktop_view`, {method: "GET"}).then(data => data.json());
     let requestButtons = pageElementAll(".request-verification")
     const element = requestButtons[i];
     
@@ -153,6 +152,7 @@ export async function requestApproval(){
   let answers = document.querySelectorAll("div[data-testid = 'answer_box'] div[data-testid = 'one_off_achievement_tooltip']")
   let responses = JSON.parse(document.querySelector("[data-testid='question_box']").getAttribute("data-z")).responses
     for (let i = 0; i < answers.length; i++) {
+      console.log(responses[i]);
      if (!responses[i].approved.date){
        let answer = responses[i].id
        let resp = await fetch(`${extension_server_url()}/get_answer_by_id/`+answer).then(response => response.json())

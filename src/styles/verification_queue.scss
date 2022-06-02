@@ -57,6 +57,7 @@
     .content{
         position:relative;
         overflow-y:auto;
+        flex:1;
         .outerButton{
             width: 200px!important;
             margin: 12px 12px 0px 24px;

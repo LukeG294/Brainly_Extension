@@ -2,17 +2,8 @@ import {
     insert_ticket
 } from "../../common/ModFunctions"
 import {
-    add_icons,
-    copy_links,
-    select_all,
-    toggle_selected
-} from "./ContentPageButtons"
-import {
     parseQuestionLink
 } from "configs/config"
-import {
-    getCookie
-} from "../../common/CommonFunctions"
 import Notify from "../../common/Notifications/Notify"
 import {
     Answer,

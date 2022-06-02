@@ -11,8 +11,9 @@ export default class Panel{
     }
 
     Basic(){
+        BasicFn.add_icons();
         BasicFn.addticket();
-        BasicFn.checkboxes();
+        BasicFn.checkboxes(true);
         BasicFn.copyLinks(this.buttonArea);
         BasicFn.toggleSelection(this.buttonArea);
         BasicFn.selectAll(this.buttonArea);

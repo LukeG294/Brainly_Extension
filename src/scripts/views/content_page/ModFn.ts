@@ -1,5 +1,4 @@
 import {
-    add_icons,
     deletion_menu,
     get_reported_content,
     approve_selected,
@@ -7,10 +6,6 @@ import {
     unverify_selected,
     confirm_selected
 } from "./ContentPageButtons"
-import{
-    addticket,
-
-} from "./ButtonFunctions"
 import {
     parseQuestionLink
 } from "configs/config"
@@ -23,11 +18,7 @@ import {
     Answer,
     Question
 } from "../../common/Content"
-import Extension from "../../../locales/en/localization.json"
-import {
-    pageElement,
-    pageElementAll
-} from "configs/config"
+import BasicFn from "./BasicFn"
 
 export default new class ModFn{
 
@@ -208,201 +199,78 @@ export default new class ModFn{
         elem.insertAdjacentHTML('beforeend', get_reported_content())
         document.querySelector("#fetchReported").addEventListener("click", async function(){
             const foundReported = []
-  let pagenum = document.querySelector("#content-old > div:nth-child(3) > p").children.length-2;
-  
-  document.querySelector("#fetchReported  .spinner-container").classList.add("show");
-  for(let p=1; p<pagenum; p++){
+            let pagenum = document.querySelector("#content-old > div:nth-child(3) > p").children.length-2;
+            
+            document.querySelector("#fetchReported  .spinner-container").classList.add("show");
+            for(let p=1; p<pagenum; p++){
+                console.log("page", p)
+                //@ts-ignore
+                let content = await fetch(`https://brainly.com/users/user_content/${id}/${type}/${p}/0`).then(data => data.text())
+                //@ts-ignore
+                let responseHTML = new DOMParser().parseFromString(content, "text/html")
 
-    
-    let content_page = await fetch(`https://brainly.com/users/user_content/${id}/${type}/${p}/0`, {
-      method:"GET",
-      headers:{
-        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
-      }
-    }).then(data => data.text())
-        //@ts-ignore
-    let responseHTML = new DOMParser().parseFromString(content_page, "text/html")
-    
-    //@ts-ignore
-    if(!responseHTML.querySelector(".border-error")){ 
-      //@ts-ignore
-      let content =  responseHTML.querySelector("tbody").children
-      for (let i = 0; i < content.length; i++) {
-        let contentlink = content[i]
-        let xhr = new XMLHttpRequest();
-        
-        xhr.withCredentials = true;
-  
-        contentlink.children[1].classList.add("iconcell");
-        let qid = contentlink.querySelector("a").href.replace("https://brainly.com/question/", "");
-        xhr.addEventListener("readystatechange", function() {
-          if(this.readyState === 4) {
-            let resp = JSON.parse(this.responseText);
-            if(type === "tasks"){
-                if(resp.data.task.settings.is_marked_abuse === true){
-                  let questionData = {"questionID": resp.data.task.id, "content":resp.data.task.content, "timeCreated":resp.data.task.created, "subject":resp.data.task.subject_id}
-                  foundReported.push(questionData)
+                if(!responseHTML.querySelector(".border-error")){ 
+                    //@ts-ignore
+                    console.log(responseHTML);
+                    let content =  responseHTML.querySelector("tbody").children;
+                    for (let i = 0; i < content.length; i++) {
+                        let contentlink = content[i]
+                        let qid = contentlink.querySelector("a").href.replace("https://brainly.com/question/", "");
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                                let resp = JSON.parse(this.responseText);
+                                if (type === "responses"){
+                                    let userId = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
+                                    let response = resp.data.responses.find(res => String(res.user_id) === String(userId));
+                                    if(response.settings.is_marked_abuse){
+                                        let questionData = {"questionID":resp.data.task.id, "content":response.content, "timeCreated":response.created, "subject":resp.data.task.subject_id}
+                                        foundReported.push(questionData)
+                                    }
+                                }
+                                if(type === "tasks"){
+                                    if(resp.data.task.settings.is_marked_abuse){
+                                        let questionData = {"questionID": resp.data.task.id, "content":resp.data.task.content, "timeCreated":resp.data.task.created, "subject":resp.data.task.subject_id}
+                                        foundReported.push(questionData)
+                                    }
+                                }
+                            }
+                        };
+                        xhttp.open("POST", `https://brainly.com/api/28/api_tasks/main_view/${qid}`);
+                        xhttp.send();
+                    }
                 }
             }
+            let subjects = await fetch(`https://brainly.com/api/28/api_config/desktop_view`).then(data => data.json()).then(data => data.data.subjects);
+            let table = document.querySelector("tbody")
+            table.innerHTML = ``
 
-             if (type === "responses"){
-                let r = JSON.parse(this.responseText);
-                let userId = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
-                let response = r.data.responses.find(res => String(res.user_id) === String(userId));
-                console.log(response);
-                if(response.settings.is_marked_abuse === true){
-                    let questionData = {"questionID":r.data.task.id, "content":response.content, "timeCreated":response.created, "subject":r.data.task.subject_id}
-                    foundReported.push(questionData)
-                }
-              }
-          }
-        });
-        xhr.open("POST", `https://brainly.com/api/28/api_tasks/main_view/${qid}?accept=application/json`);
-        xhr.send();
-        }
-    } 
-    
-}
+            for (let i = 0; i < foundReported.length; i++) {
+                let content = foundReported[i]["content"]
+                var regex = /(<([^>]+)>)/ig
+                let result = content.replace(regex, "");
+                const found = subjects.find(element => element["id"] === foundReported[i]["subject"]);
+                
+                let row = document.createElement("div") 
+                table.appendChild(row)
+                row.outerHTML = /*html*/`
+                <tr>
+                    <td>${i}</td>
+                    <td>
+                        <a href="/question/${foundReported[i].questionID}">
+                            ${String(result)}
+                        </a>
+                    </td>
+                    <td>${found.name}</td>
+                    <td>${foundReported[i].timeCreated}</td>
+                </tr>
+                `
+            }
 
-let subjects = [
-    {
-        "id": 2,
-        "name": "Mathematics"
-    },
-    {
-        "id": 5,
-        "name": "History"
-    },
-    {
-        "id": 1,
-        "name": "English"
-    },
-    {
-        "id": 8,
-        "name": "Biology"
-    },
-    {
-        "id": 18,
-        "name": "Chemistry"
-    },
-    {
-        "id": 15,
-        "name": "Physics"
-    },
-    {
-        "id": 3,
-        "name": "Social Studies"
-    },
-    {
-        "id": 31,
-        "name": "Advanced Placement (AP)"
-    },
-    {
-        "id": 32,
-        "name": "SAT"
-    },
-    {
-        "id": 7,
-        "name": "Geography"
-    },
-    {
-        "id": 6,
-        "name": "Health"
-    },
-    {
-        "id": 21,
-        "name": "Arts"
-    },
-    {
-        "id": 4,
-        "name": "Business"
-    },
-    {
-        "id": 19,
-        "name": "Computers and Technology"
-    },
-    {
-        "id": 29,
-        "name": "French"
-    },
-    {
-        "id": 30,
-        "name": "German"
-    },
-    {
-        "id": 28,
-        "name": "Spanish"
-    },
-    {
-        "id": 22,
-        "name": "World Languages"
-    },
-    {
-        "id": 33,
-        "name": "Medicine"
-    },
-    {
-        "id": 34,
-        "name": "Law"
-    },
-    {
-        "id": 35,
-        "name": "Engineering"
-    }
-]
-let table = document.querySelector("tbody")
-table.innerHTML = ``
-
-for (let i = 0; i < foundReported.length; i++) {
-  let content = foundReported[i]["content"]
-  var regex = /(<([^>]+)>)/ig
-  let result = content.replace(regex, "");
-  const found = subjects.find(element => element["id"] === foundReported[i]["subject"]);
- 
-  let row = document.createElement("div") 
-     table.appendChild(row)
-   row.outerHTML = `<tr>
-<td>${i+1}</td>
-<td class="iconcell">
-        <div class="contenticon shield">
-          
-        </div>
-       <a href="/question/${foundReported[i]["questionID"]}" style=" display: -webkit-box;
-       -webkit-line-clamp: 1;
-       -webkit-box-orient: vertical;
-       overflow: hidden;">
-       ${String(result)}
-</a>
-</td>
-<td>${found["name"]}</td>
-<td>${foundReported[i]["timeCreated"]}</td>
-`
-   
-}
-add_icons()
-addOnlyChecks()
-addticket()
-document.querySelector("#fetchReported  .spinner-container").classList.remove("show");
-    });
-    }
-}
-export function addOnlyChecks() {
-    let buttonArea = pageElement("#content-old > div:nth-child(3) > p")
-    let content = pageElementAll("#content-old > div:nth-child(2) > div:nth-child(25) > table > tbody > tr")
-    document.querySelector("thead tr").insertAdjacentHTML("afterbegin", "<th style = 'width: 5%'></th>")
-    for (let i = 0; i < content.length; i++) {
-        content[i].children[1].classList.add("iconcell")
-        content[i].insertAdjacentHTML('afterbegin', /*html*/ `
-        <td class="sg-space-x-m" style = "padding-left: 8px">
-            <label class="sg-checkbox" for="${i}"><input type="checkbox" class="sg-checkbox__element contentCheckboxes" id="${i}">
-            <div class="sg-checkbox__ghost" aria-hidden="true">
-            <div class="sg-icon sg-icon--adaptive sg-icon--x16">
-                <svg class="sg-icon__svg" role="img" aria-labelledby="title-check-255xyo" focusable="false"><text id="title-check-255xyo" hidden="">check</text>
-                <use xlink:href="#icon-check" aria-hidden="true"></use></svg>
-            </div>
-            </div>
-            </label>
-        </td>
-    `)
+            BasicFn.add_icons();
+            BasicFn.checkboxes();
+            BasicFn.addticket();
+            document.querySelector("#fetchReported  .spinner-container").classList.remove("show");
+        })
     }
 }

@@ -149,6 +149,20 @@
                 overflow:auto;
                 overflow-x: hidden;
             }
+            .cancel{
+                background: none;
+                border: 2px solid #FFC7BF;
+                svg{
+                    fill:#ff7968
+                }
+            }
+            .approve{
+                background: none;
+                border: 2px solid #9CE8C2;
+                svg{
+                    fill:#60D399
+                }
+            }
             .stats{
                 display:flex;
                 align-items:center;

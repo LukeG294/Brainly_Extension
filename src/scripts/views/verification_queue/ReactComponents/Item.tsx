@@ -77,7 +77,7 @@ export default function Item({ content, thanks, rating, created, ansdata, faunad
                         iconOnly
                         size="m"
                         toggle="peach"
-                        type="outline"
+                        type="solid-light"
                         className = "cancel"
                         />
                     </div>
@@ -89,7 +89,7 @@ export default function Item({ content, thanks, rating, created, ansdata, faunad
                         iconOnly
                         size="m"
                         toggle="blue"
-                        type="outline"
+                        type="solid-light"
                         className = "approve"
                         />
                     </div>

@@ -14,9 +14,11 @@ interface Item{
     faunadbid:string;
     answerer,
     requesterAv:string;
+    requesterId:string;
+    requesterName:string;
 }
 
-export default function Item({ content, thanks, rating, created, ansdata, faunadbid, answerer, requesterAv}: Item) {
+export default function Item({ content, thanks, rating, created, ansdata, faunadbid, answerer, requesterAv, requesterName, requesterId}: Item) {
     let av = ''
     
     if (requesterAv !== '' && requesterAv !== undefined){
@@ -61,7 +63,7 @@ export default function Item({ content, thanks, rating, created, ansdata, faunad
                 />
             </div>
             <div className="options">
-                <div className="user">
+                <div className="user" user-nick={requesterName} user-id={requesterId}>
                     <Avatar imgSrc={av} />
                 </div>
                 <div className="actions">

@@ -8,14 +8,7 @@ async function questionPage(){
       //confirmButton()
       newTickets()
   }
-  if (perms.includes("6")){
-    try {
-      document.querySelectorAll('.sg-button.sg-button--s.sg-button--outline.sg-button--icon-only')[2].remove()
-    }catch(err){
-      document.querySelectorAll('[title="Unapprove"]')[0].remove()
-    }
-
-  }
+  
   if (perms.includes("5")){requestApproval()}
 }
 

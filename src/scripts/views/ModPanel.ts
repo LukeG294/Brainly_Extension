@@ -1,4 +1,4 @@
-import { mass_msg, mass_accdel, usr_mgmt, verification_queue, md_content, reportedCommentsDeleter } from "./homepage/Admin";
+import { mass_msg, mass_accdel, usr_mgmt, verification_queue, md_content, reportedCommentsDeleter, brainly_tools } from "./homepage/Admin";
 import AdminPanel from "./homepage/Admin"
 
 let perms = localStorage.getItem('userPerms').split(",");
@@ -11,6 +11,7 @@ function newperms(){
         AdminPanel.MassMsg()
         AdminPanel.Accdel()
         usr_mgmt()
+        brainly_tools()
     }
     if(perms.includes("6") || perms.includes("4") || perms.includes("7")){
         verification_queue()

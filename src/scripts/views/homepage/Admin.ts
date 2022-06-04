@@ -145,6 +145,13 @@ export function usr_mgmt(){
         
     })
 }
+export function brainly_tools(){
+    document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
+    <li class="sg-menu-list__element mcomp-u">   
+    <a class = "sg-menu-list__link" href='/tools/moderation'>Brainly Tools</a>
+    </li>`)
+    
+}
 export function verification_queue(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
         <li class="sg-menu-list__element verification-queue">   

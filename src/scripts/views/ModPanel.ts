@@ -6,11 +6,15 @@ function newperms(){
     if (perms.includes("3") || perms.includes("4")){
         md_content()
         reportedCommentsDeleter()
+        
     }
     if(perms.includes("4")){
         AdminPanel.MassMsg()
         AdminPanel.Accdel()
         usr_mgmt()
+        
+    }
+    if (perms.includes("2") || perms.includes("3") || perms.includes("4")){
         brainly_tools()
     }
     if(perms.includes("6") || perms.includes("4") || perms.includes("7")){

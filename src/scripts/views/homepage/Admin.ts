@@ -175,7 +175,7 @@ export function md_content(){
             for (let index = 0; index < linksArray.length; index++) {
                 const element = linksArray[index];
                 let regexString = new RegExp(`https:\/\/brainly\.com\/question\/.*-.*`)
-                let qid = String(element).split("/")[4].split("?")[0]
+                let qid = String(element).split("/")[4]
               
                 usersToMsg.push(qid)
                

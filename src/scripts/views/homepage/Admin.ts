@@ -148,7 +148,7 @@ export function usr_mgmt(){
 export function brainly_tools(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
     <li class="sg-menu-list__element mcomp-u">   
-    <a class = "sg-menu-list__link" href='/tools/moderation'>Brainly Tools</a>
+    <a class = "sg-menu-list__link" href='https://brainly.com/tools/moderation'>Brainly Tools</a>
     </li>`)
     
 }

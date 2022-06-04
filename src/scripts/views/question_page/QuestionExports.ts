@@ -83,7 +83,8 @@ export async function requestApproval(){
       //@ts-ignore
       
       let requesterAv = JSON.parse(pageElement("meta[name='user_data']").content).avatar
-     
+      //@ts-expect-error
+      let requesterName = JSON.parse(pageElement("meta[name='user_data']").content).nick
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       let user = await User.Data(thisResponse.userId)
@@ -96,6 +97,7 @@ export async function requestApproval(){
         "subject":d_reference.data.subjects.find(({id}) => id === qinfo.subject_id).icon,
         "user": user,
         "requesterId":requesterID,
+        "requesterName":requesterName,
         "requesterAv":requesterAv
       });
     

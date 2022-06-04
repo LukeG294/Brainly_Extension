@@ -36,7 +36,17 @@ export async function approveAnswer(id, answerId, button){
     let item = button.parentElement.parentElement.parentElement
     button.classList.remove("show");
     item.classList.add("approved");
-    
+    let user = await fetch("https://brainly.com/api/28/api_users/me").then(data => data.json())
+    let userData = user.data.user
+    let RequesterId = item.querySelector('.user').getAttribute('user-id')
+    let RequesterName = item.querySelector('.user').getAttribute('user-nick')
+    let HandlerId = userData.id
+    let HandlerName = userData.nick
+    let HandledTime = new Date()
+   
+    let QuestionSubject = item.querySelector('.sg-subject-icon').children[0].href.baseVal.split('-')[2]
+    let QuestionLink = item.querySelector('.qid').innerHTML.replace('#','')
+    add_verification_record(RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink)
   } else {
     Notify.Flash(resp.message,"error")
   }
@@ -122,4 +132,38 @@ export async function subjectFilterHandler(fn){
         
     })
   
+}
+export function add_verification_record(RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink){
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    "requester": {
+      "id": RequesterId,
+      "name": RequesterName
+    },
+    "handler": {
+      "id": HandlerId,
+      "name": HandlerName,
+      "handledTime": HandledTime
+    },
+    "question": {
+    
+      "subject": QuestionSubject,
+      "link": 'https://brainly.com/question/'+QuestionLink
+    }
+  
+  });
+
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw
+    
+  };
+
+  fetch("https://server.grayson03.repl.co/verification-handled", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
 }

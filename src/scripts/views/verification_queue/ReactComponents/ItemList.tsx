@@ -22,6 +22,8 @@ export function List({obj}: list){
                         answerer = {item.data.user}
                         faunadbid = {item.ref["@ref"].id}
                         requesterAv = {item.data.requesterAv}
+                        requesterName = {item.data.requesterName}
+                        requesterId = {item.data.requesterId}
                     />
                 ))
             }

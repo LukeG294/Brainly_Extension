@@ -10,7 +10,20 @@ export async function removeAnswer(id, button){
   console.log(button)
   let resp = await fetch(`${extension_server_url()}/answers/`+id,{method: "DELETE"})
   .then(response => response.json())
-
+  let item = button.parentElement.parentElement.parentElement
+  let user = await fetch("https://brainly.com/api/28/api_users/me").then(data => data.json())
+  let userData = user.data.user
+  let RequesterId = item.querySelector('.user').getAttribute('user-id')
+  let RequesterName = item.querySelector('.user').getAttribute('user-nick')
+  let HandlerId = userData.id
+  let HandlerName = userData.nick
+  let HandledTime = new Date()
+  
+  let QuestionSubject = item.querySelector('.sg-subject-icon').children[0].href.baseVal.split('-')[2]
+  let QuestionLink = item.querySelector('.qid').innerHTML.replace('#','')
+  //1 = rejected
+  //0 = accepted
+  add_verification_record(RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink, '1')
   if (!resp.statusCode){
     let item = button.parentElement.parentElement.parentElement
     button.classList.remove("show");
@@ -46,7 +59,7 @@ export async function approveAnswer(id, answerId, button){
    
     let QuestionSubject = item.querySelector('.sg-subject-icon').children[0].href.baseVal.split('-')[2]
     let QuestionLink = item.querySelector('.qid').innerHTML.replace('#','')
-    add_verification_record(RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink)
+    add_verification_record(RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink, '0')
   } else {
     Notify.Flash(resp.message,"error")
   }
@@ -133,7 +146,7 @@ export async function subjectFilterHandler(fn){
     })
   
 }
-export function add_verification_record(RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink){
+export function add_verification_record(RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink, RejectApprove){
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -145,10 +158,10 @@ export function add_verification_record(RequesterId, RequesterName, HandlerId, H
     "handler": {
       "id": HandlerId,
       "name": HandlerName,
-      "handledTime": HandledTime
+      "handledTime": HandledTime,
+      "action":RejectApprove
     },
     "question": {
-    
       "subject": QuestionSubject,
       "link": 'https://brainly.com/question/'+QuestionLink
     }

@@ -1,6 +1,4 @@
 
-import BrainlyAPI from "./BrainlyAPI"
-import { Answer } from "./Content";
 import Extension from "../../locales/en/localization.json"
 
 export function getCookie(name) {

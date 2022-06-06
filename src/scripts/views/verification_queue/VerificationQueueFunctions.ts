@@ -18,12 +18,12 @@ export async function removeAnswer(id, button){
   let HandlerId = userData.id
   let HandlerName = userData.nick
   let HandledTime = new Date()
-  
+  let AnswerID = item.getAttribute('datatype')
   let QuestionSubject = item.querySelector('.sg-subject-icon').children[0].href.baseVal.split('-')[2]
   let QuestionLink = item.querySelector('.qid').innerHTML.replace('#','')
   //1 = rejected
   //0 = accepted
-  add_verification_record(RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink, '1')
+  add_verification_record(RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink, '1', AnswerID)
   if (!resp.statusCode){
     let item = button.parentElement.parentElement.parentElement
     button.classList.remove("show");
@@ -56,10 +56,10 @@ export async function approveAnswer(id, answerId, button){
     let HandlerId = userData.id
     let HandlerName = userData.nick
     let HandledTime = new Date()
-   
+    let AnswerID = item.getAttribute('datatype')
     let QuestionSubject = item.querySelector('.sg-subject-icon').children[0].href.baseVal.split('-')[2]
     let QuestionLink = item.querySelector('.qid').innerHTML.replace('#','')
-    add_verification_record(RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink, '0')
+    add_verification_record(RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink, '0', AnswerID)
   } else {
     Notify.Flash(resp.message,"error")
   }
@@ -146,7 +146,7 @@ export async function subjectFilterHandler(fn){
     })
   
 }
-export function add_verification_record(RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink, RejectApprove){
+export function add_verification_record(RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink, RejectApprove, AnswerID){
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -163,8 +163,10 @@ export function add_verification_record(RequesterId, RequesterName, HandlerId, H
     },
     "question": {
       "subject": QuestionSubject,
-      "link": 'https://brainly.com/question/'+QuestionLink
-    }
+      "link": 'https://brainly.com/question/'+QuestionLink,
+      "answerID":AnswerID
+    },
+    
   
   });
 

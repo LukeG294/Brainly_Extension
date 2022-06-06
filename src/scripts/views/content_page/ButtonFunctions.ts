@@ -83,15 +83,15 @@ export function addticket() {
         let qid = row.querySelector("a").getAttribute("href").replace("/question/", "");
         cell.insertAdjacentHTML("afterbegin", /*html*/ `
         <div class="modticket">
-        <div class="sg-spinner-container__overlay">
-          <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
-        </div>
-        <div class="contenticon shield">
-            <svg viewBox="0 0 512 512" style="overflow: visible" id="icon-shield" xmlns="http://www.w3.org/2000/svg">
-                <title>Moderate</title>
-                <path fill-rule="evenodd" d="M256 448c-32 0-192-16-192-192V96c0-11 6-32 32-32h320c11 0 32 6 32 32v176c0 160-160 176-192 176zm128-320H256v256c102 0 128-85 128-128V128z" clip-rule="evenodd"/>
-            </svg>
-        </div>
+            <div class="sg-spinner-container__overlay">
+                <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+            </div>
+            <div class="contenticon shield">
+                <svg viewBox="0 0 512 512" style="overflow: visible" id="icon-shield" xmlns="http://www.w3.org/2000/svg">
+                    <title>Moderate</title>
+                    <path fill-rule="evenodd" d="M256 448c-32 0-192-16-192-192V96c0-11 6-32 32-32h320c11 0 32 6 32 32v176c0 160-160 176-192 176zm128-320H256v256c102 0 128-85 128-128V128z" clip-rule="evenodd"/>
+                </svg>
+            </div>
         </div>
         `);
         row.querySelector(".contenticon.shield").addEventListener("click", function() {
@@ -102,9 +102,10 @@ export function addticket() {
 export async function confirmDeletion(type: "questions" | "answers") {
     
     document.querySelector("#deleteSelected  .spinner-container").classList.add("show");
-    let checkBoxes = document.getElementsByClassName("contentCheckboxes")
+    let checkBoxes = document.getElementsByClassName("contentCheckboxes");
     let checkBoxesArr = Array.from(checkBoxes)
-    checkBoxesArr.forEach(element => {
+    checkBoxesArr.forEach(async element => {
+        await new Promise(f => setTimeout(f, 200));
         //@ts-ignore
         if (String(element.checked) === "true") {
             //@ts-ignore

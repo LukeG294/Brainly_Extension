@@ -1,5 +1,5 @@
 *{
-  --primary-color: #bdc7fb;
+  --primary-color: #ccebd7;
 }
 [class ^= 'Header-module'], div[class ^= 'brn-header-placeholder'], .brn-footer, #html .mint .mint-header, #moderate-functions-panel .covering-text, footer[data-testid = 'footer_layout'],.brn-header-placeholder, #footer{
   background-color:var(--primary-color)!important;
@@ -14,8 +14,17 @@
 .brn-placeholder__animation{
   background:none!important;
 }
+.sg-layout__container{
+  display:flex;
+  flex-direction:row;
+  .modbar{
+    width:50px;
+    height:auto;
+    border-left:2px solid #e1eaf1;
+  }
+}
 .sg-button--solid-blue{
-  background-color: #bdc7fb!important;
+  background-color: var(--primary-color)!important;
   &:hover{
     filter:brightness(95%)!important;
   }

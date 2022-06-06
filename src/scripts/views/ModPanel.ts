@@ -2,7 +2,7 @@ import { mass_msg, mass_accdel, usr_mgmt, verification_queue, md_content, report
 import AdminPanel from "./homepage/Admin"
 
 let perms = localStorage.getItem('userPerms').split(",");
-function newperms(){
+function Panelfn(){
     if (perms.includes("3") || perms.includes("4")){
         md_content()
         reportedCommentsDeleter()
@@ -27,5 +27,5 @@ function newperms(){
     }
 }
 if(localStorage.getItem("canUse") === "true"){
-    newperms()
+    Panelfn()
 }

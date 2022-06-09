@@ -58,7 +58,7 @@
         position:relative;
         overflow-y:auto;
         flex:1;
-        .outerButton{
+        .outerButton, .outerButtonSwitcher{
             width: 200px!important;
             margin: 12px 12px 0px 24px;
             >span{
@@ -247,7 +247,7 @@
     visibility: visible !important;
     margin-top:5% !important;
 }
-.outerButton{
+.outerButton, .outerButtonSwitcher{
     visibility:hidden;
     width:525px !important;
 }

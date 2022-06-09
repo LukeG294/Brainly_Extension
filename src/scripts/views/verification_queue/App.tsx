@@ -1,6 +1,6 @@
 import React, {useEffect} from "react"
 import { Flex, Spinner, Button , Icon, Dropdown} from "brainly-style-guide"
-import {loadNextPage, loadPrevPage, subjectFilterHandler} from "./VerificationQueueFunctions"
+import {loadNextPage, loadPrevPage, subjectFilterHandler, verificationSwitcherHandler} from "./VerificationQueueFunctions"
 import {List} from "./ReactComponents/ItemList"
 import Head from "./ReactComponents/Header"
 import { extension_server_url } from "configs/config";
@@ -24,6 +24,7 @@ export default function App() {
             let d_reference = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/api_config/desktop_view`, {method: "GET"}).then(data => data.json());
             let subArray = []
             let subjects = d_reference.data.subjects
+            subArray.push({'label':`All subjects`, 'count':100, 'url':'subject-all'})
             subjects.forEach(async subject => {
                 let subjectCount = await fetch(`${extension_server_url()}/get_by_subject/${subject.icon}`, {method: "GET"}).then(data => data.json());
                 if (subjectCount > 0){
@@ -31,8 +32,8 @@ export default function App() {
                 }
             })
             
-            let subArr = subArray.sort((a, b) => a.count < b.count ? 1 : -1)
-            setSubjects(subArr)
+            subArray = subArray.sort((a, b) => a.count < b.count ? 1 : -1)
+            setSubjects(subArray)
             
             
         }
@@ -43,6 +44,7 @@ export default function App() {
             <Head setItems = {setItems} setSubjects = {setSubjects}/>
             <div className="content">
                 <Button type='solid' className={"outerButton"} onClick={() => subjectFilterHandler(setItems)}> <Dropdown name={"Subject"} links={subArr}></Dropdown></Button>
+                <Button type='solid' className={"outerButtonSwitcher"} onClick={() => verificationSwitcherHandler(setItems)}> <Dropdown name={"Verification"} links={[{'label':'Verification','url':'repl-this-verify'},{'label':'Unverification','url':'repl-this-unverify'}]}></Dropdown></Button>
                 <Flex className="container">
                     <div className="flash-messages-container"></div>
                     <div className={`spinner-container ${spin}`}> <Spinner /> </div>

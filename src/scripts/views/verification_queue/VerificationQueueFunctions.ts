@@ -110,19 +110,22 @@ export async function get_items_by_subject(subject_icon_name){
   let data = await fetch(`${extension_server_url()}/get_data_by_subject/${subject_icon_name}`).then(data => data.json());
   return data
 }
+export async function get_next_page_unverify(page){
+  let data = await fetch(`${extension_server_url()}/get-next-page-unverify/${page}`).then(data => data.json());
+  return data
+}
 export async function subjectFilterHandler(fn){
   
     let d_reference = await fetch(`https://brainly.com/api/28/api_config/desktop_view`, {method: "GET"}).then(data => data.json());
     let subjects = d_reference.data.subjects 
     subjects.forEach( async subject => {
         let element = document.querySelector(`a[href="subject-${subject.icon}"]`)
-       
         if (element){
           element.removeAttribute("href")
           element.addEventListener("click", async function(){
             //@ts-expect-error
             document.querySelector('.sg-dropdown').children[0].innerText = element.innerText
-            Status.Show("fetching items", "blue", true, false);
+            Status.Show(`Fetching items in ${subject.name}`, "blue", true, false);
             let toRender = await get_items_by_subject(subject.icon)
             document.querySelector(".displayMessage").remove();
             console.log(toRender)
@@ -131,7 +134,60 @@ export async function subjectFilterHandler(fn){
         }
         
     })
+    let elm = document.querySelector(`a[href="subject-all"]`)
+    if (elm){
+      elm.removeAttribute("href")
+      elm.addEventListener("click", async function(){
+        //@ts-expect-error
+        document.querySelector('.sg-dropdown').children[0].innerText = 'SUBJECT'
+        Status.Show(`Fetching all items`, "blue", true, false);
+        let toRender = await fetch(`${extension_server_url()}/get_next_page/0`)
+        .then(response => response.json())
+        document.querySelector(".displayMessage").remove();
+        fn(toRender);
+      })
+    }
   
+}
+export async function verificationSwitcherHandler(fn){
+  await new Promise(f => setTimeout(f, 200))
+  let verifyElement = document.querySelector(`a[href="repl-this-verify"]`)
+  let unverifyElement = document.querySelector(`a[href="repl-this-unverify"]`)
+ 
+  //@ts-ignore
+  verifyElement.removeAttribute("href")
+  verifyElement.addEventListener("click", async function(){
+    //@ts-expect-error
+    document.querySelectorAll('.sg-dropdown')[1].children[0].innerText = verifyElement.innerText
+    Status.Show("Fetching verification requests", "blue", true, false);
+    let toRender = await fetch(`${extension_server_url()}/get_next_page/0`).then(response => response.json())
+    document.querySelector(".displayMessage").remove();
+    fn(toRender);
+  })
+  
+   
+  //@ts-ignore
+  unverifyElement.removeAttribute("href")
+  unverifyElement.addEventListener("click", async function(){
+  
+    //@ts-expect-error
+    document.querySelectorAll('.sg-dropdown')[1].children[0].innerText = unverifyElement.innerText
+    Status.Show("Fetching unverification requests", "blue", true, false);
+    let toRender = await get_next_page_unverify('0')
+    document.querySelector(".displayMessage").remove();
+    console.log(toRender)
+    fn(toRender);
+  })
+  unverifyElement.removeAttribute("href") 
+    
+  
+  
+    
+  
+  
+  
+  
+ 
 }
 export function add_verification_record(RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink){
   var myHeaders = new Headers();

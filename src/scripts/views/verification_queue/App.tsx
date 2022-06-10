@@ -24,7 +24,7 @@ export default function App() {
             let d_reference = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/api_config/desktop_view`, {method: "GET"}).then(data => data.json());
             let subArray = []
             let subjects = d_reference.data.subjects
-            subArray.push({'label':`All subjects`, 'count':100, 'url':'subject-all'})
+            subArray.push({'label':`All`, 'count':100, 'url':'subject-all'})
             subjects.forEach(async subject => {
                 let subjectCount = await fetch(`${extension_server_url()}/get_by_subject/${subject.icon}`, {method: "GET"}).then(data => data.json());
                 if (subjectCount > 0){

@@ -29,13 +29,23 @@ export function confirmButton(){
       })
     }
 }
-export async function removeAnswer(id){
-  let resp = await fetch(`${extension_server_url()}/answers/`+id,{method: "DELETE"})
-  .then(response => response.json())
-  if (resp.code){
-    Notify.Flash("Could not delete: "+resp.message, "error")
-  } else {
-    Notify.Flash("Cancelled the request for verification.", "error")
+export async function removeAnswer(id, type:string){
+  if (type === 'verification'){
+    let resp = await fetch(`${extension_server_url()}/answers/`+id,{method: "DELETE"})
+    .then(response => response.json())
+    if (resp.code){
+      Notify.Flash("Could not delete: "+resp.message, "error")
+    } else {
+      Notify.Flash("Cancelled the request for verification.", "error")
+    }
+  } else if (type === 'unvericiation'){
+    let resp = await fetch(`${extension_server_url()}/answers-unverify/`+id,{method: "DELETE"})
+    .then(response => response.json())
+    if (resp.code){
+      Notify.Flash("Could not delete: "+resp.message, "error")
+    } else {
+      Notify.Flash("Cancelled the request for unverification.", "error")
+    }
   }
 }
 export async function newTickets(){
@@ -67,6 +77,7 @@ export async function newTickets(){
 }
 export async function requestApproval(){
   let d_reference = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/api_config/desktop_view`, {method: "GET"}).then(data => data.json());
+  
   async function requestVerificationButton(i){
     let requestButtons = pageElementAll(".request-verification")
     const element = requestButtons[i];
@@ -128,7 +139,7 @@ export async function requestApproval(){
                 </span></button>`)
                 pageElement(".cancel-request").addEventListener("click", async function(){
                   pageElement(".cancel-request .spinner-container").classList.add("show");
-                  await removeAnswer(this.id)
+                  await removeAnswer(this.id, 'verification')
                   pageElement(".cancel-request .spinner-container").classList.remove("show");
                   pageElement(".cancel-request").remove()
                   answers[i].insertAdjacentHTML("afterbegin",/*html*/`
@@ -151,6 +162,93 @@ export async function requestApproval(){
         
     })
   }
+  
+  async function requestUnverificationButton(i){
+    
+    let requestButtons = pageElementAll(".request-unverification")
+    const element = requestButtons[i];
+    
+    element.addEventListener("click", async function(){
+      pageElement(".request-unverification .spinner-container").classList.add("show");
+      let thisResponse = responses[i]
+    
+      let databaseId = thisResponse.id
+      let answerPreview = thisResponse.content
+      let qinfo = JSON.parse(pageElement("article").getAttribute("data-z"))
+      //@ts-ignore
+      let requesterID = JSON.parse(pageElement("meta[name='user_data']").content).id
+      //@ts-ignore
+      
+      let requesterAv = JSON.parse(pageElement("meta[name='user_data']").content).avatar
+      //@ts-expect-error
+      let requesterName = JSON.parse(pageElement("meta[name='user_data']").content).nick
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      let user = await User.Data(thisResponse.userId)
+      console.log(user)
+      var raw = JSON.stringify({
+        "settings": thisResponse,
+        "answerDBid":databaseId,
+        "content":answerPreview,
+        "qid": qinfo.id,
+        "subject":d_reference.data.subjects.find(({id}) => id === qinfo.subject_id).icon,
+        "user": user,
+        "requesterId":requesterID,
+        "requesterName":requesterName,
+        "requesterAv":requesterAv
+      });
+    
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw
+    
+      };
+
+      let serverResponse = await fetch(`${extension_server_url()}/request-unverify-add`, requestOptions).then(response => response.json())
+      
+        //@ts-ignore
+        
+        if (!serverResponse.message){
+          Notify.Flash("The answer has been added to the unverification queue.","success")
+          pageElement(".request-unverification .spinner-container").classList.remove("show");
+          pageElement(".request-unverification").remove();
+          answers[i].insertAdjacentHTML("afterbegin",/*html*/` 
+                <button id="${serverResponse.ref["@ref"].id}" class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-peach cancel-request-unverify">
+                <div class="spinner-container">
+                    <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
+                <span class="sg-button__icon sg-button__icon--m">
+                <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-heart-215qb" focusable="false"><text id="title-heart-215qb" hidden="">cancel</text>
+                  
+                <use xlink:href="#icon-close" aria-hidden="true"></use>
+                  </svg></div>
+                </span></button>`)
+                pageElement(".cancel-request-unverify").addEventListener("click", async function(){
+                  pageElement(".cancel-request-unverify .spinner-container").classList.add("show");
+                  await removeAnswer(this.id, 'unverification')
+                  pageElement(".cancel-request-unverify .spinner-container").classList.remove("show");
+                  pageElement(".cancel-request-unverify").remove()
+                  answers[i].insertAdjacentHTML("afterbegin",/*html*/`
+                  <button class="sg-button sg-button--m sg-button--solid-mint  request-unverification"> s
+                    <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
+                    <span class="sg-button__icon sg-button__icon--m">
+                      <div class="sg-icon sg-icon--adaptive sg-icon--x24">
+                        <svg class="sg-icon__svg" role="img" aria-labelledby="title-heart_outlined-pld9rg" focusable="false"><text id="title-heart_outlined-pld9rg" hidden="">heart outlined</text>
+                          <use xlink:href="#icon-close" aria-hidden="true"></use>
+                        </svg>
+                      </div>
+                    </span>
+                  </button>`)
+                  requestUnverificationButton(i)
+                })
+
+        } else {
+          Notify.Flash(Extension.common.unverificationQueueError + serverResponse.message,"error")
+        }
+        
+    })
+  }
+  
   let answers = document.querySelectorAll("div[data-testid = 'answer_box'] div[data-testid = 'one_off_achievement_tooltip']")
   let responses = JSON.parse(document.querySelector("[data-testid='question_box']").getAttribute("data-z")).responses
     for (let i = 0; i < answers.length; i++) {
@@ -174,6 +272,17 @@ export async function requestApproval(){
                 </div>
               </span>
             </button>`)
+            answers[i].insertAdjacentHTML("afterbegin",/*html*/`
+            <button class="sg-button sg-button--m sg-button--solid-mint request-unverification"> 
+              <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
+              <span class="sg-button__icon sg-button__icon--m">
+                <div class="sg-icon sg-icon--adaptive sg-icon--x24">
+                  <svg class="sg-icon__svg" role="img" aria-labelledby="title-heart_outlined-pld9rg" id="toColor" focusable="false"><text id="title-heart_outlined-pld9rg" hidden="">heart outlined</text>
+                    <use xlink:href="#icon-close" aria-hidden="true"></use>
+                  </svg>
+                </div>
+              </span>
+            </button>`)
             if (pastRejected.rejected === true){
               let btn = document.querySelectorAll('.request-verification')[i]
               //@ts-expect-error
@@ -185,6 +294,7 @@ export async function requestApproval(){
             } else {
               requestVerificationButton(i)
             }
+            requestUnverificationButton(i)
             
             
           
@@ -206,7 +316,7 @@ export async function requestApproval(){
 
         pageElement(".cancel-request").addEventListener("click", async function(){
           pageElement(".cancel-request .spinner-container").classList.add("show");
-          await removeAnswer(this.id)
+          await removeAnswer(this.id, 'verification')
           pageElement(".cancel-request .spinner-container").classList.remove("show");
           pageElement(".cancel-request").remove()
           answers[i].insertAdjacentHTML("afterbegin",/*html*/`

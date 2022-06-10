@@ -5,6 +5,7 @@
       "addUser":"Add User",
       "cannotFetchData":"Please re-open the modal, we can't fetch data for this user yet.",
       "verificationQueueError": "There was an error adding to the verification queue.",
+      "unverificationQueueError": "There was an error adding to the unverification queue.",
       "noAnswersYet": "No answers yet"
       
       

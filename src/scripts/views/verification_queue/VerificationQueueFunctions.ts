@@ -176,13 +176,14 @@ export async function verificationSwitcherHandler(fn){
     let toRender = await fetch(`${extension_server_url()}/get_next_page/0`).then(response => response.json())
     document.querySelector(".displayMessage").remove();
     fn(toRender);
+    
+    
   })
   
-   
   //@ts-ignore
   unverifyElement.removeAttribute("href")
   unverifyElement.addEventListener("click", async function(){
-  
+    
     //@ts-expect-error
     document.querySelectorAll('.sg-dropdown')[1].children[0].innerText = unverifyElement.innerText
     Status.Show("Fetching unverification requests", "blue", true, false);
@@ -190,6 +191,7 @@ export async function verificationSwitcherHandler(fn){
     document.querySelector(".displayMessage").remove();
     console.log(toRender)
     fn(toRender);
+    
   })
   unverifyElement.removeAttribute("href") 
     

@@ -145,6 +145,13 @@ export function usr_mgmt(){
         
     })
 }
+export function brainly_tools(){
+    document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
+    <li class="sg-menu-list__element mcomp-u">   
+    <a class = "sg-menu-list__link" href='https://brainly.com/tools/moderation'>Brainly Tools</a>
+    </li>`)
+    
+}
 export function verification_queue(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
         <li class="sg-menu-list__element verification-queue">   
@@ -318,6 +325,6 @@ export function reportedCommentsDeleter(){
         }
     }
 
-    Notify.Dialog("Delete all reported comments", "Are you sure you want to delete all reported comments in the moderate all queue? Clicking on 'Proceed' will start the process. Please make sure you don't close the tab until you are notified, or else the reported comments will be partially removed.", removeComments)
+    Notify.Dialog("Delete all reported comments", "Are you sure you want to delete all reported comments in the moderate all queue? Clicking on 'Proceed' will start the process. Please make sure you don't close the tab until you are notified, or else the reported comments will be partially removed.", removeComments, true)
     });
 }

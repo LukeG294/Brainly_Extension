@@ -158,21 +158,34 @@ export async function requestApproval(){
      if (!responses[i].approved.date){
        let answer = responses[i].id
        let resp = await fetch(`${extension_server_url()}/get_answer_by_id/`+answer).then(response => response.json())
+       let pastRejected = await fetch(`${extension_server_url()}/get_past_reject/`+answer).then(response => response.json())
+       
       //if cannot find previous request then add new button
        if (!resp.data){
        
             answers[i].insertAdjacentHTML("afterbegin",/*html*/`
-            <button class="sg-button sg-button--m sg-button--solid-mint  request-verification"> 
+            <button class="sg-button sg-button--m sg-button--solid-mint request-verification"> 
               <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
               <span class="sg-button__icon sg-button__icon--m">
                 <div class="sg-icon sg-icon--adaptive sg-icon--x24">
-                  <svg class="sg-icon__svg" role="img" aria-labelledby="title-heart_outlined-pld9rg" focusable="false"><text id="title-heart_outlined-pld9rg" hidden="">heart outlined</text>
+                  <svg class="sg-icon__svg" role="img" aria-labelledby="title-heart_outlined-pld9rg" id="toColor" focusable="false"><text id="title-heart_outlined-pld9rg" hidden="">heart outlined</text>
                     <use xlink:href="#icon-check" aria-hidden="true"></use>
                   </svg>
                 </div>
               </span>
             </button>`)
-            requestVerificationButton(i)
+            if (pastRejected.rejected === true){
+              let btn = document.querySelectorAll('.request-verification')[i]
+              //@ts-expect-error
+              btn.style.filter = 'grayscale(1)'
+              function doNothing(){}
+              btn.addEventListener('click', function(){
+                Notify.Dialog("Previously Rejected", `This request was rejected from the verification queue by ${pastRejected.mod} on ${String(pastRejected.time).split('T')[0]}. Please message this moderator directly if you'd like to find out why this request was rejected.`, doNothing(), false)
+              })
+            } else {
+              requestVerificationButton(i)
+            }
+            
             
           
           //else - add already requested button

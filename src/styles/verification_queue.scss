@@ -88,6 +88,8 @@
             align-items: center;
             justify-content: center;
             display:none;
+            bottom: 0;
+            pointer-events: none;
             &.show{
                 display:flex;
             }
@@ -118,7 +120,7 @@
                 }
             }
             &:hover{
-                border-color:#e1eaf1!important;
+                border-color:#e1eaf1;
             }
             .head{
                 display:flex;

@@ -38,7 +38,8 @@ export async function removeAnswer(id, type:string){
     } else {
       Notify.Flash("Cancelled the request for verification.", "error")
     }
-  } else if (type === 'unvericiation'){
+  } else if (type === 'unverification'){
+    alert
     let resp = await fetch(`${extension_server_url()}/answers-unverify/`+id,{method: "DELETE"})
     .then(response => response.json())
     if (resp.code){
@@ -220,10 +221,11 @@ export async function requestApproval(){
                 <span class="sg-button__icon sg-button__icon--m">
                 <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-heart-215qb" focusable="false"><text id="title-heart-215qb" hidden="">cancel</text>
                   
-                <use xlink:href="#icon-close" aria-hidden="true"></use>
+                <use xlink:href="#icon-less" aria-hidden="true"></use>
                   </svg></div>
                 </span></button>`)
                 pageElement(".cancel-request-unverify").addEventListener("click", async function(){
+                  
                   pageElement(".cancel-request-unverify .spinner-container").classList.add("show");
                   await removeAnswer(this.id, 'unverification')
                   pageElement(".cancel-request-unverify .spinner-container").classList.remove("show");
@@ -234,7 +236,7 @@ export async function requestApproval(){
                     <span class="sg-button__icon sg-button__icon--m">
                       <div class="sg-icon sg-icon--adaptive sg-icon--x24">
                         <svg class="sg-icon__svg" role="img" aria-labelledby="title-heart_outlined-pld9rg" focusable="false"><text id="title-heart_outlined-pld9rg" hidden="">heart outlined</text>
-                          <use xlink:href="#icon-close" aria-hidden="true"></use>
+                          <use xlink:href="#icon-less" aria-hidden="true"></use>
                         </svg>
                       </div>
                     </span>
@@ -278,7 +280,7 @@ export async function requestApproval(){
               <span class="sg-button__icon sg-button__icon--m">
                 <div class="sg-icon sg-icon--adaptive sg-icon--x24">
                   <svg class="sg-icon__svg" role="img" aria-labelledby="title-heart_outlined-pld9rg" id="toColor" focusable="false"><text id="title-heart_outlined-pld9rg" hidden="">heart outlined</text>
-                    <use xlink:href="#icon-close" aria-hidden="true"></use>
+                    <use xlink:href="#icon-less" aria-hidden="true"></use>
                   </svg>
                 </div>
               </span>

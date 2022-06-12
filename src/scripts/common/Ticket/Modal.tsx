@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Backdrop from "./Components/Backdrop"
 
@@ -15,8 +15,8 @@ export const modal:FunctionComponent<ModalProps> = ({
     let Modal = 
     <React.Fragment>
         <Backdrop />
-        
+
     </React.Fragment>
 
-    return Modal
+    return ReactDOM.createPortal(Modal, document.body)
 }

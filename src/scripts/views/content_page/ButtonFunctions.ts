@@ -105,9 +105,9 @@ export async function confirmDeletion(type: "questions" | "answers") {
     let checkBoxes = document.getElementsByClassName("contentCheckboxes");
     let checkBoxesArr = Array.from(checkBoxes)
     checkBoxesArr.forEach(async element => {
-        await new Promise(f => setTimeout(f, 200));
         //@ts-ignore
         if (String(element.checked) === "true") {
+            setTimeout(() => {console.log(element)}, 500);
             //@ts-ignore
             let link = element.closest("tr").getElementsByTagName('a')[0].href
             let id = parseQuestionLink(link)
@@ -121,7 +121,7 @@ export async function confirmDeletion(type: "questions" | "answers") {
             if(type === "questions"){
                 let givePts = ( < HTMLInputElement > document.querySelector("#res-pts")).checked;
                 let questionObj = new Question()
-                questionObj.Delete(id, reason, warn, take_point, givePts)
+                await questionObj.Delete(id, reason, warn, take_point, givePts)
             }
             if(type === "answers"){
                 let idsToDelete = []
@@ -136,25 +136,24 @@ export async function confirmDeletion(type: "questions" | "answers") {
                     }
                 }
                 idsToDelete.forEach(async elem => {
-                    let questionID = elem
                     let qObj = new Question()
-                    let res = await qObj.Get(questionID)
+                    let res = await qObj.Get(elem)
                         //@ts-expect-error
                     let answers = res.data.responses
                     let times = 0
-
 
                     if (answers.length === 1) {
                         times = 1
                     } else {
                         times = 2
                     }
+                    let a = answers.find(({id}) => id === parseInt(window.location.href.split("/")[5]));
+                    console.log("answer", a);
                     for (let x = 0; x < times; x++) {
                         let user = String(answers[x]["user_id"])
                         if (user === String(window.location.href.split("/")[5])) {
                             let ansobj = new Answer();
-                            ansobj.Delete(answers[x].id, reason,warn, take_point)
-                            
+                            await ansobj.Delete(answers[x].id, reason,warn, take_point);
                         }
                     }
                 })

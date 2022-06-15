@@ -43,8 +43,10 @@ export default function App() {
         <>
             <Head setItems = {setItems} setSubjects = {setSubjects}/>
             <div className="content">
-                <Button type='solid' className={"outerButton"} onClick={() => subjectFilterHandler(setItems)}> <Dropdown name={"Subject"} links={subArr}></Dropdown></Button>
-                <Button type='solid' className={"outerButtonSwitcher"} onClick={() => verificationSwitcherHandler(setItems)}> <Dropdown name={"Verification"} links={[{'label':'Verification','url':'repl-this-verify'},{'label':'Unverification','url':'repl-this-unverify'}]}></Dropdown></Button>
+                <div className="menu">
+                    <Button type='solid' className={"outerButton"} onClick={() => subjectFilterHandler(setItems)}> <Dropdown name={"Subject"} links={subArr}></Dropdown></Button>
+                    <Button type='solid' className={"outerButtonSwitcher"} onClick={() => verificationSwitcherHandler(setItems)}> <Dropdown name={"Verification"} links={[{'label':'Verification','url':'repl-this-verify'},{'label':'Unverification','url':'repl-this-unverify'}]}></Dropdown></Button>
+                </div>
                 <Flex className="container">
                     <div className="flash-messages-container"></div>
                     <div className={`spinner-container ${spin}`}> <Spinner /> </div>

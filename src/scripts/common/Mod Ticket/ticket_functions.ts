@@ -369,6 +369,23 @@ function add_answer(ans,res,a, basic_data, users_data){
   }
   if(basic_data.approved.approver !== null){
     this_ans.classList.add("approved");
+    
+    this_ans.querySelector(".unapprove").addEventListener("click", function(){
+      ansobj.Unapprove(answer_id);
+      this_ans.classList.remove("approved")
+      this_ans.querySelector('.unapprove').remove();
+      this_ans.classList.remove("reported")
+      this_ans.classList.remove("AFCreported")
+    })
+  } else {
+    this_ans.querySelector(".unapprove").remove()
+    this_ans.querySelector(".approve").addEventListener("click", function(){
+      ansobj.Approve(answer_id);
+      this_ans.classList.add("approved")
+      this_ans.classList.remove("reported")
+      this_ans.classList.remove("AFCreported")
+      this_ans.querySelector(".confirm").remove();
+    })
   }
   if (res.data.responses[a].wrong_report){
     add_report(res.data.responses[a].wrong_report,basic_data, this_ans, "AFCReport")
@@ -387,12 +404,8 @@ function add_answer(ans,res,a, basic_data, users_data){
     this_ans.classList.remove("reported");
     this_ans.classList.remove("AFCreported")
   })
-  this_ans.querySelector(".approve").addEventListener("click", function(){
-    ansobj.Approve(answer_id);
-    this_ans.classList.add("approved")
-    this_ans.classList.remove("reported")
-    this_ans.classList.remove("AFCreported")
-  })
+  
+  
 }
 async function add_question_data(res, d_reference, users_data, basic_data){
   let q_data = res.data.task;

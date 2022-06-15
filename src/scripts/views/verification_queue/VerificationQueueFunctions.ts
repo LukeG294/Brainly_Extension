@@ -176,6 +176,15 @@ export async function verificationSwitcherHandler(fn){
     let toRender = await fetch(`${extension_server_url()}/get_next_page/0`).then(response => response.json())
     document.querySelector(".displayMessage").remove();
     fn(toRender);
+    await new Promise(f => setTimeout(f, 200))
+    document.querySelectorAll('.actions').forEach(element => {
+      //@ts-expect-error
+      element.style.visibility = 'visible'
+    });
+    document.querySelectorAll('.item').forEach(element => {
+      //@ts-expect-error
+      element.style.border = 'none'
+    });
     
     
   })
@@ -191,6 +200,15 @@ export async function verificationSwitcherHandler(fn){
     document.querySelector(".displayMessage").remove();
     console.log(toRender)
     fn(toRender);
+    await new Promise(f => setTimeout(f, 100))
+    document.querySelectorAll('.actions').forEach(element => {
+      //@ts-expect-error
+      element.style.visibility = 'hidden'
+    });
+    document.querySelectorAll('.item').forEach(element => {
+      //@ts-expect-error
+      element.style.border = '2px solid rgb(156, 232, 194)'
+    });
     
   })
   unverifyElement.removeAttribute("href") 

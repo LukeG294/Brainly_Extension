@@ -3,6 +3,7 @@ import Notify from "../../common/Notifications/Notify"
 import Status from "../../common/Notifications/Status"
 import {Answer} from "../../common/Content"
 import Extension from "../../../locales/en/localization.json"
+import Label from "../../common/Notifications/Status";
 
 export async function removeAnswer(id, button){
   
@@ -138,9 +139,12 @@ export async function subjectFilterHandler(fn){
           element.addEventListener("click", async function(){
             //@ts-expect-error
             document.querySelector('.sg-dropdown').children[0].innerText = element.innerText
-            Status.Show(`Fetching items in ${subject.name}`, "blue", true, false);
+
+            let SubjectStat = new Label("subfetch")
+            SubjectStat.Show(`Fetching items in ${subject.name}`, "blue", true, false);
             let toRender = await get_items_by_subject(subject.icon)
-            document.querySelector(".displayMessage").remove();
+            SubjectStat.Close();
+
             console.log(toRender)
             fn(toRender);
           })
@@ -153,10 +157,12 @@ export async function subjectFilterHandler(fn){
       elm.addEventListener("click", async function(){
         //@ts-expect-error
         document.querySelector('.sg-dropdown').children[0].innerText = 'SUBJECT'
-        Status.Show(`Fetching all items`, "blue", true, false);
-        let toRender = await fetch(`${extension_server_url()}/get_next_page/0`)
-        .then(response => response.json())
-        document.querySelector(".displayMessage").remove();
+
+        let allStatus = new Label("status");
+        allStatus.Show(`Fetching all items`, "blue", true, false);
+        let toRender = await fetch(`${extension_server_url()}/get_next_page/0`).then(response => response.json())
+        allStatus.Close()
+
         fn(toRender);
       })
     }
@@ -172,9 +178,12 @@ export async function verificationSwitcherHandler(fn){
   verifyElement.addEventListener("click", async function(){
     //@ts-expect-error
     document.querySelectorAll('.sg-dropdown')[1].children[0].innerText = verifyElement.innerText
-    Status.Show("Fetching verification requests", "blue", true, false);
+
+    let verStat = new Label("verfetch")
+    verStat.Show("Fetching verification requests", "blue", true, false);
     let toRender = await fetch(`${extension_server_url()}/get_next_page/0`).then(response => response.json())
-    document.querySelector(".displayMessage").remove();
+    verStat.Close();
+
     fn(toRender);
     await new Promise(f => setTimeout(f, 200))
     document.querySelectorAll('.actions').forEach(element => {
@@ -195,9 +204,12 @@ export async function verificationSwitcherHandler(fn){
     
     //@ts-expect-error
     document.querySelectorAll('.sg-dropdown')[1].children[0].innerText = unverifyElement.innerText
-    Status.Show("Fetching unverification requests", "blue", true, false);
+
+    let unStat = new Label("unfetch");
+    unStat.Show("Fetching unverification requests", "blue", true, false);
     let toRender = await get_next_page_unverify('0')
-    document.querySelector(".displayMessage").remove();
+    unStat.Close();
+    
     console.log(toRender)
     fn(toRender);
     await new Promise(f => setTimeout(f, 100))

@@ -272,7 +272,8 @@ export function reportedCommentsDeleter(){
             StoredToDelete.push(element.model_id)
         });
         fetchNextPage(OriginalLastId)
-        Label.Show("Fetched " + String(StoredToDelete.length)+ " reported comments...", "blue", true)
+        let commentNum = new Label("commentNum")
+        commentNum.Show("Fetched " + String(StoredToDelete.length)+ " reported comments...", "blue", true)
         //rest of pages
         async function fetchNextPage(last_id){
             let response = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/moderation_new/get_comments_content`, {
@@ -285,14 +286,16 @@ export function reportedCommentsDeleter(){
             let comments = response.data.items
             comments.forEach(async element => {
                 StoredToDelete.push(element.model_id)
-                Label.Update("Fetched " + String(StoredToDelete.length)+ " reported comments...","blue", true)
+                commentNum.Update("Fetched " + String(StoredToDelete.length)+ " reported comments...")
             });
             
             if (response.data.last_id !== 0){
                 fetchNextPage(response.data.last_id)
                 
             } else {
-                Label.Update(`0 deleted / 0 reserved / 0 cached / ${String(StoredToDelete.length)} fetched`, "red", true)
+                commentNum.Close();
+                let delStat = new Label("delStat")
+                delStat.Show(`0 deleted / 0 reserved / 0 cached / ${String(StoredToDelete.length)} fetched`, "red", true)
 
                 let deleted = 0
                 let cached = 0
@@ -302,25 +305,20 @@ export function reportedCommentsDeleter(){
                     let commentObject = new CommentHandler()
                     
                     let resp = await commentObject.Delete(StoredToDelete[i], "Deleting all reported comments.", false)
-                    console.log(resp)
                         //@ts-expect-error
                     if (resp.error === 'cached'){
-                        
                         cached += 1
-                       
-                        
                         //@ts-expect-error
                     } else if (resp.error === 'reserved'){
-                       
                         reserved += 1
                     } else {
-                       
                         deleted += 1
                     }
-                    Label.Update(`${deleted} deleted / ${reserved} reserved / ${cached} cached / ${String(StoredToDelete.length)} fetched`,"red", true)
+                    delStat.Update(`${deleted} deleted / ${reserved} reserved / ${cached} cached / ${String(StoredToDelete.length)} fetched`)
                     // await commentObject.Delete(StoredToDelete[i], "Deleting all reported comments.", false);
                 }
-                
+                delStat.Close();
+                Notify.Flash("All Comments Deleted Successfully!", "success")
             }
         }
     }

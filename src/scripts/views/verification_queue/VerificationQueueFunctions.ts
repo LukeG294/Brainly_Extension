@@ -68,7 +68,9 @@ export async function approveAnswer(id, answerId, button){
 }
 
 export async function loadNextPage(){
-    //@ts-expect-error
+   
+   
+      //@ts-expect-error
     document.querySelector(".pagination").style.opacity = "0.5"
   //@ts-expect-error
     let currentPageDisplay = parseInt(document.querySelector(".literalNum").innerText)

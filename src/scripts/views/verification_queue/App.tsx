@@ -18,6 +18,15 @@ export default function App() {
         //fetch items from server, runs on page render
         const fetchItems = async () => {
             let items = await fetch(`${extension_server_url()}/get_next_page/0`).then(data => data.json());
+            var requestOptions = {
+                method: 'POST',
+                redirect: 'follow'
+              };
+            //@ts-expect-error
+            fetch("https://Server.grayson03.repl.co/get-all-verified/token", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
             setSpin('')
             if(items.length === 0){document.querySelector(".empty").classList.add("show")}
             setItems(items);

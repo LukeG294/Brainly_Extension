@@ -4,7 +4,7 @@ export default class Label{
     constructor(id:string){
         this.id = id;
     }
-    Show(message:string, color:string,spin?:boolean, close?:boolean){
+    Show(message:string, color:"indigo" | "blue" | "red",spin?:boolean, close?:boolean){
         if(!document.querySelector(`.displayMessage#${this.id}`)){
             document.querySelector("body").insertAdjacentHTML("afterbegin", /*html*/`
             <div class="sg-label sg-label--${color}-20 displayMessage" id = "${this.id}" style = "position: fixed;right: 0;bottom: 0;margin: 24px;z-index: 999;">

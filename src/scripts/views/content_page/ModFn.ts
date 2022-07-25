@@ -1,31 +1,33 @@
-import {
-    deletion_menu,
-    get_reported_content,
-    approve_selected,
-    delete_selected,
-    unverify_selected,
-    confirm_selected
-} from "./ContentPageButtons"
+import Components from "scripts/HTML_exports/Components"
 import {
     parseQuestionLink
 } from "configs/config"
 import {
     getCookie
 } from "../../common/CommonFunctions"
+import { deletion_menu, confirm_selected, delete_selected, get_reported_content } from "./ContentPageButtons"
 import { showDelrsn, confirmDeletion } from "./ButtonFunctions"
 import Notify from "../../common/Notifications/Notify"
 import {
     Answer,
     Question
 } from "../../common/Content"
+import Status from "scripts/common/Notifications/Status"
 import BasicFn from "./BasicFn"
 
 export default new class ModFn{
 
     async approveAnswers(elem) {
-        elem.insertAdjacentHTML('beforeend', approve_selected())
-        document.querySelector("#approveSelected").addEventListener("click", function(){
-        document.querySelector("#approveSelected  .spinner-container").classList.add("show");
+        elem.insertAdjacentElement('beforeend', Components.Button({
+            size: "m",
+            type: "solid",
+            text: "",
+            icon: "verified",
+            ClassNames: "approve"
+        }))
+        document.querySelector(".approve").addEventListener("click", function(){
+        let stat = new Status("approve");
+        stat.Show("Approving Selected Answers...", "indigo", true)
         let checkBoxes = document.getElementsByClassName("contentCheckboxes")
         let idsToVerify = []
         for (let i = 0; i < checkBoxes.length; i++) {
@@ -45,18 +47,14 @@ export default new class ModFn{
                 //@ts-ignore
             let answers = questionObjectData.data.responses
             let times = 0
-    
-    
             if (answers.length === 1) {
                 times = 1
             } else {
                 times = 2
             }
             for (let x = 0; x < times; x++) {
-    
                 let user = String(answers[x]["user_id"])
                 if (user === String(window.location.href.split("/")[5])) {
-    
                     let answerObj = new Answer()
                     await answerObj.Approve(answers[x]["id"])
                 }
@@ -64,13 +62,19 @@ export default new class ModFn{
         });
     
         Notify.Flash("Approved Selected Answers!", "success")
-        document.querySelector("#approveSelected  .spinner-container").classList.remove("show");
+        stat.Close();
     });
     }
     unverifyAnswers(elem) {
-        elem.insertAdjacentHTML('beforeend', unverify_selected());
-        document.querySelector("#unverify").addEventListener("click", function(){
-        document.querySelector("#unverify  .spinner-container").classList.add("show");
+        elem.insertAdjacentElement('beforeend', Components.Button({
+            size: "m",
+            text: "",
+            type: "solid",
+            icon: "thumb_down",
+            ClassNames: "unverify"
+        }));
+        document.querySelector(".unverify").addEventListener("click", function(){
+        document.querySelector(".unverify  .spinner-container").classList.add("show");
         let checkBoxes = document.getElementsByClassName("contentCheckboxes")
         let idsToUnverify = []
         for (let i = 0; i < checkBoxes.length; i++) {
@@ -113,13 +117,20 @@ export default new class ModFn{
     
         Notify.Flash(`${success} unapproved, ${fail} had an error. Do you have Super Moderator permissions?`, "success")
     
-        document.querySelector("#unverify  .spinner-container").classList.remove("show");
+        document.querySelector(".unverify  .spinner-container").classList.remove("show");
         });
     }
     confirmAnswers(elem) {
-        elem.insertAdjacentHTML('beforeend', confirm_selected())
-        document.querySelector("#confirmSelected").addEventListener("click", function(){
-        document.querySelector("#confirmSelected .spinner-container").classList.add("show");
+        elem.insertAdjacentElement('beforeend', Components.Button({
+            size: "m",
+            type: "solid",
+            text: "",
+            icon: "spark",
+            ClassNames: "confirm"
+        }))
+        document.querySelector(".confirm").addEventListener("click", function(){
+        let stat = new Status("confirm")
+        stat.Show("Confirming Selected Answers...", "indigo", true)
         let checkBoxes = document.getElementsByClassName("contentCheckboxes")
     
         let checkBoxesArr = Array.from(checkBoxes)
@@ -137,7 +148,6 @@ export default new class ModFn{
                     //@ts-expect-error
                     let answers = res.data.responses
                     let times = 0
-    
     
                     if (answers.length === 1) {
                         times = 1
@@ -159,13 +169,20 @@ export default new class ModFn{
             }
         });
         Notify.Flash("Confirmed selected answers!", "success");
-        document.querySelector("#confirmSelected  .spinner-container").classList.remove("show");
+        stat.Close()
         });
     }
     confirmQuestions(elem) {
-        elem.insertAdjacentHTML('beforeend', confirm_selected())
-        document.querySelector("#confirmSelected").addEventListener("click", function(){
-        document.querySelector("#confirmSelected  .spinner-container").classList.add("show");
+        elem.insertAdjacentElement('beforeend', Components.Button({
+            size: "m",
+            type: "solid",
+            ClassNames: "confirm",
+            icon: "spark",
+            text: ""
+        }))
+        document.querySelector(".confirm").addEventListener("click", function(){
+        let stat = new Status("conf");
+        stat.Show("Confirming Selected Questions...", "indigo", true)
         let checkBoxes = document.getElementsByClassName("contentCheckboxes")
         let idsToConfirm = []
         for (let i = 0; i < checkBoxes.length; i++) {
@@ -177,31 +194,42 @@ export default new class ModFn{
                 idsToConfirm.push(id)
             }
         }
-    
-        let myToken = getCookie("Zadanepl_cookie[Token][Long]")
         idsToConfirm.forEach(async element => {
             let ansObj = new Answer();
             ansObj.Confirm(element)
         });
     
     
-        document.querySelector("#confirmSelected  .spinner-container").classList.remove("show");
+        stat.Close();
         Notify.Flash("Questions confirmed successfully!", "success")
         });
     }
     delete(elem, type){
         elem.insertAdjacentHTML("afterend", deletion_menu());
-        elem.insertAdjacentHTML("beforeend", delete_selected());
-        document.querySelector("#deleteSelected").addEventListener("click", function(){showDelrsn(type)})
+        elem.insertAdjacentElement("beforeend", Components.Button({
+            type: "solid",
+            size: "m",
+            text: "",
+            ClassNames: "delete",
+            icon: "trash"
+        }));
+        document.querySelector(".delete").addEventListener("click", function(){showDelrsn(type)})
         document.querySelector(".confirmdel").addEventListener("click", function(){confirmDeletion(type)})
     }
     async find_reported_content(id, type: "responses" | "tasks", elem) {
-        elem.insertAdjacentHTML('beforeend', get_reported_content())
-        document.querySelector("#fetchReported").addEventListener("click", async function(){
+        elem.insertAdjacentElement('beforeend', Components.Button({
+            type: "solid",
+            size: "m",
+            icon: "report_flag_outlined",
+            text: "",
+            ClassNames: "fetchRep"
+        }))
+        document.querySelector(".fetchRep").addEventListener("click", async function(){
+            let stat = new Status("fetch");
             const foundReported = []
             let pagenum = document.querySelector("#content-old > div:nth-child(3) > p").children.length-2;
             
-            document.querySelector("#fetchReported  .spinner-container").classList.add("show");
+            stat.Show("Fetching Reported Content...", "indigo", true)
             for(let p=1; p<pagenum; p++){
                 console.log("page", p)
                 //@ts-ignore
@@ -270,7 +298,7 @@ export default new class ModFn{
             BasicFn.add_icons();
             BasicFn.checkboxes();
             BasicFn.addticket();
-            document.querySelector("#fetchReported  .spinner-container").classList.remove("show");
+            stat.Close()
         })
     }
 }

@@ -1,8 +1,4 @@
-import {
-    copy_links,
-    select_all,
-    toggle_selected
-} from "./ContentPageButtons"
+import Components from "scripts/HTML_exports/Components"
 import {
     insert_ticket
 } from "../../common/ModFunctions"
@@ -28,8 +24,14 @@ export default new class BasicFn{
         </td>`)}
     }
     selectAll(elem){
-        elem.insertAdjacentHTML('beforeend', select_all())
-        document.querySelector("#selectAll").addEventListener("click", function(){
+        elem.insertAdjacentElement('beforeend', Components.Button({
+            size: "m",
+            type: "solid",
+            text: "",
+            ClassNames: "select",
+            icon: "check"
+        }))
+        document.querySelector(".select").addEventListener("click", function(){
             let checkBoxes = document.getElementsByClassName("contentCheckboxes")
             for (let i = 0; i < checkBoxes.length; i++) {
                 // @ts-ignore
@@ -38,8 +40,14 @@ export default new class BasicFn{
         });
     }
     copyLinks(elem) {
-        elem.insertAdjacentHTML('beforeend', copy_links())
-        document.querySelector("#copyLinks").addEventListener("click", function(){
+        elem.insertAdjacentElement('beforeend', Components.Button({
+            size: "m",
+            type: "solid",
+            text: "",
+            ClassNames: "copy",
+            icon: "clipboard"
+        }))
+        document.querySelector(".copy").addEventListener("click", function(){
             let checkBoxes = document.getElementsByClassName("sg-checkbox__element")
             let links = []
             for (let i = 0; i < checkBoxes.length; i++) {
@@ -60,8 +68,14 @@ export default new class BasicFn{
         });
     }
     toggleSelection(elem) {
-        elem.insertAdjacentHTML('beforeend', toggle_selected())
-        document.querySelector("#toggleSelected").addEventListener("click", function(){
+        elem.insertAdjacentElement('beforeend', Components.Button({
+            size: "m",
+            text: "",
+            ClassNames: "toggle",
+            icon: "filters",
+            type: "solid"
+        }))
+        document.querySelector(".toggle").addEventListener("click", function(){
         let checkBoxes = document.getElementsByClassName("contentCheckboxes")
         for (let i = 0; i < checkBoxes.length; i++) {
             //@ts-ignore

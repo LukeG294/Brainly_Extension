@@ -3,12 +3,12 @@ import {getCookie} from "./CommonFunctions"
 
 export class Answer{
     Confirm(id:number){
-            var myHeaders = new Headers();
-            myHeaders.append("authority", "brainly.com");
-            myHeaders.append("accept", "*/*");
-            myHeaders.append("accept-language", "en-US,en;q=0.9");
-            myHeaders.append("content-type", "application/json");
-            myHeaders.append("x-b-token-long", getCookie('Zadanepl_cookie[Token][Long]'));
+        var myHeaders = new Headers();
+        myHeaders.append("authority", "brainly.com");
+        myHeaders.append("accept", "*/*");
+        myHeaders.append("accept-language", "en-US,en;q=0.9");
+        myHeaders.append("content-type", "application/json");
+        myHeaders.append("x-b-token-long", getCookie('Zadanepl_cookie[Token][Long]'));
 
         var raw = JSON.stringify({
         "operationName": "AcceptModerationReportContent",
@@ -33,20 +33,20 @@ export class Answer{
         .then(result => console.log(result))
         .catch(error => console.log('error', error));
     }
-    Approve(id:string){
-          BrainlyAPI.Legacy(`POST`, "api_content_quality/confirm", {
+    async Approve(id:string){
+          await BrainlyAPI.Legacy(`POST`, "api_content_quality/confirm", {
             "model_type": 2,
             "model_id": id
           });
     }
-    Unapprove(id:string){
-        BrainlyAPI.Legacy(`POST`, "api_content_quality/unconfirm", {
+    async Unapprove(id:string){
+        await BrainlyAPI.Legacy(`POST`, "api_content_quality/unconfirm", {
           "model_type": 2,
           "model_id": id
         });
     }
     async Delete(id:string, reason:string, warn:boolean, take_point:boolean){
-        BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_response_content', {
+        await BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_response_content', {
             "reason_id":2,
             "reason":reason,
             "give_warning":warn,

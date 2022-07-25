@@ -1,5 +1,5 @@
 const gulp = require("gulp");
-const sass = require("gulp-sass")(require("node-sass"));
+const sass = require("gulp-sass")(require("sass"));
 const watch = require("gulp-watch");
 const concat = require("gulp-concat");
 const ts = require("gulp-typescript");
@@ -60,4 +60,4 @@ gulp.task("default", gulp.parallel(
     "sass", 
     "manifest", 
     "resources"
-    ));
+));

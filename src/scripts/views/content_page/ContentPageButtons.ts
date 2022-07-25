@@ -1,6 +1,4 @@
-import {
-    runtime
-} from "webextension-polyfill"
+
 import Extension from "../../../locales/en/localization.json"
 
 export function select_all() {

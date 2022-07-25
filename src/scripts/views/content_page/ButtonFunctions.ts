@@ -9,6 +9,7 @@ import {
     Answer,
     Question
 } from "../../common/Content"
+import Status from "scripts/common/Notifications/Status"
 import Extension from "../../../locales/en/localization.json"
 
 export async function showDelrsn(type: "questions" | "answers") {
@@ -16,15 +17,16 @@ export async function showDelrsn(type: "questions" | "answers") {
         document.querySelector(".delmenu").classList.remove("show");
 
     } else {
+        let stat = new Status("del")
         //open ticket, get response, close it
         document.querySelector(".primary-items").innerHTML = '';
         let id = document.querySelector("tbody a").getAttribute("href").replace("/question/", "");
-        document.querySelector("#deleteSelected .spinner-container").classList.add("show");
+        stat.Show("Fetching Deletion Reasons...", "indigo", true, false)
         let res = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/moderation_new/get_content`, {
             method: "POST",
             body: (`{"model_type_id":1,"model_id":${id},"schema":"moderation.content.get"}`)
         }).then(data => data.json());
-        document.querySelector("#deleteSelected .spinner-container").classList.remove("show");
+        stat.Close();
         document.querySelector(".delmenu").classList.toggle("show");
         fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/moderate_tickets/expire`, {
             method: "POST",
@@ -101,7 +103,8 @@ export function addticket() {
 }
 export async function confirmDeletion(type: "questions" | "answers") {
     
-    document.querySelector("#deleteSelected  .spinner-container").classList.add("show");
+    let stat = new Status("conf")
+    stat.Show("Deleting Selected Content...", "indigo", true)
     let checkBoxes = document.getElementsByClassName("contentCheckboxes");
     let checkBoxesArr = Array.from(checkBoxes)
     checkBoxesArr.forEach(async element => {
@@ -162,5 +165,5 @@ export async function confirmDeletion(type: "questions" | "answers") {
         }
     });
     Notify.Flash(`Selected ${type} removed successfully.`, "success");
-    document.querySelector("#deleteSelected  .spinner-container").classList.remove("show");
+    stat.Close();
 }

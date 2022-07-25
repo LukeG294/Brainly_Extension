@@ -6,7 +6,7 @@
 .warnpts{
   border-bottom:none!important;
 }
-button#selectAll::after {
+button.select::after {
   content: '';
   width: 1px;
   margin: 0px 8px;
@@ -21,16 +21,24 @@ a[style = "color: #3366cc;"]{
 }
 .mass-actions{
   position: fixed;
-  bottom: 0;
-  left: 0;
-  background: white;
-  width: 100%;
   z-index: 800;
   padding: 12px 18px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  background: black;
+  width: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 3%;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-around;
   flex-wrap: wrap;
+  button{
+    &:focus, &:hover{
+      background-color: black!important;
+    }
+  }
 }
 .primary-items, .secondary-items, .warnpts{ 
     margin-top:8px;

@@ -3,10 +3,9 @@ import {login_run} from "../../common/Ryver/RyverLogin"
 import { ModObserver, AnsObserver } from "./Exports";
 import {AddContent} from "../../common/Preview/Functions"
 //import {subscribe, setAuth} from "../common/livemod"
-
 import Notify from "../../common/Notifications/Notify";
 import Extension from "../../../locales/en/localization.json"
-
+var checker = require("../../common/NoSwearing/index")
 //@ts-ignore
 async function homeperms(){
   let perms = localStorage.getItem("userPerms").split(",")
@@ -34,4 +33,7 @@ if(!localStorage.getItem("userAuth")){
   })
 }
 
-
+document.querySelector("html").insertAdjacentHTML("beforeend", "<textarea class = 'noswear'></textarea>");
+document.querySelector(".noswear").addEventListener("input", function(){
+  console.log(checker((<HTMLInputElement>document.querySelector(".noswear")).value))
+});

@@ -23,6 +23,7 @@
         "babel": "^6.23.0",
         "babel-cli": "^6.26.0",
         "babel-loader": "^8.2.3",
+        "fs": "^0.0.1-security",
         "glob": "^7.2.0",
         "gulp": "^4.0.0",
         "gulp-cli": "^2.3.0",
@@ -6410,6 +6411,12 @@
       "engines": {
         "node": ">=0.10.0"
       }
+    },
+    "node_modules/fs": {
+      "version": "0.0.1-security",
+      "resolved": "https://registry.npmjs.org/fs/-/fs-0.0.1-security.tgz",
+      "integrity": "sha512-3XY9e1pP0CVEUCdj5BmfIZxRBTSDycnbqhIOGec9QYtmVH2fbLpj86CFWkrNOkt/Fvty4KZG5lTglL9j/gJ87w==",
+      "dev": true
     },
     "node_modules/fs-minipass": {
       "version": "2.1.0",
@@ -20934,6 +20941,12 @@
       "requires": {
         "map-cache": "^0.2.2"
       }
+    },
+    "fs": {
+      "version": "0.0.1-security",
+      "resolved": "https://registry.npmjs.org/fs/-/fs-0.0.1-security.tgz",
+      "integrity": "sha512-3XY9e1pP0CVEUCdj5BmfIZxRBTSDycnbqhIOGec9QYtmVH2fbLpj86CFWkrNOkt/Fvty4KZG5lTglL9j/gJ87w==",
+      "dev": true
     },
     "fs-minipass": {
       "version": "2.1.0",

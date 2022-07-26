@@ -50,7 +50,6 @@ export async function startCompanionManager(){
                     <span class="sg-button__text"><div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-trash"></use></svg></div></span>
                 </button>
             </div>
-            <div class="permlist"></div>
         </div>`)
         
     }

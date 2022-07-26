@@ -1,5 +1,4 @@
 import BrainlyAPI from "./BrainlyAPI"
-import {getCookie} from "./CommonFunctions"
 import Extension from "../../locales/en/localization.json"
 
 export default new class User{
@@ -43,8 +42,5 @@ export default new class User{
                 }
             }`
         )
-    }
-    async Get_Bio(id:number){
-        return await (await BrainlyAPI.GetUser(id)).data.description;
     }
 }

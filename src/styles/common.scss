@@ -941,9 +941,14 @@
     padding: 8px 0px;
     border-bottom: 1px solid #c3d1dd;
     > label{
-      padding:0px 8px;
+      padding:0px 4px;
+      display: inline-flex!important;
+      flex-direction: row;
       > span:last-child{
         margin-left:8px;
+      }
+      >input{
+        position: absolute!important;
       }
     }
   }
@@ -962,8 +967,13 @@
     .warnpts{
       label{
         margin-right:8px;
+        display: inline-flex!important;
+        flex-direction: row;
         span{
           margin-left:4px!important;
+        }
+        input{
+          position:absolute!important;
         }
       }
     }

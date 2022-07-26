@@ -1,34 +1,9 @@
 import { extension_server_url, pageElement, pageElementAll } from "configs/config";
 import Notify from "../../common/Notifications/Notify"
-import {Answer} from "../../common/Content"
 import User from "../../common/User"
 import Extension from "../../../locales/en/localization.json"
 import { insert_ticket } from "../../common/ModFunctions";
 
-export function confirmButton(){
-  
-    let answers = pageElementAll("div[data-testid = 'moderation_box_answer'] > div");
-    
-    let button = /*html*/`
-    <button title="confirm"  class="sg-button sg-button--s sg-button--solid"><span class="sg-button__icon sg-button__icon--s">
-        <div class="sg-icon sg-icon--icon-white sg-icon--x16">
-            <svg class="sg-icon__svg" role="img" aria-labelledby="title-star-e7dj7r" focusable="false"><text id="title-star-e7dj7r" hidden="">star</text><use xlink:href="#icon-star_outlined" aria-hidden="true"></use></svg>
-        </div>
-        </span>
-            <span class="sg-button__text">confirm</span>
-    </button>
-    `
-    
-    for (let i = 0; i < answers.length; i++) {
-      answers[i].insertAdjacentHTML("afterbegin", `<div id=confirm${i}>`+button+`</div>`) //set the id of the confirm button to confirm0 or confirm1 for click events later
-      document.getElementById("confirm"+i).addEventListener("click",function(){
-        let answerIDs = JSON.parse(pageElement("#question-sg-layout-container > div.brn-qpage-layout.js-main-container.js-ads-screening-content > div.brn-qpage-layout__main.empty\\:sg-space-y-m.md\\:empty\\:sg-space-y-l > article").getAttribute("data-z"))
-        let ID = answerIDs["responses"][i]["id"]
-        let thisans = new Answer()
-        thisans.Confirm(ID)
-      })
-    }
-}
 export async function removeAnswer(id, type:string){
   if (type === 'verification'){
     let resp = await fetch(`${extension_server_url()}/answers/`+id,{method: "DELETE"})

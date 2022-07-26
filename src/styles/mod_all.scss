@@ -5,6 +5,7 @@ div.top > div.header > h1{
 .moderation-item{
     position:relative;
     .ticket_reserved_mod_box{
+        pointer-events: none;
         top: 0;
         position: absolute;
         height: 100%;

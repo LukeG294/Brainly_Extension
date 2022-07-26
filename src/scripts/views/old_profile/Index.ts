@@ -1,11 +1,8 @@
 
 import {add_del_menu, delete_user_btn} from "./DelMenuExp"
 import {show_recent_warnings} from "./RecentWarnings"
-import {insert_bio} from "./UserBio"
 import {manage_user} from "./ManageUser"
 //@ts-ignore
-
-insert_bio()
 
 async function oldProfile(){
   let perms = localStorage.userPerms.split(",")

@@ -5,7 +5,7 @@ import {
 import {
     getCookie
 } from "../../common/CommonFunctions"
-import { deletion_menu, confirm_selected, delete_selected, get_reported_content } from "./ContentPageButtons"
+import { deletion_menu} from "./ContentPageButtons"
 import { showDelrsn, confirmDeletion } from "./ButtonFunctions"
 import Notify from "../../common/Notifications/Notify"
 import {

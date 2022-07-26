@@ -6,15 +6,6 @@
 .warnpts{
   border-bottom:none!important;
 }
-button.select::after {
-  content: '';
-  width: 1px;
-  margin: 0px 8px;
-  height: 100%;
-  background: #c3d1dd;
-  position: absolute;
-  right: -14px;
-}
 a[style = "color: #3366cc;"]{
   color:black!important;
   font-size: 1rem;
@@ -63,9 +54,7 @@ a[style = "color: #3366cc;"]{
   margin-bottom:8px;
 }
 #container{
-  width:85%!important;
   div#content-old{
-    width:100%!important;
     >div:nth-child(1) {
       display:flex;
       align-items:center;

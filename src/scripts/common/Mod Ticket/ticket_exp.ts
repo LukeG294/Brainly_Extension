@@ -77,33 +77,46 @@ export function ticket(){
               </div>
             </div>
             <div class="delmenu">
-              <div class="primary-items"></div>
-              <div class="secondary-items"></div>
+              <div class="primary-items sg-radio-group sg-radio-group__items sg-radio-group__items--direction-row" role = "radiogroup"></div>
+              <div class="secondary-items sg-radio-group sg-radio-group__items sg-radio-group__items--direction-row" role = "radiogroup"></div>
               <textarea placeholder="Reason" class=" deletion-reason sg-textarea sg-textarea--tall"></textarea>
               <div class="sg-space-x-m del-options">
                 <div class="warnpts">
+                    <div class="sg-checkbox sg-checkbox--dark sg-checkbox--with-padding">
+                      <div class="sg-checkbox__wrapper">
+                        <div class="sg-checkbox__element">
+                          <input class="sg-checkbox__input" id="pts" type="checkbox" aria-checked="false" aria-describedby="" value="">
+                          <span class="sg-checkbox__icon" aria-hidden="true">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.475 8.01008L6.48494 11.0201L12.5249 4.98" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                          </span>
+                        </div>
+                        <label for="pts" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">${Extension.buttons.takePoints}</label>
+                      </div>
+                    </div>
 
-                  <label class="sg-checkbox" for="pts">
-                    <input type="checkbox" class="sg-checkbox__element" id="pts">
-                    <div class="sg-checkbox__ghost" aria-hidden="true">
-                      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+                  <div class="sg-checkbox sg-checkbox--dark sg-checkbox--with-padding">
+                    <div class="sg-checkbox__wrapper">
+                      <div class="sg-checkbox__element">
+                        <input class="sg-checkbox__input" id="res-pts" type="checkbox" aria-checked="false" aria-describedby="" value="">
+                        <span class="sg-checkbox__icon" aria-hidden="true">
+                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.475 8.01008L6.48494 11.0201L12.5249 4.98" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        </span>
+                      </div>
+                      <label for="res-pts" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">take back respondents' points</label>
                     </div>
-                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">${Extension.buttons.takePoints}</span>
-                  </label>
-                  <label class="sg-checkbox" for="res-pts">
-                    <input type="checkbox" class="sg-checkbox__element" id="res-pts">
-                    <div class="sg-checkbox__ghost" aria-hidden="true">
-                      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
+                  </div>
+
+                  <div class="sg-checkbox sg-checkbox--dark sg-checkbox--with-padding">
+                    <div class="sg-checkbox__wrapper">
+                      <div class="sg-checkbox__element">
+                        <input class="sg-checkbox__input" id="warn" type="checkbox" aria-checked="false" aria-describedby="" value="">
+                        <span class="sg-checkbox__icon" aria-hidden="true">
+                          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.475 8.01008L6.48494 11.0201L12.5249 4.98" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        </span>
+                      </div>
+                      <label for="warn" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">${Extension.buttons.warnUser}</label>
                     </div>
-                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">take back respondents' points</span>
-                  </label>
-                  <label class="sg-checkbox" for="warn">
-                    <input type="checkbox" class="sg-checkbox__element" id="warn">
-                    <div class="sg-checkbox__ghost" aria-hidden="true">
-                      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-                    </div>
-                    <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label">${Extension.buttons.warnUser}</span>
-                  </label>
+                  </div>
                 </div>
                 <div class="confirmdel">
                 <button class="sg-button sg-button--m sg-button--outline"><span class="sg-button__text">confirm</span></button>

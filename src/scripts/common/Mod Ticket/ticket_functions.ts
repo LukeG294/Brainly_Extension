@@ -3,7 +3,7 @@ import {ticket} from "./ticket_exp"
 import {Answer, CommentHandler, Question} from "../Content"
 import {get_time_diff} from "../CommonFunctions"
 import BrainlyAPI from "../BrainlyAPI"
-import {DelMenu, AnswerElem} from "../../HTML_exports/Snippets"
+import {DelMenu, AnswerElem} from "../../Items/Snippets"
 import Extension from "../../../locales/en/localization.json"
 
 function add_log(log){
@@ -53,11 +53,16 @@ function add_deletion(del_rsn, elem, tid, type:string){
 
   for(let i = 0; i < del_rsn.length; i++){
     elem.querySelector(".primary-items").insertAdjacentHTML("beforeend",/*html*/`
-      <label class="sg-radio sg-radio--xxs" for="${del_rsn[i].id}${tid}">
-        <input type="radio" class="sg-radio__element" name="group1" id="${del_rsn[i].id}${tid}" index = "${i}">
-        <span class="sg-radio__ghost" aria-hidden="true"></span>
-        <span class="sg-text sg-text--small sg-text--bold sg-radio__label">${del_rsn[i].text}</span>
-      </label>`
+    <div class="sg-radio sg-radio--dark sg-radio--with-label sg-radio--with-padding">
+      <div class="sg-radio__wrapper">
+        <div class="sg-radio__element">
+          <input class="sg-radio__input" type="radio" id="${del_rsn[i].id}${tid}" index = "${i}" name="option" aria-labelledby="${del_rsn[i].id}${tid}-label">
+          <span class="sg-radio__circle" aria-hidden="true"></span>
+        </div>
+        <label id="${del_rsn[i].id}${tid}-label" for="${del_rsn[i].id}${tid}" class="sg-text sg-text--small sg-text--bold sg-radio__label">${del_rsn[i].text}</label>
+      </div>
+    </div>
+      `
     )
   }
 
@@ -93,11 +98,16 @@ function add_deletion(del_rsn, elem, tid, type:string){
     //adds subcategories to the elem
     for(let i = 0; i < selected_subcats.length; i++){
       elem.querySelector(".secondary-items").insertAdjacentHTML("beforeend",/*html*/`
-        <label class="sg-radio sg-radio--xxs" for="${selected_subcats[i].id}${tid}">
-          <input type="radio" class="sg-radio__element" name="group2" id="${selected_subcats[i].id}${tid}" index = "${i}">
-          <span class="sg-radio__ghost" aria-hidden="true"></span>
-          <span class="sg-text sg-text--small sg-text--bold sg-radio__label">${selected_subcats[i].title}</span>
-        </label>`
+      <div class="sg-radio sg-radio--dark sg-radio--with-label sg-radio--with-padding">
+        <div class="sg-radio__wrapper">
+          <div class="sg-radio__element">
+            <input class="sg-radio__input" type="radio" id="${selected_subcats[i].id}${tid}" index = "${i}" name="option" aria-labelledby="${selected_subcats[i].id}${tid}-label">
+            <span class="sg-radio__circle" aria-hidden="true"></span>
+          </div>
+          <label id="${selected_subcats[i].id}${tid}-label" for="${selected_subcats[i].id}${tid}" class="sg-text sg-text--small sg-text--bold sg-radio__label">${selected_subcats[i].title}</label>
+        </div>
+      </div>
+        `
       )
     }
 

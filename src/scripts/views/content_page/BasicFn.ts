@@ -1,7 +1,8 @@
-import Components from "scripts/HTML_exports/Components"
+import Components from "scripts/Items/Components"
 import {
     insert_ticket
 } from "../../common/ModFunctions"
+import Form from "scripts/Items/Form"
 
 export default new class BasicFn{
 
@@ -9,19 +10,19 @@ export default new class BasicFn{
         let content = document.querySelectorAll("table > tbody > tr")
         first ? document.querySelector("thead tr").insertAdjacentHTML("afterbegin", "<th style = 'width: 1%'></th>") : {};
         for (let i = 0; i < content.length; i++) {
-            content[i].classList.add("modified");
+            let checkTD = document.createElement("td");
+            checkTD.appendChild(Form.Checkbox({
+                classes: ["contentCheckboxes"],
+                id: `checkbox${i}`,
+                Attributes: [{
+                    key: "onclick", 
+                    value: `document.querySelector('#checkbox-${i}').closest('tr').classList.toggle('selected')`
+                }]
+            }))
+            content[i].classList.add("modified", `checkbox${i}`);
             content[i].children[1].classList.add("iconcell")
-            content[i].insertAdjacentHTML('afterbegin', /*html*/ `
-        <td class="sg-space-x-m" style = "padding: 0px; padding-left: 8px; text-align:center;">
-            <label class="sg-checkbox" for="${i}"><input type="checkbox" class="sg-checkbox__element contentCheckboxes" id="${i}">
-            <div class="sg-checkbox__ghost" aria-hidden="true">
-            <div class="sg-icon sg-icon--adaptive sg-icon--x16">
-                <svg class="sg-icon__svg" role="img" aria-labelledby="title-check-255xyo" focusable="false"><text id="title-check-255xyo" hidden="">check</text>
-                <use xlink:href="#icon-check" aria-hidden="true"></use></svg>
-            </div>
-            </div>
-            </label>
-        </td>`)}
+            content[i].insertAdjacentElement('afterbegin', checkTD)
+        }
     }
     selectAll(elem){
         elem.insertAdjacentElement('beforeend', Components.Button({

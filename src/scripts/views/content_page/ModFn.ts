@@ -1,4 +1,4 @@
-import Components from "scripts/HTML_exports/Components"
+import Components from "scripts/Items/Components"
 import {
     parseQuestionLink
 } from "configs/config"

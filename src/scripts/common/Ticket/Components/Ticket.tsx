@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import BrainlyAPI from "../../BrainlyAPI"
-
-import Question from "./Question"
+import {Overlay, Flex, Box} from "brainly-style-guide"
 
 export default function Ticket(id){
     useEffect(() => {
@@ -9,8 +8,15 @@ export default function Ticket(id){
     })
 
     return(
-        <div className="modal">
-            <Question />
-        </div>
+        <Overlay color="black">
+            <Flex
+            alignItems="center"
+            fullHeight
+            >
+                <Box color="white">
+                    content example
+                </Box>
+            </Flex>
+        </Overlay>
     )
 }

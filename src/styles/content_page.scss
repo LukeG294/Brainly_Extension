@@ -6,6 +6,11 @@
 .warnpts{
   border-bottom:none!important;
 }
+.sg-checkbox__wrapper{
+  input{
+    width:100%!important;
+  }
+}
 a[style = "color: #3366cc;"]{
   color:black!important;
   font-size: 1rem;
@@ -75,10 +80,27 @@ a[style = "color: #3366cc;"]{
       }
     }
     tbody{
+      th,td{
+        &:first-child{
+          border-radius: 10px 0 0 10px;
+        }
+        &:last-child{
+          border-radius: 0 10px 10px 0;
+        }
+      }
+      >tr.modified {
+        > td{
+          &:nth-child(2){
+            text-align: center!important;
+          }
+        }
+      }
+      //>tr.selected{
+      //  
+      //}
       tr{
         height: 40px;
-        border-top: 1px solid #c3d1dd;
-        border-bottom: 1px solid #c3d1dd;
+        border-bottom: 4px solid white;
         &:nth-child(2n){
           background:#e1eaf1;
         }
@@ -89,9 +111,6 @@ a[style = "color: #3366cc;"]{
           padding-right:8px;
         }
       }
-      div{
-        font-size:11px!important;
-      }
     }
   }
 }
@@ -101,6 +120,7 @@ a[style = "color: #3366cc;"]{
   padding-bottom: 15px;
   li.active a{
     color:#f0f2f5!important;
+    background:black!important;
   }
 }
 .contenticon{
@@ -164,15 +184,60 @@ div#content-old a{
   font-weight: 900;
   font-size: 2rem;
 }
-tbody{
-  >tr.modified {
-    > td{
-      &:nth-child(2){
-        text-align: center!important;
+thead > th:nth-child(2){
+  text-align:center!important;
+}
+table{display:none;}
+.content{
+  flex-direction: column;
+  display: flex;
+  .content-row{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 10px;
+    border: 2px solid #f5f8fa;
+    padding: 8px 12px;
+    margin-bottom:4px;
+    &.selected{
+      border-color: black!important;
+  }
+    .content-text{
+      flex:1;
+      font-size:13px!important;
+    }
+    .num{
+      width:20px;
+      display:flex;
+      font-weight:700;
+      font-size:13px!important;
+      justify-content:center;
+    }
+    .date{
+      display: flex;
+      text-align:center;
+      align-items: center;
+      font-weight: 600;
+      color: white;
+      text-transform: uppercase;
+      justify-content: center;
+      background: black;
+      padding: 4px 8px;
+      width: 120px;
+      min-width: 100px;
+      margin: 0px;
+      border-radius: 5px;
+      margin-left: 12px!important;
+      font-size:13px!important;
+    }
+    .subject{
+      width:max-content!important;
+      svg{
+        height:32px!important;
+        width:32px!important;
       }
     }
   }
-}
-thead > th:nth-child(2){
-  text-align:center!important;
 }

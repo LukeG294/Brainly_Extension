@@ -1,5 +1,12 @@
 *{
   --primary-color: #ccebd7;
+  --radioColor: #000000;
+  --radioHoverColor: #46535f;
+  --radioInvalidColor: #cf1d00;
+  --radioInvalidHoverColor: #ff341a;
+  --radioLabelColor: #000000;
+  --radioDescriptionColor: #000000;
+  --radioOutlineColor: #4fb3f6;
 }
 [class ^= 'Header-module'], div[class ^= 'brn-header-placeholder'], .brn-footer, #html .mint .mint-header, #moderate-functions-panel .covering-text, footer[data-testid = 'footer_layout'],.brn-header-placeholder, #footer{
   background-color:var(--primary-color)!important;
@@ -855,19 +862,9 @@
     margin-top:8px;
     padding: 8px 0px;
     border-bottom: 1px solid #c3d1dd;
-    > label{
-      padding:0px 4px;
-      display: inline-flex!important;
-      flex-direction: row;
-      > span:last-child{
-        margin-left:8px;
-        padding-right:0px!important;
-      }
-      >input{
-        position: absolute!important;
-        height:16px;
-        width:16px;
-      }
+    label{
+      display: flex!important;
+      align-items:center;
     }
   }
   .deletion-reason{

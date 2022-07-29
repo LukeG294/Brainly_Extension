@@ -4,7 +4,7 @@ import User from "../../common/User"
 import { startCompanionManager } from "../../common/Management";
 import Notify from "../../common/Notifications/Notify";
 import Label from "../../common/Notifications/Status"
-import {macc_d, mcompu, mmContentModal, mmsg_s} from "../../HTML_exports/macc-d_exp"
+import {macc_d, mcompu, mmContentModal, mmsg_s} from "../../Items/macc-d_exp"
 import Extension from "../../../locales/en/localization.json"
 import {CommentHandler, Question} from "../../common/Content"
 import Ryver from "../../common/Ryver/Ryver";

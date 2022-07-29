@@ -8,7 +8,7 @@
       "outDir": "/dist/content-scripts/js",
       "esModuleInterop": true,
       "resolveJsonModule": true,
-      "lib": ["ES5", "ES6", "DOM"],
+      "lib": ["ES5", "ES6", "DOM", "ES2021"],
       "paths": {
         "@src": ["./scripts/*.ts"],
         "@locales": ["./locales"],

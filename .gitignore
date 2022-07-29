@@ -5,4 +5,3 @@ dist/content/scripts/*/**
 dist/***
 dist/content-scripts/js/bundle.js
 dist/resources/*
-src/scripts/common/NoSwearing

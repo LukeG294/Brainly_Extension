@@ -214,8 +214,14 @@ table{display:none;}
     padding: 8px 12px;
     margin-bottom:4px;
     position:relative;
+    &.deleted{
+      border-color: #ff7968!important;
+    }
     &.selected{
       border-color: black!important;
+      &.deleted{
+        border-color: #ff7968!important;
+      }
     }
     .sg-spinner-container__overlay{
       display:none;

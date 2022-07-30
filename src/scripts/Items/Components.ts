@@ -22,26 +22,36 @@ export default new class Component{
     Button(props:{
         size: "l" | "m" | "s",
         type: 'solid' | 'solid-inverted' | 'solid-indigo' | 'solid-indigo-inverted' | 'solid-light' | 'outline' | 'outline-indigo' | 'outline-inverted' | 'transparent' | 'transparent-light' | 'transparent-red' | 'transparent-inverted', 
-        ClassNames: string,
-        text:string,
+        ClassNames?: string[],
+        text?:string,
         color?: "peach" | "mustard" | "blue",
         icon?,
-        iconColor?: "peach" | "mustard" | "blue"}
+        iconSize?: "24" | "16",
+        iconColor?: "peach" | "mustard" | "blue",
+        Attributes?: {
+            key: string,
+            value: string
+        }[]
+    }
         ):Element{
         this.button = document.createElement("button");
 
         this.button.classList.add("sg-button", `sg-button--${props.size}`, `sg-button--${props.type}`)
-        props.ClassNames?{this:this.button.classList.add(`${props.ClassNames.split(" ")}`)}:{}
         
-        props.icon?{
-            this:this.button.insertAdjacentElement("beforeend", this.Icon(props.icon, "24"))
-        }:{}
+        props.icon?{this:this.button.insertAdjacentElement("beforeend", this.Icon(props.icon, props.iconSize))}:{}
 
         props.text?{
             this:this.button.insertAdjacentHTML("beforeend", /*html*/`<span class="sg-button__text">${props.text}</span>`)
         }:{
             this:this.button.classList.add("icononly")
         }
+
+        props.Attributes? {
+            props: props.Attributes.forEach(attr => {
+                this.button.setAttribute(attr.key, attr.value);
+            })
+        }:{}
+        props.ClassNames?{this: this.button.classList.add(...props.ClassNames)}:{}
 
         return this.button;
     }

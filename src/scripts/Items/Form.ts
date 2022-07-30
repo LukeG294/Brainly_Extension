@@ -64,13 +64,46 @@ export default new class Form{
             })
             return this.boxRadio;
     }
-    RadioGroup(){
+    RadioGroup(props:{
+        ClassName?:string[],
+        id: string,
+        type: "row" | "column",
+        LookFor: {
+            name: string,
+            id: string
+        }
+        items: Array<{
+            id:string,
+            text:string,
+            Attributes?: {
+                key: string,
+                value: string
+            }[]
+        }>
+    }){
         this.radio = document.createElement("div");
         this.radio.innerHTML = /*html*/`
             <div class="sg-radio-group" role="radiogroup">
-                <div class="sg-radio-group__items sg-radio-group__items--direction-column">
-                    <div class="sg-radio sg-radio--dark sg-radio--with-label sg-radio--with-padding">
-                        <div class="sg-radio__wrapper"><div class="sg-radio__element"><input class="sg-radio__input" type="radio" id="m2nnspmooco" name="option" aria-labelledby="m2nnspmooco-label" value="option-a" checked=""><span class="sg-radio__circle" aria-hidden="true"></span></div><label id="m2nnspmooco-label" for="m2nnspmooco" class="sg-text sg-text--medium sg-text--bold sg-radio__label">Option A</label></div></div><div class="sg-radio sg-radio--dark sg-radio--with-label sg-radio--with-padding"><div class="sg-radio__wrapper"><div class="sg-radio__element"><input class="sg-radio__input" type="radio" id="oemddkgk4ng" name="option" aria-labelledby="oemddkgk4ng-label" value="option-b"><span class="sg-radio__circle" aria-hidden="true"></span></div><label id="oemddkgk4ng-label" for="oemddkgk4ng" class="sg-text sg-text--medium sg-text--bold sg-radio__label">Option B</label></div></div></div></div>
+                <div class="sg-radio-group__items sg-radio-group__items--direction-${props.type}">
+                    
+                </div>
+            </div>
         `
+        props.ClassName?{this: this.radio.classList.add(...props.ClassName)}:{}
+        props.items.forEach((item, index)=> {
+            console.log("item", item)
+            this.radio.querySelector(".sg-radio-group__items").insertAdjacentHTML("beforeend",/*html*/`
+                    <div class="sg-radio sg-radio--dark sg-radio--with-label sg-radio--with-padding">
+                        <div class="sg-radio__wrapper">
+                            <div class="sg-radio__element">
+                                <input class="sg-radio__input" type="radio" name = "${props.id}"  id ="${item[props.LookFor.id]}" value = "${index}" aria-labelledby="${item[props.LookFor.id]}-label">
+                                <span class="sg-radio__circle" aria-hidden="true"></span>
+                            </div>
+                            <label id="${item[props.LookFor.id]}-label" for="${item[props.LookFor.id]}" class="sg-text sg-text--medium sg-text--bold sg-radio__label">${item[props.LookFor.name]}</label>
+                        </div>
+                    </div>
+            `)
+        })
+        return this.radio;
     }
 }

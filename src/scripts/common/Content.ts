@@ -40,13 +40,18 @@ export class Answer{
           });
     }
     async Unapprove(id:string){
-        await BrainlyAPI.Legacy(`POST`, "api_content_quality/unconfirm", {
-          "model_type": 2,
-          "model_id": id
+        await fetch("https://brainly.com/api/28/api_content_quality/unconfirm", {
+            method: "POST",
+            body: JSON.stringify({
+                "model_type": 2,
+                "model_id": id
+            })
         });
     }
     async Delete(id:string, reason:string, warn:boolean, take_point:boolean){
-        await BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_response_content', {
+        await fetch('https://brainly.com/api/28/moderation_new/delete_response_content', {
+            method: "POST",
+            body: JSON.stringify({
             "reason_id":2,
             "reason":reason,
             "give_warning":warn,
@@ -54,6 +59,7 @@ export class Answer{
             "schema":`moderation.response.delete`,
             "model_type_id":2,
             "model_id":id,
+            })
           })
     }
     async AllowCorrection(reason:string, answerID:string){

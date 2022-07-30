@@ -23,7 +23,7 @@ export default new class ModFn{
             type: "solid",
             text: "",
             icon: "verified",
-            ClassNames: "approve"
+            ClassNames: ["approve"]
         }))
         document.querySelector(".approve").addEventListener("click", function(){
         let stat = new Status("approve");
@@ -71,7 +71,7 @@ export default new class ModFn{
             text: "",
             type: "solid",
             icon: "thumb_down",
-            ClassNames: "unverify"
+            ClassNames: ["unverify"]
         }));
         document.querySelector(".unverify").addEventListener("click", function(){
         document.querySelector(".unverify  .spinner-container").classList.add("show");
@@ -126,7 +126,7 @@ export default new class ModFn{
             type: "solid",
             text: "",
             icon: "spark",
-            ClassNames: "confirm"
+            ClassNames: ["confirm"]
         }))
         document.querySelector(".confirm").addEventListener("click", function(){
         let stat = new Status("confirm")
@@ -176,7 +176,7 @@ export default new class ModFn{
         elem.insertAdjacentElement('beforeend', Components.Button({
             size: "m",
             type: "solid",
-            ClassNames: "confirm",
+            ClassNames: ["confirm"],
             icon: "spark",
             text: ""
         }))
@@ -210,7 +210,7 @@ export default new class ModFn{
             type: "solid",
             size: "m",
             text: "",
-            ClassNames: "delete",
+            ClassNames: ["delete"],
             icon: "trash"
         }));
         document.querySelector(".delete").addEventListener("click", function(){showDelrsn(type)})
@@ -222,7 +222,7 @@ export default new class ModFn{
             size: "m",
             icon: "report_flag_outlined",
             text: "",
-            ClassNames: "fetchRep"
+            ClassNames: ["fetchRep"]
         }))
         document.querySelector(".fetchRep").addEventListener("click", async function(){
             let stat = new Status("fetch");
@@ -296,7 +296,7 @@ export default new class ModFn{
             }
 
             BasicFn.add_icons();
-            BasicFn.checkboxes();
+            //BasicFn.checkboxes();
             BasicFn.addticket();
             stat.Close()
         })

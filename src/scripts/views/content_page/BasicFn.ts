@@ -5,38 +5,20 @@ import {
 import Form from "scripts/Items/Form"
 
 export default new class BasicFn{
-
-    checkboxes(first?){
-        let content = document.querySelectorAll("table > tbody > tr")
-        first ? document.querySelector("thead tr").insertAdjacentHTML("afterbegin", "<th style = 'width: 1%'></th>") : {};
-        for (let i = 0; i < content.length; i++) {
-            let checkTD = document.createElement("td");
-            checkTD.appendChild(Form.Checkbox({
-                classes: ["contentCheckboxes"],
-                id: `checkbox${i}`,
-                Attributes: [{
-                    key: "onclick", 
-                    value: `document.querySelector('#checkbox-${i}').closest('tr').classList.toggle('selected')`
-                }]
-            }))
-            content[i].classList.add("modified", `checkbox${i}`);
-            content[i].children[1].classList.add("iconcell")
-            content[i].insertAdjacentElement('afterbegin', checkTD)
-        }
-    }
     selectAll(elem){
         elem.insertAdjacentElement('beforeend', Components.Button({
             size: "m",
             type: "solid",
             text: "",
-            ClassNames: "select",
+            ClassNames: ["select"],
             icon: "check"
         }))
         document.querySelector(".select").addEventListener("click", function(){
             let checkBoxes = document.getElementsByClassName("contentCheckboxes")
             for (let i = 0; i < checkBoxes.length; i++) {
                 // @ts-ignore
-                checkBoxes[i].checked = 'true'
+                checkBoxes[i].querySelector("input").checked = 'true'
+                checkBoxes[i].closest(".content-row").classList.add("selected");
             }
         });
     }
@@ -45,7 +27,7 @@ export default new class BasicFn{
             size: "m",
             type: "solid",
             text: "",
-            ClassNames: "copy",
+            ClassNames: ["copy"],
             icon: "clipboard"
         }))
         document.querySelector(".copy").addEventListener("click", function(){
@@ -53,8 +35,8 @@ export default new class BasicFn{
             let links = []
             for (let i = 0; i < checkBoxes.length; i++) {
                 //@ts-ignore
-                if (String(checkBoxes[i].checked) === "true") {
-                    links.push(checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href)
+                if (String(checkBoxes[i].querySelector("input").checked) === "true") {
+                    links.push(checkBoxes[i].closest(".content-row").getElementsByTagName('a')[0].href)
                 }
             }
             let joinLinks = links.join("\n")
@@ -72,7 +54,7 @@ export default new class BasicFn{
         elem.insertAdjacentElement('beforeend', Components.Button({
             size: "m",
             text: "",
-            ClassNames: "toggle",
+            ClassNames: ["toggle"],
             icon: "filters",
             type: "solid"
         }))
@@ -80,20 +62,22 @@ export default new class BasicFn{
         let checkBoxes = document.getElementsByClassName("contentCheckboxes")
         for (let i = 0; i < checkBoxes.length; i++) {
             //@ts-ignore
-            if (String(checkBoxes[i].checked) === "true") {
+            if (String(checkBoxes[i].querySelector("input").checked) === "true") {
                 //@ts-ignore
-                checkBoxes[i].checked = false
+                checkBoxes[i].querySelector("input").checked = false
+                checkBoxes[i].closest(".content-row").classList.remove("selected");
             } else {
                 //@ts-ignore
-                checkBoxes[i].checked = true
+                checkBoxes[i].querySelector("input").checked = true
+                checkBoxes[i].closest(".content-row").classList.add("selected");
             }
         }
         })
     }
     addticket() {
-        let n_content = document.querySelector("tbody");
+        let n_content = document.querySelector(".content");
         for (let i = 0; i < n_content.childElementCount; i++) {
-            let row = document.querySelector("tbody").children[i];
+            let row = document.querySelector(".content").children[i];
             let cell = row.children[1];
             let qid = row.querySelector("a").getAttribute("href").replace("/question/", "");
             cell.insertAdjacentHTML("afterbegin", /*html*/ `

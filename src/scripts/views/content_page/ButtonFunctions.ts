@@ -6,10 +6,10 @@ import {
 } from "configs/config"
 import Notify from "../../common/Notifications/Notify"
 import {
-    Answer,
-    Question
+    Answer, Question
 } from "../../common/Content"
 import Status from "scripts/common/Notifications/Status"
+import Form from "scripts/Items/Form"
 import Extension from "../../../locales/en/localization.json"
 
 export async function showDelrsn(type: "questions" | "answers") {
@@ -20,7 +20,7 @@ export async function showDelrsn(type: "questions" | "answers") {
         let stat = new Status("del")
         //open ticket, get response, close it
         document.querySelector(".primary-items").innerHTML = '';
-        let id = document.querySelector("tbody a").getAttribute("href").replace("/question/", "");
+        let id = document.querySelector(".content-row a").getAttribute("href").replace("/question/", "");
         stat.Show("Fetching Deletion Reasons...", "indigo", true, false)
         let res = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/moderation_new/get_content`, {
             method: "POST",
@@ -38,39 +38,42 @@ export async function showDelrsn(type: "questions" | "answers") {
         } else if (type === "answers") {
             del_reasons = res.data.delete_reasons.response;
         }
-        console.log(JSON.stringify(res.data.delete_reasons))
+        console.log(res.data.delete_reasons)
 
         //inserting primary deletion reasons
 
-        for (let i = 0; i < del_reasons.length; i++) {
-            document.querySelector(".primary-items").insertAdjacentHTML("beforeend", /*html*/ `
-        <label class="sg-radio sg-radio--xxs" for="r${del_reasons[i].id}">
-          <input type="radio" class="sg-radio__element" name="group1" id="r${del_reasons[i].id}" index = "${i}">
-          <span class="sg-radio__ghost" aria-hidden="true"></span>
-          <span class="sg-text sg-text--small sg-text--bold sg-radio__label">${del_reasons[i].text}</span>
-        </label>`)
-        }
+        document.querySelector(".primary-items").outerHTML = Form.RadioGroup({
+            ClassName: ["primary-items"],
+            id: "primary",
+            items: del_reasons,
+            type: "row",
+            LookFor: {
+                id: "id",
+                name: "text"
+            }
+        }).outerHTML
 
         //detect selection of primary deletion reason
         document.querySelector(".primary-items").addEventListener("change", async function() {
 
             document.querySelector(".delmenu").classList.add("secondary");
-            let selected_index = document.querySelector(".primary-items input:checked").getAttribute("index");
+            let selected_index = document.querySelector(".primary-items input:checked").getAttribute("value");
             let selected_subcats = del_reasons[selected_index].subcategories;
             console.log(selected_subcats);
-            document.querySelector(".secondary-items").innerHTML = '';
             //inserting secondary deletion reasons
-            for (let i = 0; i < selected_subcats.length; i++) {
-                document.querySelector(".secondary-items").insertAdjacentHTML("beforeend", /*html*/ `
-          <label class="sg-radio sg-radio--xxs" for="s${selected_subcats[i].id}">
-            <input type="radio" class="sg-radio__element" name="group2" id="s${selected_subcats[i].id}" index = "${i}">
-            <span class="sg-radio__ghost" aria-hidden="true"></span>
-            <span class="sg-text sg-text--small sg-text--bold sg-radio__label">${selected_subcats[i].title}</span>
-          </label>`)
-            }
+            document.querySelector(".secondary-items").outerHTML = Form.RadioGroup({
+                ClassName: ["secondary-items"],
+                id: "secondary",
+                type: "row",
+                items: selected_subcats,
+                LookFor: {
+                    name: "title",
+                    id: "id"
+                }
+            }).outerHTML
             //show deletion reason in textarea
             document.querySelector(".secondary-items").addEventListener("change", function() {
-                let selected_reason = selected_subcats[document.querySelector(".secondary-items input:checked").getAttribute("index")]
+                let selected_reason = selected_subcats[document.querySelector(".secondary-items input:checked").getAttribute("value")]
                 console.log(selected_reason);
                 ( < HTMLInputElement > document.querySelector("textarea.deletion-reason")).value = selected_reason.text;
             });
@@ -107,61 +110,54 @@ export async function confirmDeletion(type: "questions" | "answers") {
     stat.Show("Deleting Selected Content...", "indigo", true)
     let checkBoxes = document.getElementsByClassName("contentCheckboxes");
     let checkBoxesArr = Array.from(checkBoxes)
+    const idsToDelete = []
+
     checkBoxesArr.forEach(async element => {
+        element = element.querySelector("input")
         //@ts-ignore
-        if (String(element.checked) === "true") {
-            setTimeout(() => {console.log(element)}, 500);
+        if (element.checked) {
             //@ts-ignore
-            let link = element.closest("tr").getElementsByTagName('a')[0].href
+            let link = element.closest(".content-row").getElementsByTagName('a')[0].href
+            let reason = (<HTMLInputElement>document.querySelectorAll(".deletion-reason")[0]).value;
+            let warn = (<HTMLInputElement>document.querySelector("#warn")).checked
+            let take_point = (<HTMLInputElement>document.querySelector("#pts")).checked;
+
+            let qObj = new Question();
+
             let id = parseQuestionLink(link)
-                //@ts-expect-error
-            let reason = document.querySelectorAll(".deletion-reason")[0].value
-                //@ts-expect-error
-            let warn = document.querySelector("#warn").checked
-                //@ts-expect-error
-            let take_point = document.querySelector("#pts").checked;
+            element.closest(".content-row").id = id;
 
             if(type === "questions"){
                 let givePts = ( < HTMLInputElement > document.querySelector("#res-pts")).checked;
-                let questionObj = new Question()
-                await questionObj.Delete(id, reason, warn, take_point, givePts)
+                idsToDelete.push(id);
+                await qObj.Delete(id, reason, warn, take_point, givePts)
+                element.closest(".content-row").classList.add("deleted")
             }
             if(type === "answers"){
-                let idsToDelete = []
-                for (let i = 0; i < checkBoxes.length; i++) {
-                    //@ts-ignore
-                    if (String(checkBoxes[i].checked) === "true") {
-                        //@ts-ignore
-                        let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
-                        let id = parseQuestionLink(link)
-                        idsToDelete.push(id)
-                        checkBoxes[i].closest("tr").style.backgroundColor = `#ffc7bf`
+
+                let res = await qObj.Get(id)
+                //@ts-ignore
+                let answers = res.data.responses
+                let times = 0
+
+                if (answers.length === 1) {
+                    times = 1
+                } else {
+                    times = 2
+                }
+                let a = answers.find(({id}) => id === parseInt(window.location.href.split("/")[5]));
+                console.log("answer", a);
+                for (let x = 0; x < times; x++) {
+                    let user = String(answers[x]["user_id"])
+                    if (user === String(window.location.href.split("/")[5])) {
+                        idsToDelete.push(answers[x].id)
+                        let ansobj = new Answer();
+                        await ansobj.Delete(answers[x].id, reason,warn, take_point);
+                        element.closest(".content-row").classList.add("deleted")
+                        
                     }
                 }
-                idsToDelete.forEach(async elem => {
-                    let qObj = new Question()
-                    let res = await qObj.Get(elem)
-                        //@ts-expect-error
-                    let answers = res.data.responses
-                    let times = 0
-
-                    if (answers.length === 1) {
-                        times = 1
-                    } else {
-                        times = 2
-                    }
-                    let a = answers.find(({id}) => id === parseInt(window.location.href.split("/")[5]));
-                    console.log("answer", a);
-                    for (let x = 0; x < times; x++) {
-                        let user = String(answers[x]["user_id"])
-                        if (user === String(window.location.href.split("/")[5])) {
-                            let ansobj = new Answer();
-                            await ansobj.Delete(answers[x].id, reason,warn, take_point);
-                        }
-                    }
-                })
             }
-            element.closest("tr").style.backgroundColor = `#ffc7bf`
         }
     });
     Notify.Flash(`Selected ${type} removed successfully.`, "success");

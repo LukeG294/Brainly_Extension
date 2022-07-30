@@ -51,8 +51,17 @@ a[style = "color: #3366cc;"]{
     margin-top: 2%;
     margin-left: 0% !important;
 }
-.delmenu label[for = 'res-pts']{
-  display:none;
+.delmenu{
+  .sg-radio-group__item{
+    display:flex;
+    flex-wrap: wrap;
+  }
+  input{
+    width:100%!important;
+  }
+  label{
+    font-size:1rem;
+  }
 }
 .modButtons{
   margin-right:8px;
@@ -118,9 +127,12 @@ a[style = "color: #3366cc;"]{
   display: flex;
   justify-content: center;
   padding-bottom: 15px;
-  li.active a{
-    color:#f0f2f5!important;
+  color:black!important;
+  li.active {
     background:black!important;
+    a{
+    color:#f0f2f5!important;
+    }
   }
 }
 .contenticon{
@@ -201,9 +213,20 @@ table{display:none;}
     border: 2px solid #f5f8fa;
     padding: 8px 12px;
     margin-bottom:4px;
+    position:relative;
     &.selected{
       border-color: black!important;
-  }
+    }
+    .sg-spinner-container__overlay{
+      display:none;
+    }
+    &.show{
+      .sg-spinner-container__overlay{
+        z-index:100;
+        display: flex;
+        background: rgba(255,255,255,0.5);
+      }
+    }
     .content-text{
       flex:1;
       font-size:13px!important;
@@ -231,6 +254,11 @@ table{display:none;}
       border-radius: 5px;
       margin-left: 12px!important;
       font-size:13px!important;
+    }
+    .modticket{
+      height:32px!important;
+      width:32px!important;
+      margin: 0 8px 0 4px;
     }
     .subject{
       width:max-content!important;

@@ -3,6 +3,7 @@ import Components from "scripts/Items/Components"
 import {
     insert_ticket
 } from "../../common/ModFunctions"
+import BasicFn from "./BasicFn"
 import Extension from "../../../locales/en/localization.json"
 
 export function deletion_menu() {
@@ -44,22 +45,23 @@ export function RenderItems(items:{
     subject: string,
     date: string
   }[]){
-  document.querySelector(".content").innerHTML = "";
+  document.querySelector(".content-items").innerHTML = "";
   items.forEach((row, index) => {
-    document.querySelector(".content").insertAdjacentHTML("beforeend", /*html*/`
+    let id = row.content.split("/question/")[1].split('">')[0];
+    document.querySelector(".content-items").insertAdjacentHTML("beforeend", /*html*/`
     <div class="content-row num${String(index)}">
         <div class="sg-spinner-container__overlay">
           <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
         </div>
         ${
             Form.Checkbox({
-            id: `checkbox-${index}`,
-            classes: ["contentCheckboxes"],
-            Attributes: [{
-                key: "onclick",
-                value: `document.querySelector('#checkbox-${index}').closest('.content-row').classList.toggle('selected')`
-            }]
-        }).outerHTML
+              id: `checkbox-${index}`,
+              classes: ["contentCheckboxes"],
+              Attributes: [{
+                  key: "onclick",
+                  value: `document.querySelector('#checkbox-${index}').closest('.content-row').classList.toggle('selected')`
+              }]
+            }).outerHTML
         }
 
         <div class="num">${index + 1}</div>
@@ -73,6 +75,30 @@ export function RenderItems(items:{
                 ClassNames: ["modticket", "mod"+String(index)]
             }).outerHTML
         }
+        <div class = "content-icons">
+          <div class = "q-icons">
+            ${
+              Components.Icon("report_flag", "16").outerHTML
+            }
+            ${
+              Components.Icon("attachment", "16").outerHTML
+            }
+          </div>
+          <div class = "a-icons">
+          ${
+              Components.Icon("report_flag", "16").outerHTML
+            }
+            ${
+              Components.Icon("attachment", "16").outerHTML
+            }
+            ${
+              Components.Icon("verified", "16").outerHTML
+            }
+            ${
+              Components.Icon("crown", "16").outerHTML
+            }
+          </div>
+        </div>
         <div class="content-text">${row.content}</div>
         <div class="subject">
             <svg
@@ -91,9 +117,10 @@ export function RenderItems(items:{
     `)
     document.querySelector(".modticket." + "mod" + String(index)).addEventListener("click", () => {
         insert_ticket(
-            row.content.split("/question/")[1].split('">')[0], 
+            id, 
             document.querySelector(".num" + String(index))
         )
     })
   })
+  BasicFn.addIcons()
 }

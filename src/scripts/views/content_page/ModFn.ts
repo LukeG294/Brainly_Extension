@@ -233,7 +233,7 @@ export default new class ModFn{
                                     if(response.settings.is_marked_abuse){
                                         let questionData = {
                                             content: /*html*/`
-                                                <a href="https://brainly.com/question/${resp.data.task.id}">${response.content}</a>
+                                                <a href="https://brainly.com/question/${resp.data.task.id}">${response.content.slice(0,50)}</a>
                                             `,
                                             date: response.created.replace("T", " "), 
                                             subject: subjects.find(element => element["id"] === resp.data.task.subject_id).icon}
@@ -244,7 +244,7 @@ export default new class ModFn{
                                     if(resp.data.task.settings.is_marked_abuse){
                                         let questionData = { 
                                             content: /*html*/`
-                                                <a href="https://brainly.com/question/${resp.data.task.id}">${resp.data.task.content}</a>
+                                                <a href="https://brainly.com/question/${resp.data.task.id}">${resp.data.task.content.slice(0,50)}</a>
                                             `,
                                             date: resp.data.task.created.replace("T", " "), 
                                             subject: subjects.find(element => element["id"] === resp.data.task.subject_id).icon}
@@ -260,7 +260,7 @@ export default new class ModFn{
             }
             
             RenderItems(foundReported)
-            document.querySelector(".content").classList.add("reportList")
+            document.querySelector(".content-items").classList.add("reportList")
             stat.Close()
         })
     }

@@ -200,7 +200,7 @@ thead > th:nth-child(2){
   text-align:center!important;
 }
 table{display:none;}
-.content{
+.content-items{
   flex-direction: column;
   display: flex;
   &.reportList::before{
@@ -252,6 +252,73 @@ table{display:none;}
       font-weight:700;
       font-size:13px!important;
       justify-content:center;
+    }
+    .content-icons{
+      display: flex;
+      position: absolute;
+      flex-direction: row;
+      align-items: center;
+      bottom: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      &.both{
+        .q-icons{
+          display:flex;
+          padding-right:4px;
+        }
+        .a-icons{
+          display:flex;
+          padding-left:4px;
+          border-left: 1px solid black;
+        }
+      }
+      &.ans{
+        .a-icons{
+          display:flex;
+          background:black;
+          padding:2px;
+          border-radius:5px;
+          span{
+            margin: 0 4px;
+          }
+          svg{
+            fill:white!important;
+           }
+        }
+      }
+      .q-icons{
+        display:flex;
+        padding:2px;
+        border-radius:5px;
+        span{
+          margin: 0 4px;
+        }
+      }
+      .q-icons, .a-icons{
+        >span{
+          display:none;
+        }
+        &.report{
+          >span:nth-child(1){
+            display:flex;
+          }
+        }
+        &.attach{
+          >span:nth-child(2){
+            display:flex;
+          }
+        }
+        &.verified{
+          >span:nth-child(3){
+            display:flex;
+          }
+        }
+        &.best{
+          >span:nth-child(4){
+            display:flex;
+          }
+        }
+      }
     }
     .date{
       display: flex;

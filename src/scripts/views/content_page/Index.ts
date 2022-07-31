@@ -40,7 +40,7 @@ async function addPerPage() {
         content.push(thisRow)
     })
     document.querySelector("table").outerHTML = /*html*/`
-    <div class="content"></div>
+    <div class="content-items"></div>
     `
     RenderItems(content)
     

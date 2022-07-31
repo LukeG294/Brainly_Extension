@@ -14,10 +14,11 @@ import {
 } from "../../common/Content"
 import Status from "scripts/common/Notifications/Status"
 import BasicFn from "./BasicFn"
+import {RenderItems} from "./ContentPageButtons"
 
 export default new class ModFn{
 
-    async approveAnswers(elem) {
+    approveAnswers(elem) {
         elem.insertAdjacentElement('beforeend', Components.Button({
             size: "m",
             type: "solid",
@@ -25,47 +26,39 @@ export default new class ModFn{
             icon: "verified",
             ClassNames: ["approve"]
         }))
-        document.querySelector(".approve").addEventListener("click", function(){
+        document.querySelector(".approve").addEventListener("click", async function(){
         let stat = new Status("approve");
         stat.Show("Approving Selected Answers...", "indigo", true)
-        let checkBoxes = document.getElementsByClassName("contentCheckboxes")
-        let idsToVerify = []
+        let checkBoxes = document.querySelectorAll(".contentCheckboxes input")
+
         for (let i = 0; i < checkBoxes.length; i++) {
             //@ts-ignore
             if (String(checkBoxes[i].checked) === "true") {
                 //@ts-ignore
                 let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
                 let id = parseQuestionLink(link)
-                idsToVerify.push(id)
-            }
-        }
-    
-        idsToVerify.forEach(async element => {
-            let questionID = element
-            let qobj = new Question()
-            let questionObjectData = await qobj.Get(questionID)
-                //@ts-ignore
-            let answers = questionObjectData.data.responses
-            let times = 0
-            if (answers.length === 1) {
-                times = 1
-            } else {
-                times = 2
-            }
-            for (let x = 0; x < times; x++) {
-                let user = String(answers[x]["user_id"])
-                if (user === String(window.location.href.split("/")[5])) {
-                    let answerObj = new Answer()
-                    await answerObj.Approve(answers[x]["id"])
+
+                let qobj = new Question()
+                let questionObjectData = await qobj.Get(id)
+                    //@ts-ignore
+                let answers = questionObjectData.data.responses
+                let times = 0
+                if (answers.length === 1) {times = 1} else {times = 2}
+                for (let x = 0; x < times; x++) {
+                    let user = String(answers[x]["user_id"])
+                    if (user === String(window.location.href.split("/")[5])) {
+                        let answerObj = new Answer()
+                        await answerObj.Approve(answers[x]["id"])
+                    }
                 }
             }
-        });
+        }
     
         Notify.Flash("Approved Selected Answers!", "success")
         stat.Close();
     });
     }
-    unverifyAnswers(elem) {
+    async unverifyAnswers(elem) {
         elem.insertAdjacentElement('beforeend', Components.Button({
             size: "m",
             text: "",
@@ -75,7 +68,7 @@ export default new class ModFn{
         }));
         document.querySelector(".unverify").addEventListener("click", function(){
         document.querySelector(".unverify  .spinner-container").classList.add("show");
-        let checkBoxes = document.getElementsByClassName("contentCheckboxes")
+        let checkBoxes = document.querySelectorAll(".contentCheckboxes input")
         let idsToUnverify = []
         for (let i = 0; i < checkBoxes.length; i++) {
             //@ts-ignore
@@ -83,34 +76,24 @@ export default new class ModFn{
                 //@ts-ignore
                 let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
                 let id = parseQuestionLink(link)
-                idsToUnverify.push(id)
-            }
-        }
-        idsToUnverify.forEach((id) => {
-            let questionID = id
     
-            let qObj = new Question()
-            let res = qObj.Get(questionID)
-                //@ts-ignore
-            let answers = res.data.responses
-            let times = 0
-    
-    
-            if (answers.length === 1) {
-                times = 1
-            } else {
-                times = 2
-            }
-            for (let x = 0; x < times; x++) {
-    
-                let user = String(answers[x]["user_id"])
-                if (user === String(window.location.href.split("/")[5])) {
-                    let answer = new Answer()
-                    answer.Unapprove(answers[x]["id"])
-    
+                let qObj = new Question()
+                let res = qObj.Get(id)
+                    //@ts-ignore
+                let answers = res.data.responses
+                let times = 0
+        
+                if (answers.length === 1) {times = 1} else { times = 2}
+                for (let x = 0; x < times; x++) {
+                    let user = String(answers[x]["user_id"])
+                    if (user === String(window.location.href.split("/")[5])) {
+                        let answer = new Answer()
+                        answer.Unapprove(answers[x]["id"])
+        
+                    }
                 }
             }
-        })
+        }
     
         let success = 0
         let fail = 0
@@ -120,7 +103,7 @@ export default new class ModFn{
         document.querySelector(".unverify  .spinner-container").classList.remove("show");
         });
     }
-    confirmAnswers(elem) {
+    async confirmAnswers(elem) {
         elem.insertAdjacentElement('beforeend', Components.Button({
             size: "m",
             type: "solid",
@@ -131,14 +114,14 @@ export default new class ModFn{
         document.querySelector(".confirm").addEventListener("click", function(){
         let stat = new Status("confirm")
         stat.Show("Confirming Selected Answers...", "indigo", true)
-        let checkBoxes = document.getElementsByClassName("contentCheckboxes")
+        let checkBoxes = document.getElementsByClassName("contentCheckboxes input")
     
         let checkBoxesArr = Array.from(checkBoxes)
         checkBoxesArr.forEach(async element => {
             //@ts-expect-error
             if (String(element.checked) === "true") {
                 //@ts-ignore
-                let link = element.closest("tr").getElementsByTagName('a')[0].href
+                let link = element.closest(".content-row").getElementsByTagName('a')[0].href
                 let id = parseQuestionLink(link)
     
                 let qObj = new Question()
@@ -172,7 +155,7 @@ export default new class ModFn{
         stat.Close()
         });
     }
-    confirmQuestions(elem) {
+    async confirmQuestions(elem) {
         elem.insertAdjacentElement('beforeend', Components.Button({
             size: "m",
             type: "solid",
@@ -183,28 +166,23 @@ export default new class ModFn{
         document.querySelector(".confirm").addEventListener("click", function(){
         let stat = new Status("conf");
         stat.Show("Confirming Selected Questions...", "indigo", true)
-        let checkBoxes = document.getElementsByClassName("contentCheckboxes")
-        let idsToConfirm = []
+        let checkBoxes = document.querySelectorAll(".contentCheckboxes input")
+        let ansObj = new Answer();
         for (let i = 0; i < checkBoxes.length; i++) {
             //@ts-ignore
             if (String(checkBoxes[i].checked) === "true") {
                 //@ts-ignore
-                let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
+                let link = checkBoxes[i].closest(".content-row").getElementsByTagName('a')[0].href
                 let id = parseQuestionLink(link)
-                idsToConfirm.push(id)
+                ansObj.Confirm(parseInt(id))
             }
         }
-        idsToConfirm.forEach(async element => {
-            let ansObj = new Answer();
-            ansObj.Confirm(element)
-        });
-    
     
         stat.Close();
         Notify.Flash("Questions confirmed successfully!", "success")
         });
     }
-    delete(elem, type){
+    async delete(elem, type){
         elem.insertAdjacentHTML("afterend", deletion_menu());
         elem.insertAdjacentElement("beforeend", Components.Button({
             type: "solid",
@@ -214,7 +192,7 @@ export default new class ModFn{
             icon: "trash"
         }));
         document.querySelector(".delete").addEventListener("click", function(){showDelrsn(type)})
-        document.querySelector(".confirmdel").addEventListener("click", function(){confirmDeletion(type)})
+        document.querySelector(".confirmdel").addEventListener("click", async function(){ await confirmDeletion(type)})
     }
     async find_reported_content(id, type: "responses" | "tasks", elem) {
         elem.insertAdjacentElement('beforeend', Components.Button({
@@ -241,6 +219,7 @@ export default new class ModFn{
                     //@ts-ignore
                     console.log(responseHTML);
                     let content =  responseHTML.querySelector("tbody").children;
+                    let subjects = await fetch(`https://brainly.com/api/28/api_config/desktop_view`).then(data => data.json()).then(data => data.data.subjects);
                     for (let i = 0; i < content.length; i++) {
                         let contentlink = content[i]
                         let qid = contentlink.querySelector("a").href.replace("https://brainly.com/question/", "");
@@ -252,13 +231,23 @@ export default new class ModFn{
                                     let userId = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
                                     let response = resp.data.responses.find(res => String(res.user_id) === String(userId));
                                     if(response.settings.is_marked_abuse){
-                                        let questionData = {"questionID":resp.data.task.id, "content":response.content, "timeCreated":response.created, "subject":resp.data.task.subject_id}
+                                        let questionData = {
+                                            content: /*html*/`
+                                                <a href="https://brainly.com/question/${resp.data.task.id}">${response.content}</a>
+                                            `,
+                                            date: response.created.replace("T", " "), 
+                                            subject: subjects.find(element => element["id"] === resp.data.task.subject_id).icon}
                                         foundReported.push(questionData)
                                     }
                                 }
                                 if(type === "tasks"){
                                     if(resp.data.task.settings.is_marked_abuse){
-                                        let questionData = {"questionID": resp.data.task.id, "content":resp.data.task.content, "timeCreated":resp.data.task.created, "subject":resp.data.task.subject_id}
+                                        let questionData = { 
+                                            content: /*html*/`
+                                                <a href="https://brainly.com/question/${resp.data.task.id}">${resp.data.task.content}</a>
+                                            `,
+                                            date: resp.data.task.created.replace("T", " "), 
+                                            subject: subjects.find(element => element["id"] === resp.data.task.subject_id).icon}
                                         foundReported.push(questionData)
                                     }
                                 }
@@ -269,35 +258,9 @@ export default new class ModFn{
                     }
                 }
             }
-            let subjects = await fetch(`https://brainly.com/api/28/api_config/desktop_view`).then(data => data.json()).then(data => data.data.subjects);
-            let table = document.querySelector("tbody")
-            table.innerHTML = ``
-
-            for (let i = 0; i < foundReported.length; i++) {
-                let content = foundReported[i]["content"]
-                var regex = /(<([^>]+)>)/ig
-                let result = content.replace(regex, "");
-                const found = subjects.find(element => element["id"] === foundReported[i]["subject"]);
-                
-                let row = document.createElement("div") 
-                table.appendChild(row)
-                row.outerHTML = /*html*/`
-                <tr>
-                    <td>${i}</td>
-                    <td>
-                        <a href="/question/${foundReported[i].questionID}">
-                            ${String(result)}
-                        </a>
-                    </td>
-                    <td>${found.name}</td>
-                    <td>${foundReported[i].timeCreated}</td>
-                </tr>
-                `
-            }
-
-            BasicFn.add_icons();
-            //BasicFn.checkboxes();
-            BasicFn.addticket();
+            
+            RenderItems(foundReported)
+            document.querySelector(".content").classList.add("reportList")
             stat.Close()
         })
     }

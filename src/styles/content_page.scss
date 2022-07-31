@@ -203,6 +203,15 @@ table{display:none;}
 .content{
   flex-direction: column;
   display: flex;
+  &.reportList::before{
+    content: "reported items";
+    font-size: 1rem;
+    line-height:1.5rem;
+    text-transform: uppercase;
+    font-weight: 900;
+    color:#ff7968;
+    font-family: "ProximaNova","Helvetica","Arial",sans-serif!important;
+  }
   .content-row{
     display:flex;
     flex-direction: row;

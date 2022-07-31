@@ -39,7 +39,12 @@ export function deletion_menu() {
             </div>
     `)
 }
-export function RenderItems(items){
+export function RenderItems(items:{
+    content: string,
+    subject: string,
+    date: string
+  }[]){
+  document.querySelector(".content").innerHTML = "";
   items.forEach((row, index) => {
     document.querySelector(".content").insertAdjacentHTML("beforeend", /*html*/`
     <div class="content-row num${String(index)}">

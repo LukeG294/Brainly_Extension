@@ -1,5 +1,5 @@
 *{
-  --primary-color: #ccebd7;
+  --primary-color: #ffe5e7;
   --radioColor: #000000;
   --radioHoverColor: #46535f;
   --radioInvalidColor: #cf1d00;
@@ -11,6 +11,9 @@
 [class ^= 'Header-module'], div[class ^= 'brn-header-placeholder'], .brn-footer, #html .mint .mint-header, #moderate-functions-panel .covering-text, footer[data-testid = 'footer_layout'],.brn-header-placeholder, #footer{
   background-color:var(--primary-color)!important;
   border-bottom-color: var(--primary-color)!important;
+  input{
+    background:white!important;
+  }
 }
 // #moderate-functions-panel .text, .menu-list a:before, a[data-testid = 'navigation_add_question'] > span, div[class ^= 'Header-module__subnav'] span, div[class ^= 'Header-module__subnav'] a, button[aria-label = 'notification center'] svg, .brn-footer-legal-section div, .brn-footer-legal-section p, .brn-footer__container a, .brn-footer__container span, .brn-footer__container h3{
 //   color: var(--primary-text)!important;

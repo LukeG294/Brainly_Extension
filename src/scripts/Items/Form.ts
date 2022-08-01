@@ -96,10 +96,10 @@ export default new class Form{
                     <div class="sg-radio sg-radio--dark sg-radio--with-label sg-radio--with-padding">
                         <div class="sg-radio__wrapper">
                             <div class="sg-radio__element">
-                                <input class="sg-radio__input" type="radio" name = "${props.id}"  id ="${item[props.LookFor.id]}" value = "${index}" aria-labelledby="${item[props.LookFor.id]}-label">
+                                <input class="sg-radio__input" type="radio" name = "${props.id}"  id ="${item[props.LookFor.id] + props.id}" value = "${index}" aria-labelledby="${item[props.LookFor.id] + props.id}-label">
                                 <span class="sg-radio__circle" aria-hidden="true"></span>
                             </div>
-                            <label id="${item[props.LookFor.id]}-label" for="${item[props.LookFor.id]}" class="sg-text sg-text--medium sg-text--bold sg-radio__label">${item[props.LookFor.name]}</label>
+                            <label id="${item[props.LookFor.id] + props.id}-label" for="${item[props.LookFor.id] + props.id}" class="sg-text sg-text--medium sg-text--bold sg-radio__label">${item[props.LookFor.name]}</label>
                         </div>
                     </div>
             `)

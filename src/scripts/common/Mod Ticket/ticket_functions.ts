@@ -3,6 +3,7 @@ import {ticket} from "./ticket_exp"
 import {Answer, CommentHandler, Question} from "../Content"
 import {get_time_diff} from "../CommonFunctions"
 import BrainlyAPI from "../BrainlyAPI"
+import Form from "../../Items/Form"
 import {DelMenu, AnswerElem} from "../../Items/Snippets"
 import Extension from "../../../locales/en/localization.json"
 
@@ -50,21 +51,17 @@ function add_deletion(del_rsn, elem, tid, type:string){
     }
     elem = elem.querySelector('.delmenu') 
   }
-
-  for(let i = 0; i < del_rsn.length; i++){
-    elem.querySelector(".primary-items").insertAdjacentHTML("beforeend",/*html*/`
-    <div class="sg-radio sg-radio--dark sg-radio--with-label sg-radio--with-padding">
-      <div class="sg-radio__wrapper">
-        <div class="sg-radio__element">
-          <input class="sg-radio__input" type="radio" id="${del_rsn[i].id}${tid}" index = "${i}" name="option" aria-labelledby="${del_rsn[i].id}${tid}-label">
-          <span class="sg-radio__circle" aria-hidden="true"></span>
-        </div>
-        <label id="${del_rsn[i].id}${tid}-label" for="${del_rsn[i].id}${tid}" class="sg-text sg-text--small sg-text--bold sg-radio__label">${del_rsn[i].text}</label>
-      </div>
-    </div>
-      `
-    )
-  }
+  console.log(del_rsn)
+  elem.querySelector(".primary-items").outerHTML = Form.RadioGroup({
+    ClassName: ["primary-items"],
+    id: "primary",
+    items: del_rsn,
+    type: "row",
+    LookFor: {
+        id: "id",
+        name: "text"
+    }
+  }).outerHTML
 
   
   //delete button listener
@@ -87,37 +84,28 @@ function add_deletion(del_rsn, elem, tid, type:string){
     }
 
     //finds selected item and links it to the object
-    let selected_index = elem.querySelector(".primary-items input:checked").getAttribute("index");
+    elem.querySelector(".delmenu").classList.add("secondary");
+    let selected_index = elem.querySelector(".primary-items input:checked").getAttribute("value");
     let selected_subcats = del_rsn[selected_index].subcategories;
 
-    console.log(selected_subcats);
-
-    //clears subcat elem before appending
-    elem.querySelector(".secondary-items").innerHTML = '';
-
-    //adds subcategories to the elem
-    for(let i = 0; i < selected_subcats.length; i++){
-      elem.querySelector(".secondary-items").insertAdjacentHTML("beforeend",/*html*/`
-      <div class="sg-radio sg-radio--dark sg-radio--with-label sg-radio--with-padding">
-        <div class="sg-radio__wrapper">
-          <div class="sg-radio__element">
-            <input class="sg-radio__input" type="radio" id="${selected_subcats[i].id}${tid}" index = "${i}" name="option" aria-labelledby="${selected_subcats[i].id}${tid}-label">
-            <span class="sg-radio__circle" aria-hidden="true"></span>
-          </div>
-          <label id="${selected_subcats[i].id}${tid}-label" for="${selected_subcats[i].id}${tid}" class="sg-text sg-text--small sg-text--bold sg-radio__label">${selected_subcats[i].title}</label>
-        </div>
-      </div>
-        `
-      )
-    }
+    //inserting secondary deletion reasons
+    elem.querySelector(".secondary-items").outerHTML = Form.RadioGroup({
+        ClassName: ["secondary-items"],
+        id: "secondary",
+        type: "row",
+        items: selected_subcats,
+        LookFor: {
+            name: "title",
+            id: "id"
+        }
+    }).outerHTML
 
     //adds listener to the subcategories
     elem.querySelector(".secondary-items").addEventListener("change", function(){
-      let selected_reason = selected_subcats[elem.querySelector(".secondary-items input:checked").getAttribute("index")]
+      let selected_reason = selected_subcats[elem.querySelector(".secondary-items input:checked").getAttribute("value")]
       console.log(selected_reason);
       
       (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value = selected_reason.text;
-      console.log(<HTMLInputElement>elem.querySelector("textarea.deletion-reason").value)
     });
     elem.querySelector(".confirmdel button").addEventListener("click", function(){
       let warnuser = false;
@@ -217,7 +205,7 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
           let id = element.id
           let commentObj = new CommentHandler()
           commentObj.Delete(id, 'Your comment was removed because it was not relevant to the question asked. Please keep in mind that all comments must be on-topic and focused on the question at hand. Thanks!', false)
-          element.parentElement.parentElement.parentElement.parentElement.classList.add("deleted")
+          element.closest(".comment").classList.add("deleted")
         }
       })
     })
@@ -248,14 +236,11 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
         <div class="comment-content">
           <div class="comment-data">
             <div class="sg-icon sg-icon--dark sg-icon--x32 rep-flag"><svg class="sg-icon__svg"><use xlink:href="#icon-report_flag"></use></svg></div>
-            <label class="sg-checkbox" for="${element.id}"><input type="checkbox" class="sg-checkbox__element commentBoxes" id='${element.id}'>
-              <div class="sg-checkbox__ghost" aria-hidden="true">
-              <div class="sg-icon sg-icon--adaptive sg-icon--x16">
-                  <svg class="sg-icon__svg" role="img" aria-labelledby="title-check-255xyo" focusable="false"><text id="title-check-255xyo" hidden="">check</text>
-                  <use xlink:href="#icon-check" aria-hidden="true"></use></svg>
-              </div>
-              </div>
-            </label>
+            ${
+              Form.Checkbox({
+                id: element.id
+              }).outerHTML
+            }
             <div class="pfp"> <a href='https://brainly.com/profile/${result[0].nick}-${result[0].id}' target="_blank"> <img src=${commentpfp} alt=""></a></div>
             <div class="sg-text sg-text--small comment-content">${element.content}</div>
           </div>
@@ -270,25 +255,27 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
       
       let commentDelete = document.querySelector(`[typeid="${element.id}"]`)
      
-      if (element.deleted){commentDelete.parentElement.parentElement.parentElement.classList.add('deleted');  commentDelete.parentElement.parentElement.parentElement.querySelector('.sg-checkbox').remove(); commentDelete.parentElement.remove();}
+      if (element.deleted){
+        commentDelete.closest(".comment").classList.add('deleted');
+        commentDelete.closest(".actions").remove()
+      }
       if (element.report){
-        commentDelete.parentElement.parentElement.parentElement.classList.add('reported'); commentDelete.parentElement.querySelector('.confirmComment').classList.remove('hidden')
+        commentDelete.closest(".comment").classList.add('reported'); 
+        commentDelete.closest('.confirmComment').classList.remove('hidden')
         let commentConfirm = document.querySelector(`[confirmid="${element.id}"]`)
-        console.log(commentConfirm)
         if (!commentConfirm.classList.contains('confAdded')){
           commentConfirm.addEventListener('click', async function(){
             let comment = new CommentHandler()
             await comment.Confirm(element.id)
-            commentConfirm.parentElement.parentElement.parentElement.classList.remove('reported')
+            commentConfirm.closest(".comment").classList.remove('reported')
             commentConfirm.remove();
-            
           })
         }
       }
       if (!commentDelete.classList.contains('delAdded')){
         commentDelete.addEventListener('click', function(){
           if (!commentDelete.querySelector('.delmenu')){
-            add_deletion(deletion_reasons, commentDelete.parentElement.parentElement.parentElement, element.id, "comment")
+            add_deletion(deletion_reasons, commentDelete.closest(".comment"), element.id, "comment")
             commentDelete.classList.add("delAdded")
           }
           
@@ -492,5 +479,5 @@ export async function ticket_data(id, res, butspinner){
       document.querySelector(".noanswer").classList.add("show")
   }
   document.querySelector(".preview-content .sg-spinner-container").classList.add("remove");
-  add_log(log);
+  //add_log(log);
 }

@@ -33,7 +33,7 @@ if(!localStorage.getItem("userAuth")){
   })
 }
 
-document.querySelector("html").insertAdjacentHTML("beforeend", "<textarea class = 'noswear'></textarea>");
-document.querySelector(".noswear").addEventListener("input", function(){
-  console.log(checker((<HTMLInputElement>document.querySelector(".noswear")).value))
-});
+// document.querySelector("html").insertAdjacentHTML("beforeend", "<textarea class = 'noswear'></textarea>");
+// document.querySelector(".noswear").addEventListener("input", function(){
+//   console.log(checker((<HTMLInputElement>document.querySelector(".noswear")).value))
+// });

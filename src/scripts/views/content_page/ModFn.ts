@@ -35,7 +35,7 @@ export default new class ModFn{
             //@ts-ignore
             if (String(checkBoxes[i].checked) === "true") {
                 //@ts-ignore
-                let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
+                let link = checkBoxes[i].closest(".content-row").getElementsByTagName('a')[0].href
                 let id = parseQuestionLink(link)
 
                 let qobj = new Question()
@@ -74,7 +74,7 @@ export default new class ModFn{
             //@ts-ignore
             if (String(checkBoxes[i].checked) === "true") {
                 //@ts-ignore
-                let link = checkBoxes[i].closest("tr").getElementsByTagName('a')[0].href
+                let link = checkBoxes[i].closest(".content-row").getElementsByTagName('a')[0].href
                 let id = parseQuestionLink(link)
     
                 let qObj = new Question()
@@ -99,8 +99,6 @@ export default new class ModFn{
         let fail = 0
     
         Notify.Flash(`${success} unapproved, ${fail} had an error. Do you have Super Moderator permissions?`, "success")
-    
-        document.querySelector(".unverify  .spinner-container").classList.remove("show");
         });
     }
     async confirmAnswers(elem) {

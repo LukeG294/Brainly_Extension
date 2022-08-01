@@ -134,8 +134,6 @@ export function ticket(){
             <h1 class="sg-text-bit sg-text-bit--small sg-text-bit--peach-primary">${Extension.common.noAnswersYet}</h1>
           </div>
         </div>
-        <h1 class="sg-text-bit--gray-secondary sg-headline sg-headline--xlarge sg-headline--extra-bold" style = "color:#323c45;font-size:1.5rem;">Log</h1>
-        <div class="log"></div>
       </div>
     `)
   }

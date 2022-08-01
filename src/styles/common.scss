@@ -423,6 +423,10 @@
               align-items: center;
               .sg-checkbox{
                 margin-right:8px;
+                width:fit-content;
+              }
+              .comment-content{
+                flex:1;
               }
             }
             .actions{
@@ -869,6 +873,13 @@
       display: flex!important;
       align-items:center;
     }
+    .sg-radio-group__items{
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .sg-radio--with-padding{
+      padding:0!important;
+    }
   }
   .deletion-reason{
     margin-top:8px;
@@ -883,6 +894,7 @@
       padding: 0.2rem 1rem;
     }
     .warnpts{
+      display:flex;
       label{
         margin-right:8px;
         display: inline-flex!important;

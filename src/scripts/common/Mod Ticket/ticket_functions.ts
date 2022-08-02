@@ -84,7 +84,6 @@ function add_deletion(del_rsn, elem, tid, type:string){
     }
 
     //finds selected item and links it to the object
-    elem.querySelector(".delmenu").classList.add("secondary");
     let selected_index = elem.querySelector(".primary-items input:checked").getAttribute("value");
     let selected_subcats = del_rsn[selected_index].subcategories;
 
@@ -135,7 +134,7 @@ function add_deletion(del_rsn, elem, tid, type:string){
         let thisc = new CommentHandler();
         thisc.Delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value, warnuser)
         elem.style.display = 'none';
-        elem.parentElement.classList.add("deleted");
+        elem.closest(".comment").classList.add("deleted");
        } else {
         elem.querySelector(".delmenu").classList.remove("show");
       }
@@ -479,5 +478,5 @@ export async function ticket_data(id, res, butspinner){
       document.querySelector(".noanswer").classList.add("show")
   }
   document.querySelector(".preview-content .sg-spinner-container").classList.add("remove");
-  //add_log(log);
+  add_log(log);
 }

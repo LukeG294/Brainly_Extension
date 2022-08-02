@@ -359,7 +359,7 @@
           display:flex;
           justify-content: space-between;
           flex-wrap: wrap;
-          padding:0px 4px;
+          padding:4px 4px;
           border-bottom:1px solid #c3d1dd;
           .content{
             margin-top:0px;
@@ -876,10 +876,16 @@
     .sg-radio-group__items{
       display: flex;
       flex-wrap: wrap;
+      .sg-radio--with-padding{
+        padding:0!important;
+        label{
+          font-size:1rem!important;
+          padding-top:0px!important;
+          padding-right:4px!important;
+        }
+      }
     }
-    .sg-radio--with-padding{
-      padding:0!important;
-    }
+
   }
   .deletion-reason{
     margin-top:8px;
@@ -896,6 +902,7 @@
     .warnpts{
       display:flex;
       label{
+        font-size:1rem;
         margin-right:8px;
         display: inline-flex!important;
         flex-direction: row;

@@ -49,7 +49,7 @@ export class Answer{
         });
     }
     async Delete(id:string, reason:string, warn:boolean, take_point:boolean){
-        await fetch('https://brainly.com/api/28/moderation_new/delete_response_content', {
+        fetch('https://brainly.com/api/28/moderation_new/delete_response_content', {
             method: "POST",
             body: JSON.stringify({
             "reason_id":2,
@@ -60,7 +60,7 @@ export class Answer{
             "model_type_id":2,
             "model_id":id,
             })
-          })
+          }).then(data => data.json())
     }
     async AllowCorrection(reason:string, answerID:string){
         await BrainlyAPI.Legacy(`POST`, 'moderation_new/wrong_report', {
@@ -81,7 +81,7 @@ export class Question{
         })
     }
 
-    async Delete(id:string, reason:string, warn:boolean, take_point:boolean, give_points:Boolean){
+    async Delete(id:string, reason:string, warn:boolean, take_point:boolean, give_points:boolean){
         await BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_task_content', {
             "reason_id":2,
             "reason":reason, //deletion reason
@@ -166,8 +166,6 @@ export class CommentHandler{
             "model_id":id,
             "model_type_id":45,
             "schema":""
-            
-            
           })
         return response
     }

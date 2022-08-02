@@ -38,7 +38,6 @@ export async function showDelrsn(type: "questions" | "answers") {
         } else if (type === "answers") {
             del_reasons = res.data.delete_reasons.response;
         }
-        console.log(res.data.delete_reasons)
 
         //inserting primary deletion reasons
 
@@ -73,22 +72,25 @@ export async function showDelrsn(type: "questions" | "answers") {
             }).outerHTML
             //show deletion reason in textarea
             document.querySelector(".secondary-items").addEventListener("change", function() {
-                let selected_reason = selected_subcats[document.querySelector(".secondary-items input:checked").getAttribute("value")]
-                console.log(selected_reason);
+                let selected_reason = selected_subcats[document.querySelector(".secondary-items input:checked").getAttribute("value")];
                 ( < HTMLInputElement > document.querySelector("textarea.deletion-reason")).value = selected_reason.text;
             });
         });
     }
 }
 export async function confirmDeletion(type: "questions" | "answers") {
-    
+    let counter = 0;
     let stat = new Status("conf")
     stat.Show("Deleting Selected Content...", "indigo", true)
-    let checkBoxesArr = Array.from(document.querySelectorAll(".contentCheckboxes input"))
+    let checkBoxesArr = Array.from(document.querySelectorAll(".contentCheckboxes input"));
 
-    for(let i = 0; i < checkBoxesArr.length; i++) {
-        let element = checkBoxesArr[i]
+    checkBoxesArr.forEach(async (element, index) => {
         if ((<HTMLInputElement>element).checked) {
+            counter += 1;
+            if(counter%15 === 0){
+                console.log("waiting")
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
             //@ts-ignore
             let link = element.closest(".content-row").getElementsByTagName('a')[0].href
             let reason = (<HTMLInputElement>document.querySelectorAll(".deletion-reason")[0]).value;
@@ -101,32 +103,37 @@ export async function confirmDeletion(type: "questions" | "answers") {
             element.closest(".content-row").id = id;
 
             if(type === "questions"){
-                let givePts = ( < HTMLInputElement > document.querySelector("#res-pts")).checked;
-                await qObj.Delete(id, reason, warn, take_point, givePts)
-                element.closest(".content-row").classList.add("deleted")
+                try{
+                    let givePts = ( < HTMLInputElement > document.querySelector("#res-pts")).checked;
+                    qObj.Delete(id, reason, warn, take_point, givePts)
+                    element.closest(".content-row").classList.add("deleted")
+                }catch(e){}
             }
             if(type === "answers"){
 
                 let res = await qObj.Get(id)
                 //@ts-ignore
                 let answers = res.data.responses
-
                 let times = 0
                 if (answers.length === 1) {times = 1} else {times = 2}
 
-                let a = answers.find(({id}) => id === parseInt(window.location.href.split("/")[5]));
-                console.log("answer", a);
                 for (let x = 0; x < times; x++) {
-                    let user = String(answers[x]["user_id"])
-                    if (user === String(window.location.href.split("/")[5])) {
-                        let ansobj = new Answer();
-                        await ansobj.Delete(answers[x].id, reason,warn, take_point);
-                        element.closest(".content-row").classList.add("deleted")
-                    }
+                    try{
+                        let user = String(answers[x]["user_id"])
+                        
+                        if (user === String(window.location.href.split("/")[5])) {
+                            let ansobj = new Answer();
+                            ansobj.Delete(answers[x].id, reason,warn, take_point);
+                            element.closest(".content-row").classList.add("deleted")
+                        }
+                    }catch(e){}
                 }
             }
         }
-    };
-    stat.Close();
-    Notify.Flash(`Selected ${type} removed successfully.`, "success");
+        if(index === (checkBoxesArr.length-1)){
+            //task completed
+            stat.Close();
+            Notify.Flash(`Selected ${type} removed successfully.`, "success");
+        }
+    })
 }

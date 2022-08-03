@@ -4,63 +4,142 @@ div.brn-placeholder__animation{
 #moderate-functions-panel .icon, div[data-testid = 'game_box_badges'], button[data-testid = 'navigation_tutoring'], div[data-testid = 'tutoring_promo_box']{
   display:none!important;
 }
-
-.brn-feed-item__points .brn-points-on-feed{
-  display:flex;
-  align-items:center;
-  .repflag{
-    background:transparent;
-    height:24px;
-    width:24px;
-    margin-right:4px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    >div{
-      fill:#ff341a!important;
-      max-height:24px;
-      max-width:24px;
+.backdrop{
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+  .repmenu{
+    position:relative;
+    height: max-content;
+    min-width: 500px;
+    min-height:400px;
+    padding: 24px;
+    z-index: 3;
+    width: max-content;
+    background: white;
+    border-radius: 10px;
+    .sg-spinner-container__overlay{
+      height:100%;
+      width:100%;
+      background:white;
+      border-radius: 10px;
+      z-index: 1;
+    }
+    &.loaded{
+      .sg-spinner-container__overlay{
+        display: none;
+      }
+    }
+    .close{
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      z-index: 2;
+      background: transparent!important;
+      svg{
+        fill: #687b86!important;
+      }
+    }
+    .rep-items{
+      display:flex;
+      flex-direction: column;
+      &::before{
+        content: "Report";
+        font-size:1.5rem;
+        line-height:2rem;
+        font-family: "ProximaNova","Helvetica","Arial",sans-serif!important;
+        font-weight:900;
+        margin-bottom:8px;
+      }
+      label{
+        font-size:1rem!important;
+      }
+      .rep-sub-items{
+        margin-left: 24px;
+        border-left: 2px solid black;
+      }
+    }
+    .cont-report{
+      margin-top:12px;
+      position: absolute;
+      right: 24px;
+      bottom: 24px;
     }
   }
 }
-.brn-feed-item__footer{
-  >div{
+.brn-feed-item-wrapper{
+  position:relative!important;
+  .brn-feed-item__points .brn-points-on-feed{
     display:flex;
-  }
-  
-  .sg-actions-list__hole--to-right{
-    display:flex;
-    margin-right:4px!important;
-    .sg-button--outline{
-
-      >div{
-        max-height:24px!important;
-        max-width:24px!important;
+    align-items:center;
+    .rep-button{
+      background:transparent!important;
+      padding: 0px;
+      height: 32px;
+      width: 32px;
+      border-radius: 100%;
+      margin-right:4px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      svg{
+        max-height:24px;
+        fill: #687b8c;
+        max-width:24px;
+      }
+      &.reported{
+        pointer-events: none;
+        svg{
+          fill:#ff341a!important;
+        }
       }
     }
   }
-  button.sg-button--outline,.newansbut{
-    width:36px;
-    height:36px;
-    padding:8px 8px 8px 8px!important;
-    border-radius:100%;
-  }
-  .newansbut{
-    background-color: black!important;
-  }
-  .mod-button{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background-color:#ebeeff!important;
-    border-color: #ebeeff!important;
-
-    svg{
-      fill:black;
+  .brn-feed-item__footer{
+    >div{
+      display:flex;
     }
-    > div{
-      height:20px;
-      width:20px;
+    
+    .sg-actions-list__hole--to-right{
+      display:flex;
+      margin-right:4px!important;
+      .sg-button--outline{
+
+        >div{
+          max-height:24px!important;
+          max-width:24px!important;
+        }
+      }
+    }
+    button.sg-button--outline,.newansbut{
+      width:36px;
+      height:36px;
+      padding:8px 8px 8px 8px!important;
+      border-radius:100%;
+    }
+    .newansbut{
+      background-color: black!important;
+    }
+    .mod-button{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background-color:#ebeeff!important;
+      border-color: #ebeeff!important;
+
+      svg{
+        fill:black;
+      }
+      > div{
+        height:20px;
+        width:20px;
+      }
     }
   }
 }

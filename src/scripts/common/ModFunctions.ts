@@ -3,7 +3,7 @@ import Notify from "./Notifications/Notify"
 import BrainlyAPI from "./BrainlyAPI"
 import Extension from "../../locales/en/localization.json"
 
-function noclick(){
+export function noclick(){
     document.querySelector("body").insertAdjacentHTML("afterbegin",/*html*/`
         <div class="blockint"></div>
     `)

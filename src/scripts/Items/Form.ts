@@ -1,9 +1,10 @@
 import {BoxRadio} from '../../typings/components';
 
 export default new class Form{
-    checkbox;
-    radio;
-    boxRadio;
+    private checkbox:Element
+    private radio:Element
+    private boxRadio:Element
+
     Checkbox(props:{
         id:string,
         classes?:[string],
@@ -37,6 +38,7 @@ export default new class Form{
         //})}:{}
         return this.checkbox
     }
+
     BoxSelectRadio(props:{
         items: Array<BoxRadio>
     }):Element{
@@ -71,7 +73,8 @@ export default new class Form{
         LookFor: {
             name: string,
             id: string
-        }
+        },
+        defCheck?: string,
         items: Array<{
             id:string,
             text:string,
@@ -91,7 +94,6 @@ export default new class Form{
         `
         props.ClassName?{this: this.radio.classList.add(...props.ClassName)}:{}
         props.items.forEach((item, index)=> {
-            console.log("item", item)
             this.radio.querySelector(".sg-radio-group__items").insertAdjacentHTML("beforeend",/*html*/`
                     <div class="sg-radio sg-radio--dark sg-radio--with-label sg-radio--with-padding">
                         <div class="sg-radio__wrapper">
@@ -104,6 +106,8 @@ export default new class Form{
                     </div>
             `)
         })
+        
+        props.defCheck? {this: this.radio.querySelector(`.sg-radio-group__items`).children[props.defCheck].querySelector("input").checked = true}:{}
         return this.radio;
     }
 }

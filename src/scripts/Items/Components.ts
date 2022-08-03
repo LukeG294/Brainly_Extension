@@ -1,6 +1,6 @@
 export default new class Component{
-    button;
-    icon;
+    private button: Element;
+    private icon: Element;
     Icon(
         name: "academic_cap" | "all_questions" | "answer" |  "arrow_double_down" | "arrow_down" | "arrow_left" | "arrow_right" | "arrow_up" | "ask_bubble" |"ask_parent_to_pay" | "attachment" | "bell_checked" | "bell_outlined" | "bold" | "bulleted_list" | "calendar" | "camera" | "chapter" | "check" | "clipboard" | "close" | "comment" | "comment_outlined" | "counter" | "credit_card" | "crown" | "crown_outlined" | "cup" | "equation" | "exclamation_mark" | "facebook" | "filters" | "friend_add" | 
         "friend_remove" | "friend_pending" | "friend_checked" | "friends" | "fullscreen" | "funnel" | "globe" | "heading" | "heart" | "heart_outlined" | "image" | "influence" | "info" | "instagram" | "italic" | "less" | "linkedin" | "lock_with_play" | "logout" |"medium" |"megaphone" |"menu" |"messages" |"mic" |"money_transfer" |"add_more" |"notifications" |"numbered_list" |"open_in_new_tab" | "padlock" |"pencil" |"play" |"plus" |"points" |"profile" |"profile_view" |"question" |"recent_questions"|
@@ -26,6 +26,7 @@ export default new class Component{
         text?:string,
         color?: "peach" | "mustard" | "blue",
         icon?,
+        id?: string,
         iconSize?: "24" | "16",
         iconColor?: "peach" | "mustard" | "blue",
         Attributes?: {
@@ -51,6 +52,7 @@ export default new class Component{
                 this.button.setAttribute(attr.key, attr.value);
             })
         }:{}
+        props.id?{this: this.button.id = props.id}:{}
         props.ClassNames?{this: this.button.classList.add(...props.ClassNames)}:{}
 
         return this.button;

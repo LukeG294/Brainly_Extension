@@ -57,7 +57,6 @@ if (localStorage.canUse === "true") {
         if(!target){ return setTimeout(addFunctionifFeed, 1); }
         
         observer.observe(target, { childList: true, subtree: true});
-        console.log("observing")
         addPerPage()
     }
     addFunctionifFeed()

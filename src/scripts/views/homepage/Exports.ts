@@ -2,6 +2,7 @@ import BrainlyAPI from "../../common/BrainlyAPI";
 import Component from "scripts/Items/Components";
 import Form from "scripts/Items/Form";
 import Status from "../../common/Notifications/Status"
+import Preview from "../../common/Preview/Index";
 import {insert_ticket, noclick} from "../../common/ModFunctions"
 
 let modbutton = /*html*/`
@@ -47,7 +48,7 @@ export function AnsObserver(){
     }
     addFunctionifFeed()
 }
-async function repMenu(qid:string, element){
+export async function repMenu(qid:string, element){
   let subcatId;
   let selectedRsn;
   document.body.insertAdjacentHTML("beforeend", /*html*/`
@@ -162,13 +163,23 @@ async function HomeAns(){
     const questions = document.querySelectorAll(".brn-feed-items > div[data-testid = 'feed-item']");
     for (let questionBox of Array.from(questions)) {
         let qid = questionBox.querySelector("a[data-test = 'feed-item-link']").getAttribute("href").replace("/question/","").split("?")[0];
+
         let actionlist = questionBox.querySelector(".sg-actions-list__hole.sg-actions-list__hole--to-right");
-        if(actionlist.id === "altered") continue;
-        if(actionlist.querySelector("a") && actionlist.id !== "altered"){
-            actionlist.id = "altered"
-            actionlist.querySelector("a").innerHTML = '<div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-plus"></use></svg></div>'
+        if (questionBox.querySelector(".preview-button")) continue;
+        questionBox.querySelector(".brn-feed-item__footer .sg-actions-list").insertAdjacentElement("afterend", Component.Button({
+          size: "m",
+          type: "solid",
+          ClassNames: ["preview-button"],
+          icon: "seen",
+          iconSize: "24"
+        }));
+        questionBox.querySelector(".preview-button").addEventListener("click", () => {Preview.Display(qid)})
+        try{
+          if(actionlist.querySelector("a")){
             actionlist.querySelector("a").classList.add("newansbut")
-        }
+            actionlist.querySelector("a").innerHTML = '<div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-plus"></use></svg></div>'
+          }
+        }catch(err){}
 
         //check if the question has been reported + add the report flag
         let bdata = await BrainlyAPI.GetQuestion(parseInt(qid));

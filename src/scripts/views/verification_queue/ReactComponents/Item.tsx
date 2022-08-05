@@ -76,7 +76,6 @@ export default function Item({ content, thanks, rating, created, ansdata, faunad
                         icon={<Icon color="adaptive" size={24} type="close"/>}
                         iconOnly
                         size="m"
-                        toggle="peach"
                         type="solid-light"
                         className = "cancel"
                         />
@@ -88,7 +87,6 @@ export default function Item({ content, thanks, rating, created, ansdata, faunad
                         icon={<Icon color="adaptive" size={24} type="check"/>}
                         iconOnly
                         size="m"
-                        toggle="blue"
                         type="solid-light"
                         className = "approve"
                         />

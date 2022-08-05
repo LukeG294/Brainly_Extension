@@ -21,6 +21,65 @@
 .brn-moderation-panel .sg-menu-list__link{
   cursor: pointer!important;
 }
+.preview-box{
+  position:relative;
+  min-width:600px;
+  max-height: 95%;
+  display: flex;
+  flex-direction: column;
+  .close{
+    position:absolute;
+    top: 18px;
+    right:18px;
+  }
+  .items{
+    margin-top:12px;
+    flex:1;
+    overflow-y: auto;
+    .item{
+      border: 1px solid #ebf2f7;
+      border-radius: 5px;
+      padding:12px;
+      margin-bottom:8px;
+      .sg-media{
+        padding:0px!important;
+        min-height: 2rem!important;
+        .sg-media__aside{
+          display: flex;
+          align-items: center;
+        }
+      }
+      .content{
+        margin-top:8px;
+        max-width:600px;
+      }
+      .attachments{
+        .attachment-view{
+          display: flex;
+          background: #e1eaf1;
+          border-radius: 10px;
+          position: relative;
+          align-items: center;
+          justify-content: center;
+          padding: 12px;
+          margin: 8px 0;
+          img{
+            max-height: 215px;
+            border-radius: 10px;
+          }
+        }
+        .attachments-panel{
+          display:flex;
+          img{
+            height:64px;
+            width:64px;
+            border-radius: 10px;
+          }
+        }
+      }
+    }
+  }
+}
 .icononly{
   padding:20px;
   height:40px;
@@ -409,7 +468,6 @@
             .confirmComment{
               display:flex!important;
             }
-            
           }
           .rep-flag{
             display:none;
@@ -439,9 +497,7 @@
                 align-items: center;
                 justify-content: center;
                 &.confirmComment{
-                  &.hidden{
-                    display:none!important;
-                  }
+                  display:none;
                 }
                 .sg-icon{
                   height:21px;

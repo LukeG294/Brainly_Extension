@@ -36,7 +36,7 @@ const config = {
     }],
   },
   resolve: {
-    extensions: [".ts", ".js", ".tsx", ""],
+    extensions: [".ts", ".js", ".tsx", ".jsx", ""],
     plugins: [
       new TsconfigPathsPlugin()
     ]

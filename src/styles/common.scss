@@ -77,6 +77,12 @@
           }
         }
       }
+      &.reported{
+        border: 2px solid #ff341a!important;
+        .rep-button{
+          display:none;
+        }
+      }
     }
   }
 }

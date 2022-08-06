@@ -20,7 +20,7 @@ export default function App({id, dRef, data}) {
                 <Head subject = {subject} grade = {grade} id = {id} data = {data.data.task} />
 
                 <div className="items">
-                    <Item id = {id} users = {data.users_data} data = {data.data.task}/>
+                    <Item id = {id} users = {data.users_data} data = {data.data.task} type = "task" />
 
                     {
                         data.data.responses.map(({id}, index) => {
@@ -30,6 +30,7 @@ export default function App({id, dRef, data}) {
                                     key = {index} 
                                     users = {data.users_data} 
                                     data = {data.data.responses[index]}
+                                    type = "response"
                                 />
                             )
                         })

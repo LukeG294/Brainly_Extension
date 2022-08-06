@@ -5,23 +5,20 @@ import { ModObserver, AnsObserver } from "./Exports";
 import Notify from "../../common/Notifications/Notify";
 import Extension from "../../../locales/en/localization.json"
 var checker = require("../../common/NoSwearing/index")
-//@ts-ignore
-async function homeperms(){
-  let perms = localStorage.getItem("userPerms").split(",")
-  if (perms.includes("1") || perms.includes("2") || perms.includes("3") || perms.includes("4")){
-    ModObserver()
-  }
-  else if (perms.includes("32")){
-    AnsObserver()
-  }
-}
 
 if(localStorage.canUse === "true"){
-  homeperms()
+  let perms = localStorage.getItem("userPerms").split(",")
+  if (perms.includes("1") || perms.includes("2") || perms.includes("3") || perms.includes("4")){
+    AnsObserver()
+  }
+  else if (perms.includes("32")){
+    ModObserver()
+  }
 }
 else{
   Notify.Flash(Extension.common.unauthorized, "error")
 }
+
 
 //if user does not have username and password in local storage
 if(!localStorage.getItem("userAuth")){

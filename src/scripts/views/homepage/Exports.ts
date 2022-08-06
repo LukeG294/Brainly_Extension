@@ -17,7 +17,10 @@ let modbutton = /*html*/`
             </button>
         </div>
         `
-
+export function successFn(element){
+  element.querySelector(".rep-button").classList.add("reported")
+  element.querySelector(".rep-button use").setAttribute("xlink:href", "#icon-report_flag")
+}
 export function ModObserver(){
     const observer = new MutationObserver(HomeMod);
     function addFunctionifFeed(){
@@ -48,9 +51,11 @@ export function AnsObserver(){
     }
     addFunctionifFeed()
 }
-export async function repMenu(qid:string, element){
+export async function repMenu(qid:string, element, type: "task" | "response", success:CallableFunction, params){
   let subcatId;
   let selectedRsn;
+  let modelId;
+  if(type === "task"){modelId = 1}else{modelId = 2}
   document.body.insertAdjacentHTML("beforeend", /*html*/`
   <div class = "backdrop">
     <div class="repmenu">
@@ -86,7 +91,7 @@ export async function repMenu(qid:string, element){
     method: 'POST',
     body: JSON.stringify({
       model_id: qid,
-      model_type_id: 1
+      model_type_id: modelId
     })
   }).then(data => data.json())
   document.querySelector(".repmenu").classList.add("loaded")
@@ -140,22 +145,22 @@ export async function repMenu(qid:string, element){
       method: 'POST',
       body: JSON.stringify({
         model_id: qid,
-        model_type_id: 1,
+        model_type_id: modelId,
         abuse:{
           category_id: selectedRsn.id,
           subcategory_id: subcatId,
-          data: null
+          data: " "
         }
       })
     }).then(data => data.json())
     .then((data) => {
       repstat.Close();
+      document.querySelector(".backdrop").remove();
       document.querySelector(".blockint").remove()
       if(data.success){
-        document.querySelector(".backdrop").remove();
-        element.querySelector(".brn-feed-item__points .brn-points-on-feed").querySelector(".rep-button").classList.add("reported")
-        element.querySelector(".brn-feed-item__points .brn-points-on-feed").querySelector(".rep-button use").setAttribute("xlink:href", "#icon-report_flag")
-    }})
+        success(params)
+      }
+  })
 
   })
 }
@@ -197,7 +202,9 @@ async function HomeAns(){
           questionBox.querySelector(".brn-feed-item__points .brn-points-on-feed").querySelector(".rep-button").classList.add("reported")
           questionBox.querySelector(".brn-feed-item__points .brn-points-on-feed").querySelector(".rep-button use").setAttribute("xlink:href", "#icon-report_flag")
         }
-        questionBox.querySelector(".rep-button").addEventListener("click", () => {repMenu(qid, questionBox)})
+        questionBox.querySelector(".rep-button").addEventListener("click", () => {
+          repMenu(qid, questionBox, "task", successFn, questionBox)
+        })
     }
 }
 export async function UserSearchTool(){
@@ -238,7 +245,8 @@ export async function HomeMod() {
         questionBox.querySelector(".brn-feed-item__points .brn-points-on-feed").querySelector(".rep-button").classList.add("reported")
         questionBox.querySelector(".brn-feed-item__points .brn-points-on-feed").querySelector(".rep-button use").setAttribute("xlink:href", "#icon-report_flag")
       }
-      questionBox.querySelector(".rep-button").addEventListener("click", () => {repMenu(qid, questionBox)})
+      questionBox.querySelector(".rep-button").addEventListener("click", () => {
+        repMenu(qid, questionBox, "task", successFn, questionBox)})
   
       //mod ticket event listeners
       questionBox.querySelector(".mod-button").addEventListener("click", async function(){

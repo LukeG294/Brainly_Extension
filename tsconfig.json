@@ -3,7 +3,7 @@
       "jsx": "react-jsx",
       "allowJs": true,
       "baseUrl": "./src",
-      "target": "es6",
+      "target": "es2022",
       "module": "commonjs",
       "outDir": "/dist/content-scripts/js",
       "esModuleInterop": true,
@@ -21,6 +21,7 @@
       "src/scripts/*",
       "src/scripts/*/*",
       "src/locales",
-      "src/lib"
-, "src/background"    ]
+      "src/lib",
+      "src/background"    
+    ]
   }

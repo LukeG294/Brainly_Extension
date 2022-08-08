@@ -1,9 +1,8 @@
 
-import {delete_user_btn} from "./DelMenuExp"
+import {deleteUserBtn} from "./DelMenuExp"
 import {show_recent_warnings} from "./RecentWarnings"
 import {QuestionCount, CommentCount, AnswerLink} from "./UserBio"
 import {manage_user} from "./ManageUser"
-//@ts-ignore
 
 async function oldProfile(){
   let perms = localStorage.userPerms.split(",")
@@ -17,7 +16,7 @@ async function oldProfile(){
     show_recent_warnings(uid)
   }
 
-  if(perms.includes("3") || perms.includes("4")) delete_user_btn();
+  if(perms.includes("3") || perms.includes("4")) deleteUserBtn();
 
   if (perms.includes("4")) manage_user();
 }

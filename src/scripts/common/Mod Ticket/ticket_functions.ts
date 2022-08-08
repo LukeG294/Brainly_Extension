@@ -84,7 +84,7 @@ function add_deletion(del_rsn, elem, tid, type:string){
     }
 
     //finds selected item and links it to the object
-    let selected_index = elem.querySelector(".primary-items input:checked").getAttribute("value");
+    let selected_index = elem.querySelector(".primary-items input:checked").getAttribute("index");
     let selected_subcats = del_rsn[selected_index].subcategories;
 
     //inserting secondary deletion reasons
@@ -101,7 +101,7 @@ function add_deletion(del_rsn, elem, tid, type:string){
 
     //adds listener to the subcategories
     elem.querySelector(".secondary-items").addEventListener("change", function(){
-      let selected_reason = selected_subcats[elem.querySelector(".secondary-items input:checked").getAttribute("value")]
+      let selected_reason = selected_subcats[elem.querySelector(".secondary-items input:checked").getAttribute("index")]
       console.log(selected_reason);
       
       (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value = selected_reason.text;

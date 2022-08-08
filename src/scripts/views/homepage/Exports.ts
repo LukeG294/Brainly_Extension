@@ -21,7 +21,7 @@ export function successFn(element){
   element.querySelector(".rep-button").classList.add("reported")
   element.querySelector(".rep-button use").setAttribute("xlink:href", "#icon-report_flag")
 }
-export function ModObserver(){
+export async function ModObserver(){
     const observer = new MutationObserver(HomeMod);
     function addFunctionifFeed(){
         let target = document.querySelector(".sg-layout__content");
@@ -113,7 +113,7 @@ export async function repMenu(qid:string, element, type: "task" | "response", su
         document.querySelector(".rep-sub-items").remove();
       }
     }catch(e){}
-    selectedRsn = reasons.data[parseInt(document.querySelector(".rep-items input:checked").getAttribute("value"))];
+    selectedRsn = reasons.data[parseInt(document.querySelector(".rep-items input:checked").getAttribute("index"))];
     let subcatElem = document.querySelector(".rep-items input:checked").closest(".sg-radio").querySelector(".rep-sub-items");
 
     if(selectedRsn.subcategories && !subcatElem){
@@ -130,10 +130,10 @@ export async function repMenu(qid:string, element, type: "task" | "response", su
           items: selectedRsn.subcategories
         })
       );
-      subcatId = selectedRsn.subcategories[parseInt(document.querySelector(".rep-sub-items input:checked").getAttribute("value"))].id
+      subcatId = selectedRsn.subcategories[parseInt(document.querySelector(".rep-sub-items input:checked").getAttribute("index"))].id
       
       document.querySelector(".rep-sub-items").addEventListener("change", () => {
-        subcatId = selectedRsn.subcategories[parseInt(document.querySelector(".rep-sub-items input:checked").getAttribute("value"))].id;
+        subcatId = selectedRsn.subcategories[parseInt(document.querySelector(".rep-sub-items input:checked").getAttribute("index"))].id;
       })
     }
   })

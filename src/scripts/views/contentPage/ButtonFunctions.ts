@@ -56,7 +56,7 @@ export async function showDelrsn(type: "questions" | "answers") {
         document.querySelector(".primary-items").addEventListener("change", async function() {
 
             document.querySelector(".delmenu").classList.add("secondary");
-            let selected_index = document.querySelector(".primary-items input:checked").getAttribute("value");
+            let selected_index = document.querySelector(".primary-items input:checked").getAttribute("index");
             let selected_subcats = del_reasons[selected_index].subcategories;
             //inserting secondary deletion reasons
             document.querySelector(".secondary-items").outerHTML = Form.RadioGroup({
@@ -71,7 +71,7 @@ export async function showDelrsn(type: "questions" | "answers") {
             }).outerHTML
             //show deletion reason in textarea
             document.querySelector(".secondary-items").addEventListener("change", function() {
-                let selected_reason = selected_subcats[document.querySelector(".secondary-items input:checked").getAttribute("value")];
+                let selected_reason = selected_subcats[document.querySelector(".secondary-items input:checked").getAttribute("index")];
                 ( < HTMLInputElement > document.querySelector("textarea.deletion-reason")).value = selected_reason.text;
             });
         });

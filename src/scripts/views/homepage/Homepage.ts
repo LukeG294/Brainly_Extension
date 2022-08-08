@@ -4,15 +4,14 @@ import { ModObserver, AnsObserver } from "./Exports";
 //import {subscribe, setAuth} from "../common/livemod"
 import Notify from "../../common/Notifications/Notify";
 import Extension from "../../../locales/en/localization.json"
-var checker = require("../../common/NoSwearing/index")
 
 if(localStorage.canUse === "true"){
   let perms = localStorage.getItem("userPerms").split(",")
   if (perms.includes("1") || perms.includes("2") || perms.includes("3") || perms.includes("4")){
-    AnsObserver()
+    ModObserver()
   }
   else if (perms.includes("32")){
-    ModObserver()
+    AnsObserver()
   }
 }
 else{
@@ -30,5 +29,7 @@ if(!localStorage.getItem("userAuth")){
 
 // document.querySelector("html").insertAdjacentHTML("beforeend", "<textarea class = 'noswear'></textarea>");
 // document.querySelector(".noswear").addEventListener("input", function(){
-//   console.log(checker((<HTMLInputElement>document.querySelector(".noswear")).value))
+//   isProfanity((<HTMLInputElement>document.querySelector(".noswear")).value, function(t, blocked){
+//     console.log(blocked)
+//   }, "../../../configs/profanity.csv")
 // });

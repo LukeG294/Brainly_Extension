@@ -108,11 +108,12 @@ span.rank > h3 > span, span.rank > h3 > a{
             display: flex;
             margin-top: 8px;
             flex-wrap: wrap;
-            >label{
-                margin-right:16px;
-                .sg-text{
-                    margin-left:8px;
-                }
+            .sg-text{
+                font-size: 1rem!important;
+            }
+            .sg-radio-group__items{
+                display:flex;
+                flex-wrap: wrap;
             }
         }
         >button{

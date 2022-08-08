@@ -9,6 +9,7 @@ const MakeEntries = require("./src/scripts/makeEntries");
 const config = {
   entry: {
     //constant stuff
+    ...MakeEntries("./src/scripts/views/shortcuts/Index.ts", "content-scripts/js", "shortcuts"),
     ...MakeEntries("./src/scripts/common/permissions/setPerms.ts", "content-scripts/js", "permissions"),
     ...MakeEntries("./src/background/background.ts", "content-scripts/js", "serviceWorker"),
     //brainly resources
@@ -17,10 +18,10 @@ const config = {
     ...MakeEntries("./src/scripts/views/ModPanel.ts", "content-scripts/js", "panel"),
 
     ...MakeEntries("./src/scripts/views/homepage/Homepage.ts", "content-scripts/js", "homepage"),
-    ...MakeEntries("./src/scripts/views/old_profile/*.ts", "content-scripts/js", "old_profile"),
-    ...MakeEntries("./src/scripts/views/question_page/QuestionPage.ts", "content-scripts/js", "question_page"),
-    ...MakeEntries("./src/scripts/views/content_page/Index.ts", "content-scripts/js", "content_page"),
-    ...MakeEntries("./src/scripts/views/mod_all/Index.ts", "content-scripts/js", "mod_all"),
+    ...MakeEntries("./src/scripts/views/oldProfile/*.ts", "content-scripts/js", "old_profile"),
+    ...MakeEntries("./src/scripts/views/questionPage/QuestionPage.ts", "content-scripts/js", "question_page"),
+    ...MakeEntries("./src/scripts/views/contentPage/Index.ts", "content-scripts/js", "content_page"),
+    ...MakeEntries("./src/scripts/views/modAll/Index.ts", "content-scripts/js", "mod_all"),
     //react
     ...MakeEntries("./src/scripts/views/verification_queue/Index.ts", "content-scripts/js", "verification_queue")
 
@@ -39,7 +40,12 @@ const config = {
     extensions: [".ts", ".js", ".tsx", ".jsx", ""],
     plugins: [
       new TsconfigPathsPlugin()
-    ]
+    ],
+    fallback: {
+      "fs": false,
+      "path": false,
+      "os": false,
+    }
   },
   target: "web",
   devtool: "inline-cheap-source-map"

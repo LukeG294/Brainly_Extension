@@ -70,6 +70,7 @@ export default new class Form{
         ClassName?:string[],
         id: string,
         type: "row" | "column",
+        padding?: boolean,
         LookFor: {
             name: string,
             id: string
@@ -78,10 +79,7 @@ export default new class Form{
         items: Array<{
             id:string,
             text:string,
-            Attributes?: {
-                key: string,
-                value: string
-            }[]
+            value?: string
         }>
     }){
         this.radio = document.createElement("div");
@@ -95,10 +93,10 @@ export default new class Form{
         props.ClassName?{this: this.radio.classList.add(...props.ClassName)}:{}
         props.items.forEach((item, index)=> {
             this.radio.querySelector(".sg-radio-group__items").insertAdjacentHTML("beforeend",/*html*/`
-                    <div class="sg-radio sg-radio--dark sg-radio--with-label sg-radio--with-padding">
+                    <div class="sg-radio sg-radio--dark sg-radio--with-label">
                         <div class="sg-radio__wrapper">
                             <div class="sg-radio__element">
-                                <input class="sg-radio__input" type="radio" name = "${props.id}"  id ="${item[props.LookFor.id] + props.id}" value = "${index}" aria-labelledby="${item[props.LookFor.id] + props.id}-label">
+                                <input class="sg-radio__input" type="radio" name = "${props.id}"  id ="${item[props.LookFor.id] + props.id}" index = ${index} value = "${item.value}" aria-labelledby="${item[props.LookFor.id] + props.id}-label">
                                 <span class="sg-radio__circle" aria-hidden="true"></span>
                             </div>
                             <label id="${item[props.LookFor.id] + props.id}-label" for="${item[props.LookFor.id] + props.id}" class="sg-text sg-text--medium sg-text--bold sg-radio__label">${item[props.LookFor.name]}</label>
@@ -106,7 +104,7 @@ export default new class Form{
                     </div>
             `)
         })
-        
+        props.padding ? {this: this.radio.querySelector(".sg-radio").classList.add("sg-radio--with-padding")}:{}
         props.defCheck? {this: this.radio.querySelector(`.sg-radio-group__items`).children[props.defCheck].querySelector("input").checked = true}:{}
         return this.radio;
     }

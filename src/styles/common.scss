@@ -289,7 +289,7 @@
 .modal_back{
   position:fixed;
   z-index:900;
-  background: rgba($color: #4fc3f6, $alpha: 0.8);
+  background: rgba($color: black, $alpha: 0.9);
   height:100%;
   width:100%;
   top:0;
@@ -934,6 +934,7 @@
     label{
       display: flex!important;
       align-items:center;
+      padding-right:8px!important;
     }
     .sg-radio-group__items{
       display: flex;

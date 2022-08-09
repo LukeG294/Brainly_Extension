@@ -9,10 +9,9 @@ export async function ryverTask(id:string){
     for(let i = 0; i < data.length; i++){
         if(data[i].body.includes(id)){
             return console.log("Task found")
-        }else{
-            return taskButton()
         }
     }
+    taskButton()
 }
 
 function taskButton(){

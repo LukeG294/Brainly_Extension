@@ -35,6 +35,10 @@ gulp.task('sass', function(done){
         .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
         .pipe(concat("question_page.css"))
         .pipe(gulp.dest("dist/content-scripts/css/"));
+    gulp.src('src/styles/newProfile.scss')
+        .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
+        .pipe(concat("newProfile.css"))
+        .pipe(gulp.dest("dist/content-scripts/css/"));
    
     done();
 });

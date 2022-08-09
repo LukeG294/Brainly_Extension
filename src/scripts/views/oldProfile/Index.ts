@@ -6,7 +6,7 @@ import {manage_user} from "./ManageUser"
 import {ryverTask} from "./BanTask"
 
 async function oldProfile(){
-  ryverTask((<string>window.location.href).split("-")[1].split("/")[0])
+  if (localStorage.getItem("userAuth")) ryverTask((<string>window.location.href).split("-")[1].split("/")[0])
   let perms = localStorage.userPerms.split(",")
 
   AnswerLink()

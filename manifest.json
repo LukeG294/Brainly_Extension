@@ -2,7 +2,7 @@
   "name": "Brainly Companion (Beta)",
   "description": "A tool in it's beta version to help Brainly Volunteers perform their tasks actions more efficiently.",
   "manifest_version": 3,
-  "version":"1.6.78",
+  "version":"1.6.81",
   "icons": {
     "128": "resources/icon.png"
   },
@@ -31,7 +31,7 @@
    
     {
       "matches": ["*://brainly.com/*"],
-      "exclude_globs": ["*://brainly.com/profile/*","*://brainly.com/companion/verification*","*://brainly.com/users/*","*://brainly.com/tools/*","*://brainly.com/tasks/archive_mod*"],
+      "exclude_globs": ["*://brainly.com/app/profile/*", "*://brainly.com/profile/*","*://brainly.com/companion/verification*","*://brainly.com/users/*","*://brainly.com/tools/*","*://brainly.com/tasks/archive_mod*"],
       "js": ["content-scripts/js/panel.js"]
     },
     {
@@ -44,6 +44,12 @@
       "matches": ["*://brainly.com/tasks/archive_mod*"],
       "css": ["content-scripts/css/mod_all.css"],
       "js": ["content-scripts/js/mod_all.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://brainly.com/app/profile*"],
+      "css": ["content-scripts/css/newProfile.css"],
+      "js": ["content-scripts/js/newProfile.js"],
       "run_at": "document_start"
     },
     {

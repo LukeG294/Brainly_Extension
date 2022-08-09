@@ -22,6 +22,7 @@ const config = {
     ...MakeEntries("./src/scripts/views/questionPage/QuestionPage.ts", "content-scripts/js", "question_page"),
     ...MakeEntries("./src/scripts/views/contentPage/Index.ts", "content-scripts/js", "content_page"),
     ...MakeEntries("./src/scripts/views/modAll/Index.ts", "content-scripts/js", "mod_all"),
+    ...MakeEntries("./src/scripts/views/newProfile/index.ts", "content-scripts/js", "newProfile"),
     //react
     ...MakeEntries("./src/scripts/views/verification_queue/Index.ts", "content-scripts/js", "verification_queue")
 

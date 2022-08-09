@@ -1,7 +1,7 @@
 import {newTickets, requestApproval} from "./QuestionExports"
 
 async function questionPage(){
-  let perms = localStorage.userPerms
+  let perms = localStorage.userPerms.split(",")
   
   if (perms.includes("1") || perms.includes("2") || perms.includes("3") || perms.includes("4")){
       newTickets()

@@ -1,0 +1,12 @@
+[data-testid = 'user_profile_content_list_item'], [data-testid = 'profile_page_questions']{
+    position: relative!important;
+    .preview-button{
+        position: absolute;
+        right: 8px;
+        top:4px;
+        background: transparent!important;
+        svg{
+            fill: #687b8c!important;
+        }
+    }
+}

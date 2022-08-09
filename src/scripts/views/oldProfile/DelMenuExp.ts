@@ -1,6 +1,7 @@
 import User from "../../common/User"
 import Extension from "../../../locales/en/localization.json"
 import Form from "scripts/Items/Form"
+import Components from "scripts/Items/Components"
 import Ryver from "scripts/common/Ryver/Ryver"
 
 function deletionMenu(){
@@ -77,15 +78,15 @@ async function sendmsg(){
     location.reload()
 }
 export function deleteUserBtn(){
-    document.querySelector(".mod-profile-panel").insertAdjacentHTML("beforeend", /*html*/`
-        <button class="sg-button sg-button--m sg-button--outline sg-button--icon-only user-del-btn">
-            <span class="sg-button__icon sg-button__icon--m">
-            <div class="sg-icon sg-icon--dark sg-icon--x32" style="height: 26px;width: 26px;">
-                <svg class="sg-icon__svg"><use xlink:href="#icon-trash"></use></svg>
-            </div><div class="mint-label__text" style="font-size: 13px;color: rgb(255, 121, 104);">${Extension.buttons.deleteUser}</div>
-            </span>
-        </button>
-    `)
+    document.querySelector(".modMenu").insertAdjacentElement("beforeend", 
+        Components.Button({
+            size: "m",
+            type: "solid",
+            ClassNames: ["user-del-btn"],
+            icon: "trash",
+            iconSize: "16"
+        })
+    )
     document.querySelector(".user-del-btn").addEventListener("click", function(){
         deletionMenu()
     });

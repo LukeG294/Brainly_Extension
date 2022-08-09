@@ -23,26 +23,26 @@
 .helped_info{display:none!important;}
 .mod-profile-panel{
     position:relative;
-    .user-del-btn{
-        border-color:#ff7968;
-        padding: 0px 16px;
-        width: 175px!important;
-        display: flex;
+    .modMenu{
         margin-top: 4px;
         position: absolute;
         right: 0;
-        bottom: 115%;
-        height: 35px;
         align-items: center;
         justify-content: space-evenly;
-        svg{
-            fill:#ff7968;
-        }
-        >span{
+        bottom: 115%;
+        height: 40px!important;
+        width: max-content!important;
+        display:flex;
+        .user-del-btn{
             display: flex;
-            align-items: center;
-            width: 100%;
-            justify-content: center;
+            background: #ff7968!important;
+            svg{
+                fill: white!important;
+            }
+        }
+        .banTask{
+            margin-right:4px;
+            display:flex;
         }
     }
 }

@@ -11,7 +11,7 @@ export default new class Notify{
                 </div>
               </div>
               <div class="sg-dialog__body">
-                <div class="sg-flex sg-flex--margin-bottom-m">${content}</div>
+                <div class="sg-flex sg-flex--margin-bottom-m sg-text">${content}</div>
                 <div class="sg-flex sg-flex--justify-content-flex-end sg-space-x-s">
                   <button class="sg-button sg-button--m sg-button--outline" onclick = "document.querySelector('.js-dialog').remove()"><span class="sg-button__text">cancel</span></button>
                   <button class="sg-button sg-button--m sg-button--solid returnfun"><span class="sg-button__text">proceed</span></button>

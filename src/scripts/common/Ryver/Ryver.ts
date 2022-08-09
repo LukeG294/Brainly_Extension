@@ -44,8 +44,12 @@ export default new class Ryver{
     
     var requestOptions = {
       method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic ' +this.token
+      },
       body: raw
-      
     };
     
     await fetch("https://brainlyus.ryver.com/api/1/odata.svc/tasks", requestOptions)

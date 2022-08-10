@@ -31,14 +31,6 @@ export async function ModObserver(){
         HomeMod()
     }
     addFunctionifFeed()
-    function userSearchIfPanel(){
-      let target = document.querySelector(".brn-moderation-panel__content");
-      if(!target){ return setTimeout(userSearchIfPanel, 100); }
-      
-      observer.observe(target, { attributes: true, childList: true, subtree: true, characterData:true });
-      UserSearchTool()
-  }
-  userSearchIfPanel()
 }
 export function AnsObserver(){
     const observer = new MutationObserver(HomeAns);

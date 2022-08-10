@@ -3,9 +3,11 @@ import {login_run} from "../../common/Ryver/RyverLogin"
 import { ModObserver, AnsObserver } from "./Exports";
 //import {subscribe, setAuth} from "../common/livemod"
 import Notify from "../../common/Notifications/Notify";
+import userSearch from "./userSearch"
 import Extension from "../../../locales/en/localization.json"
 
 if(localStorage.canUse === "true"){
+  userSearch()
   let perms = localStorage.getItem("userPerms").split(",")
   if (perms.includes("1") || perms.includes("2") || perms.includes("3") || perms.includes("4")){
     ModObserver()

@@ -12,6 +12,31 @@ export default new class User{
         }
         });
     }
+    async Search(username:string){
+        const searchRes = []
+        let data = await fetch(`https://brainly.com/users/search/${username}`).then(data => data.text())
+        let parser = new DOMParser()
+        let Doc = parser.parseFromString(data, "text/html");
+        Array.from(Doc.querySelectorAll(".user-data")).forEach((item) => {
+            let userImg;
+            if(item.querySelector("img").src === "https://brainly.com/img/"){
+                userImg = `<div class="sg-avatar__image sg-avatar__image--icon"><div aria-hidden="true" class="sg-icon sg-icon--icon-gray-40 sg-icon--x32 sg-avatar__icon"><svg class="sg-icon__svg" role="img" aria-labelledby="title-profile-692g3" focusable="false"><text id="title-profile-692g3" hidden="">profile</text><use xlink:href="#icon-profile" aria-hidden="true"></use></svg></div></div>`
+            }else{
+                userImg = `<img src = ${item.querySelector("img").src}></img>`
+            }
+            let thisUser = {
+                name: item.querySelector(".nick").innerHTML,
+                link: "https://brainly.com/" + (<HTMLAnchorElement>item.querySelector("a")).href,
+                rank:item.querySelector(":nth-child(3)").innerHTML ? {
+                        name: item.querySelector(":nth-child(3)").innerHTML.replace("\n", ""),
+                        color: (<HTMLElement>item.querySelector(":nth-child(3)")).style.color
+                }:{},
+                pfp: userImg
+            }
+            searchRes.push(thisUser)
+        })
+        return searchRes
+    }
     async Warnings(user:string){
         let warn_arr = [];
         let txt = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/users/view_user_warns/` + user).then(data => data.text());

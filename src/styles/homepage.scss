@@ -4,6 +4,60 @@ div.brn-placeholder__animation{
 #moderate-functions-panel .icon, div[data-testid = 'game_box_badges'], button[data-testid = 'navigation_tutoring'], div[data-testid = 'tutoring_promo_box']{
   display:none!important;
 }
+.sg-flex.sg-flex--column.js-above-feed-ask-question{
+  width:100%;
+  >.sg-flex{
+    display:none!important;
+  }
+  .sg-search{
+    .sg-search__icon{
+      svg{
+        color: #687b86!important;
+      }
+    }
+  }
+  .content{
+    height:max-content;
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    .search-user{
+      margin:4px;
+      margin-bottom:0px!important;
+      display: flex;
+      align-items: center;
+      height: 70px;
+      padding: 8px;
+      border: 2px solid #e1eaf1;
+      border-radius: 5px;
+      width: 49%;
+      &:nth-child(2n){
+        margin-right:0px!important;
+      }
+      .user-pfp{
+        img{
+          height:32px;
+          width:32px;
+        }
+      }
+      .user-info{
+        .username{
+          font-size: 1.1rem!important;
+          line-height: 1.1rem!important;
+        }
+        .rank{
+          line-height:1rem!important;
+        }
+      }
+    }
+    .spinner-container{
+      &.show{
+        height:150px!important;
+        position: inherit;
+      }
+    }
+  }
+}
 .backdrop{
   position: fixed;
   height: 100vh;

@@ -26,6 +26,9 @@ ul[data-testid = 'user_profile_reputation_info_list'], div[data-testid = 'profil
     display: flex;
     position:relative;
     flex-direction: column;
+    h2{
+        font-weight:900!important;
+    }
     >textarea{
         flex:1;
     }

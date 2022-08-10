@@ -1,6 +1,7 @@
 import User from "scripts/common/User"
 
 async function runSearch(){
+    document.querySelector(".sg-flex.sg-flex--column.js-above-feed-ask-question .content").innerHTML = '<div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--small"></div></div>'
     document.querySelector(".content .spinner-container").classList.add("show")
     let result = await User.Search((<HTMLInputElement>document.querySelector(".userSearch")).value)
     document.querySelector(".content .spinner-container").classList.remove("show")
@@ -54,8 +55,13 @@ function userItem(props:{
     )
 }
 export default function userSearch(){
-    let target = document.querySelector("div.js-react-feed-logged-in > div.sg-layout.sg-layout--wide.sg-layout--three-columns > div > div.sg-layout__content > div.sg-flex.sg-flex--margin-bottom-m > div > div.sg-flex.sg-flex--margin-top-m.sg-flex--margin-right-m.sg-flex--margin-bottom-l.sg-flex--margin-left-m");
+    var sheet = window.document.styleSheets[0];
+    sheet.insertRule('.sg-flex.sg-flex--column.js-above-feed-ask-question > .sg-flex { display: none; }', sheet.cssRules.length);
+    
+    let target = document.querySelector(".sg-layout__container");
+    console.log(target)
     if(!target){ return setTimeout(userSearch, 10); }
     UserSearchTool()
+    console.log("run")
 }
 userSearch()

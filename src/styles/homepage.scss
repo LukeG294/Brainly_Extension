@@ -6,9 +6,9 @@ div.brn-placeholder__animation{
 }
 .sg-flex.sg-flex--column.js-above-feed-ask-question{
   width:100%;
-  >.sg-flex{
-    display:none!important;
-  }
+  // >.sg-flex{
+  //   display:none!important;
+  // }
   .sg-search{
     .sg-search__icon{
       svg{
@@ -49,10 +49,13 @@ div.brn-placeholder__animation{
           line-height:1rem!important;
         }
       }
+      &:hover{
+        border-color: #c3d1dd;
+      }
     }
     .spinner-container{
       &.show{
-        height:150px!important;
+        height: 100px!important;
         position: inherit;
       }
     }

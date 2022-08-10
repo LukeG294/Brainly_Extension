@@ -12,48 +12,50 @@ let warn_area = /*html*/`
 `
 function shorten_warnrsn(warning){
     if (warning.includes("plagiarism") || warning.includes("Is that yours?") || warning.includes("Be cool. Be original")){
-        warning = "Plagiarism";
+        return "Plagiarism";
     }
     else if(warning.includes("unhelpful answers") || warning.includes("answering just to get the points isn’t cool.") || warning.includes("We love the rebel in you")){
-        warning = "SPAM";
+        return "SPAM";
     }
     else if(warning.includes("it contained confusing information")){
-        warning = "Wrong Information";
+        return "Wrong Information";
     }
     else if(warning.includes("repost the same question over again if that person does not get an answer")){
-        warning = "Multiple Posting";
+        return "Multiple Posting";
     }
     else if(warning.includes("not part of an academic assignment")){
-        warning = "NASP";
+        return "NASP";
     }
     else if(warning.includes("link to a website other than Brainly")){
-        warning = "Link in Content";
+        return "Link in Content";
     }
     else if(warning.includes("contents are not allowed")){
-        warning = "#BT Default";
+        return"#BT Default";
     }
-    if(warning.includes("cyberbullying")){
-        warning = "Bullying";
+    else if(warning.includes("cyberbullying")){
+        return "Bullying";
     }
     else if(warning.includes("swear words or explicit content.") || warning.includes("swearwords")){
-        warning = "Inappropriate Content";
+        return "Inappropriate Content";
     }
     else if(warning.includes("personal information")){
-        warning = "Personal Information";
+        return "Personal Information";
     }
     else if(warning.includes("not relevant to the question asked") || warning.includes("Please keep in mind that all comments must be on-topic")){
-        warning = "Off-topic";
+        return "Off-topic";
     }
     else if(warning.includes("Brainiac")){
-        warning = "IDK Answer";
+        return "IDK Answer";
     }
     else if(warning.includes("Honor Code") || warning.includes("academic dishonesty")){
-        warning = "Live Quiz/Exam";
+        return "Live Quiz/Exam";
     }
     else if(warning.includes("Community Guidelines") || warning.includes("Please review the terms and thanks for being a team player!")){
-        warning = "Default";
+        return "Default";
     }
-    return warning
+    else{
+        return "Not Detected"
+    }
 }
 export async function show_recent_warnings(uid){
     let warns = await User.Warnings(uid);

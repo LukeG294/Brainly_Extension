@@ -6,11 +6,23 @@ export default new class Ryver{
     roomID: string, 
     body: string, 
     roomType: "workrooms" | "forums",
-    displayUser?: {
-      name: string,
-      avatar: string
-    }
+    defaultUser?: boolean
   ){
+    let fetchBody;
+    if(defaultUser){
+      fetchBody = JSON.stringify({
+        "body":body
+      })
+    }else{
+      fetchBody = JSON.stringify({
+        "createSource": 
+          {
+            "avatar": this.extIcon,
+            "displayName": "Brainly Companion"
+          },
+        "body":body
+      })
+    }
     await fetch(`https://brainlyus.ryver.com/api/1/odata.svc/${roomType}(${roomID})/Chat.PostMessage()`, {
         method: 'POST',
         headers: {
@@ -18,20 +30,56 @@ export default new class Ryver{
             'Content-Type': 'application/json',
             'Authorization': 'Basic ' +this.token
         },
-        body: JSON.stringify({
-        "createSource": {
-            "avatar": displayUser ? displayUser.avatar : this.extIcon,
-            "displayName": displayUser ? displayUser.name : "Brainly Companion"
-        },
-        "body":body
-        })
+        body: fetchBody
     });
   }
 
-  async Task(subject:string, content:string, boardID:number, categoryID:number){
+  async Task(
+    subject:string, 
+    content:string, 
+    boardID:number, 
+    categoryID:number, 
+    defaultUser?: boolean
+    ){
+      let fetchRaw = JSON.stringify({
+        "subject": subject,
+        "body": content, 
+        "createSource": 
+        {
+          "avatar": this.extIcon,
+          "displayName": "Brainly Companion"
+        },
+        "category": {
+          "id": categoryID
+          //1000306
+        },
+        "board": {
+          "id": boardID
+          //1000010
+        }
+      })
+      if(defaultUser){
+        fetchRaw = JSON.stringify({
+          "subject": subject,
+          "body": content,
+          "category": {
+            "id": categoryID
+            //1000306
+          },
+          "board": {
+            "id": boardID
+            //1000010
+          }
+        })
+      }
     var raw = JSON.stringify({
       "subject": subject,
-      "body": content,
+      "body": content, 
+      "createSource": 
+      {
+        "avatar": this.extIcon,
+        "displayName": "Brainly Companion"
+      },
       "category": {
         "id": categoryID
         //1000306
@@ -49,7 +97,7 @@ export default new class Ryver{
         'Content-Type': 'application/json',
         'Authorization': 'Basic ' +this.token
       },
-      body: raw
+      body: fetchRaw
     };
     
     await fetch("https://brainlyus.ryver.com/api/1/odata.svc/tasks", requestOptions)

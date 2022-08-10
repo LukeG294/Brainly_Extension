@@ -40,7 +40,7 @@ async function sendmsg(userLink){
     **Deleted account**: ${userLink}
 **Why**: ${del_reason}
 ###### **Moderator**: ${mod_name}`
-    Ryver.Message('1291498', message, "workrooms")
+    Ryver.Message('1291498', message, "workrooms", false)
 }
 export function mass_accdel(){
     document.querySelector("body").insertAdjacentHTML("afterbegin", macc_d());

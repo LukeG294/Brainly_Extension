@@ -14,7 +14,12 @@ export async function CommentCount(){
     var parser = new DOMParser();
     let element = document.querySelector('.mod-profile-panel')
     var htmlDoc = parser.parseFromString(count, 'text/html');
-    let FoundCount = htmlDoc.querySelector("#content-old > div:nth-child(3) > p").innerHTML.split("b>")[4].replace(" ","")
+    let FoundCount;
+    try{
+        FoundCount = htmlDoc.querySelector("p[style = 'margin-top: 10px;']").innerHTML.split("b>")[4].replace(" ","")
+    }catch(err){
+        FoundCount = htmlDoc.querySelector("p[style = 'margin-top: 10px;']").innerHTML.split("b>")[2].replace(" ","")
+    }
 
     element.insertAdjacentHTML("afterbegin", `<span class="fright">Comments: <a target="_blank" href="/users/user_content/${id}/comments_tr">${FoundCount}</a></span><br>`)
 }

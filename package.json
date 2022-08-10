@@ -41,13 +41,18 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
+    "@types/react-latex": "^2.0.0",
     "brainly-style-guide": "^217.1.0",
     "concurrently": "^7.1.0",
     "eslint": "^8.10.0",
     "gulp-typescript": "^2.12.2",
     "gulp-watch": "^4.0.1",
     "html-react-parser": "^3.0.1",
+    "html-to-react": "^1.5.0",
     "isprofanity": "^1.4.1",
-    "moment": "^2.29.1"
+    "moment": "^2.29.1",
+    "parser-string-html-jsx": "^1.0.2",
+    "prop-types": "^15.8.1",
+    "react-latex": "^2.0.0"
   }
 }

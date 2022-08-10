@@ -1,6 +1,5 @@
 import react from "react"
 import {Avatar, Text, Media, Breadcrumb, Button, Icon} from "brainly-style-guide"
-import parse from "html-react-parser";
 import Attachments from "./Attachments";
 import {repMenu, successFn} from "scripts/views/homepage/Exports"
 
@@ -8,7 +7,7 @@ export default function Item({id, data, users, type}){
     let user = users.find(({id}) => id === data.user_id);
     let avatar:string;
     let userId = `https://brainly.com/profile/${user.nick}-${user.id}`
-    let content = parse(data.content);
+    let content = data.content//.replaceAll("[tex]", "<Latex>").replaceAll("[/tex]", "</Latex>")
     try{avatar = user.avatar[64]}catch(err){avatar = null}
 
     return(
@@ -36,9 +35,7 @@ export default function Item({id, data, users, type}){
                     </Text>
                 ]}
             />
-            <Text className = "content">
-                {content}
-            </Text>
+            <Text className = "content" dangerouslySetInnerHTML={{__html: content}}/>
             <Attachments attachments = {data.attachments} />
             { <Button
                 className = "rep-button"

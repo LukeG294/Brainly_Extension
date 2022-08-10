@@ -1,5 +1,6 @@
 import Ryver from "scripts/common/Ryver/Ryver";
 import Notify from "scripts/common/Notifications/Notify"
+import Status from "scripts/common/Notifications/Status"
 import Components from "scripts/Items/Components"
 
 export async function ryverTask(id:string){
@@ -31,12 +32,16 @@ function taskButton(){
     })
 }
 async function confirmBanTask(){
+    let taskStat = new Status("task")
+    taskStat.Show("Creating the task...", "blue", true, false)
     let id = (<string>window.location.href).split("-")[1].split("/")[0]
+    let username = document.querySelector(".info_top > span.ranking > h2 > a").innerHTML;
     await Ryver.Task(
-        `${document.querySelector(".info_top > span.ranking > h2 > a").innerHTML} | ${document.querySelector(".mod-profile-panel > span:nth-child(8) > span > a").innerHTML} Warnings`,
-        `https://brainly.com/users/view_user_warns/${id}`,
+        `${username} | ${document.querySelector(".mod-profile-panel > span:nth-child(8) > span > a").innerHTML} Warnings`,
+        `https://brainly.com/users/view_user_warns/${id}\nhttps://brainly.com/profile/${username}-${id} `,
         1026940,
-        1384108
+        1384108,
+        true
     )
     window.location.reload()
 }

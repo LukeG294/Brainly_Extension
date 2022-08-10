@@ -22,7 +22,6 @@ function deletionMenu(){
                         ClassName: ["presets"],
                         id: "presets",
                         type: "row",
-                        padding: false,
                         items: [
                             {
                                 id: "1",
@@ -52,7 +51,7 @@ function deletionMenu(){
         </div>
     `)
     document.querySelector(".presets").addEventListener("change", function(){
-        let rsn = document.querySelector(".presets input:checked").getAttribute("index");
+        let rsn = document.querySelector(".presets input:checked").getAttribute("value");
         (<HTMLInputElement>document.querySelector(".modal-accdel .del-rsn")).value = rsn;
     });
     document.querySelector(".modal-accdel .delete-acc").addEventListener("click", async function(){
@@ -74,7 +73,7 @@ async function sendmsg(){
 **Why**: ${del_reason}
 ###### **Moderator**: [${mod_name}](${profileLink})`
 
-    await Ryver.Message("1291498", messageBody, "workrooms")
+    await Ryver.Message("1291498", messageBody, "workrooms", false)
     location.reload()
 }
 export function deleteUserBtn(){

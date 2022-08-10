@@ -10,3 +10,38 @@
         }
     }
 }
+.reqMD{
+    background-color:#ebf2f7!important;
+    svg{
+        fill: black!important;
+    }
+}
+ul[data-testid = 'user_profile_reputation_info_list'], div[data-testid = 'profile_page_summary'] > div:nth-child(2) .sg-flex > div:nth-child(3){display:none!important;}
+.modal-reqMd{
+    background: white;
+    padding: 12px;
+    height: 300px;
+    width: 500px;
+    border-radius: 10px;
+    display: flex;
+    position:relative;
+    flex-direction: column;
+    >textarea{
+        flex:1;
+    }
+    .modal_close{
+        position:absolute;
+        right:12px;
+        cursor: pointer;
+        >div{
+            height:24px!important;
+            width:24px!important;
+            svg{
+                fill: #323c45!important;
+            }
+        }
+    }
+    .md-selection{
+        margin: 8px 0;
+    }
+}

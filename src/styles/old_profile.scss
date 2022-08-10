@@ -6,6 +6,38 @@
     display: flex;
     padding: 5px;
 }
+.reqMD{
+    margin-right: 4px!important;
+    background-color: #6d83f3!important;
+}
+.modal-reqMd{
+    background: white;
+    padding: 12px;
+    height: 300px;
+    width: 500px;
+    border-radius: 10px;
+    display: flex;
+    position:relative;
+    flex-direction: column;
+    >textarea{
+        flex:1;
+    }
+    .modal_close{
+        position:absolute;
+        right:12px;
+        cursor: pointer;
+        >div{
+            height:24px!important;
+            width:24px!important;
+            svg{
+                fill: #323c45!important;
+            }
+        }
+    }
+    .md-selection{
+        margin: 8px 0;
+    }
+}
 .bio-container{
     padding: 12px 0px;
     position: relative;

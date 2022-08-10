@@ -70,7 +70,6 @@ export default new class Form{
         ClassName?:string[],
         id: string,
         type: "row" | "column",
-        padding?: boolean,
         LookFor: {
             name: string,
             id: string
@@ -104,7 +103,6 @@ export default new class Form{
                     </div>
             `)
         })
-        props.padding ? {this: this.radio.querySelector(".sg-radio").classList.add("sg-radio--with-padding")}:{}
         props.defCheck? {this: this.radio.querySelector(`.sg-radio-group__items`).children[props.defCheck].querySelector("input").checked = true}:{}
         return this.radio;
     }

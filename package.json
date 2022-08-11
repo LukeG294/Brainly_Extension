@@ -48,6 +48,6 @@
     "gulp-typescript": "^2.12.2",
     "gulp-watch": "^4.0.1",
     "isprofanity": "^1.4.1",
-    "moment": "^2.29.1"
+    "moment": "^2.29.4"
   }
 }

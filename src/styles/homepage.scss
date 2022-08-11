@@ -31,22 +31,32 @@ div.brn-placeholder__animation{
       border: 2px solid #e1eaf1;
       border-radius: 5px;
       width: 49%;
+      justify-content: space-between;
       &:nth-child(2n){
         margin-right:0px!important;
       }
-      .user-pfp{
-        img{
-          height:32px;
-          width:32px;
+      .udata{
+        display:flex;
+        align-items: center;
+        .user-pfp{
+          img{
+            height:32px;
+            width:32px;
+          }
+        }
+        .user-info{
+          .username{
+            font-size: 1.1rem!important;
+            line-height: 1.1rem!important;
+          }
+          .rank{
+            line-height:1rem!important;
+          }
         }
       }
-      .user-info{
-        .username{
-          font-size: 1.1rem!important;
-          line-height: 1.1rem!important;
-        }
-        .rank{
-          line-height:1rem!important;
+      .friendopt{
+        button{
+          background:transparent!important;
         }
       }
       &:hover{

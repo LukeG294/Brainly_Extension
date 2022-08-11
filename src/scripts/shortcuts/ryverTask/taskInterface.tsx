@@ -13,6 +13,7 @@ export default async function TaskInterface(){
 
     document.body.insertAdjacentHTML("beforeend", `<div id="app"></div>`)
     ReactDOM.createRoot(document.querySelector("#app")).render(
+        //@ts-ignore
         <App modRep = {modRep.d.categories} modGen = {modGen.d.categories} />
     )
 }

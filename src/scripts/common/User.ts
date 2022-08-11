@@ -19,6 +19,7 @@ export default new class User{
         let Doc = parser.parseFromString(data, "text/html");
         Array.from(Doc.querySelectorAll(".user-data")).forEach((item) => {
             let userImg;
+            console.log(item)
             if(item.querySelector("img").src === "https://brainly.com/img/"){
                 userImg = `<div class="sg-avatar__image sg-avatar__image--icon"><div aria-hidden="true" class="sg-icon sg-icon--icon-gray-40 sg-icon--x32 sg-avatar__icon"><svg class="sg-icon__svg" role="img" aria-labelledby="title-profile-692g3" focusable="false"><text id="title-profile-692g3" hidden="">profile</text><use xlink:href="#icon-profile" aria-hidden="true"></use></svg></div></div>`
             }else{
@@ -26,11 +27,12 @@ export default new class User{
             }
             let thisUser = {
                 name: item.querySelector(".nick").innerHTML,
-                link: "https://brainly.com/" + (<HTMLAnchorElement>item.querySelector("a")).href,
-                rank:item.querySelector(":nth-child(3)").innerHTML ? {
+                link: (<HTMLAnchorElement>item.querySelector("a")).href,
+                rank: item.querySelector(":nth-child(3):not(div)") ? {
                         name: item.querySelector(":nth-child(3)").innerHTML.replace("\n", ""),
                         color: (<HTMLElement>item.querySelector(":nth-child(3)")).style.color
-                }:{},
+                }:null,
+                friend: item.querySelector(".user-nick .options").innerHTML === "\n" ? true:false,
                 pfp: userImg
             }
             searchRes.push(thisUser)

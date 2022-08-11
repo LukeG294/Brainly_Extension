@@ -1,3 +1,5 @@
+import Notify from "scripts/common/Notifications/Notify";
+
 export default new class Ryver{
   private extIcon = "https://camo.githubusercontent.com/30eb9e12b3f4f08d458a18dd5357be53348530ad1be7ca65b422e07083445790/68747470733a2f2f636f6e746174746166696c65732e73332e75732d776573742d312e616d617a6f6e6177732e636f6d2f746e7432393834362f6e75476d4f73676856485539555a7a2f506173746564253230496d61676525334125323044656325323038253243253230323032312532302d2532303225334133392533413135616d";
   private token = localStorage.getItem("userAuth");
@@ -31,7 +33,7 @@ export default new class Ryver{
             'Authorization': 'Basic ' +this.token
         },
         body: fetchBody
-    });
+    })
   }
 
   async Task(
@@ -72,23 +74,6 @@ export default new class Ryver{
           }
         })
       }
-    var raw = JSON.stringify({
-      "subject": subject,
-      "body": content, 
-      "createSource": 
-      {
-        "avatar": this.extIcon,
-        "displayName": "Brainly Companion"
-      },
-      "category": {
-        "id": categoryID
-        //1000306
-      },
-      "board": {
-        "id": boardID
-        //1000010
-      }
-    });
     
     var requestOptions = {
       method: 'POST',
@@ -111,7 +96,8 @@ export default new class Ryver{
       headers: {
         Authorization: "Basic " + this.token
       }
-    }).then(data => data.json())
+    })
+    .then(data => data.json())
   }
 
 }

@@ -1,4 +1,5 @@
 import User from "scripts/common/User"
+import Components from "scripts/Items/Components"
 
 async function runSearch(){
     document.querySelector(".sg-flex.sg-flex--column.js-above-feed-ask-question .content").innerHTML = '<div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--small"></div></div>'
@@ -31,24 +32,43 @@ function UserSearchTool(){
     document.querySelector(".user-search-but").addEventListener("click",() => {
         runSearch()
     })
+    document.querySelector(".userSearch").addEventListener("keyup", (event: KeyboardEvent) => {
+        if (event.key === "Enter") {
+            runSearch()
+        }
+    })
 }
 function userItem(props:{
-    name,
-    link,
-    pfp,
+    name:string,
+    link:string,
+    pfp:string,
+    friend:boolean,
     rank?:{
-        name,
-        color
+        name:string,
+        color:string
     }
 }){
+    let friendIcon = props.friend ? "_checked" : "_add" 
     return (/*html*/`
-        <a class="search-user" href = ${props.link.replace("https://brainly.com/", "")} target = "_blank">
-            <div class="user-pfp sg-avatar sg-avatar--spaced">
-                ${props.pfp}
+        <a class="search-user" href = ${props.link} target = "_blank">
+            <div class="udata">
+                <div class="user-pfp sg-avatar sg-avatar--spaced">
+                    ${props.pfp}
+                </div>
+                <div class="user-info">
+                    <div class="username">${props.name}</div>
+                    ${props.rank ? `<div class="rank" style = "color: ${props.rank.color}">${props.rank.name}</div>`:``}
+                </div>
             </div>
-            <div class="user-info">
-                <div class="username">${props.name}</div>
-                <div class="rank" style = "color: ${props.rank.color}">${props.rank.name}</div>
+            <div class="friendopt">
+                ${
+                    Components.Button({
+                        size: "m",
+                        type: "transparent",
+                        icon: `friend${friendIcon}`,
+                        iconSize: "24"
+                    }).outerHTML
+                }
             </div>
         </a>
     `
@@ -62,6 +82,5 @@ export default function userSearch(){
     console.log(target)
     if(!target){ return setTimeout(userSearch, 10); }
     UserSearchTool()
-    console.log("run")
 }
 userSearch()

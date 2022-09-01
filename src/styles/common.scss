@@ -1,5 +1,5 @@
 *{
-  --primary-color: #ffe5e7;
+  --primary-color: #bdc7fb;
   --radioColor: #000000;
   --radioHoverColor: #46535f;
   --radioInvalidColor: #cf1d00;
@@ -301,12 +301,16 @@
     background: white;
     padding: 18px;
     border-radius: 10px;
+    min-width: 600px;
     position: relative;
     >h1{
       font-size:1.5rem;
     }
     >textarea{
       width:100%;
+    }
+    .presets .sg-radio label{
+      padding-right:4px!important;
     }
     .deletion-reason{
       height:80px!important;
@@ -338,7 +342,8 @@
     background:white;
     border-radius:10px;
     max-height:95%;
-    width:800px;
+    width:50%;
+    min-width:600px;
     padding:24px;
     position:relative;
     display: flex;
@@ -965,6 +970,7 @@
     }
     .warnpts{
       display:flex;
+      flex-direction: column;
       label{
         font-size:1rem;
         margin-right:8px;

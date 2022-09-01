@@ -26,7 +26,7 @@ async function addPerPage() {
     //responses page
     if (window.location.href.includes("responses")) {
         if (permsArr.includes("2") || permsArr.includes("3") || permsArr.includes("4")) {
-            panel.Ans()
+            panel.Ans(permsArr)
         }
     }
     

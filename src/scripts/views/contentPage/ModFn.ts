@@ -1,4 +1,5 @@
 import Components from "scripts/Items/Components"
+import allPages from "./allPages"
 import {
     parseQuestionLink
 } from "configs/config"
@@ -190,7 +191,30 @@ export default new class ModFn{
             icon: "trash"
         }));
         document.querySelector(".delete").addEventListener("click", function(){showDelrsn(type)})
-        document.querySelector(".confirmdel").addEventListener("click", async function(){ await confirmDeletion(type)})
+        document.querySelector(".confirmdel").addEventListener("click", async function(){confirmDeletion(type)})
+    }
+    async approveAll(elem){
+        elem.insertAdjacentElement("beforeend", Components.Button({
+            type: "solid",
+            size: "m",
+            text: "",
+            ClassNames: ["approveAll"],
+            icon: "heart",
+            onClick: async () => {
+                allPages(
+                    "Approving all answers",
+                    "responses",
+                    (resp) => {
+                        let userId = window.location.href.replace("https://brainly.com/users/user_content/","").split("/")[0]
+                        let response = resp.data.responses.find(res => String(res.user_id) === String(userId));
+                        if(!response.approved.approver){
+                            let ans = new Answer();
+                            ans.Approve(response.id);
+                        }
+                    }
+                )
+            }
+        }));
     }
     async find_reported_content(id, type: "responses" | "tasks", elem) {
         elem.insertAdjacentElement('beforeend', Components.Button({

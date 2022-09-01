@@ -1,4 +1,5 @@
 import Extension from "../../locales/en/localization.json"
+import Form from "./Form"
 
 export function macc_d() {
     return ( /*html*/ `
@@ -7,28 +8,39 @@ export function macc_d() {
             <h1 class="sg-text-bit--gray-secondary sg-headline sg-headline--xlarge sg-headline--extra-bold" style = "color:#323c45;">${Extension.titles.massAccountDeleter}</h1>
             <div class = "modal_close"><div class="sg-toplayer__close" role="button" tabindex="0"><div class="sg-icon sg-icon--icon-gray-50 sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-close-zvtc08" focusable="false"><title id="title-close-zvtc08">close</title><use xlink:href="#icon-close" aria-hidden="true"></use></svg></div></div></div>
             <textarea placeholder="${Extension.instructions.onePerLine}" class=" profile-links sg-textarea sg-textarea--tall"></textarea>
-            <div class="presets">
-                <label class="sg-radio sg-radio--xxs" for="links">
-                    <input type="radio" class="sg-radio__element" name="group1" id="links" reason = "Link Spammer">
-                    <span class="sg-radio__ghost" style="margin-left:10px" aria-hidden="true"></span>
-                    <span class="sg-text sg-text--small sg-text--bold sg-radio__label" style="margin-left:5px">Link spammer</span>
-                </label>
-                <label class="sg-radio sg-radio--xxs" for="alt">
-                    <input type="radio" class="sg-radio__element" name="group1" id="alt" reason = "Alternate Accounts">
-                    <span class="sg-radio__ghost" style="margin-left:10px" aria-hidden="true"></span>
-                    <span class="sg-text sg-text--small sg-text--bold sg-radio__label" style="margin-left:5px">Alt Accounts</span>
-                </label>
-                <label class="sg-radio sg-radio--xxs" for="username">
-                    <input type="radio" class="sg-radio__element" name="group1" id="username" reason = "Inappropriate Username">
-                    <span class="sg-radio__ghost" style="margin-left:10px" aria-hidden="true"></span>
-                    <span class="sg-text sg-text--small sg-text--bold sg-radio__label" style="margin-left:5px">Inappropriate Username</span>
-                </label>
-                <label class="sg-radio sg-radio--xxs" for="inactive">
-                    <input type="radio" class="sg-radio__element" name="group1" id="inactive" reason = "Inactive">
-                    <span class="sg-radio__ghost" style="margin-left:10px" aria-hidden="true"></span>
-                    <span class="sg-text sg-text--small sg-text--bold sg-radio__label" style="margin-left:5px">Inactive</span>
-                </label>
-            </div>
+                ${
+                    Form.RadioGroup({
+                        ClassName: ["presets"],
+                        id: "del-presets",
+                        type: "row",
+                        items: [
+                            {
+                                id: "1",
+                                text: "Link Spammer",
+                                value: 'Link Spammer'
+                            },
+                            {
+                                id: "2",
+                                text: "Alt Accounts",
+                                value: 'Alt Accounts'
+                            },
+                            {
+                                id: "3",
+                                text: "Inappropriate Username",
+                                value: 'Inappropriate Username'
+                            },
+                            {
+                                id: "4",
+                                text: "Inactive",
+                                value: 'Inactive'
+                            }
+                        ],
+                        LookFor: {
+                            name: "text",
+                            id: "id"
+                        }
+                    }).outerHTML
+                }
             <textarea placeholder="Reason" class="deletion-reason sg-textarea sg-textarea--tall"></textarea>
             <button class="sg-button sg-button--m sg-button--solid-light delete-acc"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">${Extension.buttons.delete}</span></button>
         </div>
@@ -43,23 +55,29 @@ export function mmsg_s() {
             <h1 class="sg-text-bit--gray-secondary sg-headline sg-headline--xlarge sg-headline--extra-bold" style = "color:#323c45;">Mass Message Sender</h1>
             <div class = "modal_close"><div class="sg-toplayer__close" role="button" tabindex="0"><div class="sg-icon sg-icon--icon-gray-50 sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-close-zvtc08" focusable="false"><title id="title-close-zvtc08">close</title><use xlink:href="#icon-close" aria-hidden="true"></use></svg></div></div></div>
             <textarea placeholder="${Extension.instructions.onePerLine}" class=" profile-links sg-textarea sg-textarea--tall"></textarea>
-            <div class="presets">
-                <label class="sg-radio sg-radio--xxs" for="links">
-                    <input type="radio" class="sg-radio__element" name="group1" id="links" reason = "Link Spammer">
-                    <span class="sg-radio__ghost" aria-hidden="true"></span>
-                    <span class="sg-text sg-text--small sg-text--bold sg-radio__label">Link spammer</span>
-                </label>
-                <label class="sg-radio sg-radio--xxs" for="alt">
-                    <input type="radio" class="sg-radio__element" name="group1" id="alt" reason = "Alternate Accounts">
-                    <span class="sg-radio__ghost" aria-hidden="true"></span>
-                    <span class="sg-text sg-text--small sg-text--bold sg-radio__label">Alt Accounts</span>
-                </label>
-                <label class="sg-radio sg-radio--xxs" for="username">
-                    <input type="radio" class="sg-radio__element" name="group1" id="username" reason = "Inappropriate Username">
-                    <span class="sg-radio__ghost" aria-hidden="true"></span>
-                    <span class="sg-text sg-text--small sg-text--bold sg-radio__label">Inappropriate Username</span>
-                </label>
-            </div>
+            ${
+                Form.RadioGroup({
+                    id: "msg-presets",
+                    ClassName: ["presets"],
+                    type: "row",
+                    LookFor: {
+                        name: "text",
+                        id: "id"
+                    },
+                    items: [
+                        {
+                            id: "1",
+                            text: "Alt Accounts",
+                            value: "message"
+                        },
+                        {
+                            id: "2",
+                            text: "Link Spammer",
+                            value: "message"
+                        }
+                    ]
+                }).outerHTML
+            }
             <textarea placeholder="Message content" class="message-content sg-textarea sg-textarea--tall"></textarea>
             <button class="sg-button sg-button--m sg-button--solid-light send-message"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">${Extension.buttons.sendMessages}</span></button>
         </div>

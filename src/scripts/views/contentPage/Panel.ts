@@ -15,11 +15,12 @@ export default class Panel{
         BasicFn.toggleSelection(this.buttonArea);
         BasicFn.selectAll(this.buttonArea);
     }
-    Ans(){
+    Ans(perms){
         ModFn.delete(this.buttonArea, "answers");
         ModFn.approveAnswers(this.buttonArea);
         ModFn.confirmAnswers(this.buttonArea);
         ModFn.unverifyAnswers(this.buttonArea);
+        if(perms.includes('4')) ModFn.approveAll(this.buttonArea);
         ModFn.find_reported_content(this.userId, "responses", this.buttonArea);
     }
     Ques(){

@@ -27,6 +27,7 @@ export default new class Component{
         color?: "peach" | "mustard" | "blue",
         icon?,
         id?: string,
+        onClick?: () => {};
         iconSize?: "24" | "16",
         iconColor?: "peach" | "mustard" | "blue",
         Attributes?: {
@@ -54,6 +55,7 @@ export default new class Component{
         }:{}
         props.id?{this: this.button.id = props.id}:{}
         props.ClassNames?{this: this.button.classList.add(...props.ClassNames)}:{}
+        props.onClick ? this.button.addEventListener("click", props.onClick):{};
 
         return this.button;
     }

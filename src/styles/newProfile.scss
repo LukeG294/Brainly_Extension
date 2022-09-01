@@ -16,7 +16,7 @@
         fill: black!important;
     }
 }
-ul[data-testid = 'user_profile_reputation_info_list'], div[data-testid = 'profile_page_summary'] > div:nth-child(2) .sg-flex > div:nth-child(3){display:none!important;}
+ul[data-testid = 'user_profile_reputation_info_list']:nth-child(1), div[data-testid = 'profile_page_summary'] > div:nth-child(2) .sg-flex > div:nth-child(3){display:none!important;}
 .modal-reqMd{
     background: white;
     padding: 12px;

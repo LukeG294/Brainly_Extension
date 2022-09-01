@@ -18,13 +18,13 @@ const config = {
     ...MakeEntries("./src/scripts/views/ModPanel.ts", "content-scripts/js", "panel"),
 
     ...MakeEntries("./src/scripts/views/homepage/Homepage.ts", "content-scripts/js", "homepage"),
-    ...MakeEntries("./src/scripts/views/oldProfile/*.ts", "content-scripts/js", "old_profile"),
+    ...MakeEntries("./src/scripts/views/oldProfile/Index.ts", "content-scripts/js", "old_profile"),
     ...MakeEntries("./src/scripts/views/questionPage/QuestionPage.ts", "content-scripts/js", "question_page"),
     ...MakeEntries("./src/scripts/views/contentPage/Index.ts", "content-scripts/js", "content_page"),
     ...MakeEntries("./src/scripts/views/modAll/Index.ts", "content-scripts/js", "mod_all"),
     ...MakeEntries("./src/scripts/views/newProfile/index.ts", "content-scripts/js", "newProfile"),
     //react
-    ...MakeEntries("./src/scripts/views/verification_queue/Index.ts", "content-scripts/js", "verification_queue")
+    ...MakeEntries("./src/scripts/views/verificationQueue/Index.ts", "content-scripts/js", "verificationQueue")
 
   },
   output: {

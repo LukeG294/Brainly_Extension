@@ -37,7 +37,7 @@ async function sendmsg(userLink){
     //@ts-expect-error
     let mod_name = JSON.parse(document.querySelector('meta[name="user_data"]').content)["nick"]
     let message = `---
-    **Deleted account**: ${userLink}
+**Deleted account**: ${userLink}
 **Why**: ${del_reason}
 ###### **Moderator**: ${mod_name}`
     Ryver.Message('1291498', message, "workrooms", false)
@@ -47,7 +47,7 @@ export function mass_accdel(){
     document.querySelector(".modal_close").addEventListener("click", function(){document.querySelector(".modal_back").remove()})
     
     document.querySelector(".presets").addEventListener("change", function(){
-        let rsn = document.querySelector(".presets input:checked").getAttribute("reason");
+        let rsn = document.querySelector(".presets input:checked").getAttribute("value");
         (<HTMLInputElement>document.querySelector(".deletion-reason")).value = rsn;
     });
 
@@ -79,7 +79,7 @@ export function mass_msg(){
         
         
         document.querySelector(".presets").addEventListener("change", function(){
-            let rsn = document.querySelector(".presets input:checked").getAttribute("reason");
+            let rsn = document.querySelector(".presets input:checked").getAttribute("value");
             (<HTMLInputElement>document.querySelector(".message-content")).value = rsn;
         });
         let input = document.querySelector(".message-content");

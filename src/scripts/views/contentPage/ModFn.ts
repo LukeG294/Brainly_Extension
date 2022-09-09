@@ -3,18 +3,14 @@ import allPages from "./allPages"
 import {
     parseQuestionLink
 } from "configs/config"
-import {
-    getCookie
-} from "../../common/CommonFunctions"
-import { deletion_menu} from "./ContentPageButtons"
-import { showDelrsn, confirmDeletion } from "./ButtonFunctions"
+import { confirmDeletion } from "./ButtonFunctions"
 import Notify from "../../common/Notifications/Notify"
 import {
     Answer,
     Question
 } from "../../common/Content"
+import insertDelMenu from "@lib/insertDelMenu"
 import Status from "scripts/common/Notifications/Status"
-import BasicFn from "./BasicFn"
 import {RenderItems} from "./ContentPageButtons"
 
 export default new class ModFn{
@@ -181,17 +177,29 @@ export default new class ModFn{
         Notify.Flash("Questions confirmed successfully!", "success")
         });
     }
-    async delete(elem, type){
-        elem.insertAdjacentHTML("afterend", deletion_menu());
-        elem.insertAdjacentElement("beforeend", Components.Button({
-            type: "solid",
-            size: "m",
-            text: "",
-            ClassNames: ["delete"],
-            icon: "trash"
-        }));
-        document.querySelector(".delete").addEventListener("click", function(){showDelrsn(type)})
-        document.querySelector(".confirmdel").addEventListener("click", async function(){confirmDeletion(type)})
+    async delete(elem, type: "tasks" | "responses"){
+      elem.insertAdjacentElement("beforeend", Components.Button({
+        type: "solid",
+        size: "m",
+        text: "",
+        ClassNames: ["delete"],
+        icon: "trash",
+        onClick: () => {
+          insertDelMenu(
+            document.querySelector("#content-old > div:nth-child(3) > p"),
+            type,
+            () => {
+              return Array.from(document.querySelectorAll(".contentCheckboxes input:checked")).map(el => {
+                return parseQuestionLink(el.closest(".content-row").querySelector("a").href)
+              })
+            },
+            () => {
+                return Array.from(document.querySelectorAll(".contentCheckboxes input")).map(el => {
+                  return parseQuestionLink(el.closest(".content-row").querySelector("a").href)
+                })
+            }
+          )}
+      }));
     }
     async approveAll(elem){
         elem.insertAdjacentElement("beforeend", Components.Button({

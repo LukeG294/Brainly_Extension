@@ -1,10 +1,17 @@
 .header,#profile{
     display:flex!important;
 }
+.manage-user{
+    cursor: pointer;
+}
 .changePermissions{
     flex-direction: column;
     display: flex;
     padding: 5px;
+    display: none;
+    &.open{
+        display:flex;
+    }
 }
 .reqMD{
     margin-right: 4px!important;

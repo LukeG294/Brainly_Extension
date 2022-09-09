@@ -138,31 +138,4 @@ export default new class BasicFn{
             xhr.send();
         }
     }
-
-    // contentIcons(id:string){
-    //     const outArr = [];
-    //     let userId = (<HTMLAnchorElement>document.querySelector("#content-old > div:nth-child(1) > div:nth-child(2) > h1 > a")).href.replace("/profile/", "").split("-")[1];
-    //     fetch(`https://brainly.com/api/28/api_tasks/main_view/${id}?accept=application/json`, {method: "POST"})
-
-
-    //     if(String(resp.data.task.user_id) !== userId){
-    //         //answer page
-    //         let response = resp.data.responses.find(res => String(res.user_id) === String(userId));
-
-    //         outArr.push({
-    //             aIcons: {
-    //                 report: response.settings.is_marked_abuse?true:false,
-    //                 attachments: String(response.attachments)?true:false,
-    //                 approve: response.approved.approver?true:false,
-    //                 best: response.best?true:false
-    //             },
-    //             qIcons: {
-    //                 report: resp.data.task.settings.is_marked_abuse?true:false,
-    //                 attachments: String(resp.data.task.attachments)?true:false
-    //             }
-    //         })
-    //     }
-    //     return outArr
-    // }
-    
 }

@@ -8,6 +8,10 @@ import {macc_d, mcompu, mmContentModal, mmsg_s} from "../../Items/macc-d_exp"
 import Extension from "../../../locales/en/localization.json"
 import {CommentHandler, Question} from "../../common/Content"
 import Ryver from "../../common/Ryver/Ryver";
+import deleteWithout429 from "@lib/deleteWithout429";
+import { parseQuestionLink } from "configs/config";
+import BrainlyAPI from "scripts/common/BrainlyAPI";
+import insertDelMenu from "@lib/insertDelMenu";
 
 //@ts-ignore
 export default new class AdminPanel{
@@ -169,79 +173,38 @@ export function md_content(){
     document.querySelector(".mm-content").addEventListener("click", function(){
         document.querySelector("body").insertAdjacentHTML("afterbegin", mmContentModal());
         document.querySelector(".modal_close").addEventListener("click", function(){document.querySelector(".modal_back").remove()})
-        // Init a timeout variable to be used below
-        let timeout = null;
 
-        
-        document.querySelector(".delete-content").addEventListener("click", async function(){
-           
-            //@ts-expect-error
-            let linksArray = String(document.querySelector(".profile-links").value).split("\n")
-            let error = false
-            let usersToMsg = []
-            for (let index = 0; index < linksArray.length; index++) {
-                const element = linksArray[index];
-                let regexString = new RegExp(`https:\/\/brainly\.com\/question\/.*-.*`)
-                let qid = String(element).split("/")[4]
-              
-                usersToMsg.push(qid)
-               
-            }
-            document.querySelector(".delete-content .spinner-container").classList.add("show")
-            usersToMsg.forEach(async element => {
-                
-                let question = await new Question();
-                console.log(element)
-                //@ts-ignore
-                let warnUser = document.getElementById("warn").checked
-                 //@ts-ignore
-                let takePts = document.getElementById("pts").checked;
-                let givePts = true;
-                //let givePts = (<HTMLInputElement>document.getElementById("res-pts")).checked;
-                 //@ts-ignore
-                let reason = document.querySelector(".message-content").value
-                
-                await question.Delete(element, reason, warnUser, takePts, givePts)
+        document.querySelector(".profile-links").addEventListener("input", () => {
+            let arr = (<HTMLInputElement>document.querySelector(".profile-links")).value.split("\n").map(item => {return parseQuestionLink(item)});
+            let questions = arr.map(async ques => {
+                return await BrainlyAPI.GetQuestion(+ques)
             });
-         
-            if (error){
-                document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
-            } else {
-                document.querySelector(".profile-links").classList.add("sg-textarea--valid")
-                document.querySelector(".delete-content .spinner-container").classList.remove("show")
-                
-            }
-           
+            console.log(questions)
+            insertDelMenu(
+                document.querySelector(".warnpts"),
+                "tasks",
+                () => { return arr },
+                () => { return arr }
+            )
         })
-        document.querySelector(".confirm-content").addEventListener("click", async function(){
-           
-            //@ts-expect-error
-            let linksArray = String(document.querySelector(".profile-links").value).split("\n")
-            let error = false
-            let usersToMsg = []
-            for (let index = 0; index < linksArray.length; index++) {
-                const element = linksArray[index];
-                let regexString = new RegExp(`https:\/\/brainly\.com\/question\/.*-.*`)
-                let qid = String(element).split("/")[4].split("?")[0]
-              
-                usersToMsg.push(qid)
-               
-            }
-            document.querySelector(".confirm-content .spinner-container").classList.add("show")
-            usersToMsg.forEach(async element => {
-                
-                let question = await new Question();
-                await question.Confirm(parseInt(element))
-            });
-         
-            if (error){
-                document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
-            } else {
-                document.querySelector(".profile-links").classList.add("sg-textarea--valid")
-                document.querySelector(".confirm-content .spinner-container").classList.remove("show")
-                
-            }
-           
+        document.querySelector(".delete-content").addEventListener("click", async function(){
+            document.querySelector(".delete-content .spinner-container").classList.add("show")
+
+            await deleteWithout429(
+                (<HTMLInputElement>document.querySelector(".profile-links")).value.split("\n").map(
+                    item => {
+                        return item.replace("https://brainly.com/question/", "").split("?")[0]
+                    }
+                ),
+                "tasks",
+                {
+                    warn: false,
+                    takePts: false, 
+                    reason: (<HTMLInputElement>document.querySelector(".message-content")).value
+                }
+            )
+
+            document.querySelector(".delete-content .spinner-container").classList.remove("show")
         })
     })
 }

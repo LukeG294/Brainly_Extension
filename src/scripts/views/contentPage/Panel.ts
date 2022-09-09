@@ -16,16 +16,19 @@ export default class Panel{
         BasicFn.selectAll(this.buttonArea);
     }
     Ans(perms){
-        ModFn.delete(this.buttonArea, "answers");
-        ModFn.approveAnswers(this.buttonArea);
-        ModFn.confirmAnswers(this.buttonArea);
-        ModFn.unverifyAnswers(this.buttonArea);
-        if(perms.includes('4')) ModFn.approveAll(this.buttonArea);
-        ModFn.find_reported_content(this.userId, "responses", this.buttonArea);
+        if(perms.includes("2") || perms.includes("3") || perms.includes("4")){
+            ModFn.delete(this.buttonArea, "responses");
+            ModFn.approveAnswers(this.buttonArea);
+            ModFn.confirmAnswers(this.buttonArea);
+            ModFn.unverifyAnswers(this.buttonArea);
+            ModFn.find_reported_content(this.userId, "responses", this.buttonArea);
+        }
+        ModFn.approveAll(this.buttonArea);
     }
     Ques(){
-        ModFn.delete(this.buttonArea, "questions")
+        ModFn.delete(this.buttonArea, "tasks")
         ModFn.confirmQuestions(this.buttonArea);
         ModFn.find_reported_content(this.userId, "tasks", this.buttonArea);
     }
+    
 }

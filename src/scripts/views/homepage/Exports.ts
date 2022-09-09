@@ -252,63 +252,54 @@ export async function HomeMod() {
   }
   export function permissionChecks(){
     return(/*html*/`
-   
-    <label class="sg-checkbox permission" for="" >
-    <input type="checkbox" class="sg-checkbox__element perm1" id="1">
-    <div class="sg-checkbox__ghost" aria-hidden="true">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-    </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Junior Mod+</span>
-    </label>
-
-    <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element perm2" id="2">
-    <div class="sg-checkbox__ghost" aria-hidden="true">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-    </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Senior Mod</span>
-    </label>
-
-    <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element perm3" id="3">
-    <div class="sg-checkbox__ghost" aria-hidden="true">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-    </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Super Mod</span>
-    </label>
-
-    <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element perm4" id="4">
-    <div class="sg-checkbox__ghost" aria-hidden="true">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-    </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">Admin</span>
-    </label>
-
-    <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element perm5" id="5">
-    <div class="sg-checkbox__ghost" aria-hidden="true">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-    </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">VT Answerer</span>
-    </label>
-    
-    <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element perm6" id="6">
-    <div class="sg-checkbox__ghost" aria-hidden="true">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-    </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">VT Moderator</span>
-    </label>
-
-    <label class="sg-checkbox permission"  >
-    <input type="checkbox" class="sg-checkbox__element perm7" id="7">
-    <div class="sg-checkbox__ghost" aria-hidden="true">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-    </div>
-    <span style="font-size:13px !important;" class="sg-text sg-text--small sg-text--bold sg-checkbox__label">VT Admin</span>
-    </label>
-
+    ${
+      Form.Checkbox({
+        text: "Junior Mod+",
+        id: "1"
+      }).outerHTML
+    }
+    ${
+      Form.Checkbox({
+        text: "Senior Mod",
+        id: "2"
+      }).outerHTML
+    }
+    ${
+      Form.Checkbox({
+        text: "Super Mod",
+        id: "3"
+      }).outerHTML
+    }
+    ${
+      Form.Checkbox({
+        text: "Admin",
+        id: "4"
+      }).outerHTML
+    }
+    ${
+      Form.Checkbox({
+        text: "VT Answerer",
+        id: "5"
+      }).outerHTML
+    }
+    ${
+      Form.Checkbox({
+        text: "VT Mod",
+        id: "6"
+      }).outerHTML
+    }
+    ${
+      Form.Checkbox({
+        text: "VT Admin",
+        id: "7"
+      }).outerHTML
+    }
+    ${
+      Form.Checkbox({
+        text: "Answerer",
+        id: "32"
+      }).outerHTML
+    }
     <button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue submit-permissions">
       <div class="spinner-container">
           <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>

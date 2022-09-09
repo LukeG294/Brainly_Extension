@@ -31,6 +31,7 @@ export default async function allPages(
                 xhttp.send();
             }
         }
-        stat.Update(`${message}... (page ${p} of ${pagenum})`)
+        stat.Update(`${message}... (${((p+1)*100/pagenum).toFixed(2)} %)`)
     }
+    stat.Close();
 } 

@@ -108,32 +108,13 @@ export function mcompu() {
 export function mmContentModal() {
     return ( /*html*/ `
     <div class="modal_back">
-        <div class="modal_mass_content">
+        <div class="modal_mass_content" style = "display: flex; flex-direction: column; height:95%;">
             <h1 class="sg-text-bit--gray-secondary sg-headline sg-headline--xlarge sg-headline--extra-bold" style = "color:#323c45;">Mass Content Handler</h1>
             <div class = "modal_close"><div class="sg-toplayer__close" role="button" tabindex="0"><div class="sg-icon sg-icon--icon-gray-50 sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-close-zvtc08" focusable="false"><title id="title-close-zvtc08">close</title><use xlink:href="#icon-close" aria-hidden="true"></use></svg></div></div></div>
-            <textarea placeholder="Paste question links here" class=" profile-links sg-textarea sg-textarea--tall"></textarea>
-            <div class="warnpts" style='width: 500px;
-            padding: 10px;
-            text-align: center;'>
+            <textarea style = "flex: 1;" placeholder="Paste question links here, one link per line" class=" profile-links sg-textarea sg-textarea--tall"></textarea>
 
-            <label class="sg-checkbox" for="pts">
-              <input type="checkbox" class="sg-checkbox__element" id="pts">
-              <div class="sg-checkbox__ghost" aria-hidden="true">
-                <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-              </div>
-              <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label" style='margin-left:5px'>${Extension.buttons.takePoints}</span>
-            </label>
-            <label class="sg-checkbox" for="warn" style='margin-left: 10%;'>
-              <input type="checkbox" class="sg-checkbox__element" id="warn">
-              <div class="sg-checkbox__ghost" aria-hidden="true">
-                <div class="sg-icon sg-icon--adaptive sg-icon--x16"><svg class="sg-icon__svg"><use xlink:href="#icon-check"></use></svg></div>
-              </div>
-              <span class="sg-text sg-text--small sg-text--bold sg-checkbox__label" style='margin-left:5px'>${Extension.buttons.warnUser}</span>
-            </label>
+            <div class="warnpts" style='width: 600px;'>
           </div>
-            <textarea placeholder="Deletion reason (leave blank if confirming)" class="message-content sg-textarea sg-textarea--tall"></textarea>
-            <button class="sg-button sg-button--m sg-button--solid-light delete-content"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">${Extension.buttons.delete}</span></button>
-            <button class="sg-button sg-button--m sg-button--solid-light confirm-content"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">${Extension.buttons.confirm}</span></button>
         </div>
     </div>
     `)

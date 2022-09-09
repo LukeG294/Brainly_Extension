@@ -27,7 +27,7 @@ export default new class Component{
         color?: "peach" | "mustard" | "blue",
         icon?,
         id?: string,
-        onClick?: () => {};
+        onClick?: () => void;
         iconSize?: "24" | "16",
         iconColor?: "peach" | "mustard" | "blue",
         Attributes?: {

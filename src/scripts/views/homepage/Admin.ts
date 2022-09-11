@@ -4,16 +4,13 @@ import User from "../../common/User"
 import { startCompanionManager } from "../../common/Management";
 import Notify from "../../common/Notifications/Notify";
 import Label from "../../common/Notifications/Status"
-import {macc_d, mcompu, mmContentModal, mmsg_s} from "../../Items/macc-d_exp"
+import { macc_d, mcompu, mmContentModal, mmsg_s } from "../../Items/macc-d_exp"
 import Extension from "../../../locales/en/localization.json"
-import {CommentHandler, Question} from "../../common/Content"
+import { CommentHandler } from "../../common/Content"
 import Ryver from "../../common/Ryver/Ryver";
-import deleteWithout429 from "@lib/deleteWithout429";
 import { parseQuestionLink } from "configs/config";
-import BrainlyAPI from "scripts/common/BrainlyAPI";
 import insertDelMenu from "@lib/insertDelMenu";
 
-//@ts-ignore
 export default new class AdminPanel{
     constructor(){
         document.querySelector(".brn-moderation-panel__content .sg-content-box__title").insertAdjacentHTML("afterend", `<div class = "user-mgmt"></div>`)
@@ -35,7 +32,7 @@ export default new class AdminPanel{
         document.querySelector(".mass-accdel").addEventListener("click", function(){mass_accdel()})
     }
 }
-async function sendmsg(userLink){
+async function sendmsg(userLink:string){
     let del_reason = (<HTMLInputElement>document.querySelector(".deletion-reason")).value;
     if(del_reason === ''){del_reason = "Not Provided"};
     //@ts-expect-error
@@ -72,7 +69,6 @@ export function mass_accdel(){
             document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
         } else {
             document.querySelector(".profile-links").classList.add("sg-textarea--valid")
-            
         }
         
     })
@@ -175,36 +171,15 @@ export function md_content(){
         document.querySelector(".modal_close").addEventListener("click", function(){document.querySelector(".modal_back").remove()})
 
         document.querySelector(".profile-links").addEventListener("input", () => {
+            
             let arr = (<HTMLInputElement>document.querySelector(".profile-links")).value.split("\n").map(item => {return parseQuestionLink(item)});
-            let questions = arr.map(async ques => {
-                return await BrainlyAPI.GetQuestion(+ques)
-            });
-            console.log(questions)
             insertDelMenu(
                 document.querySelector(".warnpts"),
                 "tasks",
                 () => { return arr },
-                () => { return arr }
+                () => { return arr },
+                false
             )
-        })
-        document.querySelector(".delete-content").addEventListener("click", async function(){
-            document.querySelector(".delete-content .spinner-container").classList.add("show")
-
-            await deleteWithout429(
-                (<HTMLInputElement>document.querySelector(".profile-links")).value.split("\n").map(
-                    item => {
-                        return item.replace("https://brainly.com/question/", "").split("?")[0]
-                    }
-                ),
-                "tasks",
-                {
-                    warn: false,
-                    takePts: false, 
-                    reason: (<HTMLInputElement>document.querySelector(".message-content")).value
-                }
-            )
-
-            document.querySelector(".delete-content .spinner-container").classList.remove("show")
         })
     })
 }

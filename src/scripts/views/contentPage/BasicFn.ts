@@ -110,17 +110,16 @@ export default new class BasicFn{
             xhr.addEventListener("readystatechange", function() {
                 if (this.readyState === 4) {
                     let resp = JSON.parse(this.responseText);
-                    console.log(content.children[i].querySelector(".q-icons"))
         
                     if (resp.data.task.settings.is_marked_abuse === true) {content.children[i].querySelector(".q-icons").classList.add("report")}
                     if (String(resp.data.task.attachments) !== "") {content.children[i].querySelector(".q-icons").classList.add("attach")}
 
                     if (choice.children[1].classList.value === "active") {
                         //answer page
-                        console.log("answer page")
                         let userId = window.location.href.replace("https://brainly.com/users/user_content/", "").split("/")[0]
                         let response = resp.data.responses.find(res => String(res.user_id) === String(userId));
 
+                        content.children[i].setAttribute("resp", response.id)
                         if (String(response.attachments) !== "") {content.children[i].querySelector(".a-icons").classList.add("attach")}
                         if (response.approved.approver !== null) {content.children[i].querySelector(".a-icons").classList.add("verified")}
                         if (response.settings.is_marked_abuse === true) {content.children[i].querySelector(".a-icons").classList.add("report")}

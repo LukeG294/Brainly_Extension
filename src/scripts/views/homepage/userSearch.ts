@@ -6,9 +6,7 @@ async function runSearch(){
     document.querySelector(".content .spinner-container").classList.add("show")
     let result = await User.Search((<HTMLInputElement>document.querySelector(".userSearch")).value)
     document.querySelector(".content .spinner-container").classList.remove("show")
-    console.log(result)
-    let itemNum;
-    if(result.length > 4){itemNum = 4}else{itemNum = result.length}
+    let itemNum = result.length > 4 ? 4 : result.length;
     for(let i = 0; i < itemNum; i++){
         document.querySelector(".content").insertAdjacentHTML("beforeend", userItem(result[i]))
     }

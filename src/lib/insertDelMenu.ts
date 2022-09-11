@@ -1,13 +1,14 @@
 import Form from "scripts/Items/Form"
 import deleteWithout429 from "./deleteWithout429";
 import Status from "scripts/common/Notifications/Status"
-import BrainlyAPI from "scripts/common/BrainlyAPI";
 
 export default async function insertDelMenu(
   targetElem: HTMLElement, 
   type: "tasks" | "responses",
   contentIdFn: () => string[],
-  reasonIds: () => string[]
+  reasonIds: () => string[],
+  toggle: boolean,
+  itemSuccessFn?: (element) => void
 ){
   if(!targetElem.querySelector(".delmenu")){
     let stat = new Status("del")
@@ -103,11 +104,12 @@ export default async function insertDelMenu(
             warn: warnuser,
             takePts: takepts,
             reason: (<HTMLInputElement>elem.querySelector(".deletion-reason")).value,
-          }
+          },
+          (element) => { itemSuccessFn(element) }
         )
       });
     });
   }else {
-    targetElem.querySelector(".delmenu").classList.toggle("show")
+    if(toggle) targetElem.querySelector(".delmenu").classList.toggle("show")
   }
 }

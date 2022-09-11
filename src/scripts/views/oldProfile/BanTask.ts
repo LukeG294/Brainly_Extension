@@ -5,9 +5,7 @@ import Components from "scripts/Items/Components"
 
 export async function ryverTask(id:string){
     let data = await Ryver.getBoardTasks("1197733")
-    //@ts-ignore
     data = data.d.categories.results[1].tasks.results
-    //@ts-ignore
     for(let i = 0; i < data.length; i++){
         if(data[i].body.includes(id)){
             return console.log("Task found")

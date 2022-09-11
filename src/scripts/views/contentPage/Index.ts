@@ -1,8 +1,6 @@
 //import { checkUser, checkPermissionSet } from "../common/permission_system"
 import Panel from "./Panel"
-import {RenderItems} from "./ContentPageButtons"
-
-//@ts-ignore
+import { RenderItems } from "./ContentPageButtons"
 
 async function addPerPage() {
     if(document.querySelector(".modified")) return;

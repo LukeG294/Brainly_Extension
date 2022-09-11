@@ -1,5 +1,6 @@
 import {Question, Answer} from "scripts/common/Content"
 import Notify from "scripts/common/Notifications/Notify";
+import Status from "scripts/common/Notifications/Status";
 
 export default async function deleteWithout429(
     IdArr: string[] | string,
@@ -11,7 +12,9 @@ export default async function deleteWithout429(
     },
     itemSuccessFn?: (element) => void
 ){
-  async function deletefromId(id: string){
+  let stat = new Status("del");
+  stat.Show("Removing Content...", "blue", true, false)
+  async function deletefromId(id: string, fail?){
     if(type === "tasks"){
       let qObj = new Question()
       await qObj.Delete(
@@ -20,7 +23,7 @@ export default async function deleteWithout429(
         settings.warn, 
         settings.takePts, 
         false
-      )
+      ).catch(err => { fail += 1 })
     }
     if(type === "responses"){
       let aObj = new Answer()
@@ -29,30 +32,25 @@ export default async function deleteWithout429(
         settings.reason, 
         settings.warn, 
         settings.takePts
-      )
+      ).catch(err => fail += 1)
     }
   }
   if(typeof IdArr === "string"){
     deletefromId(IdArr)
   }else {
-    let success = 0;
     let fail = 0;
     const chunkSize = 10;
     for (let i = 0; i < IdArr.length; i += chunkSize) {
       let chunk = IdArr.slice(i, i + chunkSize);
 
       chunk.forEach(async (element) => {
-        try{
-          deletefromId(element)
-          itemSuccessFn(element);
-          success += 1
-        }catch(e){
-          fail += 1
-        }
+        deletefromId(element, fail)
+        itemSuccessFn(element);
       })
       //add a 2 second delay between each chunk
       await new Promise(resolve => setTimeout(resolve, 2000));
     }
-    Notify.Flash(`${success} removed successfully, ${fail} deletions failed`, "info")
+    stat.Close()
+    Notify.Flash(`Content Removed Successfully`, "info")
   }
 }

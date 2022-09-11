@@ -5,7 +5,7 @@ export function parseProfileLink(link: string){
     return link.split("/")[4].split("-")[1]
 }
 export function parseQuestionLink(link: string){
-    return link.split("/")[4]
+    return link.split("?")[0].split("/")[4]
 }
 export function currentLocalizationFile(){
     return "en_US.json"

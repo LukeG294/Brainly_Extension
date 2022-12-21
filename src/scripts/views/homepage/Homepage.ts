@@ -20,6 +20,12 @@ else{
   Notify.Flash(Extension.common.unauthorized, "error")
 }
 
+if (localStorage.flashed !== "true"){
+  Notify.Flash("Thanks for using Brainly Companion, Happy Holidays :)", "success")
+  localStorage.flashed = "true"
+} 
+
+
 
 //if user does not have username and password in local storage
 if(!localStorage.getItem("userAuth")){

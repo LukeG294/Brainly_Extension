@@ -6,7 +6,10 @@ async function getData(){
     let nick = user_data.data.nick
 
 
-    chrome.runtime.sendMessage({data: {"id":id,"username":nick}, message:"get_permissions"}, function (response) {console.log(response + chrome.runtime.lastError.message)});
+    //await chrome.runtime.sendMessage({data: {"id":id,"username":nick}, message:"get_permissions"}, function (response) {console.log(response)});
+    const response = await chrome.runtime.sendMessage({greeting: "hello", "id":"16118329","username":"x"});
+  // do something with response here, not outside the function
+  console.log(response);
 }
 
 getData()

@@ -27,6 +27,8 @@ export default async function allPages(
                         itemFn(resp);
                     }
                 };
+                const delay = ms => new Promise(res => setTimeout(res, ms));
+                 await delay(600)
                 xhttp.open("POST", `https://brainly.com/api/28/api_tasks/main_view/${qid}`);
                 xhttp.send();
             }

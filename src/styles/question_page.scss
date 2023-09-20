@@ -1,5 +1,6 @@
 .request-verification{
     padding:0px 10px!important;
+    border:none;
     background:transparent!important;
     .sg-button__icon{
         margin-right:0px!important;
@@ -17,6 +18,15 @@
             fill:black;
         }
     }
+}
+.alrdone{
+    display:none !important;
+}
+.confirm {
+    height: 32px !important;
+    padding: 0 16px !important;
+    font-size: 12px !important;
+    line-height: 12px !important;
 }
 .openTicketQuestionPage{
     padding: 0px;
@@ -41,7 +51,7 @@
     .sg-button__icon{
         margin-right:0px!important;
         svg{
-            fill:#ff7968!important;
+            fill:black!important;
         }
     }
 }

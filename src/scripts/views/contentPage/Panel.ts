@@ -6,8 +6,8 @@ export default class Panel{
     userId;
     constructor(){
         this.userId = (<string>window.location.href).replace("https://brainly.com/users/user_content/","").split("/")[0];
-        document.querySelector("#content-old > div:nth-child(3)").insertAdjacentHTML("beforeend", '<div class = "mass-actions">');
-        this.buttonArea = document.querySelector(".mass-actions") 
+     
+        this.buttonArea = document.querySelector("#content-old") 
     }
 
     Basic(){
@@ -15,20 +15,22 @@ export default class Panel{
         BasicFn.toggleSelection(this.buttonArea);
         BasicFn.selectAll(this.buttonArea);
     }
-    Ans(perms){
-        if(perms.includes("2") || perms.includes("3") || perms.includes("4")){
+    Ans(){
+       
             ModFn.delete(this.buttonArea, "responses");
             ModFn.approveAnswers(this.buttonArea);
             ModFn.confirmAnswers(this.buttonArea);
+            ModFn.afc(this.buttonArea);
+            
             ModFn.unverifyAnswers(this.buttonArea);
-            ModFn.find_reported_content(this.userId, "responses", this.buttonArea);
-        }
-        ModFn.approveAll(this.buttonArea);
+            //ModFn.find_reported_content(this.userId, "responses", this.buttonArea);
+        
+       // ModFn.approveAll(this.buttonArea);
     }
     Ques(){
         ModFn.delete(this.buttonArea, "tasks")
         ModFn.confirmQuestions(this.buttonArea);
-        ModFn.find_reported_content(this.userId, "tasks", this.buttonArea);
+       //ModFn.find_reported_content(this.userId, "tasks", this.buttonArea);
     }
     
 }

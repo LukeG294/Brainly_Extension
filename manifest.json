@@ -1,6 +1,6 @@
 {
-  "name": "Brainly Companion (Beta)",
-  "description": "A tool in it's beta version to help Brainly Volunteers perform their tasks actions more efficiently.",
+  "name": "Brainly Extension",
+  "description": "Moderation tools for convenience including selective deletion, admin functions, and homepage tickets. - Luke G",
   "manifest_version": 3,
   "version":"1.7.02",
   "icons": {
@@ -9,17 +9,27 @@
   "host_permissions": [
     "*://brainly.com/*"
   ],
-  "permissions": ["storage"],
+  
   "web_accessible_resources": [{
     "matches": ["*://brainly.com/*"],
     "resources": ["resources/*/*.svg"]
   }],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  
   "content_scripts": [
     {
       "matches": ["*://brainly.com/*"],
       "css": ["content-scripts/css/common.css"],
-      "js": ["content-scripts/js/permissions.js", "content-scripts/js/shortcuts.js"],
+      "js": ["content-scripts/js/get_permissions.js", "content-scripts/js/shortcuts.js"],
       "run_at": "document_start"
+    },
+    {
+      "matches": ["*://brainly.com/profile/*"],
+      "js": ["content-scripts/js/old_profile.js"],
+      "css": ["content-scripts/css/old_profile.css"]
     },
     {
       "matches": ["*://brainly.com/companion/verification/*"],
@@ -27,8 +37,6 @@
       "css": ["content-scripts/css/verification_queue.css"],
       "run_at": "document_start"
     },
-    
-
     {
       "matches": ["*://brainly.com/*"],
       "exclude_globs": ["*://brainly.com/app/profile/*", "*://brainly.com/profile/*","*://brainly.com/companion/verification*","*://brainly.com/users/*","*://brainly.com/tools/*","*://brainly.com/tasks/archive_mod*"],
@@ -37,25 +45,8 @@
     {
       "matches": ["*://brainly.com/*"],
       "exclude_globs": ["*://brainly.com/question/*","*://brainly.com/profile/*","*://brainly.com/companion/verification*","*://brainly.com/users/*","*://brainly.com/tools/*","*://brainly.com/tasks/archive_mod*"],
-      "js": ["content-scripts/js/homepage.js"],
+     
       "css": ["content-scripts/css/homepage.css"]
-    },
-    {
-      "matches": ["*://brainly.com/tasks/archive_mod*"],
-      "css": ["content-scripts/css/mod_all.css"],
-      "js": ["content-scripts/js/mod_all.js"],
-      "run_at": "document_start"
-    },
-    {
-      "matches": ["*://brainly.com/app/profile*"],
-      "css": ["content-scripts/css/newProfile.css"],
-      "js": ["content-scripts/js/newProfile.js"],
-      "run_at": "document_start"
-    },
-    {
-      "matches": ["*://brainly.com/profile/*"],
-      "js": ["content-scripts/js/old_profile.js"],
-      "css": ["content-scripts/css/old_profile.css"]
     },
     {
       "matches": ["*://brainly.com/*"],

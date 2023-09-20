@@ -20,22 +20,31 @@ export default new class ModFn {
     elem.insertAdjacentElement('beforeend', Components.Button({
       size: "m",
       type: "solid",
-      text: "",
+      text: "Verify",
       icon: "verified",
-      ClassNames: ["approve"]
+      ClassNames: ["mapprove"]
     }))
-    document.querySelector(".approve").addEventListener("click", async function () {
-      let stat = new Status("approve");
-      stat.Show("Approving Selected Answers...", "indigo", true)
+    let mass_approve = document.querySelector(".mapprove")
+    mass_approve.insertAdjacentHTML("beforeend", ` <div class="sg-spinner-container__overlay">
+    <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+  </div>`)
+    mass_approve.addEventListener("click", async function () {
+      mass_approve.classList.add("shower")
       let checkBoxes = document.querySelectorAll(".contentCheckboxes input")
-
+      
+     
+     
       for (let i = 0; i < checkBoxes.length; i++) {
+        
         //@ts-ignore
         if (String(checkBoxes[i].checked) === "true") {
           //@ts-ignore
+          let box = checkBoxes[i].closest(".content-row")
+          //@ts-ignore
+          box.style.backgroundColor = '#E3F7ED'
           let link = checkBoxes[i].closest(".content-row").getElementsByTagName('a')[0].href
           let id = parseQuestionLink(link)
-
+          
           let qobj = new Question()
           let questionObjectData = await qobj.Get(id)
           //@ts-ignore
@@ -46,28 +55,42 @@ export default new class ModFn {
             let user = String(answers[x]["user_id"])
             if (user === String(window.location.href.split("/")[5])) {
               let answerObj = new Answer()
-              await answerObj.Approve(answers[x]["id"])
+              try {
+                await answerObj.Approve(answers[x]["id"])
+              } catch(err){
+                //pass
+              }
+              
             }
           }
+          
+          
         }
       }
-
-      Notify.Flash("Approved Selected Answers!", "success")
-      stat.Close();
+      mass_approve.classList.remove("shower")
+      
+      Notify.Flash("Approved successfully", "success")
+     
     });
   }
   async unverifyAnswers(elem) {
     elem.insertAdjacentElement('beforeend', Components.Button({
       size: "m",
-      text: "",
+      text: "Unverify",
       type: "solid",
       icon: "thumb_down",
-      ClassNames: ["unverify"]
+      ClassNames: ["munverify"]
     }));
-    document.querySelector(".unverify").addEventListener("click", function () {
-      document.querySelector(".unverify  .spinner-container").classList.add("show");
+    let mass_unverify = document.querySelector(".munverify")
+    mass_unverify.insertAdjacentHTML("beforeend", ` <div class="sg-spinner-container__overlay">
+    <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+  </div>`)
+    mass_unverify.addEventListener("click", async function () {
+      //@ts-ignore
+      mass_unverify.classList.add("shower")
       let checkBoxes = document.querySelectorAll(".contentCheckboxes input")
-      let idsToUnverify = []
+      let suc = 0
+      let fail = 0
       for (let i = 0; i < checkBoxes.length; i++) {
         //@ts-ignore
         if (String(checkBoxes[i].checked) === "true") {
@@ -76,54 +99,82 @@ export default new class ModFn {
           let id = parseQuestionLink(link)
 
           let qObj = new Question()
-          let res = qObj.Get(id)
+          let res = await qObj.Get(id)
           //@ts-ignore
           let answers = res.data.responses
           let times = 0
-
+          
           if (answers.length === 1) { times = 1 } else { times = 2 }
           for (let x = 0; x < times; x++) {
             let user = String(answers[x]["user_id"])
             if (user === String(window.location.href.split("/")[5])) {
               let answer = new Answer()
-              answer.Unapprove(answers[x]["id"])
-
+              let p = await answer.Unapprove(answers[x]["id"])
+              if (p.success === false){
+                fail += 1
+              } else {
+                suc += 1
+              }
             }
           }
+          
+          
         }
       }
 
-      let success = 0
-      let fail = 0
+      if (fail > 0){
+        Notify.Flash(`${suc} unverified, ${fail} could not unverify. Check permissions.`, "error")
+      } else {
+        Notify.Flash(`${suc} unverified successfully`, "success")
+      } 
+      //@ts-ignore
+      mass_unverify.classList.remove("shower")
+      
+   
 
-      Notify.Flash(`${success} unapproved, ${fail} had an error. Do you have Super Moderator permissions?`, "success")
+      
     });
   }
+
   async confirmAnswers(elem) {
+   
     elem.insertAdjacentElement('beforeend', Components.Button({
       size: "m",
       type: "solid",
-      text: "",
-      icon: "spark",
-      ClassNames: ["confirm"]
+      text: "Confirm",
+      icon: "thumb_up_outlined",
+      ClassNames: ["mconfirm"]
     }))
-    document.querySelector(".confirm").addEventListener("click", function () {
+    let m_confirm = document.querySelector(".mconfirm")
+    m_confirm.insertAdjacentHTML("beforeend", ` <div class="sg-spinner-container__overlay">
+    <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+  </div>`)
+    m_confirm.addEventListener("click", function () {
+      
+      m_confirm.classList.add("shower")
       let stat = new Status("confirm")
       stat.Show("Confirming Selected Answers...", "indigo", true)
-      let checkBoxes = document.getElementsByClassName("contentCheckboxes input")
+      
+      let checkBoxes = document.querySelectorAll(".contentCheckboxes input")
 
       let checkBoxesArr = Array.from(checkBoxes)
+    
       checkBoxesArr.forEach(async element => {
+        let box = element.closest(".content-row")
+          //@ts-ignore
+          
         //@ts-expect-error
         if (String(element.checked) === "true") {
           //@ts-ignore
           let link = element.closest(".content-row").getElementsByTagName('a')[0].href
           let id = parseQuestionLink(link)
-
+          
           let qObj = new Question()
           let res = await qObj.Get(id)
 
           if (res.success) {
+            
+           
             //@ts-expect-error
             let answers = res.data.responses
             let times = 0
@@ -138,16 +189,23 @@ export default new class ModFn {
               let user = String(answers[x]["user_id"])
               if (user === String(window.location.href.split("/")[5])) {
                 let ansObj = new Answer()
-                ansObj.Confirm(answers[x]["id"])
+                await ansObj.Confirm(answers[x]["id"])
+                
+                
               }
+              //@ts-ignore
+              box.style.backgroundColor = '#D9F0FF'
             }
+            m_confirm.classList.remove("shower")
           } else {
             console.log("Skipped a ticket due to reservation by another mod.")
           }
 
         }
       });
+      
       Notify.Flash("Confirmed selected answers!", "success");
+      
       stat.Close()
     });
   }
@@ -155,15 +213,20 @@ export default new class ModFn {
     elem.insertAdjacentElement('beforeend', Components.Button({
       size: "m",
       type: "solid",
-      ClassNames: ["confirm"],
-      icon: "spark",
-      text: ""
+      ClassNames: ["mconfirm"],
+      icon: "thumb_up_outlined",
+      text: "Confirm"
     }))
-    document.querySelector(".confirm").addEventListener("click", function () {
+    let m_confirmQ = document.querySelector(".mconfirm")
+    m_confirmQ.insertAdjacentHTML("beforeend", ` <div class="sg-spinner-container__overlay">
+    <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+  </div>`)
+    m_confirmQ.addEventListener("click", async function () {
+      m_confirmQ.classList.add("shower")
       let stat = new Status("conf");
       stat.Show("Confirming Selected Questions...", "indigo", true)
       let checkBoxes = document.querySelectorAll(".contentCheckboxes input")
-      let ansObj = new Answer();
+      let ansObj = new Question();
       for (let i = 0; i < checkBoxes.length; i++) {
         //@ts-ignore
         if (String(checkBoxes[i].checked) === "true") {
@@ -171,23 +234,108 @@ export default new class ModFn {
           let link = checkBoxes[i].closest(".content-row").getElementsByTagName('a')[0].href
           let id = parseQuestionLink(link)
           ansObj.Confirm(parseInt(id))
+          const delay = ms => new Promise(res => setTimeout(res, ms));
+          await delay(300)
+          //@ts-ignore
+          checkBoxes[i].closest(".content-row").style.backgroundColor = '#D9F0FF'
         }
       }
 
       stat.Close();
-      Notify.Flash("Questions confirmed successfully!", "success")
+      m_confirmQ.classList.remove("shower")
+      Notify.Flash("Confirmed selected questions!", "success")
     });
   }
+  async afc(elem){
+    elem.insertAdjacentElement("beforeend", Components.Button({
+      type: "solid",
+      size: "m",
+      text: "Ask for Correction",
+      ClassNames: ["mafc"],
+      icon: "question",
+      onClick: () => {
+        let targetElem = document.querySelector("#content-old")
+        if (document.querySelector(".delmenu") !== null){
+          document.querySelector(".delmenu").remove()
+        }
+        if (document.querySelector(".afcmenu") === null){
+          targetElem.insertAdjacentHTML("beforeend", /*html*/`<div class="afcmenu show">
+        
+       <textarea placeholder="Reason" class=" afc-reason sg-textarea sg-textarea--tall"></textarea>
+        
+        <div class="confirmafc">
+            <button class="sg-button sg-button--m sg-button--outline">
+              
+              <span class="sg-button__text">Ask for Correction</span>
+              <div class="sg-spinner-container__overlay">
+                <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+             </div>
+            </button>
+          </div>
+        </div>
+      </div>`)
+        let confirm_afc = document.querySelector(".confirmafc")
+        confirm_afc.addEventListener("click", async function () {
+          confirm_afc.classList.add("shower")
+        let checkBoxes = document.querySelectorAll(".contentCheckboxes input")
+        for (let i = 0; i < checkBoxes.length; i++) {
+          //@ts-ignore
+          if (String(checkBoxes[i].checked) === "true") {
+
+            //@ts-ignore
+            let link = checkBoxes[i].closest(".content-row").getElementsByTagName('a')[0].href
+            //@ts-ignore
+            checkBoxes[i].closest(".content-row").style.backgroundColor = '#fedd8e'
+            let id = parseQuestionLink(link)
+            console.log(id)
+            let qObj = new Question()
+            let res = await qObj.Get(id)
+            //@ts-ignore
+            
+            let answers = res.data.responses
+            
+            let times = 0
+  
+            if (answers.length === 1) { times = 1 } else { times = 2 }
+            for (let x = 0; x < times; x++) {
+              let user = String(answers[x]["user_id"])
+              if (user === String(window.location.href.split("/")[5])) {
+                let answer = new Answer()
+                //@ts-ignore
+               
+                answer.AllowCorrection(document.querySelector(".afc-reason").innerText,answers[x]["id"])
+                
+              }
+            }
+            
+          }
+          
+          
+        }
+        Notify.Flash("Opened for correction","success")
+        confirm_afc.classList.remove("shower")
+        
+          })
+        } else {document.querySelector(".afcmenu").remove();}
+        
+      }
+    })
+  )}
   async delete(elem, type: "tasks" | "responses") {
     elem.insertAdjacentElement("beforeend", Components.Button({
       type: "solid",
       size: "m",
-      text: "",
-      ClassNames: ["delete"],
+      text: "Delete",
+      ClassNames: ["mdelete"],
       icon: "trash",
       onClick: () => {
+        document.querySelector(".mdelete").classList.add("shower")
+        if (document.querySelector(".afcmenu") !== null){
+          document.querySelector(".afcmenu").remove()
+        }
+        
         insertDelMenu(
-          document.querySelector("#content-old > div:nth-child(3) > p"),
+          document.querySelector("#content-old") ,
           type,
           () => {
             if (type === "tasks") {
@@ -210,30 +358,43 @@ export default new class ModFn {
             if (type === "tasks") document.querySelector(`a[href = "/question/${element}"]`).closest(".content-row").classList.add("deleted")
             if (type === "responses") document.querySelector(`.content-row[resp = "${element}"]`).classList.add("deleted")
           }
+          
         )
+        
+        document.querySelector(".mdelete").classList.remove("shower")
       }
+      
     }));
+    document.querySelector(".mdelete").insertAdjacentHTML("beforeend", ` <div class="sg-spinner-container__overlay">
+    <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+  </div>`)
   }
   async approveAll(elem) {
     elem.insertAdjacentElement("beforeend", Components.Button({
       type: "solid",
       size: "m",
-      text: "",
-      ClassNames: ["approveAll"],
+      text: "Approve",
+      ClassNames: ["mapproveAll"],
       icon: "heart",
       onClick: async () => {
-        allPages(
-          "Approving all answers",
-          "responses",
-          (resp) => {
-            let userId = window.location.href.replace("https://brainly.com/users/user_content/", "").split("/")[0]
-            let response = resp.data.responses.find(res => String(res.user_id) === String(userId));
-            if (!response.approved.approver) {
-              let ans = new Answer();
-              ans.Approve(response.id);
+        Notify.Dialog("Verify All Answers", "Are you sure?", all, true)
+        function all(){
+          allPages(
+            "Approving all answers",
+            "responses",
+            async (resp) => {
+              let userId = window.location.href.replace("https://brainly.com/users/user_content/", "").split("/")[0]
+              let response = resp.data.responses.find(res => String(res.user_id) === String(userId));
+              if (!response.approved.approver) {
+                let ans = new Answer();
+                const delay = ms => new Promise(res => setTimeout(res, ms));
+                await delay(600)
+                ans.Approve(response.id);
+                
+              }
             }
-          }
-        )
+          )
+        }
       }
     }));
   }
@@ -242,7 +403,7 @@ export default new class ModFn {
       type: "solid",
       size: "m",
       icon: "report_flag_outlined",
-      text: "",
+      text: "Fetch Reported",
       ClassNames: ["fetchRep"]
     }))
     document.querySelector(".fetchRep").addEventListener("click", async function () {
@@ -310,3 +471,4 @@ export default new class ModFn {
     })
   }
 }
+

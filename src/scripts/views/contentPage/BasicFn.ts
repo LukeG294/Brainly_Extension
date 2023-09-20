@@ -3,17 +3,18 @@ import {
     insert_ticket
 } from "../../common/ModFunctions"
 import Form from "scripts/Items/Form"
+import Notify from "../../common/Notifications/Notify"
 
 export default new class BasicFn{
     selectAll(elem){
         elem.insertAdjacentElement('beforeend', Components.Button({
             size: "m",
             type: "solid",
-            text: "",
-            ClassNames: ["select"],
-            icon: "check"
+            text: "Select All",
+            ClassNames: ["mselect"],
+            icon: "add_more"
         }))
-        document.querySelector(".select").addEventListener("click", function(){
+        document.querySelector(".mselect").addEventListener("click", function(){
             let checkBoxes = document.getElementsByClassName("contentCheckboxes")
             for (let i = 0; i < checkBoxes.length; i++) {
                 // @ts-ignore
@@ -26,11 +27,11 @@ export default new class BasicFn{
         elem.insertAdjacentElement('beforeend', Components.Button({
             size: "m",
             type: "solid",
-            text: "",
-            ClassNames: ["copy"],
+            text: "Copy Selected",
+            ClassNames: ["mcopy"],
             icon: "clipboard"
         }))
-        document.querySelector(".copy").addEventListener("click", function(){
+        document.querySelector(".mcopy").addEventListener("click", function(){
             let checkBoxes = document.getElementsByClassName("sg-checkbox__element")
             let links = []
             for (let i = 0; i < checkBoxes.length; i++) {
@@ -47,18 +48,23 @@ export default new class BasicFn{
                 .catch(err => {
                     console.log('Something went wrong', err);
                 });
+                if (links.length > 0){
+                    Notify.Flash("Copied to clipboard", "success")
+                }
             links = []
+            
+            
         });
     }
     toggleSelection(elem) {
         elem.insertAdjacentElement('beforeend', Components.Button({
             size: "m",
-            text: "",
-            ClassNames: ["toggle"],
+            text: "Toggle Selected",
+            ClassNames: ["mtoggle"],
             icon: "filters",
             type: "solid"
         }))
-        document.querySelector(".toggle").addEventListener("click", function(){
+        document.querySelector(".mtoggle").addEventListener("click", function(){
         let checkBoxes = document.getElementsByClassName("contentCheckboxes")
         for (let i = 0; i < checkBoxes.length; i++) {
             //@ts-ignore
@@ -93,12 +99,13 @@ export default new class BasicFn{
             </div>
             </div>
             `);
+           
             row.querySelector(".contenticon.shield").addEventListener("click", function() {
                 insert_ticket(qid, row.querySelector(".modticket > .sg-spinner-container__overlay"));
             });
         }
     }
-    addIcons() {
+    addIcons(questionPage) {
         let choice = document.querySelector("#tabs-doj ul")
         let content = document.querySelector(".content-items");
         for (let i = 0; i < content.childElementCount; i++) {
@@ -110,9 +117,9 @@ export default new class BasicFn{
             xhr.addEventListener("readystatechange", function() {
                 if (this.readyState === 4) {
                     let resp = JSON.parse(this.responseText);
-        
-                    if (resp.data.task.settings.is_marked_abuse === true) {content.children[i].querySelector(".q-icons").classList.add("report")}
-                    if (String(resp.data.task.attachments) !== "") {content.children[i].querySelector(".q-icons").classList.add("attach")}
+                    //@ts-ignore
+                    if (resp.data.task.settings.is_marked_abuse === true) {content.children[i].style.backgroundColor = '#FFE8E5'}
+                    if (String(resp.data.task.attachments) !== "" && questionPage) {content.children[i].querySelector(".q-icons").classList.add("attach")}
 
                     if (choice.children[1].classList.value === "active") {
                         //answer page
@@ -121,9 +128,14 @@ export default new class BasicFn{
 
                         content.children[i].setAttribute("resp", response.id)
                         if (String(response.attachments) !== "") {content.children[i].querySelector(".a-icons").classList.add("attach")}
-                        if (response.approved.approver !== null) {content.children[i].querySelector(".a-icons").classList.add("verified")}
-                        if (response.settings.is_marked_abuse === true) {content.children[i].querySelector(".a-icons").classList.add("report")}
-                        if (response.best === true) {content.children[i].querySelector(".a-icons").classList.add("best")}
+                        //@ts-ignore
+                        if (response.approved.approver !== null) {content.children[i].style.backgroundColor = '#F0FAF5'}
+                        //@ts-ignore
+                        if (response.settings.is_marked_abuse === true) {content.children[i].style.backgroundColor = '#FFE8E5'}
+                        console.log(response)
+                        //@ts-ignore
+                        if (response.wrong_report) {content.children[i].style.backgroundColor = '#fedd8e'}
+                        // brainliest if (response.best === true) {content.children[i].querySelector(".a-icons").classList.add("best")}
                     }
                     if(content.children[i].querySelector(".a-icons").classList.length > 1 && content.children[i].querySelector(".q-icons").classList.length > 1){
                         content.children[i].querySelector(".content-icons").classList.add("both")

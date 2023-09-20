@@ -3,6 +3,7 @@ const sass = require("gulp-sass")(require("sass"));
 const watch = require("gulp-watch");
 const concat = require("gulp-concat");
 const ts = require("gulp-typescript");
+const { javascript } = require("webpack");
 
 
 //defining tasks
@@ -54,6 +55,7 @@ gulp.task("resources", function(done){
         .pipe(gulp.dest("dist/resources/"));
     done();
 });
+
 //watching while development
 gulp.task("watch", function(done){
     watch(["./src/scss/*.scss"], gulp.series("sass"));

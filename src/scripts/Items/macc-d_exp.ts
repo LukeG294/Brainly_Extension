@@ -67,13 +67,29 @@ export function mmsg_s() {
                     items: [
                         {
                             id: "1",
-                            text: "Alt Accounts",
-                            value: "message"
+                            text: "Incomplete MD",
+                            value: `Hey there! Brainly is all about giving students the tools they need to tackle future problems on their own, so it's important to always show your work. Your answers didn't contain enough explanation to follow our guidelines, so all of your answers have been removed. In the future, please be sure to elaborate and add more to your answers, such as full explanations, examples, and any information that can help our fellow Brainiacs. Thanks!
+                            `
                         },
                         {
                             id: "2",
-                            text: "Link Spammer",
-                            value: "message"
+                            text: "Questions",
+                            value: `Hello! We are sorry for any confusion about your questions being removed. While some may have been valid, many of your questions violated our Content Guidelines: https://brainly.com/content-guidelines. Help us keep Brainly's Knowledge Base quality high by getting familiar with our guidelines so that this does not happen in the future.`
+                        },
+                        {
+                            id: "3",
+                            text: "Plagiarism",
+                            value: `Plagiarism is serious business - remember that it is forbidden to post any content from another website, person, or source without proper permission. We are sure that you can do it on your own! Please refrain from plagiarizing answers in the future, otherwise your account may be suspended. For more help please check our Answering Guidelines: https://faq-us.brainly.com/hc/en-us/articles/5193292847250-Answering-Guidelines. Please note that we have removed your post.`
+                        },
+                        {
+                            id: "4",
+                            text: "Comments",
+                            value: `Hey there! Brainly's comment feature allows you to ask follow-up questions or clarify a question or answer. The majority of your comments did not meet these guidelines, so they have been removed. All comments should be relevant to the question being asked. If you do create comments that violate these guidelines in the future, your account may be suspended. Thank you for your understanding! Please review the Community Guidelines for additional information: https://brainly.com/community-guidelines`
+                        },
+                        {
+                            id: "5",
+                            text: "Deletion Request",
+                            value: `Hello! We have received your request to have your account permanently removed from Brainly. To finalize the process, please send an email to Brainly Administrators by visiting this link: https://faq-us.brainly.com/hc/en-us/requests/new To send the request, select the 'General form' option. We're sorry to see you go!`
                         }
                     ]
                 }).outerHTML

@@ -51,6 +51,6 @@ export default async function deleteWithout429(
       await new Promise(resolve => setTimeout(resolve, 2000));
     }
     stat.Close()
-    Notify.Flash(`Content Removed Successfully`, "info")
+    Notify.Flash(`Content removed successfully`, "success")
   }
 }

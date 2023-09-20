@@ -2,36 +2,10 @@ import BrainlyAPI from "./BrainlyAPI"
 import {getCookie} from "./CommonFunctions"
 
 export class Answer{
-    Confirm(id:number){
-        var myHeaders = new Headers();
-        myHeaders.append("authority", "brainly.com");
-        myHeaders.append("accept", "*/*");
-        myHeaders.append("accept-language", "en-US,en;q=0.9");
-        myHeaders.append("content-type", "application/json");
-        myHeaders.append("x-b-token-long", getCookie('Zadanepl_cookie[Token][Long]'));
-
-        var raw = JSON.stringify({
-        "operationName": "AcceptModerationReportContent",
-        "variables": {
-            "input": {
-            "contentType": "Answer",
-            "contentId": id
-            }
-        },
-        "query": "mutation AcceptModerationReportContent($input: AcceptModerationReportContentInput!) {\n  acceptModerationReportContent(input: $input) {\n    validationErrors {\n      error\n      __typename\n    }\n    __typename\n  }\n}\n"
-        });
-
-        var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        
-        };
-
-        fetch("https://brainly.com/graphql/us", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
+    async Confirm(id:number){
+        let cookie = getCookie("Zadanepl_cookie[Token][Long]")
+        chrome.runtime.sendMessage({ data: {"id":id,"cookie":cookie}, message:"confirm" }, function () {});
+       
     }
     async Approve(id:string){
           await BrainlyAPI.Legacy(`POST`, "api_content_quality/confirm", {
@@ -40,13 +14,14 @@ export class Answer{
           });
     }
     async Unapprove(id:string){
-        await fetch("https://brainly.com/api/28/api_content_quality/unconfirm", {
+        let x = await fetch("https://brainly.com/api/28/api_content_quality/unconfirm", {
             method: "POST",
             body: JSON.stringify({
                 "model_type": 2,
                 "model_id": id
             })
-        });
+        }).then(data => data.json());
+        return x
     }
     async Delete(id:string, reason:string, warn:boolean, take_point:boolean){
         fetch('https://brainly.com/api/28/moderation_new/delete_response_content', {

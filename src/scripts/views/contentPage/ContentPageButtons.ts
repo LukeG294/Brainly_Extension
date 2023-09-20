@@ -19,7 +19,7 @@ export function deletion_menu() {
           }
           ${Form.Checkbox({
             id: "res-pts",
-            text: "Take back Respondents' Points"
+            text: "Take Back Respondents' Points"
           }).outerHTML
           }
           ${Form.Checkbox({
@@ -59,7 +59,7 @@ export function RenderItems(items: {
       }
 
         <div class="num">${index + 1}</div>
-
+        
         ${Components.Button({
         size: "s",
         type: "solid",
@@ -102,6 +102,8 @@ export function RenderItems(items: {
         <div class="date">${row.date}</div>
     </div>
     `)
+    
+   
     document.querySelector(".modticket." + "mod" + String(index)).addEventListener("click", () => {
       insert_ticket(
         id,
@@ -109,5 +111,6 @@ export function RenderItems(items: {
       )
     })
   })
-  BasicFn.addIcons()
+  let question = String(window.location.href).includes("tasks")
+  BasicFn.addIcons(question)
 }

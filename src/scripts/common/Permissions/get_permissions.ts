@@ -1,3 +1,4 @@
+import Notify from "../../common/Notifications/Notify"
 function getCookie(cname) {
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
@@ -22,19 +23,31 @@ function setCookie(cname, cvalue, exdays) {
 }
 
 
+
+
+
 async function getData(){
-
-
-    //let user_data = await fetch('https://brainly.com/api/28/api_user_profiles/get_by_id/16118329').then(data => data.json())
-    //let id = user_data.data.id
-    //let nick = user_data.data.nick
-    let data = await fetch(`https://lgextension.azurewebsites.net/get_user/16118329`).then(data => data.json())
-    if (getCookie("extension_permissions") !== ""){
-      alert(getCookie("extension_permissions"))
-    } else {
-      setCookie("extension_permissions", btoa(data),"30")
-     
+    let me = await fetch("https://brainly.com/api/28/api_users/me").then(data => data.json())
+    let {id} = me.data.user
+    
+    let data = await fetch(`https://lgextension.azurewebsites.net/get_user/`+id)
+    if (data.status === 200){
+      const json = await data.json();
+      if (!json.permissions || json.permissions === ''){
+        Notify.Flash(`You're not authorized to use these tools. If you think this is an error, please refresh. Otherwise, please contact management. Thanks! `, "error");
+      } else {
+        let old_cookie = getCookie("l.token")
+        if (old_cookie !== "" && old_cookie === btoa(json.permissions)){
+          //pass
+        } else {
+          setCookie("l.token", btoa(json.permissions),"30")
+        }
+      }
+    } else if (data.status === 400) {
+      Notify.Flash(`You're not authorized to use these tools. If you think this is an error, please refresh. Otherwise, please contact management. Thanks! `, "error");
     }
+    
+    
     // do something with response here, not outside the function
    
     

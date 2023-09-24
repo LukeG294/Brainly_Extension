@@ -8,7 +8,7 @@ class Background {
 
 	private async Init() {
 		chrome.runtime.onMessage.addListener( async function (request, sender, sendResponse) {
-			switch (request.mesesage) {
+			switch (request.message) {
 				case 'confirm':
 					fetch(`https://lgextension.azurewebsites.net/confirm/?id=${request.data.id}&cookie=${request.data.cookie}`, {'mode': 'no-cors'})
 					return;

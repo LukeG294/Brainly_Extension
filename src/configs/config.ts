@@ -16,3 +16,11 @@ export function pageElement(selector: string){
 export function pageElementAll(selector: string){
     return document.querySelectorAll(selector)
 }
+export function main_control_permissions(){
+    let permissions = {
+        "admin":"0",
+        "mod":"1",
+        "jm":"2"
+    }
+    return permissions
+}

@@ -5,11 +5,11 @@ import { ModObserver } from "./homepage/Exports";
 import { runCheck } from "../../scripts/common/ModFunctions";
 import { main_control_permissions } from "configs/config";
 
-let {admin, mod} = main_control_permissions()
-runCheck(md_content, admin)
-runCheck(reportedCommentsDeleter, admin)
-runCheck(AdminPanel.MassMsg, admin)
-runCheck(ModObserver, mod)
+let {Administrator, Moderator} = main_control_permissions()
+runCheck(md_content, Administrator)
+runCheck(reportedCommentsDeleter, Administrator)
+runCheck(AdminPanel.MassMsg, Administrator)
+runCheck(ModObserver, Moderator)
 //userSearch()
 //verification_queue()
 

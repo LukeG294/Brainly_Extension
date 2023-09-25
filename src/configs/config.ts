@@ -18,9 +18,9 @@ export function pageElementAll(selector: string){
 }
 export function main_control_permissions(){
     let permissions = {
-        "admin":"0",
-        "mod":"1",
-        "jm":"2"
+        "Administrator":"0",
+        "Moderator":"1",
+        "Junior Moderator":"2"
     }
     return permissions
 }

@@ -1,5 +1,7 @@
 import User from "../../common/User"
 import Extension from "../../../locales/en/localization.json"
+import { main_control_permissions } from "configs/config";
+import Form from "scripts/Items/Form";
 let warn_area = /*html*/`
 <div class="warnbox">
     <div class="heading">
@@ -10,6 +12,17 @@ let warn_area = /*html*/`
     </div>
 </div>
 `
+let perms_area = /*html*/`
+    <div class="warnbox">
+        <div class="heading">
+        <h2 class="sg-headline sg-headline--xlarge sg-headline--extra-bold">Extension Options</h2>
+        </div>
+        <div class="warnings">
+
+        </div>
+    </div>
+    `
+  
 function shorten_warnrsn(warning){
     if (warning.includes("plagiarism") || warning.includes("Is that yours?") || warning.includes("Be cool. Be original")){
         return "Plagiarism";
@@ -57,10 +70,87 @@ function shorten_warnrsn(warning){
         return "Not Detected"
     }
 }
+
+export async function user_manager(id) {
+    
+    let menu = document.createElement("div")
+    menu.id = "permission_menu"
+    document.querySelectorAll(".personal_info")[0].appendChild(menu)
+    
+    
+    function append_checks(key, value, checked){
+       let each = document.createElement("div")
+        menu.appendChild(each)
+        each.className = "permission"
+        each.innerHTML = `${
+            Form.Checkbox({
+                text: key,
+                id: "perm-"+value,
+            }).outerHTML
+            }`
+        if (checked==="true"){
+            each.querySelectorAll(".sg-checkbox__input")[0].setAttribute("checked","")
+        }
+    }
+    let main_perms = main_control_permissions()
+    let data = await fetch(`https://lgextension.azurewebsites.net/get_user/`+id)
+    if (data.status === 200){
+       
+      const json = await data.json();
+      let database_perms = json.permissions.split(",")
+      function set_checks(){
+        if (!json.permissions || json.permissions === ''){
+                //@ts-ignore
+                for (const [key, value] of Object.entries(main_perms)) {
+                    append_checks(key,value,String(database_perms.includes(value)));
+                }
+              } else {
+                //@ts-ignore
+                for (const [key, value] of Object.entries(main_perms)) {
+                    append_checks(key,value,String(database_perms.includes(value)));
+                    
+                  }
+        }
+        
+        }
+     
+        let edit_permissions = document.createElement("div")
+        edit_permissions.innerHTML = `<div class="edit_menu">
+        <a>Edit Permissions<a></div>`
+        edit_permissions.addEventListener("click",function(){
+            let hasFinished = edit_permissions.getAttribute("done")
+            if (hasFinished === "true") {
+                if (menu.style.display === "none") {
+                    menu.style.display = "block"
+                } else {
+                    menu.style.display = "none"
+                }
+            } else {
+                set_checks()
+                menu.setAttribute("style","display:block")
+            }
+            edit_permissions.setAttribute("done","true")
+        })
+        document.querySelector(".pw").appendChild(edit_permissions)
+    
+    } else if (data.status === 400) {
+        let add_permissions = document.createElement("div")
+        add_permissions.innerHTML = `<div class="friends">
+        <a href="/buddies_new/invite/84655478">Make Extension User</a> </div>`
+        document.querySelector(".pw").appendChild(add_permissions)
+    }
+
+    
+    
+    
+}
 export async function show_recent_warnings(uid){
     let warns = await User.Warnings(uid);
+    
     if(warns.length !==0){
         document.querySelector("#main-right").insertAdjacentHTML("beforeend", warn_area)
+        
+        
         for(let i=0; i<warns.length; i++){
             let warn = warns[i];
             let short_rsn = shorten_warnrsn(warn.reason);
@@ -93,4 +183,5 @@ export async function show_recent_warnings(uid){
             })
         }
     }
+    
 }

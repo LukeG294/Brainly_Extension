@@ -7,7 +7,8 @@
     "128": "resources/icon.png"
   },
   "host_permissions": [
-    "*://brainly.com/*"
+    "*://brainly.com/*",
+    "*://lgextension.azurewebsites.net/*"
   ],
   
   "web_accessible_resources": [{

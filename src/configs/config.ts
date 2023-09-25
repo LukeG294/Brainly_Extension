@@ -21,6 +21,7 @@ export function main_control_permissions(){
         "Administrator":"0",
         "Moderator":"1",
         "Junior Moderator":"2"
+       
     }
     return permissions
 }

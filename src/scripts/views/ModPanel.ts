@@ -6,10 +6,10 @@ import { runCheck } from "../../scripts/common/ModFunctions";
 import { main_control_permissions } from "configs/config";
 
 let {Administrator, Moderator} = main_control_permissions()
-runCheck(md_content, Administrator)
-runCheck(reportedCommentsDeleter, Administrator)
-runCheck(AdminPanel.MassMsg, Administrator)
-runCheck(ModObserver, Moderator)
+runCheck(md_content, Administrator, "")
+runCheck(reportedCommentsDeleter, Administrator, "")
+runCheck(AdminPanel.MassMsg, Administrator, "")
+runCheck(ModObserver, Moderator, "")
 //userSearch()
 //verification_queue()
 

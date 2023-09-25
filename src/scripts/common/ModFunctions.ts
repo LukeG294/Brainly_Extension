@@ -13,11 +13,11 @@ function getCookie(name) {
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
 }
-export function runCheck(f, needed_num){
+export function runCheck(f, needed_num, args){
     //@ts-ignore
     let arr = atob(getCookie("l.token")).split(",")
     if (arr.includes(needed_num)) {
-        f()
+        f(args)
     } 
 }
 export async function insert_ticket(id, butspinner){

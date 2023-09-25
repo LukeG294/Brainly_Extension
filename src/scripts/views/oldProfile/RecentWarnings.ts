@@ -2,6 +2,9 @@ import User from "../../common/User"
 import Extension from "../../../locales/en/localization.json"
 import { main_control_permissions } from "configs/config";
 import Form from "scripts/Items/Form";
+import Notify from "../../common/Notifications/Notify";
+import Label from "../../common/Notifications/Status"
+
 let warn_area = /*html*/`
 <div class="warnbox">
     <div class="heading">
@@ -77,6 +80,17 @@ export async function user_manager(id) {
     menu.id = "permission_menu"
     document.querySelectorAll(".personal_info")[0].appendChild(menu)
     
+    function check_checks(){
+        let bxs = document.querySelectorAll(".permission-box")
+        let idString = []
+        for (let i = 0; i < bxs.length; i++) {
+            //@ts-ignore
+        if (bxs[i].querySelector(".sg-checkbox__input").checked){
+            idString.push(bxs[i].getAttribute("plain_id"))
+        }}
+        chrome.runtime.sendMessage({ data: {"id":id,"permissions":idString.toString()}, message:"edit_user" }, function () {});
+        
+    }
     
     function append_checks(key, value, checked){
        let each = document.createElement("div")
@@ -88,6 +102,11 @@ export async function user_manager(id) {
                 id: "perm-"+value,
             }).outerHTML
             }`
+        each.className = "permission-box"
+        each.setAttribute("plain_id",value)
+        each.addEventListener("click",function(){
+            check_checks()
+        })
         if (checked==="true"){
             each.querySelectorAll(".sg-checkbox__input")[0].setAttribute("checked","")
         }
@@ -132,17 +151,30 @@ export async function user_manager(id) {
             edit_permissions.setAttribute("done","true")
         })
         document.querySelector(".pw").appendChild(edit_permissions)
-    
+        let remove_user = document.createElement("div")
+        let username = window.location.href.split("/")[4].split("-")[0]
+        remove_user.innerHTML = `<div class="remove">
+        <a>Remove Access<a></div>`
+        remove_user.addEventListener("click",function(){
+            chrome.runtime.sendMessage({ data: {"id":id,"username":username}, message:"remove_user" }, function () {});
+            remove_user.remove()
+            document.querySelector(".edit_menu").remove()
+            Notify.Flash(`${username}'s access revoked.`,"error")
+        })
+        document.querySelector(".pw").appendChild(remove_user)
     } else if (data.status === 400) {
         let add_permissions = document.createElement("div")
-        add_permissions.innerHTML = `<div class="friends">
-        <a href="/buddies_new/invite/84655478">Make Extension User</a> </div>`
+        add_permissions.innerHTML = `<div class="add_user">
+        <a>+ Extension User<a> </div>`
         document.querySelector(".pw").appendChild(add_permissions)
+        let username = window.location.href.split("/")[4].split("-")[0]
+        add_permissions.addEventListener("click",function(){
+            chrome.runtime.sendMessage({ data: {"id":id,"username":username}, message:"add_user" }, function () {});
+            add_permissions.remove()
+            Notify.Flash(`${username} added to the extension. Refresh to edit permissions.`,"success")
+        })
     }
 
-    
-    
-    
 }
 export async function show_recent_warnings(uid){
     let warns = await User.Warnings(uid);

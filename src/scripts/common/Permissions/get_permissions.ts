@@ -23,9 +23,6 @@ function setCookie(cname, cvalue, exdays) {
 }
 
 
-
-
-
 async function getData(){
     let me = await fetch("https://brainly.com/api/28/api_users/me").then(data => data.json())
     let {id} = me.data.user

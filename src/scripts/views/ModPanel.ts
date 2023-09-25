@@ -13,10 +13,12 @@ async function insert(){
     runCheck(reportedCommentsDeleter,  await get_feature_key_needed("reported_comments_deleter"))
     runCheck(AdminPanel.MassMsg,  await get_feature_key_needed("mass_messager"))
     runCheck(ModObserver,  await get_feature_key_needed("homepage_tickets"))
+    runCheck(verification_queue,  await get_feature_key_needed("verification_queue"))
+   
 }
 insert()
 //userSearch()
-//verification_queue()
+
 
   
     

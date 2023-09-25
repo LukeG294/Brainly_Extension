@@ -51,7 +51,7 @@ export async function confirmButton() {
 
       oldTickets[i].children[0].children[0].insertAdjacentHTML("afterend", /*html*/ `
     <div>
-    <button class="sg-button sg-button--m sg-button--solid confirm">
+    <button class="sg-button sg-button--m sg-button--solid confirm-black">
       <span class="sg-button__icon sg-button__icon--m"><div class="sg-icon sg-icon--adaptive sg-icon--x24">
         <svg class="sg-icon__svg" role="img" aria-labelledby="title-heart_outlined-hyr1vi" focusable="false">
           <text id="title-heart_outlined-hyr1vi" visibility="hidden">heart outlined</text>
@@ -65,7 +65,7 @@ export async function confirmButton() {
 
 
   }
-  let confirmButtons = document.querySelectorAll('.confirm')
+  let confirmButtons = document.querySelectorAll('.confirm-black')
 
   for (let i = 0; i < confirmButtons.length; i++) {
       let element = confirmButtons[i]

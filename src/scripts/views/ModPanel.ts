@@ -9,10 +9,10 @@ async function insert(){
     //let permissions =  await main_control_permissions()
     
     
-    runCheck(md_content,  await get_feature_key_needed("admin_content_deleter"), "")
-    runCheck(reportedCommentsDeleter,  await get_feature_key_needed("reported_comments_deleter"), "")
-    runCheck(AdminPanel.MassMsg,  await get_feature_key_needed("mass_messager"), "")
-    runCheck(ModObserver,  await get_feature_key_needed("homepage_tickets"), "")
+    runCheck(md_content,  await get_feature_key_needed("admin_content_deleter"))
+    runCheck(reportedCommentsDeleter,  await get_feature_key_needed("reported_comments_deleter"))
+    runCheck(AdminPanel.MassMsg,  await get_feature_key_needed("mass_messager"))
+    runCheck(ModObserver,  await get_feature_key_needed("homepage_tickets"))
 }
 insert()
 //userSearch()

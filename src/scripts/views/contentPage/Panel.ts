@@ -1,5 +1,7 @@
+import { get_feature_key_needed } from "configs/config";
 import BasicFn from "./BasicFn";
 import ModFn from "./ModFn"
+import { runCheck } from "../../../scripts/common/ModFunctions";
 
 export default class Panel{
     buttonArea;
@@ -15,21 +17,22 @@ export default class Panel{
         BasicFn.toggleSelection(this.buttonArea);
         BasicFn.selectAll(this.buttonArea);
     }
-    Ans(){
-       
-            ModFn.delete(this.buttonArea, "responses");
-            ModFn.approveAnswers(this.buttonArea);
-            ModFn.confirmAnswers(this.buttonArea);
-            ModFn.afc(this.buttonArea);
+    async Ans(){
+            runCheck(ModFn.delete, await get_feature_key_needed("selective_answer_deletion"), this.buttonArea, "responses")
+            runCheck(ModFn.approveAnswers, await get_feature_key_needed("selective_answer_approval"), this.buttonArea)
+            runCheck(ModFn.confirmAnswers, await get_feature_key_needed("selective_answer_confirmation"), this.buttonArea)
+            runCheck(ModFn.afc, await get_feature_key_needed("selective_answer_AFC"), this.buttonArea)
+            runCheck(ModFn.unverifyAnswers, await get_feature_key_needed("selective_answer_unverify"), this.buttonArea)
             
-            ModFn.unverifyAnswers(this.buttonArea);
+        
             //ModFn.find_reported_content(this.userId, "responses", this.buttonArea);
         
        // ModFn.approveAll(this.buttonArea);
     }
-    Ques(){
-        ModFn.delete(this.buttonArea, "tasks")
-        ModFn.confirmQuestions(this.buttonArea);
+    async Ques(){
+        runCheck(ModFn.delete, await get_feature_key_needed("selective_question_deletion"), this.buttonArea, "tasks")
+        runCheck(ModFn.confirmQuestions, await get_feature_key_needed("selective_question_confirmation"), this.buttonArea)
+       
        //ModFn.find_reported_content(this.userId, "tasks", this.buttonArea);
     }
     

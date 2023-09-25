@@ -111,7 +111,7 @@ export async function user_manager(id) {
             each.querySelectorAll(".sg-checkbox__input")[0].setAttribute("checked","")
         }
     }
-    let main_perms = main_control_permissions()
+    let main_perms = await main_control_permissions()
     let data = await fetch(`https://lgextension.azurewebsites.net/get_user/`+id)
     if (data.status === 200){
        
@@ -121,12 +121,12 @@ export async function user_manager(id) {
         if (!json.permissions || json.permissions === ''){
                 //@ts-ignore
                 for (const [key, value] of Object.entries(main_perms)) {
-                    append_checks(key,value,String(database_perms.includes(value)));
+                    append_checks(value,key,String(database_perms.includes(value)));
                 }
               } else {
                 //@ts-ignore
                 for (const [key, value] of Object.entries(main_perms)) {
-                    append_checks(key,value,String(database_perms.includes(value)));
+                    append_checks(value,key,String(database_perms.includes(value)));
                     
                   }
         }

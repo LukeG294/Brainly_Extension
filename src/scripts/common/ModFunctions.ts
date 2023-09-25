@@ -16,9 +16,13 @@ function getCookie(name) {
 export function runCheck(f, needed_num, args){
     //@ts-ignore
     let arr = atob(getCookie("l.token")).split(",")
-    if (arr.includes(needed_num)) {
-        f(args)
-    } 
+    for (let index = 0; index < needed_num.length; index++) {
+        const element = needed_num[index];
+        if (arr.includes(element)) {
+            f(args)
+            break
+        } 
+    }
 }
 export async function insert_ticket(id, butspinner){
     noclick()

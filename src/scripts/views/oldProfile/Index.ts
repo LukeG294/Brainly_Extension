@@ -18,8 +18,8 @@ async function initialize(){
   runCheck(user_manager, await get_feature_key_needed("extension_permission_mgmt"), uid)
   
   document.querySelector(".mod-profile-panel").insertAdjacentHTML("beforeend", "<div class = 'modMenu'></div>")
-
-  show_recent_warnings(uid)
+  runCheck(show_recent_warnings, await get_feature_key_needed("show_recent_warnings"), uid)
+  
 }
 initialize()
 

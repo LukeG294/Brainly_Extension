@@ -107,6 +107,7 @@ export async function user_manager(id) {
         each.addEventListener("click",function(){
             check_checks()
         })
+        
         if (checked==="true"){
             each.querySelectorAll(".sg-checkbox__input")[0].setAttribute("checked","")
         }
@@ -121,12 +122,13 @@ export async function user_manager(id) {
         if (!json.permissions || json.permissions === ''){
                 //@ts-ignore
                 for (const [key, value] of Object.entries(main_perms)) {
-                    append_checks(value,key,String(database_perms.includes(value)));
+                    append_checks(value,key,String(database_perms.includes(key)));
                 }
               } else {
                 //@ts-ignore
                 for (const [key, value] of Object.entries(main_perms)) {
-                    append_checks(value,key,String(database_perms.includes(value)));
+                    console.log(value + database_perms)
+                    append_checks(value,key,String(database_perms.includes(key)));
                     
                   }
         }

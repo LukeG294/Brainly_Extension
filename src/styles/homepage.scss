@@ -22,6 +22,7 @@ div.brn-placeholder__animation{
     display: flex;
     flex-wrap: wrap;
     .search-user{
+      
       margin:4px;
       margin-bottom:0px!important;
       display: flex;
@@ -140,6 +141,26 @@ div.brn-placeholder__animation{
     }
   }
 }
+.search-user {
+  display: flex !important;
+  font-size: 15px !important;
+  padding: 5% !important;
+  zoom: 0.75 !important;
+}
+.udata {
+  img {
+    height: auto;
+    width: 100%;
+  }
+}
+.userSearch {
+  width: 90% !important;
+  margin-top: 5% !important;
+  margin-left: 5% !important;
+  margin-bottom: 10% !important;
+  
+}
+
 .brn-feed-item-wrapper{
   position:relative!important;
   .preview-button{

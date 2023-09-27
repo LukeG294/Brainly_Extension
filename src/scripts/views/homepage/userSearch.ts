@@ -2,23 +2,22 @@ import User from "scripts/common/User"
 import Components from "scripts/Items/Components"
 
 async function runSearch(){
-    document.querySelector(".sg-flex.sg-flex--column.js-above-feed-ask-question .content").innerHTML = '<div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--small"></div></div>'
-    document.querySelector(".content .spinner-container").classList.add("show")
+  
+   
     let result = await User.Search((<HTMLInputElement>document.querySelector(".userSearch")).value)
-    document.querySelector(".content .spinner-container").classList.remove("show")
+    
     let itemNum = result.length > 4 ? 4 : result.length;
+    document.querySelector(".content").innerHTML = ``
     for(let i = 0; i < itemNum; i++){
         document.querySelector(".content").insertAdjacentHTML("beforeend", userItem(result[i]))
     }
 }
 function UserSearchTool(){
-    document.querySelector('[data-testid="game_box_container"]').innerHTML = /*html*/`
+    document.querySelector('.brn-moderation-panel__list').insertAdjacentHTML("beforeend", /*html*/`
         <div class="sg-search">
             <input type="search" placeholder="Look for users..." class="sg-input sg-input--with-icon sg-search__input userSearch">
                 <button class="sg-search__icon user-search-but">
-                        <div class="sg-icon sg-icon--gray-secondary sg-icon--x16"><svg class="sg-icon__svg">
-                            <use xlink:href="#icon-search"></use>
-                          </svg></div>
+                        
                 </button>
         </div>
         <div class="content">
@@ -26,7 +25,7 @@ function UserSearchTool(){
                 <div class="sg-spinner sg-spinner--gray-900 sg-spinner--small"></div>
             </div>
         </div>
-    `
+    `)
     document.querySelector(".user-search-but").addEventListener("click",() => {
         runSearch()
     })
@@ -58,21 +57,13 @@ function userItem(props:{
                     ${props.rank ? `<div class="rank" style = "color: ${props.rank.color}">${props.rank.name}</div>`:``}
                 </div>
             </div>
-            <div class="friendopt">
-                ${
-                    Components.Button({
-                        size: "m",
-                        type: "transparent",
-                        icon: `friend${friendIcon}`,
-                        iconSize: "24"
-                    }).outerHTML
-                }
-            </div>
+           
         </a>
     `
     )
 }
 export default function userSearch(){
+
     var sheet = window.document.styleSheets[0];
     sheet.insertRule('.sg-flex.sg-flex--column.js-above-feed-ask-question > .sg-flex { display: none; }', sheet.cssRules.length);
     
@@ -81,4 +72,3 @@ export default function userSearch(){
     if(!target){ return setTimeout(userSearch, 10); }
     UserSearchTool()
 }
-userSearch()

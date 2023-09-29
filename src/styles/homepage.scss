@@ -72,6 +72,7 @@ div.brn-placeholder__animation{
     }
   }
 }
+
 .backdrop{
   position: fixed;
   height: 100vh;
@@ -141,6 +142,9 @@ div.brn-placeholder__animation{
     }
   }
 }
+.brn-moderation-panel__content{
+  border-radius:10px;
+}
 .search-user {
   display: flex !important;
   font-size: 15px !important;
@@ -154,11 +158,9 @@ div.brn-placeholder__animation{
   }
 }
 .userSearch {
-  width: 90% !important;
+  width: 80% !important;
   margin-top: 5% !important;
-  margin-left: 5% !important;
-  margin-bottom: 10% !important;
-  
+  margin-left: 2.8% !important;
 }
 
 .brn-feed-item-wrapper{

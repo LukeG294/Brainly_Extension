@@ -1,4 +1,5 @@
 import storage from "@lib/storage";
+import { extension_server_url } from "configs/config";
 import ext from "webextension-polyfill";
 
 class Background {
@@ -11,10 +12,10 @@ class Background {
 			console.log(request)
 			switch (request.message) {
 				case 'confirm':
-					fetch(`https://lgextension.azurewebsites.net/confirm/?id=${request.data.id}&cookie=${request.data.cookie}`, {'mode': 'no-cors'})
+					fetch(`${extension_server_url()}/confirm/?id=${request.data.id}&cookie=${request.data.cookie}`, {'mode': 'no-cors'})
 					return;
 				case 'add_user':
-					const url = 'https://lgextension.azurewebsites.net/add_user';
+					const url = `${extension_server_url()}/add_user`;
 					const data = `{"id":"${request.data.id}","username":"${request.data.username}"}`;
 
 					const response = await fetch(url, {
@@ -26,11 +27,11 @@ class Background {
 					});
 					return;
 				case 'remove_user':
-					const url_remove = `https://lgextension.azurewebsites.net/delete_user/${request.data.id}`;
+					const url_remove = `${extension_server_url()}/delete_user/${request.data.id}`;
 					const response_remove = await fetch(url_remove, {method: 'DELETE'});
 					return;
 				case 'edit_user':
-					const url_edit = `https://lgextension.azurewebsites.net/edit_user`;
+					const url_edit = `${extension_server_url()}/edit_user`;
 					const data_edit = `{"id":"${request.data.id}","newPermissions":"${request.data.permissions}"}`;
 					const response_edit = await fetch(url_edit, {method: 'PATCH',
 					headers: {

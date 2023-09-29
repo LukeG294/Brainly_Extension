@@ -3,7 +3,7 @@ import AdminPanel from "./homepage/Admin"
 import userSearch from "./homepage/userSearch"
 import { ModObserver } from "./homepage/Exports";
 import { insert_ticket, runCheck } from "../../scripts/common/ModFunctions";
-import { get_feature_key_needed, main_control_permissions } from "configs/config";
+import { get_feature_key_needed, main_control_permissions, check_version, check_for_message } from "configs/config";
 
 async function insert(){
     //let permissions =  await main_control_permissions()
@@ -18,6 +18,7 @@ async function insert(){
 }
 insert()
 userSearch()
+
 
 
   

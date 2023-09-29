@@ -1,3 +1,4 @@
+import { extension_server_url } from "configs/config";
 import Notify from "../../common/Notifications/Notify"
 function getCookie(cname) {
   let name = cname + "=";
@@ -27,7 +28,7 @@ async function getData(){
     let me = await fetch("https://brainly.com/api/28/api_users/me").then(data => data.json())
     let {id} = me.data.user
     
-    let data = await fetch(`https://lgextension.azurewebsites.net/get_user/`+id)
+    let data = await fetch(`${extension_server_url()}/get_user/`+id)
     if (data.status === 200){
       const json = await data.json();
       if (!json.permissions || json.permissions === ''){

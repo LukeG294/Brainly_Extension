@@ -1,6 +1,6 @@
 import Notify from "scripts/common/Notifications/Notify";
 export function extension_server_url(){
-    return 'https://vserver.lukeg294.repl.co'
+    return 'https://lgextension.azurewebsites.net/'
 }
 export function parseProfileLink(link: string){
     return link.split("/")[4].split("-")[1]
@@ -19,19 +19,37 @@ export function pageElementAll(selector: string){
 }
 export async function main_control_permissions(){
 
-    let permissions = await fetch(`https://lgextension.azurewebsites.net/configs/permission_keys`).then(data => data.json())
+    let permissions = await fetch(`${extension_server_url()}/configs/permission_keys`).then(data => data.json())
     return permissions
 }
 export async function get_feature_key_needed(feature){
-    let key = await fetch(`https://lgextension.azurewebsites.net/configs/feature_keys`).then(data => data.json())
+    let key = await fetch(`${extension_server_url()}/configs/feature_keys`).then(data => data.json())
     return key[feature]  
+}
+export async function check_for_message(){
+    let check_message = await fetch(`${extension_server_url()}/configs/shown_alert`).then(data => data.json())
+    if (check_message.on && !document.querySelector(".sg-flash__message")){
+        Notify.Flash(check_message.message,check_message.type)
+    } else {
+        Notify.Flash(check_message.message,check_message.type)
+        document.querySelector(".sg-flash__message").remove()
+    }
+   
 }
 export async function check_version(){
     var version = chrome.runtime.getManifest().version;
-    let accepted_versions = await fetch(`https://lgextension.azurewebsites.net/configs/accepted_versions`).then(data => data.json())
+    let accepted_versions = await fetch(`${extension_server_url()}/configs/accepted_versions`).then(data => data.json())
     if(!accepted_versions.versions.includes(version)){
-        Notify.Flash(`Hello! It seems like you're using a version of the extension that's no longer supported. Please visit chrome://extensions/ and click the refresh button to update to the latest version. Thank you!`,"error")
-        document.cookie = "l.token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        if (!document.querySelector(".sg-flash__message")){
+            Notify.Flash(`Hello! It seems like you're using a version of the extension that's no longer supported. Please visit chrome://extensions/ and click the refresh button to update to the latest version. Thank you!`,"error")
+            document.cookie = "l.token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        } else {
+            document.querySelector(".sg-flash__message").remove()
+            Notify.Flash(`Hello! It seems like you're using a version of the extension that's no longer supported. Please visit chrome://extensions/ and click the refresh button to update to the latest version. Thank you!`,"error")
+            document.cookie = "l.token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+        
     }
 }
+check_for_message()
 check_version()

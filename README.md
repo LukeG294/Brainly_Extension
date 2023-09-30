@@ -5,3 +5,4 @@ Luke Graham
 Thank you to the following for beta testing:
 
 - NoblePenguin
+- Semsee45

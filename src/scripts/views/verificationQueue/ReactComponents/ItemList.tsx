@@ -13,17 +13,17 @@ export function List({obj}: list){
             {
                 obj.map( item => (
                     <Item 
-                        key={item.data.id}
-                        content={item.data.content}
-                        thanks={item.data.settings.thanks}
-                        rating={item.data.settings.mark}
-                        created={item.data.settings.created}
-                        ansdata={item.data}
-                        answerer = {item.data.user}
-                        faunadbid = {item.ref["@ref"].id}
-                        requesterAv = {item.data.requesterAv}
-                        requesterName = {item.data.requesterName}
-                        requesterId = {item.data.requesterId}
+                        key={item.id}
+                        content={item.content}
+                        thanks={item.settings.thanks}
+                        rating={item.settings.mark}
+                        created={item.settings.created}
+                        ansdata={item}
+                        answerer = {item.user}
+                        faunadbid = {"d"}
+                        requesterAv = {item.requesterAv}
+                        requesterName = {item.requesterName}
+                        requesterId = {item.requesterId}
                     />
                 ))
             }

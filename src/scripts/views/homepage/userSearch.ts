@@ -68,7 +68,7 @@ export default function userSearch(){
     sheet.insertRule('.sg-flex.sg-flex--column.js-above-feed-ask-question > .sg-flex { display: none; }', sheet.cssRules.length);
     
     let target = document.querySelector(".sg-layout__container");
-    console.log(target)
+   
     if(!target){ return setTimeout(userSearch, 10); }
     UserSearchTool()
 }

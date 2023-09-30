@@ -55,6 +55,16 @@
         }
     }
 }
+.is-requested{
+    padding:0px 10px!important;
+    background:transparent!important;
+    .sg-button__icon{
+        margin-right:0px!important;
+        svg{
+            fill:black!important;
+        }
+    }
+}
 .requested{
     padding:0px 10px!important;
     background:transparent!important;

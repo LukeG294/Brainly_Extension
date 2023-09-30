@@ -1,6 +1,6 @@
 import React, {useEffect} from "react"
 import { Flex, Spinner, Button , Icon, Dropdown} from "brainly-style-guide"
-import {loadNextPage, loadPrevPage, subjectFilterHandler, verificationSwitcherHandler} from "./VerificationQueueFunctions"
+import {verificationSwitcherHandler} from "./VerificationQueueFunctions"
 import {List} from "./ReactComponents/ItemList"
 import Head from "./ReactComponents/Header"
 import { extension_server_url } from "configs/config";
@@ -17,34 +17,11 @@ export default function App() {
     useEffect(() => {
         //fetch items from server, runs on page render
         const fetchItems = async () => {
-            let items = await fetch(`${extension_server_url()}/get_next_page/0`).then(data => data.json());
-            var requestOptions = {
-                method: 'POST',
-                redirect: 'follow'
-              };
-            //@ts-expect-error
-            fetch("https://vserver.lukeg294.repl.co/get-all-verified/token", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
+            let items = await fetch(`${extension_server_url()}/verification/queue`).then(data => data.json());
             setSpin('')
             if(items.length === 0){document.querySelector(".empty").classList.add("show")}
             setItems(items);
             let d_reference = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/api_config/desktop_view`, {method: "GET"}).then(data => data.json());
-            let subArray = []
-            let subjects = d_reference.data.subjects
-            subArray.push({'label':`All`, 'count':100, 'url':'subject-all'})
-            subjects.forEach(async subject => {
-                let subjectCount = await fetch(`${extension_server_url()}/get_by_subject/${subject.icon}`, {method: "GET"}).then(data => data.json());
-                if (subjectCount > 0){
-                    subArray.push({'label':`${subject.name} (${subjectCount})`, 'count':subjectCount, 'url':'subject-'+subject.icon})
-                }
-            })
-            
-            subArray = subArray.sort((a, b) => a.count < b.count ? 1 : -1)
-            setSubjects(subArray)
-            
-            
         }
         fetchItems();
     }, [])
@@ -53,7 +30,7 @@ export default function App() {
             <Head setItems = {setItems} setSubjects = {setSubjects}/>
             <div className="content">
                 <div className="menu">
-                    <Button type='solid' className={"outerButton"} onClick={() => subjectFilterHandler(setItems)}> <Dropdown name={"Subject"} links={subArr}></Dropdown></Button>
+                    
                     <Button type='solid' className={"outerButtonSwitcher"} onClick={() => verificationSwitcherHandler(setItems)}> <Dropdown name={"Verification"} links={[{'label':'Verification','url':'repl-this-verify'},{'label':'Unverification','url':'repl-this-unverify'}]}></Dropdown></Button>
                 </div>
                 <Flex className="container">

@@ -1,5 +1,5 @@
 export default new class Notify{
-    Dialog(heading:string, content:string, confirmfn, showConfirm:boolean){
+    Dialog(heading:string, content:string, confirmfn, showConfirm:boolean, args?, removeargs?){
         if (showConfirm === true){
           document.querySelector("body").insertAdjacentHTML("afterbegin", /*html*/`
           <div class="js-dialog sg-dialog__overlay sg-dialog__overlay--scroll sg-dialog__overlay--open" style="z-index: 999;">
@@ -23,7 +23,8 @@ export default new class Notify{
         </div>`)
         document.querySelector(".js-dialog .returnfun").addEventListener("click", () => {
           document.querySelector(".js-dialog").remove()
-          confirmfn()
+          confirmfn(args)
+          removeargs.remove()
         });
         } else {
           document.querySelector("body").insertAdjacentHTML("afterbegin", /*html*/`

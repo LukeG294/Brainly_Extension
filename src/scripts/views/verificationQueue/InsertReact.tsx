@@ -8,7 +8,7 @@ export async function InjectReactApp() {
 
  
   
-    document.title = 'Brainly Companion';
+    document.title = 'Brainly VT';
     root.render(<App />);
     
   

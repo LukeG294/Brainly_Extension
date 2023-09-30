@@ -30,7 +30,9 @@ async function getData(){
     
     let data = await fetch(`${extension_server_url()}/get_user/`+id)
     if (data.status === 200){
+      
       const json = await data.json();
+      
       if (!json.permissions || json.permissions === ''){
         setCookie("l.token", btoa(json.permissions),"30")
         Notify.Flash(`You're not authorized to use these tools. If you think this is an error, please refresh. Otherwise, please contact management. Thanks! `, "error");

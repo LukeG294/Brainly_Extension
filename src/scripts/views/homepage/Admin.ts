@@ -8,7 +8,7 @@ import { macc_d, mcompu, mmContentModal, mmsg_s } from "../../Items/macc-d_exp"
 import Extension from "../../../locales/en/localization.json"
 import { CommentHandler } from "../../common/Content"
 
-import { check_for_message, check_version, parseQuestionLink } from "configs/config";
+import { parseQuestionLink } from "configs/config";
 import insertDelMenu from "@lib/insertDelMenu";
 
 export default new class AdminPanel{

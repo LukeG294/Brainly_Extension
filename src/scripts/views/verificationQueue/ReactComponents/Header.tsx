@@ -1,26 +1,24 @@
 import React from 'react';
 import { Button , Icon} from "brainly-style-guide"
-import {getQueueInfo, loadNextPage, loadPrevPage} from "../VerificationQueueFunctions"
+
 
 export default function Head({setItems, setSubjects}){
     const nextPage = async () =>{
         //fetch next page of items from server, runs on next page button click
         document.querySelector(".spinner-container").classList.add("show");
-        let newdata = await loadNextPage();
+      
         document.querySelector(".spinner-container").classList.remove("show");
         
-        newdata.end?{}:setItems(newdata)
+       
         
     }
     const prevPage = async () => {
         //fetch previous page of items from server, runs on previous page button click
         document.querySelector(".spinner-container").classList.add("show");
-        let newdata = await loadPrevPage();
+        
         document.querySelector(".spinner-container").classList.remove("show");
-        console.log(newdata)
-        if (!newdata.end){
-            setItems(newdata);
-        }
+      
+        
     }
     return(
         <div data-testid="header">

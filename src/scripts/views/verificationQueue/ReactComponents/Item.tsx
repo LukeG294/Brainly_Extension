@@ -72,7 +72,7 @@ export default function Item({ content, thanks, rating, created, ansdata, faunad
                         <Spinner size={"xsmall"} />
                         <Button
                         
-                        onClick={async () =>  await removeAnswer(faunadbid, document.querySelector(`[ datatype = '${ansdata.settings.id}'] .ignoreRequest`))}
+                        onClick={async () =>  await removeAnswer(ansdata.settings.id, document.querySelector(`[ datatype = '${ansdata.settings.id}'] .ignoreRequest`))}
                         icon={<Icon color="adaptive" size={24} type="close"/>}
                         iconOnly
                         size="m"
@@ -83,7 +83,7 @@ export default function Item({ content, thanks, rating, created, ansdata, faunad
                     <div className="approveRequest"> 
                         <Spinner size={"xsmall"} />
                         <Button
-                        onClick={async () =>  await approveAnswer(faunadbid, ansdata.answerDBid, document.querySelector(`[ datatype = '${ansdata.settings.id}'] .approveRequest`))}
+                        onClick={async () =>  await approveAnswer(ansdata.settings.id, ansdata.answerDBid, document.querySelector(`[ datatype = '${ansdata.settings.id}'] .approveRequest`))}
                         icon={<Icon color="adaptive" size={24} type="check"/>}
                         iconOnly
                         size="m"

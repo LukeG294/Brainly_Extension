@@ -118,6 +118,42 @@ export async function newTickets() {
       }
   });
 }
+export async function withdrawReport(id){
+  chrome.runtime.sendMessage({ message:"cancel_verify", data: {"id":id}}, function () {});
+}
+export function cancel_html(){
+  return `<div class = "sg-flex sg-flex--margin-left-xxs">
+  <button class="cancel-request queueButtons sg-button sg-button--m sg-button--solid-mint">
+  <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
+    <span class="sg-button__icon sg-button__icon--m">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">filter filled</text>
+          <use xlink:href="#icon-counter" aria-hidden="true"></use>
+        </svg></div>
+  </button>
+  </div>`
+}
+export function already_requested_html(){
+  return `<div class = "sg-flex sg-flex--margin-left-xxs">
+  <button class="is-requested queueButtons sg-button sg-button--m sg-button--solid-mint">
+  <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
+    <span class="sg-button__icon sg-button__icon--m">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">filter filled</text>
+          <use xlink:href="#icon-counter" aria-hidden="true"></use>
+        </svg></div>
+  </button>
+  </div>`
+}
+export function to_request_html(){
+  return ` <div class = "sg-flex sg-flex--margin-left-xxs">
+  <button class="request-verification queueButtons sg-button sg-button--m sg-button--solid-mint">
+  <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
+    <span class="sg-button__icon sg-button__icon--m">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">filter filled</text>
+          <use xlink:href="#icon-check" aria-hidden="true"></use>
+        </svg></div>
+  </button>
+  </div>`
+}
 export async function requestApproval() {
   let responsesData = JSON.parse(document.querySelector("[data-testid='question_box']").getAttribute("data-z")).responses
   let d_reference = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/api_config/desktop_view`, {
@@ -126,37 +162,18 @@ export async function requestApproval() {
   let areaToAppend = document.querySelectorAll('[data-testid="options_list"]')
   let answers = document.querySelectorAll("div[data-testid = 'answer_box_options_list']")
   let responses = JSON.parse(document.querySelector("[data-testid='question_box']").getAttribute("data-z")).responses
+  
   for (let i = 0; i < answers.length; i++) {
-      if (true) {
+     if (true) {
           let answer = responses[i].id
-          let resp = await fetch(`${extension_server_url()}/get_answer_by_id/` + answer).then(response => response.json())
-          if (!resp.data) {
-            if (answers.length > 1 && !document.querySelectorAll(".request-verification")[i]){
-              areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ `
-              <div class = "sg-flex sg-flex--margin-left-xxs">
-              <button class="request-verification queueButtons sg-button sg-button--m sg-button--solid-mint">
-              <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
-                <span class="sg-button__icon sg-button__icon--m">
-                  <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">filter filled</text>
-                      <use xlink:href="#icon-check" aria-hidden="true"></use>
-                    </svg></div>
-              </button>
-              </div>
-              `)
-            } else if (!document.querySelectorAll(".queueButtons")[i+1]) {
-              areaToAppend[i].insertAdjacentHTML("afterbegin", /*html*/ `
-              <div class = "sg-flex sg-flex--margin-left-xxs">
-              <button class="request-verification queueButtons sg-button sg-button--m sg-button--solid-mint">
-              <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
-                <span class="sg-button__icon sg-button__icon--m">
-                  <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">filter filled</text>
-                      <use xlink:href="#icon-check" aria-hidden="true"></use>
-                    </svg></div>
-              </button>
-              </div>
-              `)
-            }
-             
+          let resp = await fetch(`${extension_server_url()}/verification/get_answer/` + answer).then(data => data.json());
+          //@ts-ignore
+          if (!resp.content) {
+              if (answers.length === 1) {
+                areaToAppend[i].insertAdjacentHTML("afterbegin", /*html*/ to_request_html())
+              } else {
+                 areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ to_request_html())
+              }
               let element = document.querySelectorAll(".queueButtons")[i]
               if (!element.classList.contains('inserted')) {
                 element.addEventListener("click", async function() {
@@ -170,91 +187,41 @@ export async function requestApproval() {
                   let requesterAv = JSON.parse(pageElement("meta[name='user_data']").content).avatar
                       //@ts-expect-error
                   let requesterName = JSON.parse(pageElement("meta[name='user_data']").content).nick
-                  var myHeaders = new Headers();
-                  myHeaders.append("Content-Type", "application/json");
                   let user = await User.Data(thisResponse.userId)
-                  var raw = JSON.stringify({
-                      "settings": thisResponse,
-                      "answerDBid": databaseId,
-                      "content": answerPreview,
-                      "qid": qinfo.id,
-                      "subject": d_reference.data.subjects.find(({
-                          id
-                      }) => id === qinfo.subject_id).icon,
-                      "user": user,
-                      "requesterId": requesterID,
-                      "requesterName": requesterName,
-                      "requesterAv": requesterAv
-                  });
-                  var requestOptions = {
-                      method: 'POST',
-                      headers: myHeaders,
-                      body: raw
-          
-                  };
-          
-                  let serverResponse = await fetch(`${extension_server_url()}/request-verify-add`, requestOptions).then(response => response.json())
+                  chrome.runtime.sendMessage({ message:"add_verify", data: {id:answer, object:{"answerDBid": databaseId, "settings":thisResponse, content: answerPreview, "qid": qinfo.id, "subject":d_reference.data.subjects.find(({id}) => id === qinfo.subject_id).icon, "user": user, "requesterId": requesterID, "requesterName": requesterName,"requesterAv": requesterAv}}}, function () {});
                   //@ts-ignore
-                  if (!serverResponse.message) {
-                      Notify.Flash("The answer has been added to the verification queue.", "success")
-                      pageElement(".request-verification .spinner-container").classList.remove("show");
-                      pageElement(".request-verification").remove();
-                    
-          
-                  } else {
-                      Notify.Flash(Extension.common.verificationQueueError + serverResponse.message, "error")
-                  }
-                    element.classList.add('inserted')
+                  Notify.Flash("The answer has been requested to be verified.", "success")
+                  element.classList.remove("show");
+                  element.remove();
+                  element.classList.add('inserted')
                 })
             }
             //@ts-ignore
-          } else if (resp.data.requesterId === String(JSON.parse(document.querySelector("meta[name='user_data']").content).id)) {
-            
-            let answer = responses[i].id
-            let resp = await fetch(`${extension_server_url()}/get_answer_by_id/` + answer).then(response => response.json())
-            console.log(areaToAppend)
-            if (answers.length > 1){
-              areaToAppend[i + 1].insertAdjacentHTML("afterbegin", /*html*/ `
-              <div class = "sg-flex sg-flex--margin-left-xxs">
-              <button class="cancel-request queueButtons sg-button sg-button--m sg-button--solid-mint" id=${resp["ref"]["@ref"]["id"]}>
-              <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
-                <span class="sg-button__icon sg-button__icon--m">
-                  <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">filter filled</text>
-                      <use xlink:href="#icon-block" aria-hidden="true"></use>
-                    </svg></div>
-              </button>
-              </div>
-              `)
-            } else if (!document.querySelectorAll(".queueButtons")[i]) {
-              
-              areaToAppend[i].insertAdjacentHTML("afterbegin", /*html*/ `
-              <div class = "sg-flex sg-flex--margin-left-xxs">
-              <button class="cancel-request queueButtons sg-button sg-button--m sg-button--solid-mint" id=${resp["ref"]["@ref"]["id"]}>
-              <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
-                <span class="sg-button__icon sg-button__icon--m">
-                  <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">filter filled</text>
-                      <use xlink:href="#icon-block" aria-hidden="true"></use>
-                    </svg></div>
-              </button>
-              </div>
-              `)
+          } else if (String(resp.requesterId) === String(JSON.parse(document.querySelector("meta[name='user_data']").content).id)) {
+            //@ts-ignore
+            if (answers.length === 1) {
+              areaToAppend[i].insertAdjacentHTML("afterbegin", /*html*/ cancel_html())
+            } else {
+              areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ cancel_html())
             }
-            
-          
-           document.querySelectorAll(".queueButtons")[i].addEventListener("click", async function(){
-          
-            await removeAnswer(this.id, 'verification')
-            this.remove();
-            
-           })
-                 
-
-            
-
+            document.querySelectorAll(".cancel-request")[i].addEventListener("click",function(){
+              Notify.Dialog("Under Review", `This item was requested by you and is in the queue. Withdraw this request by clicking proceed.`, withdrawReport, true, responsesData[i].id, this)
+            });
+           
           } else {
-              //insert clock icon
+            
+            //@ts-ignore
+            if (answers.length === 1) {
+              areaToAppend[i].insertAdjacentHTML("afterbegin", /*html*/ already_requested_html())
+            } else {
+              areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ already_requested_html())
+            }
+            document.querySelector(".is-requested").addEventListener("click",function(){
+              Notify.Dialog("Under Review", `This item was requested by ${resp.requesterName} and is in the queue.`, false, false)
+            });
 
           }
+          
 
 
       } else {

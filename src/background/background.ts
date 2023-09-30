@@ -1,6 +1,9 @@
 import storage from "@lib/storage";
+
 import { extension_server_url } from "configs/config";
 import ext from "webextension-polyfill";
+import {
+	Answer} from "../scripts/common/Content"
 
 class Background {
 	constructor() {
@@ -16,7 +19,13 @@ class Background {
 					return;
 				case 'add_user':
 					const url = `${extension_server_url()}/add_user`;
-					const data = `{"id":"${request.data.id}","username":"${request.data.username}"}`;
+					const data = `{
+						"id":"${request.data.id}",
+						"username":"${request.data.username}",
+						"message":{
+						   ${request.data.message}
+						}
+					 }`;
 
 					const response = await fetch(url, {
 						method: 'POST',
@@ -38,6 +47,21 @@ class Background {
 						'Content-Type': 'application/json',
 					},
 					body: data_edit});
+					return;
+				case 'add_verify':
+					const add = `${extension_server_url()}/verification/add_request/${request.data.id}`;
+					
+					const responseAdd = await fetch(add, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(request.data.object)
+					});
+					return;
+				case 'cancel_verify':
+					const verify_remove = `${extension_server_url()}/verification/cancel/${request.data.id}`;
+					await fetch(verify_remove, {method: 'DELETE'});
 					return;
 			}
 			

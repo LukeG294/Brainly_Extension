@@ -168,11 +168,15 @@ export async function requestApproval() {
           let answer = responses[i].id
           let resp = await fetch(`${extension_server_url()}/verification/get_answer/` + answer).then(data => data.json());
           //@ts-ignore
-          if (!resp.content) {
-              if (answers.length === 1) {
+          if (!resp.content) {  
+              let beingAnswered = document.querySelector(".brn-qpage-next-answer-box")
+             
+              if (answers.length === 1 && !beingAnswered) {
                 areaToAppend[i].insertAdjacentHTML("afterbegin", /*html*/ to_request_html())
+              } else if (beingAnswered) {
+               areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ to_request_html())
               } else {
-                 areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ to_request_html())
+                areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ to_request_html())
               }
               let element = document.querySelectorAll(".queueButtons")[i]
               if (!element.classList.contains('inserted')) {
@@ -198,9 +202,12 @@ export async function requestApproval() {
             }
             //@ts-ignore
           } else if (String(resp.requesterId) === String(JSON.parse(document.querySelector("meta[name='user_data']").content).id)) {
+            let beingAnswered = document.querySelector(".brn-qpage-next-answer-box")
             //@ts-ignore
-            if (answers.length === 1) {
+            if (answers.length === 1 && !beingAnswered) {
               areaToAppend[i].insertAdjacentHTML("afterbegin", /*html*/ cancel_html())
+            } else if (beingAnswered) {
+              areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ cancel_html())
             } else {
               areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ cancel_html())
             }
@@ -209,10 +216,12 @@ export async function requestApproval() {
             });
            
           } else {
-            
+            let beingAnswered = document.querySelector(".brn-qpage-next-answer-box")
             //@ts-ignore
-            if (answers.length === 1) {
+            if (answers.length === 1 && !beingAnswered) {
               areaToAppend[i].insertAdjacentHTML("afterbegin", /*html*/ already_requested_html())
+            } else if (beingAnswered){
+              areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ already_requested_html())
             } else {
               areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ already_requested_html())
             }

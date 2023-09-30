@@ -73,11 +73,11 @@ export async function verificationSwitcherHandler(fn){
   verifyElement.removeAttribute("href")
   verifyElement.addEventListener("click", async function(){
     //@ts-expect-error
-    document.querySelectorAll('.sg-dropdown')[1].children[0].innerText = verifyElement.innerText
+    document.querySelectorAll('.sg-dropdown')[0].children[0].innerText = verifyElement.innerText
 
     let verStat = new Label("verfetch")
     verStat.Show("Fetching verification requests", "blue", true, false);
-    let toRender = await fetch(`${extension_server_url()}/get_next_page/0`).then(response => response.json())
+    let toRender = await fetch(`${extension_server_url()}/queue/0`).then(response => response.json())
     verStat.Close();
 
     fn(toRender);
@@ -99,7 +99,7 @@ export async function verificationSwitcherHandler(fn){
   unverifyElement.addEventListener("click", async function(){
     
     //@ts-expect-error
-    document.querySelectorAll('.sg-dropdown')[1].children[0].innerText = unverifyElement.innerText
+    document.querySelectorAll('.sg-dropdown')[0].children[0].innerText = unverifyElement.innerText
 
     let unStat = new Label("unfetch");
     unStat.Show("Fetching unverification requests", "blue", true, false);
@@ -121,14 +121,66 @@ export async function verificationSwitcherHandler(fn){
   })
   unverifyElement.removeAttribute("href") 
     
-  
-  
-    
-  
-  
-  
-  
- 
+}
+
+export async function loadNextPage(){
+  //let count = await fetch("https://lgextension.azurewebsites.net/verification/count").then(response => response.json())
+   
+  //@ts-expect-error
+document.querySelector(".pagination").style.opacity = "0.5"
+//@ts-expect-error
+let currentPageDisplay = parseInt(document.querySelector(".literalNum").innerText)
+if (currentPageDisplay >= 0){
+    let nextData = await fetch(`${extension_server_url()}/verification/queue/`+(currentPageDisplay))
+    .then(response => response.json())
+    //@ts-ignore
+   
+    if (nextData[0]){
+      //@ts-ignore
+      document.querySelector(".pagenum").innerHTML = `<div class='literalNum'>${parseInt(currentPageDisplay) + 1}</div>`
+      
+      
+    } else {
+      //@ts-ignore
+      document.querySelector(".pagination").style.opacity = "1"
+      return false
+    }
+     //@ts-ignore
+   
+    document.querySelector(".pagination").style.opacity = "1"
+    return nextData
+}
+//@ts-expect-error
+document.querySelector(".pagination").style.opacity = "1"
+}
+
+export async function loadPrevPage(){
+  //let count = await fetch("https://lgextension.azurewebsites.net/verification/count").then(response => response.json())
+//@ts-expect-error
+document.querySelector(".pagination").style.opacity = "0.5"
+//@ts-expect-error
+let currentPageDisplay = parseInt(document.querySelector(".literalNum").innerText)
+if (currentPageDisplay > 1){
+    let prevData = await fetch(`${extension_server_url()}/verification/queue/`+(currentPageDisplay-2))
+    .then(response => response.json())
+    if (prevData[0]){
+      //@ts-ignore
+      document.querySelector(".pagenum").innerHTML = `<div class='literalNum'>${parseInt(currentPageDisplay) - 1}</div>`
+      //@ts-ignore
+      
+    } else {
+      return false
+    }
+    //@ts-ignore
+    document.querySelector(".pagenum").innerHTML = `<div class='literalNum'> ${parseInt(currentPageDisplay) - 1} </div>`
+    //@ts-ignore
+    document.querySelector(".pagination").style.opacity = "1"
+    return prevData
+}
+//@ts-expect-error
+document.querySelector(".pagination").style.opacity = "1"
+
+
 }
 export function add_verification_record(RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink, RejectApprove, AnswerID){
   var myHeaders = new Headers();

@@ -17,7 +17,7 @@ export default function App() {
     useEffect(() => {
         //fetch items from server, runs on page render
         const fetchItems = async () => {
-            let items = await fetch(`${extension_server_url()}/verification/queue`).then(data => data.json());
+            let items = await fetch(`${extension_server_url()}/verification/queue/0`).then(data => data.json());
             setSpin('')
             if(items.length === 0){document.querySelector(".empty").classList.add("show")}
             setItems(items);

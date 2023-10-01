@@ -127,17 +127,30 @@
       width:16px!important;
     }
     &.mass-msg{
-      border-color:#687b86!important;
+      border-color:#4fb3f6!important;
       >div{
-        color:#687b86!important;
+        color:#4fb3f6!important;
       }
     }
     &.mass-accdel{
+      border-color: #687b8c!important;
+      >div{
+        color: #687b8c!important;
+      }
+    }
+    &.reported-comments-deleter{
+      border-color: #6d83f3!important;
+      >div{
+        color: #6d83f3!important;
+      }
+    }
+    &.mm-content{
       border-color: #ff7968!important;
       >div{
         color: #ff7968!important;
       }
     }
+    
   }
 }
 #moderate-functions-panel .text{

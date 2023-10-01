@@ -11,7 +11,9 @@ async function insert(){
     
     runCheck(md_content,  key["admin_content_deleter"])
     runCheck(reportedCommentsDeleter,  key["reported_comments_deleter"])
+    runCheck(AdminPanel.Accdel,  key["mass_account_deleter"])
     runCheck(AdminPanel.MassMsg,  key["mass_messager"])
+    
     runCheck(ModObserver,  key["homepage_tickets"])
     runCheck(verification_queue,  key["verification_queue"])
    

@@ -122,11 +122,12 @@ export function mass_msg(){
 
 
 export function md_content(){
-    document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
-    <li class="sg-menu-list__element mm-content">   
-        <a class = "sg-menu-list__link">${Extension.titles.massManageContent}</a>
-    </li>
-    `)
+    document.querySelector(".user-mgmt").insertAdjacentHTML("afterbegin", /*html*/`
+            <button class = "mm-content panbut">
+                <div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-answer"></use></svg></div>
+            </button>
+        `);
+  
 
     document.querySelector(".mm-content").addEventListener("click", function(){
         document.querySelector("body").insertAdjacentHTML("afterbegin", mmContentModal());
@@ -153,11 +154,12 @@ export function verification_queue(){
     `)
 }
 export function reportedCommentsDeleter(){
-    document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
-    <li class="sg-menu-list__element reported-comments-deleter">   
-        <a class = "sg-menu-list__link">${Extension.titles.reportedCommentsDeleter}</a>
-    </li>
-    `)
+    document.querySelector(".user-mgmt").insertAdjacentHTML("afterbegin", /*html*/`
+            <button class = "reported-comments-deleter panbut">
+                <div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-comment"></use></svg></div>
+            </button>
+        `);
+   
 
     document.querySelector(".reported-comments-deleter").addEventListener("click", function(){
        async function removeComments(){

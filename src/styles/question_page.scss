@@ -45,6 +45,30 @@
         }
     }
 }
+.sg-search{
+    .sg-search__icon{
+      svg{
+        color: #687b86!important;
+      }
+    }
+  }
+.search-user {
+    display: flex !important;
+    font-size: 15px !important;
+    padding: 5% !important;
+    zoom: 0.75 !important;
+  }
+  .udata {
+    img {
+      height: auto;
+      width: 100%;
+    }
+  }
+  .userSearch {
+    width: 80% !important;
+    margin-top: 5% !important;
+    margin-left: 2.8% !important;
+  }
 .cancel-request, .cancel-request-unverify{
     padding:0px 10px!important;
     background:transparent!important;

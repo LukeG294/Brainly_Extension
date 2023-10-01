@@ -150,7 +150,7 @@ export function md_content(){
 export function verification_queue(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
         <li class="sg-menu-list__element verification-queue">   
-            <a class = "sg-menu-list__link" href = "https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/companion/verification">${Extension.titles.verificationQueue}</a>
+            <a class = "sg-menu-list__link" href = "https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/extension/verification">${Extension.titles.verificationQueue}</a>
         </li>
     `)
 }

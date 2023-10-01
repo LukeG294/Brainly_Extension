@@ -1,7 +1,7 @@
 
 
 import { extension_server_url, main_control_permissions } from "configs/config";
-import {show_recent_warnings, user_manager} from "./RecentWarnings"
+import {approveAll, rateAllFive, show_recent_warnings, user_manager} from "./RecentWarnings"
 import {QuestionCount, CommentCount, AnswerLink} from "./UserBio"
 import { runCheck } from "../../../scripts/common/ModFunctions";
 
@@ -19,6 +19,8 @@ async function initialize(){
   
   document.querySelector(".mod-profile-panel").insertAdjacentHTML("beforeend", "<div class = 'modMenu'></div>")
   runCheck(show_recent_warnings, key["show_recent_warnings"], uid)
+  runCheck(approveAll, key["admin_approve_all"])
+  runCheck(rateAllFive, key["rate_all_answers_five_stars"])
   
 }
 initialize()

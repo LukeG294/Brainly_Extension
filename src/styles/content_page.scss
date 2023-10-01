@@ -178,6 +178,44 @@ a[style = "color: #3366cc;"]{
     }
   }
 }
+.mapproveAll{
+  background: #9ce8c2 !important;
+  color: black !important;
+  padding: 22px !important;
+  margin: 10px;
+  span {
+    margin-right: 5% !important;
+  }
+  .sg-spinner-container__overlay{
+    display:none;
+  }
+  &.shower{
+    .sg-spinner-container__overlay{
+      z-index:100;
+        display: flex;
+        background: rgba(255,255,255,0.5);
+    }
+  }
+}
+.mratefive{
+  background: #fedd8e !important;
+  color: black !important;
+  padding: 22px !important;
+  margin: 10px;
+  span {
+    margin-right: 5% !important;
+  }
+  .sg-spinner-container__overlay{
+    display:none;
+  }
+  &.shower{
+    .sg-spinner-container__overlay{
+      z-index:100;
+        display: flex;
+        background: rgba(255,255,255,0.5);
+    }
+  }
+}
 .modButtons{
   margin-right:8px;
   margin-bottom:8px;

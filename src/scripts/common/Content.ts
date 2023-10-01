@@ -13,6 +13,11 @@ export class Answer{
             "model_id": id
           });
     }
+    async Rate(id:string){
+        await BrainlyAPI.Legacy(`POST`, `api_responses/vote/${id}`, {
+          "data":{"value":5}
+        });
+    }
     async Unapprove(id:string){
         let x = await fetch("https://brainly.com/api/28/api_content_quality/unconfirm", {
             method: "POST",

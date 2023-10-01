@@ -4,6 +4,8 @@ import { main_control_permissions } from "configs/config";
 import Form from "scripts/Items/Form";
 import Notify from "../../common/Notifications/Notify";
 import Label from "../../common/Notifications/Status"
+import allPages from "../contentPage/allPages"
+import { Answer } from "../../common/Content";
 
 let warn_area = /*html*/`
 <div class="warnbox">
@@ -218,5 +220,73 @@ export async function show_recent_warnings(uid){
             })
         }
     }
+    
+}
+export async function approveAll() {
+   
+    let approve_all = document.createElement("div")
+    approve_all.innerHTML = `<div class="approve_all">
+    <a>Approve Answers<a> </div>`
+    document.querySelector(".pw").appendChild(approve_all)
+   
+    approve_all.addEventListener("click",function(){
+        let prompted = confirm("Approve all answers?")
+        if (prompted){
+            allPages(
+            "Approving all answers",
+            "responses",
+            async (resp) => {
+                let userId =  window.location.href.replace("https://brainly.com/profile/", "").split("-")[1];
+                let response = resp.data.responses.find(res => String(res.user_id) === String(userId));
+                if (!response.approved.approver) {
+                let ans = new Answer();
+                const delay = ms => new Promise(res => setTimeout(res, ms));
+                await delay(600)
+                ans.Approve(response.id);
+                
+                }
+            }
+            )
+            
+        }
+      
+       
+    })
+    
+      
+    
+  }
+
+export async function rateAllFive() {
+    let rate_all = document.createElement("div")
+    rate_all.innerHTML = `<div class="approve_all">
+    <a>Rate 5 Stars<a> </div>`
+    document.querySelector(".pw").appendChild(rate_all)
+   
+    rate_all.addEventListener("click",function(){
+        let prompted = confirm("Rate all answers 5 stars?")
+        if (prompted){
+            allPages(
+                "Rating all answers",
+                "responses",
+                async (resp) => {
+                    let userId = window.location.href.replace("https://brainly.com/profile/", "").split("-")[1];
+                    let response = resp.data.responses.find(res => String(res.user_id) === String(userId));
+                    
+                    let ans = new Answer();
+                    const delay = ms => new Promise(res => setTimeout(res, ms));
+                    await delay(600)
+                    ans.Rate(response.id);
+                    
+                    
+                }
+                )
+        }
+           
+        
+        
+       
+       
+    })
     
 }

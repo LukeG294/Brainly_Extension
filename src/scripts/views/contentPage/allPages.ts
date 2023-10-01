@@ -6,9 +6,10 @@ export default async function allPages(
     itemFn: (resp) => void
 ){
     let stat = new Status("fetch");
-    let id = window.location.href.replace("https://brainly.com/users/user_content/", "").split("/")[0];
-    let pagenum = document.querySelector("#content-old > div:nth-child(3) > p").children.length-2;
-    
+    let id = window.location.href.replace("https://brainly.com/profile/", "").split("-")[1];
+    //@ts-ignore
+    let pagenum =  Math.ceil(parseInt(document.querySelectorAll(".fright")[2].querySelector('a').innerText)/25)
+   
     stat.Show(message+"...", "indigo", true)
     for(let p=1; p<pagenum; p++){
         let content = await fetch(`https://brainly.com/users/user_content/${id}/${type}/${p}/0`).then(data => data.text())

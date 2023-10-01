@@ -26,10 +26,9 @@ export default class Panel{
             runCheck(ModFn.afc, key["selective_answer_AFC"], this.buttonArea)
             runCheck(ModFn.unverifyAnswers, key["selective_answer_unverify"], this.buttonArea)
             
-        
             //ModFn.find_reported_content(this.userId, "responses", this.buttonArea);
         
-       // ModFn.approveAll(this.buttonArea);
+           
     }
     async Ques(){
         let key = await fetch(`${extension_server_url()}/configs/feature_keys`).then(data => data.json())

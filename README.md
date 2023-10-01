@@ -1,8 +1,5 @@
-# Welcome to the all new Brainly Extension
+#  Brainly Extension
 
-Luke Graham
+**This project is not created by Brainly.com**
 
-Thank you to the following for beta testing:
 
-- NoblePenguin
-- Semsee45

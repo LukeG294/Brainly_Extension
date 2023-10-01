@@ -1,6 +1,6 @@
 {
   "name": "Brainly Extension",
-  "description": "Permission-based moderation tools that allow for organization and streamlined moderation. Created by Luke Graham.",
+  "description": "Permission-based moderation tools that allow for organization and streamlined moderation.",
   "manifest_version": 3,
   "version":"1.0.0",
   "icons": {
@@ -33,19 +33,19 @@
       "css": ["content-scripts/css/old_profile.css"]
     },
     {
-      "matches": ["*://brainly.com/companion/verification/*"],
+      "matches": ["*://brainly.com/extension/verification/*"],
       "js": ["content-scripts/js/verificationQueue.js"],
       "css": ["content-scripts/css/verification_queue.css"],
       "run_at": "document_start"
     },
     {
       "matches": ["*://brainly.com/*"],
-      "exclude_globs": ["*://brainly.com/app/profile/*", "*://brainly.com/profile/*","*://brainly.com/companion/verification*","*://brainly.com/users/*","*://brainly.com/tools/*","*://brainly.com/tasks/archive_mod*"],
+      "exclude_globs": ["*://brainly.com/app/profile/*", "*://brainly.com/profile/*","*://brainly.com/extension/verification*","*://brainly.com/users/*","*://brainly.com/tools/*","*://brainly.com/tasks/archive_mod*"],
       "js": ["content-scripts/js/panel.js"]
     },
     {
       "matches": ["*://brainly.com/*"],
-      "exclude_globs": ["*://brainly.com/question/*","*://brainly.com/profile/*","*://brainly.com/companion/verification*","*://brainly.com/users/*","*://brainly.com/tools/*","*://brainly.com/tasks/archive_mod*"],
+      "exclude_globs": ["*://brainly.com/question/*","*://brainly.com/profile/*","*://brainly.com/extension/verification*","*://brainly.com/users/*","*://brainly.com/tools/*","*://brainly.com/tasks/archive_mod*"],
      
       "css": ["content-scripts/css/homepage.css"]
     },

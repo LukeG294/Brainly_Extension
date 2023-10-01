@@ -1,5 +1,5 @@
 import Components from "scripts/Items/Components"
-import allPages from "./allPages"
+
 import {
   parseProfileLink,
   parseQuestionLink
@@ -369,35 +369,7 @@ export default new class ModFn {
     <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
   </div>`)
   }
-  async approveAll(elem) {
-    elem.insertAdjacentElement("beforeend", Components.Button({
-      type: "solid",
-      size: "m",
-      text: "Approve",
-      ClassNames: ["mapproveAll"],
-      icon: "heart",
-      onClick: async () => {
-        Notify.Dialog("Verify All Answers", "Are you sure?", all, true)
-        function all(){
-          allPages(
-            "Approving all answers",
-            "responses",
-            async (resp) => {
-              let userId = window.location.href.replace("https://brainly.com/users/user_content/", "").split("/")[0]
-              let response = resp.data.responses.find(res => String(res.user_id) === String(userId));
-              if (!response.approved.approver) {
-                let ans = new Answer();
-                const delay = ms => new Promise(res => setTimeout(res, ms));
-                await delay(600)
-                ans.Approve(response.id);
-                
-              }
-            }
-          )
-        }
-      }
-    }));
-  }
+  
   async find_reported_content(id, type: "responses" | "tasks", elem) {
     elem.insertAdjacentElement('beforeend', Components.Button({
       type: "solid",

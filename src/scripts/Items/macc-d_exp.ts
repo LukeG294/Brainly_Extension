@@ -67,7 +67,7 @@ export function mmsg_s() {
                     items: [
                         {
                             id: "1",
-                            text: "Incomplete MD",
+                            text: "Incomplete/Spam MD",
                             value: `Hey there! Brainly is all about giving students the tools they need to tackle future problems on their own, so it's important to always show your work. Your answers didn't contain enough explanation to follow our guidelines, so all of your answers have been removed. In the future, please be sure to elaborate and add more to your answers, such as full explanations, examples, and any information that can help our fellow Brainiacs. Thanks!
                             `
                         },

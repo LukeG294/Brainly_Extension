@@ -121,6 +121,9 @@ export async function newTickets() {
 export async function withdrawReport(id){
   chrome.runtime.sendMessage({ message:"cancel_verify", data: {"id":id}}, function () {});
 }
+export async function log_action(args){
+  chrome.runtime.sendMessage({ message:"log_user_action", data: args}, function () {});
+}
 export function cancel_html(){
   return `<div class = "sg-flex sg-flex--margin-left-xxs">
   <button class="cancel-request queueButtons sg-button sg-button--m sg-button--solid-mint">

@@ -63,6 +63,16 @@ class Background {
 					const verify_remove = `${extension_server_url()}/verification/cancel/${request.data.id}`;
 					await fetch(verify_remove, {method: 'DELETE'});
 					return;
+				case 'log_user_action':
+					const logger = `${extension_server_url()}/verification/add_logs/${request.data.AnswerID}`;
+					const logResp = await fetch(logger, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify(request.data)
+					});
+					return;
 			}
 			
 		})

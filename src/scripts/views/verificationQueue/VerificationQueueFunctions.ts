@@ -4,7 +4,8 @@ import Status from "../../common/Notifications/Status"
 import {Answer} from "../../common/Content"
 import Extension from "../../../locales/en/localization.json"
 import Label from "../../common/Notifications/Status";
-import { withdrawReport } from "../questionPage/QuestionExports";
+import { log_action, withdrawReport } from "../questionPage/QuestionExports";
+
 
 export async function removeAnswer(id, button){
   
@@ -26,7 +27,9 @@ export async function removeAnswer(id, button){
   withdrawReport(id)
   //1 = rejected
   //0 = accepted
- // add_verification_record(RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink, '1', AnswerID)
+  let RejectApprove = 'rejected'
+  let list = {RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink, RejectApprove, AnswerID}
+  log_action(list)
   
  
   button.classList.remove("show");
@@ -58,7 +61,9 @@ export async function approveAnswer(id, answerId, button){
   let QuestionLink = item.querySelector('.qid').innerHTML.replace('#','')
   
   withdrawReport(id)
-  //add_verification_record(RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink, '0', AnswerID)
+  let RejectApprove = 'accepted'
+  let list = {RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink, RejectApprove, AnswerID}
+  log_action(list)
   
   
 }
@@ -182,39 +187,4 @@ document.querySelector(".pagination").style.opacity = "1"
 
 
 }
-export function add_verification_record(RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink, RejectApprove, AnswerID){
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
 
-  var raw = JSON.stringify({
-    "requester": {
-      "id": RequesterId,
-      "name": RequesterName
-    },
-    "handler": {
-      "id": HandlerId,
-      "name": HandlerName,
-      "handledTime": HandledTime,
-      "action":RejectApprove
-    },
-    "question": {
-      "subject": QuestionSubject,
-      "link": 'https://brainly.com/question/'+QuestionLink,
-      "answerID":AnswerID
-    },
-    
-  
-  });
-
-  var requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: raw
-    
-  };
-
-  fetch("https://vserver.lukeg294.repl.co/verification-handled", requestOptions)
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
-}

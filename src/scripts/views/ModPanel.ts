@@ -1,4 +1,4 @@
-import { mass_msg, mass_accdel, md_content, reportedCommentsDeleter, verification_queue } from "./homepage/Admin";
+import { mass_msg, mass_accdel, md_content, reportedCommentsDeleter, verification_queue, firebase_append } from "./homepage/Admin";
 import AdminPanel from "./homepage/Admin"
 import userSearch from "./homepage/userSearch"
 import { ModObserver } from "./homepage/Exports";
@@ -13,7 +13,7 @@ async function insert(){
     runCheck(reportedCommentsDeleter,  key["reported_comments_deleter"])
     runCheck(AdminPanel.Accdel,  key["mass_account_deleter"])
     runCheck(AdminPanel.MassMsg,  key["mass_messager"])
-    
+    runCheck(firebase_append,  key["panel_link_to_backend"])
     runCheck(ModObserver,  key["homepage_tickets"])
     runCheck(verification_queue,  key["verification_queue"])
    

@@ -31,6 +31,7 @@ export default new class AdminPanel{
         `);
         document.querySelector(".mass-accdel").addEventListener("click", function(){mass_accdel()})
     }
+    
 }
 export function mass_accdel(){
     document.querySelector("body").insertAdjacentHTML("afterbegin", macc_d());
@@ -150,6 +151,13 @@ export function verification_queue(){
     document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
         <li class="sg-menu-list__element verification-queue">   
             <a class = "sg-menu-list__link" href = "https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/companion/verification">${Extension.titles.verificationQueue}</a>
+        </li>
+    `)
+}
+export function firebase_append(){
+    document.querySelector(".brn-moderation-panel__list > ul > li:nth-child(1)").insertAdjacentHTML("afterend", /*html*/`
+        <li class="sg-menu-list__element">   
+            <a class = "sg-menu-list__link" href = "https://console.firebase.google.com/u/0/project/brainly-extension/firestore/data/~2Fconfigurations~2Ffeature_keys" target=_blank >Extension Configuration</a>
         </li>
     `)
 }

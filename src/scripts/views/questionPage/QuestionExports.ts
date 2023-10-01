@@ -146,6 +146,17 @@ export function already_requested_html(){
   </button>
   </div>`
 }
+export function already_rejected_html(){
+  return `<div class = "sg-flex sg-flex--margin-left-xxs">
+  <button class="is-rejected queueButtons sg-button sg-button--m sg-button--solid-mint">
+  <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
+    <span class="sg-button__icon sg-button__icon--m">
+      <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">filter filled</text>
+          <use xlink:href="#icon-exclamation_mark" aria-hidden="true"></use>
+        </svg></div>
+  </button>
+  </div>`
+}
 export function to_request_html(){
   return ` <div class = "sg-flex sg-flex--margin-left-xxs">
   <button class="request-verification queueButtons sg-button sg-button--m sg-button--solid-mint">
@@ -162,6 +173,7 @@ export async function requestApproval() {
   let d_reference = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/api_config/desktop_view`, {
       method: "GET"
   }).then(data => data.json());
+ 
   let areaToAppend = document.querySelectorAll('[data-testid="options_list"]')
   let answers = document.querySelectorAll("div[data-testid = 'answer_box_options_list']")
   let responses = JSON.parse(document.querySelector("[data-testid='question_box']").getAttribute("data-z")).responses
@@ -170,8 +182,9 @@ export async function requestApproval() {
      if (true) {
           let answer = responses[i].id
           let resp = await fetch(`${extension_server_url()}/verification/get_answer/` + answer).then(data => data.json());
+          let past_approvals = await fetch(`${extension_server_url()}/verification/logs/${answer}`).then(data => data.json());
           //@ts-ignore
-          if (!resp.content) {  
+          if (!resp.content && !past_approvals.requester) {  
               let beingAnswered = document.querySelector(".brn-qpage-next-answer-box")
              
               if (answers.length === 1 && !beingAnswered) {
@@ -215,10 +228,23 @@ export async function requestApproval() {
               areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ cancel_html())
             }
             document.querySelectorAll(".cancel-request")[i].addEventListener("click",function(){
-              Notify.Dialog("Under Review", `This item was requested by you and is in the queue. Withdraw this request by clicking proceed.`, withdrawReport, true, responsesData[i].id, this)
+              Notify.Dialog("Under Review", `This item was requested to be approved by you and is in the queue. Withdraw this request by clicking proceed.`, withdrawReport, true, responsesData[i].id, this)
             });
            
-          } else {
+          } else if (past_approvals.requester){
+            let beingAnswered = document.querySelector(".brn-qpage-next-answer-box")
+            //@ts-ignore
+            if (answers.length === 1 && !beingAnswered) {
+              areaToAppend[i].insertAdjacentHTML("afterbegin", /*html*/ already_rejected_html())
+            } else if (beingAnswered){
+              areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ already_rejected_html())
+            } else {
+              areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ already_rejected_html())
+            }
+            document.querySelector(".is-rejected").addEventListener("click",function(){
+              Notify.Dialog("Already Rejected", `This item was requested to be approved by ${past_approvals.requester.name} and was rejected by ${past_approvals.handler.name}.`, false, false)
+            });
+           } else {
             let beingAnswered = document.querySelector(".brn-qpage-next-answer-box")
             //@ts-ignore
             if (answers.length === 1 && !beingAnswered) {

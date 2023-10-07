@@ -175,7 +175,7 @@ export async function user_manager(id) {
         let username = window.location.href.split("/")[4].split("-")[0]
         let message = `"message":"","on":false,"type":""`
         add_permissions.addEventListener("click",function(){
-            chrome.runtime.sendMessage({ data: {"id":id,"username":username}, message:"add_user" }, function () {});
+            chrome.runtime.sendMessage({ data: {"id":id,"username":username,"permissions":""}, message:"add_user" }, function () {});
             add_permissions.remove()
             Notify.Flash(`${username} added to the extension. Refresh to edit permissions.`,"success")
         })

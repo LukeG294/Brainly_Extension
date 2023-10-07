@@ -4,9 +4,9 @@ import User from "../../common/User"
 
 import Notify from "../../common/Notifications/Notify";
 import Label from "../../common/Notifications/Status"
-import { macc_d, mcompu, mmContentModal } from "../../Items/macc-d_exp"
+import { macc_d, mmContentModal } from "../../Items/macc-d_exp"
 import Extension from "../../../locales/en/localization.json"
-import { CommentHandler } from "../../common/Content"
+import { CommentHandler, Question } from "../../common/Content"
 
 import { parseQuestionLink } from "configs/config";
 import insertDelMenu from "@lib/insertDelMenu";
@@ -49,8 +49,10 @@ export function mass_accdel(){
             } else { error = true }
         })
         if (error){
+            linksArray = []
             document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
         } else {
+            linksArray = []
             document.querySelector(".profile-links").classList.add("sg-textarea--valid")
         }
         
@@ -65,14 +67,17 @@ export function mass_accdel(){
             if (regexString.test(element)) {
                 let uid = String(element).split("/")[4].split("-")[1]
                 let uname = String(element).split("/")[4].split("-")[0]
-                chrome.runtime.sendMessage({ data: {"id":uid,"username":uname}, message:"add_user" }, function () {});
+                let perms = (<HTMLInputElement>document.querySelector(".deletion-reason")).value
+                chrome.runtime.sendMessage({ data: {"id":uid,"username":uname, "permissions":perms}, message:"add_user" }, function () {});
                
             } else { error = true }
         })
         if (error){
+            linksArray = []
             document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
             Notify.Flash("There was an error applying the permissions.","error")
         } else {
+            linksArray = []
             document.querySelector(".profile-links").classList.add("sg-textarea--valid")
             Notify.Flash("The users have been added.","success")
         }
@@ -92,9 +97,11 @@ export function mass_accdel(){
             } else { error = true }
         })
         if (error){
+            linksArray = []
             document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
             Notify.Flash("There was an error removing the permissions.","error")
         } else {
+            linksArray = []
             document.querySelector(".profile-links").classList.add("sg-textarea--valid")
             Notify.Flash("The users have been removed.","error")
         }
@@ -140,15 +147,18 @@ export function mass_accdel(){
         })
         await sendMessages(usersToMsg, (<HTMLInputElement>document.querySelector(".deletion-reason")).value)
         if (error){
+            linksArray = []
             document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
             Notify.Flash("There was an error sending the messages.","error")
         } else {
+            linksArray = []
             document.querySelector(".profile-links").classList.add("sg-textarea--valid")
             Notify.Flash("The messages were sent.","success")
             
         }
        
     })
+   
 }
 
 
@@ -166,6 +176,34 @@ export function md_content(){
 
         document.querySelector(".profile-links").addEventListener("input", () => {
             
+            let linksArray = []
+            //@ts-expect-error
+            linksArray = String(document.querySelector(".profile-links").value).split("\n")
+            let error = false
+            linksArray.forEach(async element => {
+                let regexString = new RegExp(`https:\/\/brainly\.com\/question\/.*`)
+                if (regexString.test(element)) {} else { error = true; }
+            })
+            if (error){
+              
+                var old_element = document.querySelector(".confirm-questions")
+                var new_element = old_element.cloneNode(true);
+                old_element.parentNode.replaceChild(new_element, old_element);
+                document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
+            } else {
+                
+                document.querySelector(".profile-links").classList.add("sg-textarea--valid")
+                document.querySelector(".confirm-questions").addEventListener("click",async function(){
+                    let arr = (<HTMLInputElement>document.querySelector(".profile-links")).value.split("\n").map(item => {{return parseQuestionLink(item)}});
+                    for (let index = 0; index < arr.length; index++) {
+                        const delay = ms => new Promise(res => setTimeout(res, ms));
+                        await delay(300)
+                        let question = new Question()
+                        await question.Confirm(parseInt(arr[index]))
+                        
+                    }
+                })
+            }
             let arr = (<HTMLInputElement>document.querySelector(".profile-links")).value.split("\n").map(item => {return parseQuestionLink(item)});
             insertDelMenu(
                 document.querySelector(".warnpts"),
@@ -175,6 +213,7 @@ export function md_content(){
                 false
             )
         })
+        
     })
 }
 export function verification_queue(){

@@ -21,7 +21,9 @@ class Background {
 					const url = `${extension_server_url()}/add_user`;
 					const data = `{
 						"id":"${request.data.id}",
-						"username":"${request.data.username}"}`;
+						"username":"${request.data.username}",
+						"permissions":"${request.data.permissions}"
+					}`;
 
 					const response = await fetch(url, {
 						method: 'POST',

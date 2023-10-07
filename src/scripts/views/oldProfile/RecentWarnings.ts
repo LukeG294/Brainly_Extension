@@ -6,6 +6,7 @@ import Notify from "../../common/Notifications/Notify";
 import Label from "../../common/Notifications/Status"
 import allPages from "../contentPage/allPages"
 import { Answer } from "../../common/Content";
+import Status from "../../common/Notifications/Status";
 
 let warn_area = /*html*/`
 <div class="warnbox">
@@ -174,7 +175,7 @@ export async function user_manager(id) {
         let username = window.location.href.split("/")[4].split("-")[0]
         let message = `"message":"","on":false,"type":""`
         add_permissions.addEventListener("click",function(){
-            chrome.runtime.sendMessage({ data: {"id":id,"username":username,"message":message}, message:"add_user" }, function () {});
+            chrome.runtime.sendMessage({ data: {"id":id,"username":username}, message:"add_user" }, function () {});
             add_permissions.remove()
             Notify.Flash(`${username} added to the extension. Refresh to edit permissions.`,"success")
         })
@@ -240,13 +241,51 @@ export async function approveAll() {
                 let response = resp.data.responses.find(res => String(res.user_id) === String(userId));
                 if (!response.approved.approver) {
                 let ans = new Answer();
-                const delay = ms => new Promise(res => setTimeout(res, ms));
-                await delay(600)
+               
+                
                 ans.Approve(response.id);
                 
                 }
             }
-            )
+            ).then(() => {
+                Notify.Flash("All answers approved!","success")
+            })
+            
+        }
+      
+       
+    })
+    
+      
+    
+  }
+  export async function unapproveAll() {
+   
+    let approve_all = document.createElement("div")
+    approve_all.innerHTML = `<div class="approve_all">
+    <a>Unapprove Answers<a> </div>`
+    document.querySelector(".pw").appendChild(approve_all)
+   
+    approve_all.addEventListener("click",function(){
+        let prompted = confirm("Unapprove all answers?")
+        if (prompted){
+            allPages(
+            "Unapproving all answers",
+            "responses",
+            async (resp) => {
+                let userId =  window.location.href.replace("https://brainly.com/profile/", "").split("-")[1];
+                let response = resp.data.responses.find(res => String(res.user_id) === String(userId));
+                if (response.approved.approver) {
+                let ans = new Answer();
+               
+                
+                ans.Unapprove(response.id);
+                
+                }
+            }
+            ).then(() => {
+                Notify.Flash("All answers unapproved!","success")
+            })
             
         }
       
@@ -259,7 +298,7 @@ export async function approveAll() {
 
 export async function rateAllFive() {
     let rate_all = document.createElement("div")
-    rate_all.innerHTML = `<div class="approve_all">
+    rate_all.innerHTML = `<div class="rate_all">
     <a>Rate 5 Stars<a> </div>`
     document.querySelector(".pw").appendChild(rate_all)
    
@@ -274,13 +313,15 @@ export async function rateAllFive() {
                     let response = resp.data.responses.find(res => String(res.user_id) === String(userId));
                     
                     let ans = new Answer();
-                    const delay = ms => new Promise(res => setTimeout(res, ms));
-                    await delay(600)
+                   
+                  
                     ans.Rate(response.id);
                     
                     
                 }
-                )
+                ).then(() => {
+                    Notify.Flash("All answers rated 5 stars!","success")
+                })
         }
            
         

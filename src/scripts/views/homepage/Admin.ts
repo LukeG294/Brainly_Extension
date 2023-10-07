@@ -4,7 +4,7 @@ import User from "../../common/User"
 
 import Notify from "../../common/Notifications/Notify";
 import Label from "../../common/Notifications/Status"
-import { macc_d, mcompu, mmContentModal, mmsg_s } from "../../Items/macc-d_exp"
+import { macc_d, mcompu, mmContentModal } from "../../Items/macc-d_exp"
 import Extension from "../../../locales/en/localization.json"
 import { CommentHandler } from "../../common/Content"
 
@@ -15,14 +15,7 @@ export default new class AdminPanel{
     constructor(){
         document.querySelector(".brn-moderation-panel__content .sg-content-box__title").insertAdjacentHTML("afterend", `<div class = "user-mgmt"></div>`)
     }
-    MassMsg(){
-        document.querySelector(".user-mgmt").insertAdjacentHTML("afterbegin", /*html*/`
-            <button class = "mass-msg panbut">
-                <div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-messages"></use></svg></div>
-            </button>
-        `);
-        document.querySelector(".mass-msg").addEventListener("click", function(){mass_msg()})
-    }
+    
     Accdel(){
         document.querySelector(".user-mgmt").insertAdjacentHTML("afterbegin", /*html*/`
             <button class = "mass-accdel panbut">
@@ -62,63 +55,100 @@ export function mass_accdel(){
         }
         
     })
-}
-export function mass_msg(){
-        document.querySelector("body").insertAdjacentHTML("afterbegin", mmsg_s());
-        document.querySelector(".modal_close").addEventListener("click", function(){document.querySelector(".modal_back").remove()})
+    document.querySelector(".add-user").addEventListener("click", async function(){
         
-        
-        document.querySelector(".presets").addEventListener("change", function(){
-            let rsn = document.querySelector(".presets input:checked").getAttribute("value");
-            (<HTMLInputElement>document.querySelector(".message-content")).value = rsn;
-        });
-        let input = document.querySelector(".message-content");
-
-        // Init a timeout variable to be used below
-        let timeout = null;
-
-        // Listen for keystroke events
-        input.addEventListener('keyup', function (e) {
-            // Clear the timeout if it has already been set.
-            // This will prevent the previous task from executing
-            // if it has been less than <MILLISECONDS>
-            clearTimeout(timeout);
-
-            // Make a new timeout set to go off in 1000ms (1 second)
-            timeout = setTimeout(function () {
-                if (String((<HTMLInputElement>input).value).includes("{user}")){
-                    //@ts-ignore
-                    document.querySelector(".send-message").setAttribute("style","background-color:#6D83F3 !important")
-                } else {
-                    //@ts-ignore
-                    document.querySelector(".send-message").setAttribute("style","background-color:#4FB3F6 !important")
-                }
-            }, 100);
-        });
-        document.querySelector(".send-message").addEventListener("click", async function(){
-           
-            //@ts-expect-error
-            let linksArray = String(document.querySelector(".profile-links").value).split("\n")
-            let error = false
-            let usersToMsg = []
-            linksArray.forEach(element => {
+        //@ts-expect-error
+        let linksArray = String(document.querySelector(".profile-links").value).split("\n")
+        let error = false
+        linksArray.forEach(async element => {
+            let regexString = new RegExp(`https:\/\/brainly\.com\/profile\/.*-.*`)
+            if (regexString.test(element)) {
+                let uid = String(element).split("/")[4].split("-")[1]
+                let uname = String(element).split("/")[4].split("-")[0]
+                chrome.runtime.sendMessage({ data: {"id":uid,"username":uname}, message:"add_user" }, function () {});
                
-                let regexString = new RegExp(`https:\/\/brainly\.com\/profile\/.*-.*`)
-                if (regexString.test(element)) {
-                    let uid = String(element).split("/")[4].split("-")[1]
-                    let uname = String(element).split("/")[4].split("-")[0]
-                    usersToMsg.push(uid+"-"+uname)
-                } else { error = true }
-            })
-            await sendMessages(usersToMsg, (<HTMLInputElement>document.querySelector(".message-content")).value)
-            if (error){
-                document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
-            } else {
-                document.querySelector(".profile-links").classList.add("sg-textarea--valid")
-                
-            }
-           
+            } else { error = true }
         })
+        if (error){
+            document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
+            Notify.Flash("There was an error applying the permissions.","error")
+        } else {
+            document.querySelector(".profile-links").classList.add("sg-textarea--valid")
+            Notify.Flash("The users have been added.","success")
+        }
+        
+    })
+    document.querySelector(".remove-user").addEventListener("click", async function(){
+       
+        //@ts-expect-error
+        let linksArray = String(document.querySelector(".profile-links").value).split("\n")
+        let error = false
+        linksArray.forEach(async element => {
+            let regexString = new RegExp(`https:\/\/brainly\.com\/profile\/.*-.*`)
+            if (regexString.test(element)) {
+                let uid = String(element).split("/")[4].split("-")[1]
+                let uname = String(element).split("/")[4].split("-")[0]
+                chrome.runtime.sendMessage({ data: {"id":uid,"username":uname}, message:"remove_user" }, function () {});
+            } else { error = true }
+        })
+        if (error){
+            document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
+            Notify.Flash("There was an error removing the permissions.","error")
+        } else {
+            document.querySelector(".profile-links").classList.add("sg-textarea--valid")
+            Notify.Flash("The users have been removed.","error")
+        }
+        
+    })
+    let input = document.querySelector(".deletion-reason");
+
+    // Init a timeout variable to be used below
+    let timeout = null;
+
+    // Listen for keystroke events
+    input.addEventListener('keyup', function (e) {
+        // Clear the timeout if it has already been set.
+        // This will prevent the previous task from executing
+        // if it has been less than <MILLISECONDS>
+        clearTimeout(timeout);
+
+        // Make a new timeout set to go off in 1000ms (1 second)
+        timeout = setTimeout(function () {
+            if (String((<HTMLInputElement>input).value).includes("{user}")){
+                //@ts-ignore
+                document.querySelector(".send-message").setAttribute("style","background-color:#6D83F3 !important")
+            } else {
+                //@ts-ignore
+                document.querySelector(".send-message").setAttribute("style","background-color:#4FB3F6 !important")
+            }
+        }, 100);
+    });
+    document.querySelector(".send-message").addEventListener("click", async function(){
+           
+        //@ts-expect-error
+        let linksArray = String(document.querySelector(".profile-links").value).split("\n")
+        let error = false
+        let usersToMsg = []
+        linksArray.forEach(element => {
+           
+            let regexString = new RegExp(`https:\/\/brainly\.com\/profile\/.*-.*`)
+            if (regexString.test(element)) {
+                let uid = String(element).split("/")[4].split("-")[1]
+                let uname = String(element).split("/")[4].split("-")[0]
+                usersToMsg.push(uid+"-"+uname)
+            } else { error = true }
+        })
+        await sendMessages(usersToMsg, (<HTMLInputElement>document.querySelector(".deletion-reason")).value)
+        if (error){
+            document.querySelector(".profile-links").classList.add("sg-textarea--invalid")
+            Notify.Flash("There was an error sending the messages.","error")
+        } else {
+            document.querySelector(".profile-links").classList.add("sg-textarea--valid")
+            Notify.Flash("The messages were sent.","success")
+            
+        }
+       
+    })
 }
 
 

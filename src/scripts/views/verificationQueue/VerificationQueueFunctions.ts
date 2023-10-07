@@ -82,7 +82,7 @@ export async function verificationSwitcherHandler(fn){
 
     let verStat = new Label("verfetch")
     verStat.Show("Fetching verification requests", "blue", true, false);
-    let toRender = await fetch(`${extension_server_url()}/queue/0`).then(response => response.json())
+    let toRender = await fetch(`${extension_server_url()}/verification/queue/0`).then(response => response.json())
     verStat.Close();
 
     fn(toRender);
@@ -91,10 +91,7 @@ export async function verificationSwitcherHandler(fn){
       //@ts-expect-error
       element.style.visibility = 'visible'
     });
-    document.querySelectorAll('.item').forEach(element => {
-      //@ts-expect-error
-      element.style.border = 'none'
-    });
+   
     
     
   })
@@ -107,7 +104,7 @@ export async function verificationSwitcherHandler(fn){
     document.querySelectorAll('.sg-dropdown')[0].children[0].innerText = unverifyElement.innerText
 
     let unStat = new Label("unfetch");
-    unStat.Show("Fetching unverification requests", "blue", true, false);
+    unStat.Show("This queue is currently turned off.", "blue", true, false);
    // let toRender = await get_next_page_unverify('0')
     unStat.Close();
     
@@ -119,8 +116,8 @@ export async function verificationSwitcherHandler(fn){
       element.style.visibility = 'hidden'
     });
     document.querySelectorAll('.item').forEach(element => {
-      //@ts-expect-error
-      element.style.border = '2px solid rgb(156, 232, 194)'
+      
+      //element.style.border = '2px solid rgb(156, 232, 194)'
     });
     
   })

@@ -9,9 +9,9 @@ export default async function allPages(
     let id = window.location.href.replace("https://brainly.com/profile/", "").split("-")[1];
     //@ts-ignore
     let pagenum =  Math.ceil(parseInt(document.querySelectorAll(".fright")[2].querySelector('a').innerText)/25)
-   
+    
     stat.Show(message+"...", "indigo", true)
-    for(let p=1; p<pagenum; p++){
+    for(let p=1; p<pagenum+1; p++){
         let content = await fetch(`https://brainly.com/users/user_content/${id}/${type}/${p}/0`).then(data => data.text())
         //@ts-ignore
         let responseHTML = new DOMParser().parseFromString(content, "text/html")
@@ -28,8 +28,8 @@ export default async function allPages(
                         itemFn(resp);
                     }
                 };
-                const delay = ms => new Promise(res => setTimeout(res, ms));
-                 await delay(600)
+                
+                
                 xhttp.open("POST", `https://brainly.com/api/28/api_tasks/main_view/${qid}`);
                 xhttp.send();
             }

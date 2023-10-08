@@ -141,6 +141,7 @@ export async function user_manager(id) {
         let edit_permissions = document.createElement("div")
         edit_permissions.innerHTML = `<div class="edit_menu">
         <a>Edit Permissions<a></div>`
+        document.querySelector(".personal_info").classList.add("trusted")
         edit_permissions.addEventListener("click",function(){
             let hasFinished = edit_permissions.getAttribute("done")
             if (hasFinished === "true") {
@@ -163,6 +164,7 @@ export async function user_manager(id) {
         remove_user.addEventListener("click",function(){
             chrome.runtime.sendMessage({ data: {"id":id,"username":username}, message:"remove_user" }, function () {});
             remove_user.remove()
+            document.querySelector(".personal_info").classList.remove("trusted")
             document.querySelector(".edit_menu").remove()
             Notify.Flash(`${username}'s access revoked.`,"error")
         })

@@ -241,7 +241,7 @@ export async function requestApproval() {
             } else {
               areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ already_rejected_html())
             }
-            document.querySelector(".is-rejected").addEventListener("click",function(){
+            document.querySelectorAll(".is-rejected")[i].addEventListener("click",function(){
               Notify.Dialog("Already Rejected", `This item was requested to be approved by ${past_approvals.requester.name} and was rejected by ${past_approvals.handler.name}.`, false, false)
             });
            } else {

@@ -21,6 +21,18 @@
 .brn-moderation-panel .sg-menu-list__link{
   cursor: pointer!important;
 }
+.question-md{
+  border-color: rgb(235, 242, 247);
+  background: rgb(235, 242, 247);
+  margin-bottom: 8px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(235, 242, 247);
+  border-image: initial;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 2%;
+}
 .preview-box{
   position:relative;
   min-width:600px;
@@ -332,26 +344,22 @@
     .presets{
       margin:8px 0px;
     }
-    .delete-acc, .delete-content{
+    .delete-acc, .delete-content, .delete-questions, .remove-user{
       width:100%;
       margin-top:8px;
       background-color:#ff7968!important;
       color:white;
     }
-    
+    .count{
+      display: inline-flex;
+    }
     .add-user, .confirm-questions{
       width:100%;
       margin-top:8px;
       background-color:#60D399!important;
       color:white;
     }
-    .remove-user{
-      width:100%;
-      margin-top:8px;
-      background-color:#fbbe2e!important;
-      color:white;
-      
-    }
+    
     .confirm-content{
       width:100%;
       margin-top:8px;
@@ -872,6 +880,7 @@
   color: #323c45;
   padding: 0 2px;
 }
+
 .ryv-notif{
   background: #f5f8fa;
     position: fixed;

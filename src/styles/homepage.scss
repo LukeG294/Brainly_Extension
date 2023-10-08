@@ -72,7 +72,28 @@ div.brn-placeholder__animation{
     }
   }
 }
-
+.ticket-button{ 
+  display:flex;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  > div{
+    display:flex;
+  }
+  .modticket{
+    display: flex;
+    height: 40px;
+    align-items: center;
+    margin-right: 10px;
+    justify-content: center;
+    .sg-spinner-container__overlay{
+      background:#f0f2f5!important;
+    }
+    .contenticon.shield{
+      margin-right:0px!important;
+    }
+  }
+}
 .backdrop{
   position: fixed;
   height: 100vh;

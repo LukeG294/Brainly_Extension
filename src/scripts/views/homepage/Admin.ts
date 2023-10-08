@@ -1,15 +1,16 @@
 
 import { sendMessages } from "../../common/ModFunctions";
 import User from "../../common/User"
-
+import Form from "scripts/Items/Form"
 import Notify from "../../common/Notifications/Notify";
 import Label from "../../common/Notifications/Status"
 import { macc_d, mmContentModal } from "../../Items/macc-d_exp"
 import Extension from "../../../locales/en/localization.json"
 import { CommentHandler, Question } from "../../common/Content"
-
+import { insert_ticket } from "../../common/ModFunctions";
 import { parseQuestionLink } from "configs/config";
 import insertDelMenu from "@lib/insertDelMenu";
+import BrainlyAPI from "../../common/BrainlyAPI";
 
 export default new class AdminPanel{
     constructor(){
@@ -34,7 +35,7 @@ export function mass_accdel(){
         let rsn = document.querySelector(".presets input:checked").getAttribute("value");
         (<HTMLInputElement>document.querySelector(".deletion-reason")).value = rsn;
     });
-
+    /*
     document.querySelector(".delete-acc").addEventListener("click", async function(){
         
         //@ts-expect-error
@@ -57,6 +58,7 @@ export function mass_accdel(){
         }
         
     })
+    */
     document.querySelector(".add-user").addEventListener("click", async function(){
         
         //@ts-expect-error
@@ -174,7 +176,7 @@ export function md_content(){
         document.querySelector("body").insertAdjacentHTML("afterbegin", mmContentModal());
         document.querySelector(".modal_close").addEventListener("click", function(){document.querySelector(".modal_back").remove()})
 
-        document.querySelector(".profile-links").addEventListener("input", () => {
+        document.querySelector(".profile-links").addEventListener("input", async () => {
             
             let linksArray = []
             //@ts-expect-error
@@ -203,15 +205,102 @@ export function md_content(){
                         
                     }
                 })
+
+                document.querySelector(".delete-questions").addEventListener("click",async function(){
+                    let arr = (<HTMLInputElement>document.querySelector(".profile-links")).value.split("\n").map(item => {return parseQuestionLink(item)});
+                    insertDelMenu(
+                        document.querySelector(".warnpts"),
+                        "tasks",
+                        () => { return arr },
+                        () => { return arr },
+                        false
+                    )
+                })
+                
             }
+            let subjects = await fetch(`https://brainly.com/api/28/api_config/desktop_view`).then(data => data.json()).then(data => data.data.subjects);
             let arr = (<HTMLInputElement>document.querySelector(".profile-links")).value.split("\n").map(item => {return parseQuestionLink(item)});
-            insertDelMenu(
-                document.querySelector(".warnpts"),
-                "tasks",
-                () => { return arr },
-                () => { return arr },
-                false
-            )
+            let selector = document.querySelector(".question-area")
+            selector.innerHTML = ''
+            //@ts-ignore
+            selector.style.height = ""
+            for (let index = 0; index < arr.length; index++) {
+                const element = arr[index];
+                
+                //@ts-ignore
+                await BrainlyAPI.GetQuestion(element).then(data => {
+                    
+                    if (!data.data.task.settings.is_deleted){
+                        //@ts-ignore
+                        let subject = subjects.find(element => element["id"] === data.data.task.subject_id).name
+                        //@ts-ignore
+                        let responses = data.data.responses
+                        //@ts-ignore
+                        selector.style.height = "400px"
+                        selector.insertAdjacentHTML('beforeend',/*html*/`
+                            <div class="question-md">
+                                <div class="question-data">
+                                    <div class="subject">Question <a href='https://brainly.com/question/${element}' target=_blank>#${element}</a> - ${subject}</div>
+                                </div>
+                                <div class="question-answers">
+                                <div class="ticket-button">
+                               
+                                    <div class="modticket">
+                                    <div class="sg-spinner-container__overlay">
+                                    <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+                                    </div>
+                                    <div class="contenticon shield">
+                                        <svg viewBox="0 0 512 512" style="overflow: visible" id="icon-shield" xmlns="http://www.w3.org/2000/svg">
+                                            <title>Moderate</title>
+                                            <path fill-rule="evenodd" d="M256 448c-32 0-192-16-192-192V96c0-11 6-32 32-32h320c11 0 32 6 32 32v176c0 160-160 176-192 176zm128-320H256v256c102 0 128-85 128-128V128z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            `)
+                        document.querySelector(".modticket").addEventListener("click",function(){
+                            insert_ticket(data.data.task.id, document.querySelectorAll(".question-md")[index].querySelector(".modticket > .sg-spinner-container__overlay"));
+                        })
+                        responses.forEach(answerer => {
+                            let findNick = data.users_data.find(element => element["id"] === answerer.user_id).nick
+                            let ranks = data.users_data.find(element => element["id"] === answerer.user_id).ranks.names
+                            let answer_info = document.createElement("div")
+                            let approved = false
+                            if (answerer.approved.approver){
+                                approved = true
+                            }
+                            document.querySelectorAll(".question-answers")[index].appendChild(answer_info)
+                            answer_info.innerHTML = `${answerer.user_id},${approved},${findNick}, ${ranks}`
+                        
+                        })
+                    } else {
+                        
+                        selector.insertAdjacentHTML('beforeend',/*html*/`
+                            <div class="question-md" style="background-color:#ffe8e5">
+                               <div class="question-data">
+                                    <div class="subject">Question <a href='https://brainly.com/question/${element}' target=_blank>#${element} - Deleted</a></div>
+                                </div>
+                                ${Form.Checkbox({
+                                    id: element,
+                                    text: ""
+                                }).outerHTML
+                                }
+                             </div>
+                            `)
+                    }
+                    
+                    
+                    
+                })
+               
+                
+              
+                
+                
+            }
+            
         })
         
     })

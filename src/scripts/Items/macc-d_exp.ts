@@ -21,7 +21,7 @@ export function macc_d(presets) {
                         }
                     }).outerHTML
                 }
-            <textarea placeholder="Message to send or permission string (ex. 1,2,3). Tip: use {user} to replace with the username." class="deletion-reason sg-textarea sg-textarea--tall"></textarea>
+            <textarea placeholder="Message to send or permission string (ex. 1,2,3). Tip: use {user} to replace with the username and {new} to send a separate message." class="deletion-reason sg-textarea sg-textarea--tall"></textarea>
           
             <button class="sg-button sg-button--m sg-button--solid-light add-user"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Give Extension Permission</span></button>
             <button class="sg-button sg-button--m sg-button--solid-light remove-user"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Remove Extension Permission</span></button>

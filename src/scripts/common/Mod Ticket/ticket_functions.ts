@@ -30,7 +30,7 @@ function add_log(log){
       let deleted = log.users_data.find(({id}) => id === log.data[i].owner_id).nick;
       document.querySelector(".log").insertAdjacentHTML("beforeend",/*html*/`
       <div class="log-item">
-        <div class = "content">${log.data[i].text.replace("%1$s", "<div class = 'user'>"+mod+"</div>").replace("%3$s", "<div class = 'user'>"+ deleted+"</div>")}</div>
+        <div class = "content">${log.data[i].text.replace("%1$s", "<div class = 'user'>"+mod+"</div>").replace("%3$s", "<div class = 'user'>&nbsp;"+ deleted+"</div>")}</div>
         <div class="datetime">
           <div class="date rightdot">${date}</div>
           <div class="time">${time}</div>

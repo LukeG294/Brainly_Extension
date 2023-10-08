@@ -47,28 +47,28 @@ export async function sendMessages(users_ids, content){
         "user_id": userid
         });
     
-    var xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
-    
-    xhr.addEventListener("readystatechange", async function() {
-        if(this.readyState === 4) {
-        let response = JSON.parse(this.responseText)
-       
-        let convoID = response["data"]["conversation_id"]
-            var data = JSON.stringify({
-            "content": varContent,
-            "conversation_id": convoID
-        });
-    
         var xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         
-        xhr.addEventListener("readystatechange",  function() {
+        xhr.addEventListener("readystatechange", async function() {
             if(this.readyState === 4) {
-            console.log(this.responseText);
-            document.querySelector(".send-message .spinner-container").classList.remove("show");
-            }
-        });
+            let response = JSON.parse(this.responseText)
+        
+            let convoID = response["data"]["conversation_id"]
+                var data = JSON.stringify({
+                "content": varContent,
+                "conversation_id": convoID
+            });
+        
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+            
+            xhr.addEventListener("readystatechange",  function() {
+                if(this.readyState === 4) {
+                console.log(this.responseText);
+                document.querySelector(".send-message .spinner-container").classList.remove("show");
+                }
+            });
        
   
           
@@ -102,8 +102,11 @@ export async function sendMessages(users_ids, content){
         let idForConvo = String(element).split("-")[0]
         let unameForConvo = String(element).split("-")[1]
         let varContent = content.replaceAll("{user}",unameForConvo)
+        let splitContent = varContent.split("{new}")
+        splitContent.forEach(element => {
+            getConvoId(idForConvo,element)
+        });
         
-        getConvoId(idForConvo,varContent)
     })
    
 }

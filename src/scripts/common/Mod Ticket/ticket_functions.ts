@@ -235,11 +235,7 @@ function add_comments(data, users_data, deletion_reasons, type:string, loopnum?)
         <div class="comment-content">
           <div class="comment-data">
             <div class="sg-icon sg-icon--dark sg-icon--x32 rep-flag"><svg class="sg-icon__svg"><use xlink:href="#icon-report_flag"></use></svg></div>
-            ${
-              Form.Checkbox({
-                id: element.id
-              }).outerHTML
-            }
+           
             <div class="pfp"> <a href='https://brainly.com/profile/${result[0].nick}-${result[0].id}' target="_blank"> <img src=${commentpfp} alt=""></a></div>
             <div class="sg-text sg-text--small comment-content">${element.content}</div>
           </div>

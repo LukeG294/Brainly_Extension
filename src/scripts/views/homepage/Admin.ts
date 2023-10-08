@@ -8,7 +8,7 @@ import { macc_d, mmContentModal } from "../../Items/macc-d_exp"
 import Extension from "../../../locales/en/localization.json"
 import { CommentHandler, Question } from "../../common/Content"
 import { insert_ticket } from "../../common/ModFunctions";
-import { parseQuestionLink } from "configs/config";
+import { extension_server_url, parseQuestionLink } from "configs/config";
 import insertDelMenu from "@lib/insertDelMenu";
 import BrainlyAPI from "../../common/BrainlyAPI";
 
@@ -27,8 +27,14 @@ export default new class AdminPanel{
     }
     
 }
-export function mass_accdel(){
-    document.querySelector("body").insertAdjacentHTML("afterbegin", macc_d());
+export async function mass_accdel(){
+    let firebase_presets = await fetch(`${extension_server_url()}/configs/preset_messages`).then(data => data.json())
+    let items_array = []
+    for (const [key, value] of Object.entries(firebase_presets)) {
+        items_array.push(value)
+    }
+    console.log(items_array)
+    document.querySelector("body").insertAdjacentHTML("afterbegin", macc_d(items_array));
     document.querySelector(".modal_close").addEventListener("click", function(){document.querySelector(".modal_back").remove()})
     
     document.querySelector(".presets").addEventListener("change", function(){

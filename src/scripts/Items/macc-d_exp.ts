@@ -1,7 +1,8 @@
 import Extension from "../../locales/en/localization.json"
 import Form from "./Form"
 
-export function macc_d() {
+export function macc_d(presets) {
+    
     return ( /*html*/ `
     <div class="modal_back">
         <div class="modal_accdel">
@@ -13,28 +14,7 @@ export function macc_d() {
                         ClassName: ["presets"],
                         id: "del-presets",
                         type: "row",
-                        items: [
-                            {
-                                id: "1",
-                                text: "Link Spammer",
-                                value: 'Link Spammer'
-                            },
-                            {
-                                id: "2",
-                                text: "Alt Accounts",
-                                value: 'Alt Accounts'
-                            },
-                            {
-                                id: "3",
-                                text: "Inappropriate Username",
-                                value: 'Inappropriate Username'
-                            },
-                            {
-                                id: "4",
-                                text: "Inactive",
-                                value: 'Inactive'
-                            }
-                        ],
+                        items: presets,
                         LookFor: {
                             name: "text",
                             id: "id"

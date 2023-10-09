@@ -21,6 +21,13 @@
 .brn-moderation-panel .sg-menu-list__link{
   cursor: pointer!important;
 }
+.presets {
+  .sg-radio-group__items {
+    display: flex;
+    flex-wrap: wrap;
+    width:750px;
+  }
+}
 .question-md{
   border-color: rgb(235, 242, 247);
   background: rgb(235, 242, 247);

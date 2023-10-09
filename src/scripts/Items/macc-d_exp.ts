@@ -41,7 +41,7 @@ export function mmContentModal() {
         <div class="modal_mass_content" style = "display: flex; flex-direction: column; max-height:95%; min-height:300px;">
             <h1 class="sg-text-bit--gray-secondary sg-headline sg-headline--xlarge sg-headline--extra-bold" style = "color:#323c45;">Question Management</h1>
             <div class = "modal_close"><div class="sg-toplayer__close" role="button" tabindex="0"><div class="sg-icon sg-icon--icon-gray-50 sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-close-zvtc08" focusable="false"><title id="title-close-zvtc08">close</title><use xlink:href="#icon-close" aria-hidden="true"></use></svg></div></div></div>
-            <textarea style = "flex: 1;" placeholder="Paste question links here, with a new line for each link. Once you paste links the deletion menu will show up." class=" profile-links sg-textarea sg-textarea--tall"></textarea>
+            <textarea style = "flex: 1;" placeholder="Paste question links here, with a new line for each link." class=" profile-links sg-textarea sg-textarea--tall"></textarea>
           
             <div class="question-area" style="overflow:scroll;">
             

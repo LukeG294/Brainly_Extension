@@ -71,6 +71,8 @@ function shorten_warnrsn(warning){
     }
     else if(warning.includes("Community Guidelines") || warning.includes("Please review the terms and thanks for being a team player!")){
         return "Default";
+    } else if (warning.includes("Copyright policy")){
+        return "Copyright"
     }
     else{
         return "Not Detected"

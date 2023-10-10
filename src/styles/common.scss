@@ -179,12 +179,13 @@
 .qdel, .adel{
   display:none!important;
 }
-#html .mint,input, button, select, textarea,.mint-header-secondary, .mint-cake-heading, #html .mint #profile #main-left .personal_info .header .info .info_top .ranking h2 a, #html .mint #profile #main-left .personal_info .header .info .info_top .rank h3 span, #html .mint #profile #main-left .personal_info .header .info .info_top .points h1, #html .mint #profile h3{
+#html ,input, button, select, textarea,.mint-header-secondary, .mint-cake-heading, #html .mint #profile #main-left .personal_info .header .info .info_top .ranking h2 a, #html .mint #profile #main-left .personal_info .header .info .info_top .rank h3 span, #html .mint #profile #main-left .personal_info .header .info .info_top .points h1, #html .mint #profile h3{
   font-family: "ProximaNova","Helvetica","Arial",sans-serif!important;
 }
 #html h1, #html h2{
   font-weight:900!important;
 }
+
 .modal_mcomp_u{
   display: flex;
   flex-direction: column;

@@ -1,6 +1,6 @@
 #  Brainly Extension
 
-In the approval process by Chrome and Microsoft.
+https://lgextension.azurewebsites.net
 
 This project is not created by Brainly.com
 

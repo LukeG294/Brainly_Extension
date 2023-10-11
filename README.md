@@ -1,6 +1,6 @@
 #  Brainly Extension
 
-https://lgextension.azurewebsites.net
+https://lgextension.azurewebsites.net/download
 
 This project is not created by Brainly.com
 

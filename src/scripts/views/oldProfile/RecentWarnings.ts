@@ -273,6 +273,7 @@ export async function approveAll() {
     approve_all.addEventListener("click",function(){
         let prompted = confirm("Unapprove all answers?")
         if (prompted){
+            
             allPages(
             "Unapproving all answers",
             "responses",

@@ -269,7 +269,7 @@ export async function approveAll() {
                 let ans = new Answer()
                 ans.Approve(element)
             }
-            Notify.Flash("All answers approved!","success")
+          
         
         }
     })
@@ -318,7 +318,7 @@ export async function approveAll() {
                 let ans = new Answer()
                 ans.Unapprove(element)
             }
-            Notify.Flash("All answers unapproved!","success")
+          
             
             
         }
@@ -370,7 +370,7 @@ export async function rateAllFive() {
                 let ans = new Answer()
                 ans.Rate(element)
             }
-            Notify.Flash("All answers rated!","success")
+           
         }
            
         

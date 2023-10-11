@@ -234,30 +234,42 @@ export async function approveAll() {
     <a>Approve Answers<a> </div>`
     document.querySelector(".pw").appendChild(approve_all)
    
-    approve_all.addEventListener("click",function(){
+    approve_all.addEventListener("click",async function(){
         let prompted = confirm("Approve all answers?")
         if (prompted){
-            allPages(
-            "Approving all answers",
-            "responses",
-            async (resp) => {
-                let userId =  window.location.href.replace("https://brainly.com/profile/", "").split("-")[1];
-                let response = resp.data.responses.find(res => String(res.user_id) === String(userId));
-                if (!response.approved.approver) {
-                let ans = new Answer();
-               
-                
-                ans.Approve(response.id);
-                
-                }
-            }
-            ).then(() => {
-                Notify.Flash("All answers approved!","success")
-            })
             
+            let userId =  window.location.href.replace("https://brainly.com/profile/", "").split("-")[1];
+            let totalList = []
+            
+            let first = await fetch(`https://brainly.com/api/28/api_responses/get_by_user?userId=${userId}&limit=100`).then(data => data.json())
+            first.data.forEach(element => {
+                if (!element.is_confirmed){
+                    totalList.push(element.id)
+                }
+            });
+            if (first.pagination.next){
+                next(first.pagination.next)
+            }
+            async function next(prev){
+                let current = await fetch(prev).then(data => data.json())
+                current.data.forEach(element => {
+                    if (!element.is_confirmed){
+                        totalList.push(element.id)
+                    }
+                    
+                });
+                
+                if (current.pagination.next){
+                    next(current.pagination.next)
+                }
+                
+            }
+            for (let index = 0; index < totalList.length; index++) {
+                const element = totalList[index];
+                let ans = new Answer()
+                ans.Approve(element)
+            }
         }
-      
-       
     })
     
       
@@ -270,27 +282,42 @@ export async function approveAll() {
     <a>Unapprove Answers<a> </div>`
     document.querySelector(".pw").appendChild(approve_all)
    
-    approve_all.addEventListener("click",function(){
+    approve_all.addEventListener("click", async function(){
         let prompted = confirm("Unapprove all answers?")
         if (prompted){
+            let userId =  window.location.href.replace("https://brainly.com/profile/", "").split("-")[1];
+            let totalList = []
             
-            allPages(
-            "Unapproving all answers",
-            "responses",
-            async (resp) => {
-                let userId =  window.location.href.replace("https://brainly.com/profile/", "").split("-")[1];
-                let response = resp.data.responses.find(res => String(res.user_id) === String(userId));
-                if (response.approved.approver) {
-                let ans = new Answer();
-               
-                
-                ans.Unapprove(response.id);
-                
+            let first = await fetch(`https://brainly.com/api/28/api_responses/get_by_user?userId=${userId}&limit=100`).then(data => data.json())
+            first.data.forEach(element => {
+                if (element.is_confirmed){
+                    totalList.push(element.id)
                 }
+            });
+            if (first.pagination.next){
+                next(first.pagination.next)
             }
-            ).then(() => {
-                Notify.Flash("All answers unapproved!","success")
-            })
+            async function next(prev){
+                let current = await fetch(prev).then(data => data.json())
+                current.data.forEach(element => {
+                    if (element.is_confirmed){
+                        totalList.push(element.id)
+                    }
+                    
+                });
+                
+                if (current.pagination.next){
+                    next(current.pagination.next)
+                }
+                
+            }
+            for (let index = 0; index < totalList.length; index++) {
+                const element = totalList[index];
+                let ans = new Answer()
+                ans.Unapprove(element)
+            }
+            
+            
             
         }
       
@@ -307,26 +334,40 @@ export async function rateAllFive() {
     <a>Rate 5 Stars<a> </div>`
     document.querySelector(".pw").appendChild(rate_all)
    
-    rate_all.addEventListener("click",function(){
+    rate_all.addEventListener("click", async function(){
         let prompted = confirm("Rate all answers 5 stars?")
         if (prompted){
-            allPages(
-                "Rating all answers",
-                "responses",
-                async (resp) => {
-                    let userId = window.location.href.replace("https://brainly.com/profile/", "").split("-")[1];
-                    let response = resp.data.responses.find(res => String(res.user_id) === String(userId));
+            let userId =  window.location.href.replace("https://brainly.com/profile/", "").split("-")[1];
+            let totalList = []
+            
+            let first = await fetch(`https://brainly.com/api/28/api_responses/get_by_user?userId=${userId}&limit=100`).then(data => data.json())
+            first.data.forEach(element => {
+                
+                totalList.push(element.id)
+                
+            });
+            if (first.pagination.next){
+                next(first.pagination.next)
+            }
+            async function next(prev){
+                let current = await fetch(prev).then(data => data.json())
+                current.data.forEach(element => {
                     
-                    let ans = new Answer();
-                   
-                  
-                    ans.Rate(response.id);
+                    totalList.push(element.id)
                     
                     
+                });
+                
+                if (current.pagination.next){
+                    next(current.pagination.next)
                 }
-                ).then(() => {
-                    Notify.Flash("All answers rated 5 stars!","success")
-                })
+                
+            }
+            for (let index = 0; index < totalList.length; index++) {
+                const element = totalList[index];
+                let ans = new Answer()
+                ans.Rate(element)
+            }
         }
            
         

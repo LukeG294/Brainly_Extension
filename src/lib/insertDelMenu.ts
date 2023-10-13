@@ -43,10 +43,10 @@ export default async function insertDelMenu(
               Form.Checkbox({ id: "pts", text: "take points" }).outerHTML
             }
             ${
-              Form.Checkbox({ id: "res-pts", text: "take back respondents' points" }).outerHTML
+              Form.Checkbox({ id: "res-pts", text: "take respondents' points" }).outerHTML
             }
             ${
-              Form.Checkbox({ id: "warn", text: "Warn User" }).outerHTML
+              Form.Checkbox({ id: "warn", text: "warn user" }).outerHTML
             }
           </div>
           <div class="confirmdel">

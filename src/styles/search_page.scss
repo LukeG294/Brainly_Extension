@@ -50,3 +50,22 @@
 
    
   
+.mdelete{
+  background:#ffc7bf !important;
+  color: black !important;
+  padding: 22px !important;
+  margin: 10px;
+  span {
+    margin-right: 7% !important;
+  }
+  .sg-spinner-container__overlay{
+    display:none;
+  }
+  &.shower{
+    .sg-spinner-container__overlay{
+      z-index:100;
+        display: flex;
+        background: rgba(255,255,255,0.5);
+    }
+  }
+}

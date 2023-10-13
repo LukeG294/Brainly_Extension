@@ -1,7 +1,7 @@
-import { insert_ticket } from "../../common/ModFunctions";
+import { insert_ticket, runCheck } from "../../common/ModFunctions";
 import Form from "scripts/Items/Form"
 import insertDelMenu from "@lib/insertDelMenu";
-import { parseQuestionLink } from "configs/config";
+import { extension_server_url, parseQuestionLink } from "configs/config";
 import Components from "scripts/Items/Components"
 
 let modbutton = /*html*/`
@@ -106,5 +106,9 @@ export async function searchMod(){
     }
     
 }
+async function init(){
+    let key = await fetch(`${extension_server_url()}/configs/feature_keys`).then(data => data.json())
+    runCheck(SearchObserver, key["search_page_mass_mod"])
+}
 
-SearchObserver()
+init()

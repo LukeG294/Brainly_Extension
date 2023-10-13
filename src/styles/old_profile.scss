@@ -242,3 +242,39 @@ span.rank > h3 > span, span.rank > h3 > a{
 #content-old{
     width:max-content!important;
 }
+.modticket{
+    display: flex;
+    height: 40px;
+    align-items: center;
+    float: right;
+   
+    justify-content: center;
+    .sg-spinner-container__overlay{
+    background:#f0f2f5!important;
+    }
+    .contenticon.shield{
+    margin-right:0px!important;
+    }
+}
+.mod-button{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background-color:#D9F0FF!important;
+    border-color: #D9F0FF!important;
+   
+    svg{
+      fill:black;
+    }
+    > div{
+      height:20px;
+      width:20px;
+    }
+  }
+
+  .mod-button{
+    width:36px;
+    height:36px;
+    padding:8px 8px 8px 8px!important;
+    border-radius:100%;
+  }

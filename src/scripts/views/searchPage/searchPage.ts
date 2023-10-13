@@ -22,7 +22,7 @@ export async function SearchObserver(){
     const observer = new MutationObserver(searchMod);
     function addFunctionifFeed(){
         let target = document.querySelector(".sg-layout__content");
-        if(!target){ return setTimeout(addFunctionifFeed, 5000); }
+        if(!target){ return setTimeout(addFunctionifFeed, 500); }
         
         observer.observe(target, { attributes: true, childList: true, subtree: true, characterData:true });
         if (added === false){

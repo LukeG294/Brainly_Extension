@@ -7,7 +7,9 @@ import Label from "../../common/Notifications/Status"
 import allPages from "../contentPage/allPages"
 import { Answer } from "../../common/Content";
 import Status from "../../common/Notifications/Status";
-
+import { extension_server_url, parseQuestionLink } from "configs/config";
+import Components from "scripts/Items/Components"
+import { insert_ticket } from "../../common/ModFunctions";
 let warn_area = /*html*/`
 <div class="warnbox">
     <div class="heading">
@@ -227,6 +229,7 @@ export async function show_recent_warnings(uid){
     }
     
 }
+
 export async function approveAll() {
    
     let approve_all = document.createElement("div")
@@ -335,4 +338,58 @@ export async function rateAllFive() {
        
     })
     
+}
+let added = false
+export async function OldObserver(){
+
+    const observer = new MutationObserver(oldProfileMod);
+    function addFunctionifFeed(){
+        let target = document.querySelector("#tasks-solved");
+        if(!target){ return setTimeout(addFunctionifFeed, 500); }
+        
+        observer.observe(target, { attributes: true, childList: true, subtree: true, characterData:true });
+        if (added === false){
+            oldProfileMod()
+            added = true
+        }
+        
+    }
+    addFunctionifFeed()
+}
+
+let modbutton = /*html*/`
+        <div class="modticket">
+            <div class="sg-spinner-container__overlay">
+            <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
+            </div>
+            <button class="mod-button sg-button--outline">
+            <div class="sg-icon sg-icon--dark sg-icon--x32">
+                <svg class="sg-icon__svg"><use xlink:href="#icon-shield"></use></svg>
+            </div>
+            </button>
+        </div>
+        `
+export async function oldProfileMod(){
+    
+    const questions = document.querySelectorAll(".task ")
+    let i = 0
+    for (let questionBox of Array.from(questions)) {
+      i+=1
+      
+      let qid = questionBox.querySelector(".task-content").querySelector("a").getAttribute("href").replace("/question/","").split("?")[0];
+      if (!questionBox.querySelector(".append")){
+        
+        questionBox.querySelector(".task-content").insertAdjacentHTML("afterend", `<div class = "sg-actions-list__hole sg-actions-list__hole--to-right append">${modbutton}</div>`);
+        
+        questionBox.querySelector(".mod-button").addEventListener("click", async function(){
+            insert_ticket(qid, questionBox.querySelector(".modticket > .sg-spinner-container__overlay"))
+          });
+         
+          
+      }
+       
+      
+    }
+    
+   
 }

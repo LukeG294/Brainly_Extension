@@ -23,6 +23,7 @@ const config = {
     ...MakeEntries("./src/scripts/views/contentPage/Index.ts", "content-scripts/js", "content_page"),
     ...MakeEntries("./src/scripts/views/modAll/Index.ts", "content-scripts/js", "mod_all"),
     ...MakeEntries("./src/scripts/views/newProfile/index.ts", "content-scripts/js", "newProfile"),
+    ...MakeEntries("./src/scripts/views/searchPage/searchPage.ts", "content-scripts/js", "search_page"),
     //react
     ...MakeEntries("./src/scripts/views/verificationQueue/Index.ts", "content-scripts/js", "verificationQueue"),
     ...MakeEntries("./src/background/background.ts", "/", "background")

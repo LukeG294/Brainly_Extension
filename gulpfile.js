@@ -40,6 +40,10 @@ gulp.task('sass', function(done){
         .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
         .pipe(concat("newProfile.css"))
         .pipe(gulp.dest("dist/content-scripts/css/"));
+    gulp.src('src/styles/search_page.scss')
+    .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
+    .pipe(concat("search_page.css"))
+    .pipe(gulp.dest("dist/content-scripts/css/"));
    
     done();
 });

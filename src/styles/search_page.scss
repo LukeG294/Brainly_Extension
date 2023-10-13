@@ -1,0 +1,44 @@
+
+.modticket{
+    display: flex;
+    height: 40px;
+    align-items: center;
+   
+   
+    justify-content: center;
+    .sg-spinner-container__overlay{
+    background:#f0f2f5!important;
+    }
+    .contenticon.shield{
+    margin-right:0px!important;
+    }
+}
+.mod-button{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background-color:#D9F0FF!important;
+    border-color: #D9F0FF!important;
+   
+    svg{
+      fill:black;
+    }
+    > div{
+      height:20px;
+      width:20px;
+    }
+  }
+
+  button.sg-button--outline{
+    width:36px;
+    height:36px;
+    padding:8px 8px 8px 8px!important;
+    border-radius:100%;
+  }
+.sg-rate-box {
+    right:5%;
+}
+[data-testid = 'thanks-label'] {
+    margin-left:10px;
+}
+

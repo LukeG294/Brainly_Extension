@@ -33,6 +33,11 @@
       "css": ["content-scripts/css/old_profile.css"]
     },
     {
+      "matches": ["*://brainly.com/app/ask*"],
+      "js": ["content-scripts/js/search_page.js"],
+      "css": ["content-scripts/css/search_page.css"]
+    },
+    {
       "matches": ["*://brainly.com/extension/verification/*"],
       "js": ["content-scripts/js/verificationQueue.js"],
       "css": ["content-scripts/css/verification_queue.css"],

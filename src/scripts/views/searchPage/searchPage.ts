@@ -1,4 +1,8 @@
 import { insert_ticket } from "../../common/ModFunctions";
+import Form from "scripts/Items/Form"
+import insertDelMenu from "@lib/insertDelMenu";
+import { parseQuestionLink } from "configs/config";
+import Components from "scripts/Items/Components"
 
 let modbutton = /*html*/`
         <div class="modticket">
@@ -33,19 +37,74 @@ export async function SearchObserver(){
 export async function searchMod(){
     
     const questions = document.querySelectorAll("[data-testid = search-item-facade-wrapper]")
-   
+    let i = 0
     for (let questionBox of Array.from(questions)) {
-      
-        
+      i+=1
+      let qid = questionBox.querySelector(".sg-text--link-unstyled").getAttribute("href").replace("/question/","").split("?")[0];
       if (!questionBox.querySelector(".append")){
-        let qid = questionBox.querySelector(".sg-text--link-unstyled").getAttribute("href").replace("/question/","").split("?")[0];
+        
         questionBox.querySelector(".sg-rate-box").insertAdjacentHTML("afterend", `<div class = "sg-actions-list__hole sg-actions-list__hole--to-right append">${modbutton}</div>`);
+        questionBox.insertAdjacentHTML("beforeend", /*html*/`
+            ${Form.Checkbox({
+            id: `checkbox-${i}`,
+            classes: ["contentCheckboxes"],
+           
+        }).outerHTML
+        }`)
         questionBox.querySelector(".mod-button").addEventListener("click", async function(){
             insert_ticket(qid, questionBox.querySelector(".modticket > .sg-spinner-container__overlay"))
           });
-    }
+         
+          
+      }
+       
       
     }
+    
+    let elem = document.getElementById("main-content")
+    if (!elem.querySelector(".mdelete")){
+        elem.insertAdjacentElement("beforeend", Components.Button({
+            type: "solid",
+            size: "m",
+            text: "Delete",
+            ClassNames: ["mdelete"],
+            icon: "trash",
+            onClick: () => {
+              document.querySelector(".mdelete").classList.add("shower")
+              if (document.querySelector(".afcmenu") !== null){
+                document.querySelector(".afcmenu").remove()
+              }
+              
+              insertDelMenu(
+                document.getElementById("main-content") ,
+                "tasks",
+                () => {
+                 
+                    return Array.from(document.querySelectorAll(".contentCheckboxes input:checked")).map(el => {
+                      return parseQuestionLink(el.closest("[data-testid = search-item-facade-wrapper]").querySelector("a").href)
+                    })
+                  
+                },
+                () => {
+                  return Array.from(document.querySelectorAll(".contentCheckboxes input")).map(el => {
+                    return parseQuestionLink(el.closest("[data-testid = search-item-facade-wrapper]").querySelector("a").href)
+                  })
+                },
+                true,
+                (element) => {
+                    
+                   document.querySelector(`a[href = "/question/${element}?referrer=searchResults"]`).parentElement.classList.add("deleted")
+                 
+                }
+                
+              )
+              
+              document.querySelector(".mdelete").classList.remove("shower")
+            }
+            
+          }));
+    }
+    
 }
 
 SearchObserver()

@@ -1,6 +1,6 @@
 **Admin:**
 
-admin_approve_all = Similar to mass-deletion, approve all answers from old profile.
+admin_approve_all = Similar to mass-deletion, approve all answers from old profile. \n
 admin_unapprove_all = Same as above but for unapprove.
 admin_content_deleter = Shows on the panel, used to mass-delete questions.
 extension_permission_mgmt = Manage ext. users & their permissions **from the old profile**. 

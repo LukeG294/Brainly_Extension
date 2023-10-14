@@ -131,7 +131,7 @@ export default new class ModFn {
       
     });
   }
-
+//jump
   async confirmAnswers(elem) {
    
     elem.insertAdjacentElement('beforeend', Components.Button({
@@ -145,60 +145,70 @@ export default new class ModFn {
     m_confirm.insertAdjacentHTML("beforeend", ` <div class="sg-spinner-container__overlay">
     <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
   </div>`)
-    m_confirm.addEventListener("click", function () {
+    m_confirm.addEventListener("click", async function () {
       
-      m_confirm.classList.add("shower")
-      let stat = new Status("confirm")
-      stat.Show("Confirming Selected Answers...", "indigo", true)
-      
-      let checkBoxes = document.querySelectorAll(".contentCheckboxes input")
-
-      let checkBoxesArr = Array.from(checkBoxes)
-    
-      checkBoxesArr.forEach(async element => {
-        let box = element.closest(".content-row")
-          //@ts-ignore
+          m_confirm.classList.add("shower")
+          let stat = new Status("confirm")
+          stat.Show("Confirming selected answers...", "indigo", true)
           
-        //@ts-expect-error
-        if (String(element.checked) === "true") {
-          //@ts-ignore
-          let link = element.closest(".content-row").getElementsByTagName('a')[0].href
-          let id = parseQuestionLink(link)
-          
-          let qObj = new Question()
-          let res = await qObj.Get(id)
-
-          if (res.success) {
-            
-           
-            //@ts-expect-error
-            let answers = res.data.responses
-            let times = 0
-
-            if (answers.length === 1) {
-              times = 1
-            } else {
-              times = 2
-            }
-            for (let x = 0; x < times; x++) {
-
-              let user = String(answers[x]["user_id"])
-              if (user === String(window.location.href.split("/")[5])) {
-                let ansObj = new Answer()
-                await ansObj.Confirm(answers[x]["id"])
-                
-                
-              }
-              //@ts-ignore
-              box.style.backgroundColor = '#D9F0FF'
-            }
-            m_confirm.classList.remove("shower")
-          } else {
-            console.log("Skipped a ticket due to reservation by another mod.")
+          let checkBoxes = document.querySelectorAll(".contentCheckboxes input")
+          let done = 0
+          let error = 0
+          let userid = window.location.href.split("/")[5]
+          let page = window.location.href.split("/")[7]
+          if (!page){
+            page = "1"
           }
+          let pageAnswers = await fetch(`https://brainly.com/api/28/api_responses/get_by_user?userId=${userid}&limit=25&page=${page}`).then(data => data.json())
+          for (let i = 0; i < checkBoxes.length; i++) {
+            //@ts-ignore
+            if (String(checkBoxes[i].checked) === "true") {
 
-        }
-      });
+              //@ts-ignore
+              let link = checkBoxes[i].closest(".content-row").getElementsByTagName('a')[0].href
+              //@ts-ignore
+              checkBoxes[i].closest(".content-row").style.backgroundColor = '#fedd8e'
+              let id = parseQuestionLink(link)
+            
+              //@ts-ignore
+              let box = checkBoxes[i].closest(".content-row")
+              //@ts-ignore
+              box.style.backgroundColor = '#d9f0ff'
+              
+              try {
+                let ans = new Answer()
+                //@ts-ignore
+                await ans.Confirm(pageAnswers.data[i].id)
+                done += 1
+               
+                
+              } catch(err) {
+                error += 1 
+              }
+                  
+                  
+                
+              
+             
+              
+              
+              
+            }
+              
+              
+            }
+          
+            m_confirm.classList.remove("shower")
+            if (error === 0){
+              Notify.Flash("Confirmed successfully!", "success")
+            } else if (error === 1) {
+              Notify.Flash(`Error with ${error} item. ${done} opened. Check ticket reservations.`, "error")
+            } else {
+              Notify.Flash(`Error with ${error} items. ${done} opened. Check ticket reservations.`, "error")
+            }
+          
+        
+     
       
       
       

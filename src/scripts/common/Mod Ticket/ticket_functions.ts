@@ -15,9 +15,10 @@ function add_log(log){
     let time = log.data[i].time;
     if(log.data[i].class === "added" || log.data[i].class === "edited"){
       let user = log.users_data.find(({id}) => id === log.data[i].user_id).nick;
+      let user_id = log.users_data.find(({id}) => id === log.data[i].user_id).id;
       document.querySelector(".log").insertAdjacentHTML("beforeend",/*html*/`
       <div class="log-item">
-        <div class = "content">${log.data[i].text.replace('%1$s',"<div class = 'user'>"+user+"</div>")}</div>
+        <div class = "content">${log.data[i].text.replace('%1$s',`<a class = 'user' target=_blank href = "/profile/${user}-${user_id}">${user}</a>`)}</div>
         <div class="datetime">
           <div class="date rightdot">${date}</div>
           <div class="time">${time}</div>
@@ -28,9 +29,11 @@ function add_log(log){
     if(log.data[i].class === "deleted" || log.data[i].class === "accepted" || log.data[i].class === "reported" || log.data[i].class === "best"){
       let mod = log.users_data.find(({id}) => id === log.data[i].user_id).nick;
       let deleted = log.users_data.find(({id}) => id === log.data[i].owner_id).nick;
+      let mod_id = log.users_data.find(({id}) => id === log.data[i].user_id).id
+      let deleted_id = log.users_data.find(({id}) => id === log.data[i].owner_id).id
       document.querySelector(".log").insertAdjacentHTML("beforeend",/*html*/`
       <div class="log-item">
-        <div class = "content">${log.data[i].text.replace("%1$s", "<div class = 'user'>"+mod+"</div>").replace("%3$s", "<div class = 'user'>&nbsp;"+ deleted+"</div>")}</div>
+        <div class = "content">${log.data[i].text.replace("%1$s", `<a class = 'user' target=_blank href = "/profile/${mod}-${mod_id}">${mod}</a>`).replace("%3$s", `<a class = 'user' target=_blank href = "/profile/${deleted}-${deleted_id}">&nbsp;${deleted}</a>`)}</div>
         <div class="datetime">
           <div class="date rightdot">${date}</div>
           <div class="time">${time}</div>

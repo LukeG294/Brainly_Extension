@@ -1,4 +1,4 @@
-Admin:
+**Admin:**
 
 admin_approve_all = Similar to mass-deletion, approve all answers from old profile.
 admin_unapprove_all = Same as above but for unapprove.
@@ -6,7 +6,7 @@ admin_content_deleter = Shows on the panel, used to mass-delete questions.
 extension_permission_mgmt = Manage ext. users & their permissions **from the old profile**. 
 user_manager = The other way to add users to the extension. Also allows for changing permissions, mass-deleting accounts, & sending messages.
 
-Not sensitive:
+**Not sensitive:**
 
 homepage_tickets = Tickets next to questions on the homepage.
 old_profile_tickets = Same but on old profile.
@@ -18,7 +18,7 @@ reported_comments_deleter = Probably will not be used but used to delete all com
 show_recent_warnings = Recent warnings section on old profile.
 
 
-Sensitive:
+**Sensitive:**
 
 search_page_mass_mod = Ability to mass-moderate on the search page (similar to old Brainly Tools)
 selective_answer_AFC = Ask for correction for multiple answers on content page.
@@ -31,7 +31,7 @@ selective_question_deletion = Same as above but for question deleting.
 
 
 
-Subteam / Other:
+**Subteam / Other:**
 
 request_verification_button = VT permission to allow answers to place content in the queue.
 verification_queue = VT permission to allow Content Verifiers to handle content. Can give this to answerers/requesters as well if they are curious and want to see the queue!

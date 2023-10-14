@@ -31,9 +31,8 @@ export default new class ModFn {
     mass_approve.addEventListener("click", async function () {
       mass_approve.classList.add("shower")
       let checkBoxes = document.querySelectorAll(".contentCheckboxes input")
-      
-     
-     
+      let error = 0
+      let done = 0
       for (let i = 0; i < checkBoxes.length; i++) {
         
         //@ts-ignore
@@ -46,30 +45,43 @@ export default new class ModFn {
           let id = parseQuestionLink(link)
           
           let qobj = new Question()
-          let questionObjectData = await qobj.Get(id)
-          //@ts-ignore
-          let answers = questionObjectData.data.responses
-          let times = 0
-          if (answers.length === 1) { times = 1 } else { times = 2 }
-          for (let x = 0; x < times; x++) {
-            let user = String(answers[x]["user_id"])
-            if (user === String(window.location.href.split("/")[5])) {
-              let answerObj = new Answer()
-              try {
-                await answerObj.Approve(answers[x]["id"])
-              } catch(err){
-                //pass
+          let questionObjectData = {}
+          try {
+            questionObjectData = await qobj.Get(id)
+            //@ts-ignore
+            let answers = questionObjectData.data.responses
+            let times = 0
+            if (answers.length === 1) { times = 1 } else { times = 2 }
+            for (let x = 0; x < times; x++) {
+              let user = String(answers[x]["user_id"])
+              if (user === String(window.location.href.split("/")[5])) {
+                let answerObj = new Answer()
+                try {
+                  done += 1
+                  await answerObj.Approve(answers[x]["id"])
+                } catch(err){
+                  //pass
+                }
+                
               }
-              
             }
+          } catch (err){
+            error +=1
           }
+          
           
           
         }
       }
       mass_approve.classList.remove("shower")
       
-      Notify.Flash("Approved successfully", "success")
+      if (error === 0){
+        Notify.Flash("Approved successfully!", "success")
+      } else if (error === 1) {
+        Notify.Flash(`Error with ${error} item. ${done} approved. Check ticket reservations.`, "error")
+      } else {
+        Notify.Flash(`Error with ${error} items. ${done} approved. Check ticket reservations.`, "error")
+      }
      
     });
   }
@@ -99,33 +111,36 @@ export default new class ModFn {
           let id = parseQuestionLink(link)
 
           let qObj = new Question()
-          let res = await qObj.Get(id)
-          //@ts-ignore
-          let answers = res.data.responses
-          let times = 0
-          
-          if (answers.length === 1) { times = 1 } else { times = 2 }
-          for (let x = 0; x < times; x++) {
-            let user = String(answers[x]["user_id"])
-            if (user === String(window.location.href.split("/")[5])) {
-              let answer = new Answer()
-              let p = await answer.Unapprove(answers[x]["id"])
-              if (p.success === false){
-                fail += 1
-              } else {
-                suc += 1
+          let res = {}
+          try {
+            res = await qObj.Get(id)
+            //@ts-ignore
+            let answers = res.data.responses
+            let times = 0
+            
+            if (answers.length === 1) { times = 1 } else { times = 2 }
+            for (let x = 0; x < times; x++) {
+              let user = String(answers[x]["user_id"])
+              if (user === String(window.location.href.split("/")[5])) {
+                let answer = new Answer()
+                let p = await answer.Unapprove(answers[x]["id"])
+                if (p.success === false){
+                  fail += 1
+                } else {
+                  suc += 1
+                }
               }
             }
+          } catch(err) {
+            fail += 1
           }
-          
-          
         }
       }
 
       if (fail > 0){
-        Notify.Flash(`${suc} unverified, ${fail} could not unverify. Check permissions.`, "error")
+        Notify.Flash(`${suc} unverified, ${fail} could not unverify. Check permissions & reservations.`, "error")
       } else {
-        Notify.Flash(`${suc} unverified successfully`, "success")
+        Notify.Flash(`${suc} unverified successfully!`, "success")
       } 
       //@ts-ignore
       mass_unverify.classList.remove("shower")

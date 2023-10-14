@@ -11,12 +11,6 @@ export function parseQuestionLink(link: string){
 export function currentLocalizationFile(){
     return "en_US.json"
 }
-export function pageElement(selector: string){
-    return document.querySelector(selector)
-}
-export function pageElementAll(selector: string){
-    return document.querySelectorAll(selector)
-}
 export async function main_control_permissions(){
 
     let permissions = await fetch(`${extension_server_url()}/configs/permission_keys`).then(data => data.json())

@@ -1,7 +1,6 @@
 import {
-  extension_server_url,
-  pageElement,
-  pageElementAll
+  extension_server_url
+ 
 } from "configs/config";
 import Notify from "../../common/Notifications/Notify"
 import User from "../../common/User"
@@ -200,7 +199,7 @@ export async function requestApproval() {
                   let thisResponse = responsesData[i]
                   let databaseId = thisResponse.id
                   let answerPreview = thisResponse.content
-                  let qinfo = JSON.parse(pageElement("article").getAttribute("data-z"))
+                  let qinfo = JSON.parse(document.querySelector("article").getAttribute("data-z"))
                       //@ts-ignore
                   let requesterID = JSON.parse(pageElement("meta[name='user_data']").content).id
                       //@ts-ignore

@@ -14,7 +14,6 @@ import Extension from "../../../locales/en/localization.json"
 import insertDelMenu from "@lib/insertDelMenu"
 
 export async function confirmDeletion(type: "questions" | "answers") {
-    let counter = 0;
     let stat = new Status("conf")
     stat.Show("Deleting Selected Content...", "indigo", true)
     let checkBoxesArr = Array.from(document.querySelectorAll(".contentCheckboxes input:checked"));

@@ -12,7 +12,6 @@ export function currentLocalizationFile(){
     return "en_US.json"
 }
 export async function main_control_permissions(){
-
     let permissions = await fetch(`${extension_server_url()}/configs/permission_keys`).then(data => data.json())
     return permissions
 }

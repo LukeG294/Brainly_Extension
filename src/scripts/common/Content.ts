@@ -46,12 +46,16 @@ export class Answer{
           }).then(data => data.json())
     }
     async AllowCorrection(reason:string, answerID:string){
-        await BrainlyAPI.Legacy(`POST`, 'moderation_new/wrong_report', {
-            "model_id":answerID,
-            "model_type_id":2,
-            "reason": reason,
-            "schema": "",
-        })
+        let x = await fetch('https://brainly.com/api/28/moderation_new/wrong_report', {
+            method: "POST",
+            body: JSON.stringify({
+                "model_id":answerID,
+                "model_type_id":2,
+                "reason": reason,
+                "schema": ""
+            })
+        }).then(data => data.json());
+        return x
     }
 }
 

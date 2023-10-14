@@ -200,7 +200,7 @@ export default new class ModFn {
         }
       });
       
-      Notify.Flash("Confirmed selected answers!", "success");
+      
       
       stat.Close()
     });
@@ -274,6 +274,14 @@ export default new class ModFn {
         confirm_afc.addEventListener("click", async function () {
           confirm_afc.classList.add("shower")
         let checkBoxes = document.querySelectorAll(".contentCheckboxes input")
+        let error = 0
+        let done = 0
+        let userid = window.location.href.split("/")[5]
+        let page = window.location.href.split("/")[7]
+        if (!page){
+          page = "1"
+        }
+        let pageAnswers = await fetch(`https://brainly.com/api/28/api_responses/get_by_user?userId=${userid}&limit=25&page=${page}`).then(data => data.json())
         for (let i = 0; i < checkBoxes.length; i++) {
           //@ts-ignore
           if (String(checkBoxes[i].checked) === "true") {
@@ -283,33 +291,46 @@ export default new class ModFn {
             //@ts-ignore
             checkBoxes[i].closest(".content-row").style.backgroundColor = '#fedd8e'
             let id = parseQuestionLink(link)
-            console.log(id)
-            let qObj = new Question()
-            let res = await qObj.Get(id)
+           
             //@ts-ignore
+            let box = checkBoxes[i].closest(".content-row")
+            //@ts-ignore
+            box.style.backgroundColor = '#fedd8e'
             
-            let answers = res.data.responses
-            
-            let times = 0
-  
-            if (answers.length === 1) { times = 1 } else { times = 2 }
-            for (let x = 0; x < times; x++) {
-              let user = String(answers[x]["user_id"])
-              if (user === String(window.location.href.split("/")[5])) {
-                let answer = new Answer()
-                //@ts-ignore
-               
-                answer.AllowCorrection(document.querySelector(".afc-reason").innerText,answers[x]["id"])
-                
+            try {
+              let ans = new Answer()
+              //@ts-ignore
+              let r = await ans.AllowCorrection(document.querySelector(".afc-reason").value,pageAnswers.data[i].id)
+              if (r.success){
+                done += 1
+              } else {
+                error += 1
               }
+              
+            } catch(err) {
+              error += 1 
             }
+                
+                
+              
+            
+            confirm_afc.classList.remove("shower")
+            
+            
             
           }
           
           
         }
-        Notify.Flash("Opened for correction","success")
+       
         confirm_afc.classList.remove("shower")
+        if (error === 0){
+          Notify.Flash("Opened successfully!", "success")
+        } else if (error === 1) {
+          Notify.Flash(`Error with ${error} item. ${done} opened. Check ticket reservations or see if it was already opened.`, "error")
+        } else {
+          Notify.Flash(`Error with ${error} items. ${done} opened. Check ticket reservations or see if they were already opened.`, "error")
+        }
         
           })
         } else {document.querySelector(".afcmenu").remove();}

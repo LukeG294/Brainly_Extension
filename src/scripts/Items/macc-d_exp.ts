@@ -26,6 +26,7 @@ export function macc_d(presets) {
             <button class="sg-button sg-button--m sg-button--solid-light add-user"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Give Extension Permission</span></button>
             <button class="sg-button sg-button--m sg-button--solid-light remove-user"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Remove Extension Permission</span></button>
             <button class="sg-button sg-button--m sg-button--solid-light send-message"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Send Message</span></button>
+            <button class="sg-button sg-button--m sg-button--solid-light delete-acc"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Delete Account</span></button>
             
         </div>
     </div>

@@ -352,11 +352,17 @@
     .presets{
       margin:8px 0px;
     }
-    .delete-acc, .delete-content, .delete-questions, .remove-user{
+    .delete-acc, .delete-content, .delete-questions{
       width:100%;
       margin-top:8px;
       background-color:#ff7968!important;
       color:white;
+    }
+    .remove-user{
+      width:100%;
+        margin-top:8px;
+        background-color:#fbbe2e!important;
+        color:white;
     }
     .count{
       display: inline-flex;

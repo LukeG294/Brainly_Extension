@@ -33,42 +33,28 @@ export default new class ModFn {
       let checkBoxes = document.querySelectorAll(".contentCheckboxes input")
       let error = 0
       let done = 0
+      let userid = window.location.href.split("/")[5]
+      let page = window.location.href.split("/")[7]
+      if (!page){
+        page = "1"
+      }
+      let pageAnswers = await fetch(`https://brainly.com/api/28/api_responses/get_by_user?userId=${userid}&limit=25&page=${page}`).then(data => data.json())
       for (let i = 0; i < checkBoxes.length; i++) {
         
         //@ts-ignore
         if (String(checkBoxes[i].checked) === "true") {
+          
           //@ts-ignore
           let box = checkBoxes[i].closest(".content-row")
           //@ts-ignore
           box.style.backgroundColor = '#E3F7ED'
-          let link = checkBoxes[i].closest(".content-row").getElementsByTagName('a')[0].href
-          let id = parseQuestionLink(link)
-          
-          let qobj = new Question()
-          let questionObjectData = {}
           try {
-            questionObjectData = await qobj.Get(id)
-            //@ts-ignore
-            let answers = questionObjectData.data.responses
-            let times = 0
-            if (answers.length === 1) { times = 1 } else { times = 2 }
-            for (let x = 0; x < times; x++) {
-              let user = String(answers[x]["user_id"])
-              if (user === String(window.location.href.split("/")[5])) {
-                let answerObj = new Answer()
-                try {
-                  done += 1
-                  await answerObj.Approve(answers[x]["id"])
-                } catch(err){
-                  //pass
-                }
-                
-              }
-            }
-          } catch (err){
-            error +=1
+            let ans = new Answer()
+            ans.Approve(pageAnswers.data[i].id) 
+            done += 1
+          } catch(err) {
+            error += 1 
           }
-          
           
           
         }
@@ -103,44 +89,39 @@ export default new class ModFn {
       let checkBoxes = document.querySelectorAll(".contentCheckboxes input")
       let suc = 0
       let fail = 0
+      let userid = window.location.href.split("/")[5]
+      let page = window.location.href.split("/")[7]
+      if (!page){
+        page = "1"
+      }
+      let pageAnswers = await fetch(`https://brainly.com/api/28/api_responses/get_by_user?userId=${userid}&limit=25&page=${page}`).then(data => data.json())
       for (let i = 0; i < checkBoxes.length; i++) {
         //@ts-ignore
         if (String(checkBoxes[i].checked) === "true") {
           //@ts-ignore
           let link = checkBoxes[i].closest(".content-row").getElementsByTagName('a')[0].href
-          let id = parseQuestionLink(link)
-
-          let qObj = new Question()
-          let res = {}
+          
+         
           try {
-            res = await qObj.Get(id)
-            //@ts-ignore
-            let answers = res.data.responses
-            let times = 0
-            
-            if (answers.length === 1) { times = 1 } else { times = 2 }
-            for (let x = 0; x < times; x++) {
-              let user = String(answers[x]["user_id"])
-              if (user === String(window.location.href.split("/")[5])) {
-                let answer = new Answer()
-                let p = await answer.Unapprove(answers[x]["id"])
-                if (p.success === false){
-                  fail += 1
-                } else {
-                  suc += 1
-                }
-              }
+            let ans = new Answer()
+            let perm = ans.Unapprove(pageAnswers.data[i].id).then(data => data.json())
+            if (perm["success"]) {
+              suc += 1
+            } else {
+              fail += 1
             }
+            
           } catch(err) {
-            fail += 1
+            fail += 1 
           }
+
         }
       }
 
       if (fail > 0){
-        Notify.Flash(`${suc} unverified, ${fail} could not unverify. Check permissions & reservations.`, "error")
+        Notify.Flash(`${suc} unverified, ${fail} could not unverify. Check permissions & reservations. Might already be verified.`, "error")
       } else {
-        Notify.Flash(`${suc} unverified successfully!`, "success")
+        Notify.Flash(`${suc} unverified successfully`, "success")
       } 
       //@ts-ignore
       mass_unverify.classList.remove("shower")

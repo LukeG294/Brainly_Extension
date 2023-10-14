@@ -41,7 +41,7 @@ export async function mass_accdel(){
         let rsn = document.querySelector(".presets input:checked").getAttribute("value");
         (<HTMLInputElement>document.querySelector(".deletion-reason")).value = rsn;
     });
-    /*
+    
     document.querySelector(".delete-acc").addEventListener("click", async function(){
         
         //@ts-expect-error
@@ -64,7 +64,7 @@ export async function mass_accdel(){
         }
         
     })
-    */
+    
     document.querySelector(".add-user").addEventListener("click", async function(){
         
         //@ts-expect-error

@@ -402,7 +402,8 @@ export default new class ModFn {
 
       stat.Show("Fetching Reported Content...", "indigo", true)
       for (let p = 1; p < pagenum; p++) {
-        console.log("page", p)
+       
+        
         //@ts-ignore
         let content = await fetch(`https://brainly.com/users/user_content/${id}/${type}/${p}/0`).then(data => data.text())
         //@ts-ignore
@@ -410,7 +411,8 @@ export default new class ModFn {
 
         if (!responseHTML.querySelector(".border-error")) {
           //@ts-ignore
-          console.log(responseHTML);
+       
+          
           let content = responseHTML.querySelector("tbody").children;
           let subjects = await fetch(`https://brainly.com/api/28/api_config/desktop_view`).then(data => data.json()).then(data => data.data.subjects);
           for (let i = 0; i < content.length; i++) {

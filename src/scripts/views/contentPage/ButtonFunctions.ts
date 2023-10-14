@@ -21,7 +21,7 @@ export async function confirmDeletion(type: "questions" | "answers") {
     const chunkSize = 10;
     for (let i = 0; i < checkBoxesArr.length; i += chunkSize) {
         let chunk = checkBoxesArr.slice(i, i + chunkSize);
-        console.log(chunk)
+       
 
         chunk.forEach(async (element) => {
             if ((<HTMLInputElement>element).checked) {

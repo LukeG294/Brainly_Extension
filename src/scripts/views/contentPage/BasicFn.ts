@@ -132,7 +132,7 @@ export default new class BasicFn{
                         if (response.approved.approver !== null) {content.children[i].style.backgroundColor = '#F0FAF5'}
                         //@ts-ignore
                         if (response.settings.is_marked_abuse === true) {content.children[i].style.backgroundColor = '#FFE8E5'}
-                        console.log(response)
+                     
                         //@ts-ignore
                         if (response.wrong_report) {content.children[i].style.backgroundColor = '#fedd8e'}
                         // brainliest if (response.best === true) {content.children[i].querySelector(".a-icons").classList.add("best")}

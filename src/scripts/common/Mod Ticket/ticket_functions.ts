@@ -384,7 +384,7 @@ function add_answer(ans,res,a, basic_data, users_data){
   if (res.data.responses[a].wrong_report){
     add_report(res.data.responses[a].wrong_report,basic_data, this_ans, "AFCReport")
   }
-  this_ans.querySelector(".text-subj > div:nth-child(2)").innerHTML =  `${answerer.stats.answers} Answer`
+  this_ans.querySelector(".text-subj > div:nth-child(2)").innerHTML =  `${answerer.stats.answers} Answers`
   this_ans.querySelector(".time").innerHTML = get_time_diff(res.data.responses[a].created)
 
   user_content_data(answerer, this_ans, ans);

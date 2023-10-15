@@ -201,11 +201,11 @@ export async function requestApproval() {
                   let answerPreview = thisResponse.content
                   let qinfo = JSON.parse(document.querySelector("article").getAttribute("data-z"))
                       //@ts-ignore
-                  let requesterID = JSON.parse(pageElement("meta[name='user_data']").content).id
+                  let requesterID = JSON.parse(document.querySelector("meta[name='user_data']").content).id
                       //@ts-ignore
-                  let requesterAv = JSON.parse(pageElement("meta[name='user_data']").content).avatar
+                  let requesterAv = JSON.parse(document.querySelector("meta[name='user_data']").content).avatar
                       //@ts-expect-error
-                  let requesterName = JSON.parse(pageElement("meta[name='user_data']").content).nick
+                  let requesterName = JSON.parse(document.querySelector("meta[name='user_data']").content).nick
                   let user = await User.Data(thisResponse.userId)
                   chrome.runtime.sendMessage({ message:"add_verify", data: {id:answer, object:{"answerDBid": databaseId, "settings":thisResponse, content: answerPreview, "qid": qinfo.id, "subject":d_reference.data.subjects.find(({id}) => id === qinfo.subject_id).icon, "user": user, "requesterId": requesterID, "requesterName": requesterName,"requesterAv": requesterAv}}}, function () {});
                   //@ts-ignore

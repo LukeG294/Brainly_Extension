@@ -134,9 +134,9 @@ export function cancel_html(){
   </button>
   </div>`
 }
-export function already_requested_html(){
+export function already_requested_html(i){
   return `<div class = "sg-flex sg-flex--margin-left-xxs">
-  <button class="is-requested queueButtons sg-button sg-button--m sg-button--solid-mint">
+  <button id="requested-${i}" class="is-requested queueButtons sg-button sg-button--m sg-button--solid-mint">
   <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
     <span class="sg-button__icon sg-button__icon--m">
       <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">filter filled</text>
@@ -145,13 +145,13 @@ export function already_requested_html(){
   </button>
   </div>`
 }
-export function already_rejected_html(){
+export function already_rejected_html(i){
   return `<div class = "sg-flex sg-flex--margin-left-xxs">
-  <button class="is-rejected queueButtons sg-button sg-button--m sg-button--solid-mint">
+  <button id="rejected-${i}" class="is-rejected queueButtons sg-button sg-button--m sg-button--solid-mint">
   <div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div>
     <span class="sg-button__icon sg-button__icon--m">
-      <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">filter filled</text>
-          <use xlink:href="#icon-exclamation_mark" aria-hidden="true"></use>
+      <div class="sg-icon sg-icon--adaptive sg-icon--x24"><svg class="sg-icon__svg" style="fill: #ff7968 !important;" role="img"  focusable="false"><text id="title-add_more-9qmrbd" hidden="">filter filled</text>
+          <use xlink:href="#icon-block" aria-hidden="true"></use>
         </svg></div>
   </button>
   </div>`
@@ -185,13 +185,21 @@ export async function requestApproval() {
           //@ts-ignore
           if (!resp.content && !past_approvals.requester) {  
               let beingAnswered = document.querySelector(".brn-qpage-next-answer-box")
-             
+              let trueI = i
               if (answers.length === 1 && !beingAnswered) {
-                areaToAppend[i].insertAdjacentHTML("afterbegin", /*html*/ to_request_html())
+                if (areaToAppend[i].parentElement.getAttribute("data-testid") !== 'question_box_options_list'){
+                  areaToAppend[i].insertAdjacentHTML("afterbegin", /*html*/ to_request_html())
+                }
               } else if (beingAnswered) {
-               areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ to_request_html())
+                if (areaToAppend[i+1].parentElement.getAttribute("data-testid") !== 'question_box_options_list'){
+                  areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ to_request_html())
+                }
+               trueI += 1
               } else {
-                areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ to_request_html())
+                if (areaToAppend[i+1].parentElement.getAttribute("data-testid") !== 'question_box_options_list'){
+                  areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ to_request_html())
+                }
+                trueI += 1
               }
               let element = document.querySelectorAll(".queueButtons")[i]
               if (!element.classList.contains('inserted')) {
@@ -232,28 +240,35 @@ export async function requestApproval() {
            
           } else if (past_approvals.requester){
             let beingAnswered = document.querySelector(".brn-qpage-next-answer-box")
+            let trueI = i
             //@ts-ignore
             if (answers.length === 1 && !beingAnswered) {
-              areaToAppend[i].insertAdjacentHTML("afterbegin", /*html*/ already_rejected_html())
+              areaToAppend[i].insertAdjacentHTML("afterbegin", /*html*/ already_rejected_html(i))
             } else if (beingAnswered){
-              areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ already_rejected_html())
+              areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ already_rejected_html(i))
+              trueI += 1
             } else {
-              areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ already_rejected_html())
+              areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ already_rejected_html(i))
+              trueI += 1
             }
-            document.querySelectorAll(".is-rejected")[i].addEventListener("click",function(){
+            
+            document.getElementById(`rejected-${i}`).addEventListener("click",function(){
               Notify.Dialog("Already Rejected", `This item was requested to be approved by ${past_approvals.requester.name} and was rejected by ${past_approvals.handler.name}.`, false, false)
             });
            } else {
             let beingAnswered = document.querySelector(".brn-qpage-next-answer-box")
+            let trueI = i
             //@ts-ignore
             if (answers.length === 1 && !beingAnswered) {
-              areaToAppend[i].insertAdjacentHTML("afterbegin", /*html*/ already_requested_html())
+              areaToAppend[i].insertAdjacentHTML("afterbegin", /*html*/ already_requested_html(i))
             } else if (beingAnswered){
-              areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ already_requested_html())
+              trueI+=1
+              areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ already_requested_html(i))
             } else {
-              areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ already_requested_html())
+              trueI+=1
+              areaToAppend[i+1].insertAdjacentHTML("afterbegin", /*html*/ already_requested_html(i))
             }
-            document.querySelector(".is-requested").addEventListener("click",function(){
+            document.getElementById(`requested-${i}`).addEventListener("click",function(){
               Notify.Dialog("Under Review", `This item was requested by ${resp.requesterName} and is in the queue.`, false, false)
             });
 

@@ -3,7 +3,7 @@ import { SubjectIconBox, SubjectIcon, Media, Avatar, Text, Button, Icon, Label, 
 import {approveAnswer, removeAnswer} from "../VerificationQueueFunctions"
 import {get_time_diff} from "../../../common/CommonFunctions"
 import {insert_ticket} from "../../../common/ModFunctions"
-
+import Notify from "../../../common/Notifications/Notify"
 interface Item{
     key: string;
     content: string;
@@ -25,6 +25,21 @@ export default function Item({ content, thanks, rating, created, ansdata, faunad
         av = requesterAv
     } else {
         av = 'https://brainly.com/img/avatars/100-ON.png'
+    }
+    async function remove_confirm(){
+        async function exec(){
+            await removeAnswer(ansdata.settings.id, document.querySelector(`[ datatype = '${ansdata.settings.id}'] .ignoreRequest`))
+        }
+        Notify.Dialog("Confirm Rejection", `Are you sure you'd like to reject the request made by ${requesterName}?`, exec, true)
+        
+    }
+    async function approve_confirm(){
+        async function exec(){
+            await approveAnswer(ansdata.settings.id, ansdata.answerDBid, document.querySelector(`[ datatype = '${ansdata.settings.id}'] .approveRequest`))
+
+        }
+        Notify.Dialog("Confirm Approval", `Are you sure you'd like to approve the request made by ${requesterName}?`, exec, true)
+        
     }
     return(
         <div className = "item" datatype = {ansdata.settings.id}>
@@ -72,7 +87,7 @@ export default function Item({ content, thanks, rating, created, ansdata, faunad
                         <Spinner size={"xsmall"} />
                         <Button
                         
-                        onClick={async () =>  await removeAnswer(ansdata.settings.id, document.querySelector(`[ datatype = '${ansdata.settings.id}'] .ignoreRequest`))}
+                        onClick={async () =>  remove_confirm()}
                         icon={<Icon color="adaptive" size={24} type="close"/>}
                         iconOnly
                         size="m"
@@ -83,7 +98,7 @@ export default function Item({ content, thanks, rating, created, ansdata, faunad
                     <div className="approveRequest"> 
                         <Spinner size={"xsmall"} />
                         <Button
-                        onClick={async () =>  await approveAnswer(ansdata.settings.id, ansdata.answerDBid, document.querySelector(`[ datatype = '${ansdata.settings.id}'] .approveRequest`))}
+                        onClick={async () =>  approve_confirm()}
                         icon={<Icon color="adaptive" size={24} type="check"/>}
                         iconOnly
                         size="m"

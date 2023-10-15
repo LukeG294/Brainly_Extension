@@ -210,6 +210,7 @@ export function md_content(){
                         await question.Confirm(parseInt(arr[index]))
                         
                     }
+                    Notify.Flash("Confirmed!","success")
                 })
 
                 document.querySelector(".delete-questions").addEventListener("click",async function(){

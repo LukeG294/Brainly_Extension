@@ -179,6 +179,7 @@ export default new class ModFn {
                 let ans = new Answer()
                 //@ts-ignore
                 await ans.Confirm(pageAnswers.data[i].id)
+                
                 done += 1
                
                 
@@ -200,11 +201,11 @@ export default new class ModFn {
           
             m_confirm.classList.remove("shower")
             if (error === 0){
-              Notify.Flash("Confirmed successfully!", "success")
+              Notify.Flash("Confirmed successfully! Double check this action worked for all selected content. This is done on the backend so we don't know if there was a reserved ticket!", "success")
             } else if (error === 1) {
-              Notify.Flash(`Error with ${error} item. ${done} opened. Check ticket reservations.`, "error")
+              Notify.Flash(`Error with ${error} item. ${done} confirmed. Check ticket reservations.`, "error")
             } else {
-              Notify.Flash(`Error with ${error} items. ${done} opened. Check ticket reservations.`, "error")
+              Notify.Flash(`Error with ${error} items. ${done} confirmed. Check ticket reservations.`, "error")
             }
           
         
@@ -233,23 +234,37 @@ export default new class ModFn {
       stat.Show("Confirming Selected Questions...", "indigo", true)
       let checkBoxes = document.querySelectorAll(".contentCheckboxes input")
       let ansObj = new Question();
+      let err = 0
+      let suc = 0
       for (let i = 0; i < checkBoxes.length; i++) {
         //@ts-ignore
         if (String(checkBoxes[i].checked) === "true") {
           //@ts-ignore
           let link = checkBoxes[i].closest(".content-row").getElementsByTagName('a')[0].href
           let id = parseQuestionLink(link)
-          ansObj.Confirm(parseInt(id))
-          const delay = ms => new Promise(res => setTimeout(res, ms));
-          await delay(300)
-          //@ts-ignore
-          checkBoxes[i].closest(".content-row").style.backgroundColor = '#D9F0FF'
+          let r = await ansObj.Confirm(parseInt(id))
+          if (!r.success) {
+            err+=1
+          } else {
+            suc+=1
+            //@ts-ignore
+            checkBoxes[i].closest(".content-row").style.backgroundColor = '#D9F0FF'
+          }
+         
+         
+          
         }
       }
 
       stat.Close();
       m_confirmQ.classList.remove("shower")
-      Notify.Flash("Confirmed selected questions!", "success")
+      if (err === 0){
+        Notify.Flash("Confirmed successfully!", "success")
+      } else if (err === 1) {
+        Notify.Flash(`Error with ${err} item. ${suc} confirmed. Check ticket reservations.`, "error")
+      } else {
+        Notify.Flash(`Error with ${err} items. ${suc} confirmed. Check ticket reservations.`, "error")
+      }
     });
   }
   async afc(elem){

@@ -60,14 +60,17 @@ export class Answer{
 }
 
 export class Question{
-    Confirm(id:number) {
-        BrainlyAPI.Legacy(`POST`, "moderation_new/accept", {
+    
+    async Confirm(id:number){
+        let r = await fetch("https://brainly.com/api/28/moderation_new/accept", {
+            method: "POST",
+            body: JSON.stringify({
             "model_type_id":1,
             "model_id":id,
-            "schema":""
-        })
+            "schema":""})
+        }).then(data => data.json());
+        return r
     }
-
     async Delete(id:string, reason:string, warn:boolean, take_point:boolean, give_points:boolean){
         await BrainlyAPI.Legacy(`POST`, 'moderation_new/delete_task_content', {
             "reason_id":2,

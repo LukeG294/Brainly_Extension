@@ -45,17 +45,19 @@ export function RenderItems(items: {
     let id = row.content.split("/question/")[1].split('">')[0];
     let subjectIcon = row.subject.toLowerCase()
     if (subjectIcon === "social studies"){
-      subjectIcon = "social-science"
+      subjectIcon = "sociology"
     } else if (subjectIcon === "computers and technology"){
-      subjectIcon = "technology"
+      subjectIcon = "informatics"
     } else if (subjectIcon === "world languages"){
-      subjectIcon = "language"
-    } else if (subjectIcon === "arts"){
+      subjectIcon = "otherlanguages"
+    } else if (subjectIcon === "artmusic"){
       subjectIcon = "art"
     } else if (subjectIcon === "medicine"){
-      subjectIcon = "health"
+      subjectIcon = "first-aid"
     } else if (subjectIcon === "engineering"){
-      subjectIcon = "skills"
+      subjectIcon = "technology"
+    } else if (subjectIcon === "advanced placement (ap)"){
+      subjectIcon = "pedagogics"
     }
     document.querySelector(".content-items").insertAdjacentHTML("beforeend", /*html*/`
     <div class="content-row num${String(index)}">

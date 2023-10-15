@@ -43,6 +43,20 @@ export function RenderItems(items: {
   document.querySelector(".content-items").innerHTML = "";
   items.forEach((row, index) => {
     let id = row.content.split("/question/")[1].split('">')[0];
+    let subjectIcon = row.subject.toLowerCase()
+    if (subjectIcon === "social studies"){
+      subjectIcon = "social-science"
+    } else if (subjectIcon === "computers and technology"){
+      subjectIcon = "technology"
+    } else if (subjectIcon === "world languages"){
+      subjectIcon = "language"
+    } else if (subjectIcon === "arts"){
+      subjectIcon = "art"
+    } else if (subjectIcon === "medicine"){
+      subjectIcon = "health"
+    } else if (subjectIcon === "engineering"){
+      subjectIcon = "skills"
+    }
     document.querySelector(".content-items").insertAdjacentHTML("beforeend", /*html*/`
     <div class="content-row num${String(index)}">
         <div class="sg-spinner-container__overlay">
@@ -84,19 +98,20 @@ export function RenderItems(items: {
       }
             ${Components.Icon("crown", "16").outerHTML
       }
+     
           </div>
         </div>
         <div class="content-text">${row.content}</div>
         <div class="subject">
             <svg
                 class="sg-subject-icon"
-                aria-labelledby="sg-math-symbol-icon-${row.subject.toLowerCase()}-title"
+                aria-labelledby="sg-math-symbol-icon-${subjectIcon}-title"
                 role="img"
                 >
-                <text id="sg-math-symbol-icon-${row.subject.toLowerCase()}-title" hidden="">
-                    ${row.subject.toLowerCase()}
+                <text id="sg-math-symbol-icon-${subjectIcon}-title" hidden="">
+                    ${subjectIcon}
                 </text>
-                <use xlink:href="#icon-subject-${row.subject.toLowerCase()}" aria-hidden="true"></use>
+                <use xlink:href="#icon-subject-${subjectIcon}" aria-hidden="true"></use>
             </svg>
         </div>
         <div class="date">${row.date}</div>

@@ -261,9 +261,9 @@ export default new class ModFn {
       if (err === 0){
         Notify.Flash("Confirmed successfully!", "success")
       } else if (err === 1) {
-        Notify.Flash(`Error with ${err} item. ${suc} confirmed. Check ticket reservations.`, "error")
+        Notify.Flash(`Error with ${err} item. ${suc} confirmed. Check ticket reservations or see if already confirmed.`, "error")
       } else {
-        Notify.Flash(`Error with ${err} items. ${suc} confirmed. Check ticket reservations.`, "error")
+        Notify.Flash(`Error with ${err} items. ${suc} confirmed. Check ticket reservations or see if already confirmed.`, "error")
       }
     });
   }

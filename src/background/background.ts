@@ -111,45 +111,47 @@ class Background {
 		
 
 		async function deletionHandler(info,tab) {
-			let id = parseQuestionLink(info.linkUrl)
+			if (info.linkUrl.includes("brainly.com/question/")){
+				let id = parseQuestionLink(info.linkUrl)
 			
-			if (!info.menuItemId.includes("-")) {
-				return;
-			} else {
-				const result = menu_ids.filter(obj => {
-					return obj.id === info.menuItemId
-				});
-				console.log(result[0]);
-				(async () => {
-					const [tab] = await chrome.tabs.query({active: true, lastFocusedWindow: true});
-					const response = await chrome.tabs.sendMessage(tab.id, {reason: result[0].title, element: info.linkUrl});
-					// do something with response here, not outside the function
-					if (response.confirmed){
-						let reason = result[0].reasonText + " " + reason_append[0].text
-						let warn = response.warn
-						let take_point = false
-						let give_points = false
+				if (!info.menuItemId.includes("-")) {
+					return;
+				} else {
+					const result = menu_ids.filter(obj => {
+						return obj.id === info.menuItemId
+					});
+					console.log(result[0]);
+					(async () => {
+						const [tab] = await chrome.tabs.query({active: true, lastFocusedWindow: true});
+						const response = await chrome.tabs.sendMessage(tab.id, {reason: result[0].title, element: info.linkUrl});
+						// do something with response here, not outside the function
+						if (response.confirmed){
+							let reason = result[0].reasonText + " " + reason_append[0].text
+							let warn = response.warn
+							let take_point = false
+							let give_points = false
 
-						let r = await fetch ('https://brainly.com/api/28/moderation_new/delete_task_content', {
-							method: "POST",
-							body: JSON.stringify({
-								"reason_id":2,
-								"reason": reason, //deletion reason
-								"give_warning":warn,
-								"take_points": take_point, //asker's points
-								"schema":`moderation.task.delete`,
-								"model_type_id":1,
-								"model_id":id, //question id
-								"give_points": give_points //respondent's points
-							})
-						}).then(data => data.json());
-					}
-				  })();
-				
-				
-				
-				
-			} 
+							let r = await fetch ('https://brainly.com/api/28/moderation_new/delete_task_content', {
+								method: "POST",
+								body: JSON.stringify({
+									"reason_id":2,
+									"reason": reason, //deletion reason
+									"give_warning":warn,
+									"take_points": take_point, //asker's points
+									"schema":`moderation.task.delete`,
+									"model_type_id":1,
+									"model_id":id, //question id
+									"give_points": give_points //respondent's points
+								})
+							}).then(data => data.json());
+						}
+					})();
+					
+					
+					
+					
+				} 
+			}
 		}
 		function makeMenu(name, id){
 			chrome.contextMenus.create({

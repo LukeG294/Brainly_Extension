@@ -154,9 +154,31 @@ export async function searchMod(){
     }
     
 }
+
+export async function quick_deleter(){
+  chrome.runtime.onMessage.addListener(
+      function(request, sender, sendResponse) {
+       
+        if (request.reason){
+          let yes = confirm(`Are you sure you want to delete with ${request.reason}?`)
+          if (yes){
+            document.querySelector(`[href='${request.element.replace("https://brainly.com","")}']`).closest("[data-testid = search-item-facade-wrapper]").classList.add("deleted");
+            let warn = confirm("Apply a warning?")
+            sendResponse({"confirmed":true, warn: warn});
+          } else {
+            sendResponse({"confirmed":false});
+          }
+        }
+          
+      }
+    );
+}
+
+
 async function init(){
     let key = await fetch(`${extension_server_url()}/configs/feature_keys`).then(data => data.json())
     runCheck(SearchObserver, key["search_page_mass_mod"])
+    runCheck(quick_deleter, key["search_page_quick_delete"])
 }
 
 init()

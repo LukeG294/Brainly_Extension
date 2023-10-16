@@ -162,7 +162,9 @@ function add_report(data, item, elem, type){
     report_elem.querySelector(".report-info div").innerHTML = item.report?.abuse.name; 
     elem.classList.add("reported");
     report_elem.querySelector(".username").innerHTML = reporter.nick;
-    report_elem.querySelector(".rank").innerHTML = reporter.ranks.names[0];
+    let rank = reporter.ranks.names[0];
+    if (!rank){rank="no rank"}
+    report_elem.querySelector(".rank").innerHTML = rank
     report_elem.querySelector(".rank").setAttribute("style", `color: ${reporter.ranks.color}`)
   } else if (type === 'AFCReport') {
     let report_elem = elem.querySelector(".report")
@@ -329,11 +331,12 @@ function user_content_data(user, elem, item){
       <img src=${user.avatar[64]} alt="">
       `
   }
-
+  let rank = user.ranks.names[0];
+  if (!rank){rank="no rank"}
   elem.querySelector(".text-user .username").innerHTML = user.nick;
   elem.querySelector(".text-user .username").setAttribute("href", `https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/profile/${user.nick}-${user.id}`);
   elem.querySelector(".text-user .username").setAttribute("target", `_blank`);
-  elem.querySelector(".text-user .rank").innerHTML = user.ranks.names[0];
+  elem.querySelector(".text-user .rank").innerHTML = rank
   elem.querySelector(".text-user .rank").setAttribute("style", `color: ${user.ranks.color}`)
   elem.querySelector(".content").innerHTML = item.content;
 }

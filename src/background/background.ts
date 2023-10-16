@@ -125,7 +125,7 @@ class Background {
 					const response = await chrome.tabs.sendMessage(tab.id, {reason: result[0].title, element: info.linkUrl});
 					// do something with response here, not outside the function
 					if (response.confirmed){
-						let reason = result[0].reasonText + reason_append[0].text
+						let reason = result[0].reasonText + " " + reason_append[0].text
 						let warn = response.warn
 						let take_point = false
 						let give_points = false

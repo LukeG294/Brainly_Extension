@@ -28,7 +28,7 @@ export default new class AdminPanel{
     
 }
 export async function mass_accdel(){
-    let firebase_presets = await fetch(`${extension_server_url()}/configs/preset_messages`).then(data => data.json())
+    let firebase_presets = await fetch(`${extension_server_url()}/preset_messages/manage_users`).then(data => data.json())
     let items_array = []
     for (const [key, value] of Object.entries(firebase_presets)) {
         items_array.push(value)

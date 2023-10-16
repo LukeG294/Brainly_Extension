@@ -1,6 +1,7 @@
 import Form from "scripts/Items/Form"
 import deleteWithout429 from "./deleteWithout429";
 import Status from "scripts/common/Notifications/Status"
+import { extension_server_url } from "configs/config";
 
 export default async function insertDelMenu(
   targetElem: HTMLElement, 
@@ -92,18 +93,20 @@ export default async function insertDelMenu(
         
         (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value = selected_reason.text;
       });
+      let reason_append = await fetch(`${extension_server_url()}/preset_messages/ext_action_note`).then(data => data.json())
       elem.querySelector(".confirmdel button").addEventListener("click", async function(){
         let warnuser = (<HTMLInputElement>elem.querySelector("input[id ^= 'warn']")).checked;
         let takepts = !(<HTMLInputElement>elem.querySelector("input[id ^= 'res-pts']")).checked;
-        let respts = !(<HTMLInputElement>elem.querySelector("input[id ^= 'res-pts']")).checked;
-
+        let reason = (<HTMLInputElement>elem.querySelector(".deletion-reason")).value
+        
+        let changedReason = reason + "" + reason_append[0].text
         await deleteWithout429(
           contentIdFn(),
           type,
           {
             warn: warnuser,
             takePts: takepts,
-            reason: (<HTMLInputElement>elem.querySelector(".deletion-reason")).value,
+            reason: changedReason,
           },
           (element) => { itemSuccessFn(element) }
         )

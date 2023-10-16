@@ -153,12 +153,17 @@ class Background {
 				} 
 			}
 		}
+		
 		function makeMenu(name, id){
-			chrome.contextMenus.create({
-				title: name, 
-				contexts:["selection"], 
-				id: id
-			});
+			try {
+				chrome.contextMenus.create({
+					title: name, 
+					contexts:["selection"], 
+					id: id
+				});
+			} catch(err) {
+				console.log("Already created")
+			}
 		}
 		let rnum = Math.floor(Math.random() * protected_questions.length);
 		let random_id = protected_questions[rnum]

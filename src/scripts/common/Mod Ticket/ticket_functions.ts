@@ -446,11 +446,19 @@ async function add_question_data(res, d_reference, users_data, basic_data){
 
 function show_ticket(qid:string){
     document.body.insertAdjacentHTML("beforeend", <string>ticket())
-
-      document.querySelector(".modal_close").addEventListener("click", async function(){
+    async function event(e) {
+      document.removeEventListener("keydown", event); 
+      if (e.key === 'Escape') {
         document.querySelector(".modal_back").remove()
         await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${qid},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
-      });
+      }
+    }
+    document.addEventListener('keydown',event)
+    document.querySelector(".modal_close").addEventListener("click", async function(){
+      document.querySelector(".modal_back").remove()
+      await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/api/28/moderate_tickets/expire`,{method: "POST", body:`{"model_id":${qid},"model_type_id":1,"schema":"moderation.ticket.expire"}`})
+    });
+     
 }
 export async function ticket_data(id, res, butspinner){
 

@@ -178,7 +178,7 @@ export async function quick_deleter(){
 async function init(){
     let key = await fetch(`${extension_server_url()}/configs/feature_keys`).then(data => data.json())
     runCheck(SearchObserver, key["search_page_mass_mod"])
-    runCheck(quick_deleter, key["search_page_quick_delete"])
+    runCheck(quick_deleter, key["quick_delete"])
 }
 
 init()

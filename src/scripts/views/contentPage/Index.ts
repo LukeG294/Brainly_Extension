@@ -1,6 +1,7 @@
 //import { checkUser, checkPermissionSet } from "../common/permission_system"
 import Panel from "./Panel"
 import { RenderItems } from "./ContentPageButtons"
+import { quick_deleter } from "./ButtonFunctions";
 
 async function addPerPage() {
     if(document.querySelector(".modified")) return;
@@ -15,7 +16,7 @@ async function addPerPage() {
     //tasks page
     if (window.location.href.includes("task") || (!window.location.href.includes("responses") && !window.location.href.includes("comments_tr"))) {
         panel.Ques()
-
+        quick_deleter()
     }
 
     //responses page

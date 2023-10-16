@@ -22,7 +22,7 @@ async function initialize(){
   runCheck(unapproveAll, key["admin_unapprove_all"])
   runCheck(rateAllFive, key["rate_all_answers_five_stars"])
   runCheck(OldObserver, key["old_profile_tickets"])
-  runCheck(quick_deleter, key["old_profile_quick_delete"])
+  runCheck(quick_deleter, key["quick_delete"])
 
 }
 initialize()

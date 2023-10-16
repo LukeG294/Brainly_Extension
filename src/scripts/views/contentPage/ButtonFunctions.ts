@@ -13,6 +13,25 @@ import Form from "scripts/Items/Form"
 import Extension from "../../../locales/en/localization.json"
 import insertDelMenu from "@lib/insertDelMenu"
 
+export async function quick_deleter(){
+    chrome.runtime.onMessage.addListener(
+      function(request, sender, sendResponse) {
+       
+        if (request.reason){
+          let yes = confirm(`Are you sure you want to delete with ${request.reason}?`)
+          if (yes){
+            document.querySelector(`[href='${request.element.replace("https://brainly.com","")}']`).closest(".content-row").classList.add("deleted");
+            let warn = confirm("Apply a warning?")
+            sendResponse({"confirmed":true, warn: warn});
+          } else {
+            sendResponse({"confirmed":false});
+          }
+        }
+          
+      }
+    );
+  }
+
 export async function confirmDeletion(type: "questions" | "answers") {
     let stat = new Status("conf")
     stat.Show("Deleting Selected Content...", "indigo", true)

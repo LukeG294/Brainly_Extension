@@ -15,6 +15,7 @@ question_page_confirm = Separate confirm button next to "Moderate" and "Approve"
 question_page_ticket = *Includes confirm button*, new ticket that can be opened from the question page.\
 rate_all_answers_five_stars = Same place on profile as first 2 admin features but for rating.\
 reported_comments_deleter = Probably will not be used but used to delete all comments in the mod all queue.\
+quick_deletes = Right-click quick delete menu for deleting content without opening the question. Can give warns from here.\
 show_recent_warnings = Recent warnings section on old profile.
 
 

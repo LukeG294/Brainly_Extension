@@ -127,16 +127,16 @@ async function add_deletion(del_rsn, elem, tid, type:string){
         if((<HTMLInputElement>elem.querySelector("input[id ^= 'res-pts']").checked)){
           respts = false
         }
-        thisq.Delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value + "" + reason_append[0].text, warnuser, takepts, respts)
+        thisq.Delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value + " " + reason_append[0].text, warnuser, takepts, respts)
       }
       if(type === "response"){
         let thisa = new Answer();
         console.log(elem.querySelector("textarea.deletion-reason"))
-        thisa.Delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value + "" + reason_append[0].text, warnuser, takepts)
+        thisa.Delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value + " " + reason_append[0].text, warnuser, takepts)
       }
       if (type === "comment"){
         let thisc = new CommentHandler();
-        thisc.Delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value + "" +  reason_append[0].text, warnuser)
+        thisc.Delete(tid, (<HTMLInputElement>elem.querySelector("textarea.deletion-reason")).value + " " +  reason_append[0].text, warnuser)
         elem.style.display = 'none';
         elem.closest(".comment").classList.add("deleted");
        } else {

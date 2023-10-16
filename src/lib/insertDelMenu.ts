@@ -99,7 +99,7 @@ export default async function insertDelMenu(
         let takepts = !(<HTMLInputElement>elem.querySelector("input[id ^= 'res-pts']")).checked;
         let reason = (<HTMLInputElement>elem.querySelector(".deletion-reason")).value
         
-        let changedReason = reason + "" + reason_append[0].text
+        let changedReason = reason + " " + reason_append[0].text
         await deleteWithout429(
           contentIdFn(),
           type,

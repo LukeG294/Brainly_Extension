@@ -3,7 +3,7 @@ import Form from "scripts/Items/Form"
 import insertDelMenu from "@lib/insertDelMenu";
 import { extension_server_url, parseQuestionLink } from "configs/config";
 import Components from "scripts/Items/Components"
-
+import Notify from "../../common/Notifications/Notify"
 let modbutton = /*html*/`
         <div class="modticket">
             <div class="sg-spinner-container__overlay">
@@ -103,6 +103,54 @@ export async function searchMod(){
             }
             
           }));
+    }
+    if (!elem.querySelector(".mtoggle")){
+      elem.insertAdjacentElement("beforeend", Components.Button({
+          type: "solid",
+          size: "m",
+          text: "Toggle Selected",
+          ClassNames: ["mtoggle"],
+          icon: "filters",
+          onClick: () => {
+            document.querySelectorAll(".contentCheckboxes input").forEach(element => {
+              //@ts-ignore
+              if (!element.checked){element.checked = true} else {element.checked = false}
+            });
+            
+          }
+          
+        }));
+    }
+    if (!elem.querySelector(".mcopy")){
+      elem.insertAdjacentElement("beforeend", Components.Button({
+          type: "solid",
+          size: "m",
+          text: "Copy Selected",
+          ClassNames: ["mcopy"],
+          icon: "clipboard",
+          onClick: () => {
+            let links = []
+            document.querySelectorAll(".contentCheckboxes input").forEach(element => {
+              //@ts-ignore
+              if (element.checked){
+                links.push(element.closest("[data-testid = search-item-facade-wrapper]").querySelector("a").href.replace("?referrer=searchResults",""))
+              }
+            });
+            let joinLinks = links.join("\n")
+            navigator.clipboard.writeText(joinLinks)
+                .then(() => {
+                    // Success!
+                })
+                .catch(err => {
+                    console.log('Something went wrong', err);
+                });
+                if (links.length > 0){
+                    Notify.Flash("Copied links to clipboard!", "success")
+                }
+            links = []
+          }
+          
+        }));
     }
     
 }

@@ -75,10 +75,17 @@ function shorten_warnrsn(warning){
         return "Default";
     } else if (warning.includes("Copyright policy")){
         return "Copyright"
-    }
-    else{
+    } else if (warning.includes("cyber bullying")){
+        return "Bullying"
+    } else if (warning.includes("Brainly's Terms of Use")){
+        return "BT - Miscellaneous"
+    } else if (warning.includes("safe and respectful")){
+        return "BT - Harmful"
+    } else if (warning.includes("advertisements, meeting codes")){
+        return "BT - Spam"
+    } else{
         return "Not Detected"
-    }
+    } 
 }
 
 export async function user_manager(id) {

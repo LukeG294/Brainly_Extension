@@ -10,8 +10,7 @@ import { runCheck } from "../../../scripts/common/ModFunctions";
 async function initialize(){
   let uid = (<string>window.location.href).split("-")[1].split("/")[0];
   let key = await fetch(`${extension_server_url()}/configs/feature_keys`).then(data => data.json())
-  let permissions = main_control_permissions()
-
+  
   AnswerLink()
   QuestionCount()
   CommentCount()

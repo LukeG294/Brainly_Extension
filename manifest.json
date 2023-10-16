@@ -19,7 +19,9 @@
     "service_worker": "background.js",
     "type": "module"
   },
-  
+  "permissions": [
+    "contextMenus"
+  ],
   "content_scripts": [
     {
       "matches": ["*://brainly.com/*"],

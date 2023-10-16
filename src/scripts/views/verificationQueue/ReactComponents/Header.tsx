@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button , Icon} from "brainly-style-guide"
-import { loadNextPage, loadPrevPage } from '../VerificationQueueFunctions';
+import { loadNextPage, loadPrevPage, UpdateCount } from '../VerificationQueueFunctions';
 
 
 export default function Head({setItems, setSubjects}){
+    UpdateCount()
     const nextPage = async () =>{
         //fetch next page of items from server, runs on next page button click
         document.querySelector(".spinner-container").classList.add("show");
@@ -24,6 +25,7 @@ export default function Head({setItems, setSubjects}){
             setItems(prevData);
         }
         
+        
     }
     return(
         <div data-testid="header">
@@ -34,6 +36,7 @@ export default function Head({setItems, setSubjects}){
                         </div>
                     </a>
                 </div>
+                <h3 className="count"></h3>
                 <div className="pagination">
                 <Button
                 

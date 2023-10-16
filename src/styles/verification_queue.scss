@@ -53,6 +53,10 @@
                 display: inherit;
             }
         }
+        .count {
+            display:flex;
+            align-items: center;
+        }
     }
     .content{
         position:relative;

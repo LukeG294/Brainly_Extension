@@ -10,7 +10,7 @@ import { log_action, withdrawReport } from "../questionPage/QuestionExports";
 export async function removeAnswer(id, button){
   
   button.classList.add("show");
- 
+  
   
   let item = button.parentElement.parentElement.parentElement
   let user = await fetch("https://brainly.com/api/28/api_users/me").then(data => data.json())
@@ -35,7 +35,7 @@ export async function removeAnswer(id, button){
   button.classList.remove("show");
   item.style.opacity = '0.5'
   item.style.pointerEvents = 'none'
-    
+  UpdateCount()
   
     
 }
@@ -64,7 +64,7 @@ export async function approveAnswer(id, answerId, button){
   let RejectApprove = 'accepted'
   let list = {RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink, RejectApprove, AnswerID}
   log_action(list)
-  
+  UpdateCount()
   
 }
 
@@ -184,4 +184,7 @@ document.querySelector(".pagination").style.opacity = "1"
 
 
 }
-
+export async function UpdateCount(){
+  let count = await fetch(`${extension_server_url()}/verification/count`).then(data => data.json())
+  document.querySelector(".count").innerHTML = count.count + " requests"
+}

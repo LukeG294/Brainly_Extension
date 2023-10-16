@@ -74,7 +74,11 @@ class Background {
 			}
 			
 		})
-	
+		chrome.runtime.onUpdateAvailable.addListener((details) => {
+			if (details) {
+				chrome.runtime.reload();
+			}
+		});
 	}
 	
 	

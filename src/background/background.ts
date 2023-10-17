@@ -155,27 +155,26 @@ class Background {
 		}
 		
 		function makeMenu(name, id){
-			try {
-				chrome.contextMenus.create({
-					title: name, 
-					contexts:["selection"], 
-					id: id
-				});
-			} catch(err) {
-				console.log("Already created")
-			}
+			chrome.contextMenus.create({
+				title: name, 
+				contexts:["selection"], 
+				id: id
+			});
 		}
 		let rnum = Math.floor(Math.random() * protected_questions.length);
 		let random_id = protected_questions[rnum]
 		let reasons = await getReasons(random_id)
-		for (let i = 0; i < reasons.length; i++) {
-			const element = reasons[i];
-			let subcategories = element.subcategories
-			for (let index = 0; index < subcategories.length; index++) {
-				const e = subcategories[index];
-				makeMenu(e.title, `${i}-${index}`)
+		chrome.contextMenus.removeAll(function() {
+			for (let i = 0; i < reasons.length; i++) {
+				const element = reasons[i];
+				let subcategories = element.subcategories
+				for (let index = 0; index < subcategories.length; index++) {
+					const e = subcategories[index];
+					makeMenu(e.title, `${i}-${index}`)
+				}
 			}
-		}
+		});
+		
 		chrome.contextMenus.onClicked.addListener(deletionHandler)
 		
 	}

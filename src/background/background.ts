@@ -173,9 +173,10 @@ class Background {
 					makeMenu(e.title, `${i}-${index}`)
 				}
 			}
+			chrome.contextMenus.onClicked.addListener(deletionHandler)
 		});
 		
-		chrome.contextMenus.onClicked.addListener(deletionHandler)
+		
 		
 	}
 	

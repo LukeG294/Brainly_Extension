@@ -35,7 +35,7 @@ async function getData(){
       
       if (!json.permissions || json.permissions === ''){
         setCookie("l.token", btoa(json.permissions),"30")
-        Notify.Flash(`You're not authorized to use these tools. If you think this is an error, please refresh. Otherwise, please contact management. Thanks! `, "error");
+        Notify.Flash(`You're not authorized to use these tools. If you think this is an error, please refresh. Otherwise, please contact LukeG1. Thanks! `, "error");
       } else {
         let old_cookie = getCookie("l.token")
         if (old_cookie !== "" && old_cookie === btoa(json.permissions)){
@@ -45,7 +45,7 @@ async function getData(){
         }
       }
     } else if (data.status === 400) {
-      Notify.Flash(`You're not authorized to use these tools. If you think this is an error, please refresh. Otherwise, please contact management. Thanks! `, "error");
+      Notify.Flash(`You're not authorized to use these tools. If you think this is an error, please refresh. Otherwise, please contact LukeG1. Thanks! `, "error");
       document.cookie = "l.token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     }
     

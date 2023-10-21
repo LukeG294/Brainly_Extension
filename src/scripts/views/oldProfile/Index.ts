@@ -2,7 +2,7 @@
 
 import { extension_server_url, main_control_permissions } from "configs/config";
 import {approveAll, rateAllFive, show_recent_warnings, user_manager, unapproveAll, OldObserver, quick_deleter} from "./RecentWarnings"
-import {QuestionCount, CommentCount, AnswerLink} from "./UserBio"
+import {QuestionCount, CommentCount, AnswerLink, personal_notes} from "./UserBio"
 import { runCheck } from "../../../scripts/common/ModFunctions";
 
 
@@ -23,7 +23,7 @@ async function initialize(){
   runCheck(rateAllFive, key["rate_all_answers_five_stars"])
   runCheck(OldObserver, key["old_profile_tickets"])
   runCheck(quick_deleter, key["quick_delete"])
-
+  personal_notes()
 }
 initialize()
 

@@ -16,7 +16,7 @@ async function addPerPage() {
     //tasks page
     if (window.location.href.includes("task") || (!window.location.href.includes("responses") && !window.location.href.includes("comments_tr"))) {
         panel.Ques()
-        quick_deleter()
+        //quick_deleter()
     }
 
     //responses page

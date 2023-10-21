@@ -260,6 +260,9 @@ export function reportedCommentsDeleter(){
         });
         fetchNextPage(OriginalLastId)
         let commentNum = new Label("commentNum")
+        let serverData = await fetch(`${extension_server_url()}/preset_messages/comments_deleter_reason`).then(data => data.json())
+        let serverRsn = serverData[0].text
+        
         commentNum.Show("Fetched " + String(StoredToDelete.length)+ " reported comments...", "blue", true)
         //rest of pages
         async function fetchNextPage(last_id){
@@ -291,7 +294,7 @@ export function reportedCommentsDeleter(){
                 for (let i = 0; i < StoredToDelete.length; i++) {
                     let commentObject = new CommentHandler()
                     
-                    let resp = await commentObject.Delete(StoredToDelete[i], "Deleting all reported comments.", false)
+                    let resp = await commentObject.Delete(StoredToDelete[i], serverRsn, false)
                         //@ts-expect-error
                     if (resp.error === 'cached'){
                         cached += 1

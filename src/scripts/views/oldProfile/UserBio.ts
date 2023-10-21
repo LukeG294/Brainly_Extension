@@ -33,8 +33,30 @@ export async function personal_notes(){
         let NotedId = parseProfileLink(window.location.href)
         let me = await fetch("https://brainly.com/api/28/api_users/me").then(data => data.json())
         let {id} = me.data.user
-        let note = await fetch(`${extension_server_url()}/get_user/${id}/notes/${NotedId}`).then(data => data.text())
+        let prevNote = null
+        try {
+            prevNote = await fetch(`${extension_server_url()}/get_user/${id}/notes/${NotedId}`).then(data => data.json())
+        }catch(err){
+            prevNote = {"note":""}
+        }
         let notes_area = document.getElementById("main-right")
         notes_area.insertAdjacentHTML("afterbegin",noteHTML)
+        let timeout = null;
+        let textBox = notes_area.querySelector(".profile-links")
+        //@ts-ignore
+        textBox.value = prevNote.note
+        textBox.addEventListener('keyup', function (e) {
+            // Clear the timeout if it has already been set.
+            // This will prevent the previous task from executing
+            // if it has been less than <MILLISECONDS>
+            clearTimeout(timeout);
+
+            // Make a new timeout set to go off in 1000ms (1 second)
+            timeout = setTimeout(async function () {
+                //@ts-ignore
+                chrome.runtime.sendMessage({ data: {"id":id,"notedId":NotedId,"newNote":textBox.value}, message:"edit_note" }, function () {});
+            }, 100);
+        });
+        
     }
 }

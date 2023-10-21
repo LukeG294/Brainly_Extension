@@ -47,6 +47,15 @@ class Background {
 					},
 					body: data_edit});
 					return;
+				case 'edit_note':
+					const url_edit_note = `${extension_server_url()}/edit_note/${request.data.id}/notes/${request.data.notedId}`;
+					const newData = `{"newNote":"${request.data.newNote}"}`;
+					const response_edit_note = await fetch(url_edit_note, {method: 'PATCH',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: newData});
+					return;
 				case 'add_verify':
 					const add = `${extension_server_url()}/verification/add_request/${request.data.id}`;
 					
@@ -75,6 +84,7 @@ class Background {
 				}
 			
 		})
+		/*
 		chrome.runtime.onUpdateAvailable.addListener((details) => {
 			if (details) {
 				chrome.runtime.reload();
@@ -109,7 +119,7 @@ class Background {
 		}
 		
 		
-
+		
 		async function deletionHandler(info,tab) {
 			if (info.linkUrl.includes("brainly.com/question/")){
 				let id = parseQuestionLink(info.linkUrl)
@@ -181,7 +191,7 @@ class Background {
 		});
 		
 		
-		
+		*/
 	}
 	
 	

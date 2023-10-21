@@ -2,7 +2,7 @@
   "name": "Brainly Extension",
   "description": "Permission-based moderation tools that allow for organization, streamlined moderation, and large actions.",
   "manifest_version": 3,
-  "version":"0.0.97",
+  "version":"0.0.98",
   "icons": {
     "128": "resources/icon.png"
   },

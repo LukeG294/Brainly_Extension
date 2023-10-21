@@ -16,7 +16,7 @@ async function insert(){
     runCheck(firebase_append,  key["panel_link_to_backend"])
     runCheck(ModObserver,  key["homepage_tickets"])
     runCheck(verification_queue,  key["verification_queue"])
-    runCheck(quick_deleter,  key["quick_delete"])
+    //runCheck(quick_deleter,  key["quick_delete"])
 }
 
 insert()

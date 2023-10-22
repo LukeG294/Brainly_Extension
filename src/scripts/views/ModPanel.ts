@@ -1,7 +1,7 @@
 import {  mass_accdel, md_content, reportedCommentsDeleter, verification_queue, firebase_append } from "./homepage/Admin";
 import AdminPanel from "./homepage/Admin"
 import userSearch from "./homepage/userSearch"
-import { ModObserver, quick_deleter } from "./homepage/Exports";
+import { ModObserver } from "./homepage/Exports";
 import { insert_ticket, runCheck } from "../../scripts/common/ModFunctions";
 import {  main_control_permissions, check_version, extension_server_url } from "configs/config";
 

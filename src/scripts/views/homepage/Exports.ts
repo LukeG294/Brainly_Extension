@@ -232,13 +232,12 @@ export async function HomeMod() {
     for (let questionBox of Array.from(questions)) {
       let qid = questionBox.querySelector("a[data-test = 'feed-item-link']").getAttribute("href").replace("/question/","").split("?")[0];
       
-      //check if the answer button is available
+      
       try{
         let actionlist = questionBox.querySelector(".sg-actions-list__hole.sg-actions-list__hole--to-right");
         if (questionBox.querySelector(".mod-button")) continue;
         actionlist.insertAdjacentHTML("afterend", modbutton);
-       //actionlist.querySelector("a").classList.add("newansbut")
-        //actionlist.querySelector("a").innerHTML = '<div class="sg-icon sg-icon--dark sg-icon--x32"><svg class="sg-icon__svg"><use xlink:href="#icon-plus"></use></svg></div>'
+       
       }catch(err){
         if(questionBox.id !== "noanswer"){
           questionBox.id = 'noanswer'
@@ -246,92 +245,16 @@ export async function HomeMod() {
         }
       }
   
-      //check if the question has been reported + add the report flag
-      /*
-      let bdata = await BrainlyAPI.GetQuestion(parseInt(qid));
-      questionBox.querySelector(".brn-feed-item__footer").children[0].children[0].insertAdjacentElement("beforeend",
-          Component.Button({
-            size: "s",
-            type: "transparent",
-            ClassNames: ["rep-button"],
-            icon: "report_flag_outlined",
-            id: "report-"+qid
-          })
-        )
-
-      if(bdata.data.task.settings.is_marked_abuse === true){
-        questionBox.querySelector(".brn-feed-item__points .brn-points-on-feed").querySelector(".rep-button").classList.add("reported")
-        questionBox.querySelector(".brn-feed-item__points .brn-points-on-feed").querySelector(".rep-button use").setAttribute("xlink:href", "#icon-report_flag")
-      }
-      */
+     
   
-      //mod ticket event listeners
+      
       questionBox.querySelector(".mod-button").addEventListener("click", async function(){
         insert_ticket(qid, questionBox.querySelector(".modticket > .sg-spinner-container__overlay"))
       });
   
-      //livemod setup
-      //questionBox.querySelector(".brn-feed-item").setAttribute("id", qid);
+      
     }
-    //subscribe()
+   
   }
-  export function permissionChecks(){
-    return(/*html*/`
-    ${
-      Form.Checkbox({
-        text: "Junior Mod+",
-        id: "1"
-      }).outerHTML
-    }
-    ${
-      Form.Checkbox({
-        text: "Senior Mod",
-        id: "2"
-      }).outerHTML
-    }
-    ${
-      Form.Checkbox({
-        text: "Super Mod",
-        id: "3"
-      }).outerHTML
-    }
-    ${
-      Form.Checkbox({
-        text: "Admin",
-        id: "4"
-      }).outerHTML
-    }
-    ${
-      Form.Checkbox({
-        text: "VT Answerer",
-        id: "5"
-      }).outerHTML
-    }
-    ${
-      Form.Checkbox({
-        text: "VT Mod",
-        id: "6"
-      }).outerHTML
-    }
-    ${
-      Form.Checkbox({
-        text: "VT Admin",
-        id: "7"
-      }).outerHTML
-    }
-    ${
-      Form.Checkbox({
-        text: "Answerer",
-        id: "32"
-      }).outerHTML
-    }
-    <button class="sg-button sg-button--m sg-button--solid-light sg-button--solid-light-toggle-blue submit-permissions">
-      <div class="spinner-container">
-          <div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div>
-      </div>
-      <span class="sg-button__text">Update</span>
-    </button>
-    `)
-}
 
 

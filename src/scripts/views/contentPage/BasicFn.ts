@@ -49,7 +49,7 @@ export default new class BasicFn{
                     console.log('Something went wrong', err);
                 });
                 if (links.length > 0){
-                    Notify.Flash("Copied to clipboard", "success")
+                    Notify.Flash("Copied question links to clipboard.", "info")
                 }
             links = []
             

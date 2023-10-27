@@ -253,7 +253,7 @@ export async function requestApproval() {
             }
             
             document.getElementById(`rejected-${i}`).addEventListener("click",function(){
-              Notify.Dialog("Already Rejected", `This item was requested to be approved by ${past_approvals.requester.name} and was rejected by ${past_approvals.handler.name}.`, false, false)
+              Notify.Dialog("Previously Rejected", `This item was requested to be approved by ${past_approvals.requester.name} and was rejected by ${past_approvals.handler.name} on ${past_approvals.handler.handledTime.split("T")[0]}.`, false, false)
             });
            } else {
             let beingAnswered = document.querySelector(".brn-qpage-next-answer-box")

@@ -7,8 +7,6 @@
       "verificationQueueError": "There was an error adding to the verification queue.",
       "unverificationQueueError": "There was an error adding to the unverification queue.",
       "noAnswersYet": "No answers yet"
-      
-      
     },
     "marketConfigs":{
       "siteName" : "brainly",

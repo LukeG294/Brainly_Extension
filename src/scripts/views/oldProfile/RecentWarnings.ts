@@ -36,7 +36,9 @@ function shorten_warnrsn(warning){
         return "Plagiarism";
     }
     else if(warning.includes("unhelpful answers") || warning.includes("answering just to get the points isn’t cool.") || warning.includes("We love the rebel in you")){
-        return "SPAM";
+        return "Spam";
+    } else if (warning.includes("gibberish-like")) {
+        return "BT Spam";
     }
     else if(warning.includes("it contained confusing information")){
         return "Wrong Information";

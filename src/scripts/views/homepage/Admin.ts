@@ -87,7 +87,7 @@ export async function mass_accdel(){
         } else {
             linksArray = []
             document.querySelector(".profile-links").classList.add("sg-textarea--valid")
-            Notify.Flash("The users have been added.","success")
+            Notify.Flash("The users have been given permission.","success")
         }
         
     })
@@ -308,12 +308,12 @@ export function reportedCommentsDeleter(){
                     // await commentObject.Delete(StoredToDelete[i], "Deleting all reported comments.", false);
                 }
                 delStat.Close();
-                Notify.Flash("All Comments Deleted Successfully!", "success")
+                Notify.Flash("Reported comments deleted!", "success")
             }
         }
     }
 
-    Notify.Dialog("Delete all reported comments", "Are you sure you want to delete all reported comments in the moderate all queue? Clicking on 'Proceed' will start the process. Please make sure you don't close the tab until you are notified, or else the reported comments will be partially removed.", removeComments, true)
+    Notify.Dialog("Delete all reported comments", "Are you sure you want to delete all reported comments in the moderate all queue? Clicking on 'Proceed' will start the process. Make sure you don't close the tab until you are notified, or else the reported comments will be partially removed.", removeComments, true)
     });
 }
 

@@ -13,7 +13,7 @@ export default async function insertDelMenu(
 ){
   if(!targetElem.querySelector(".delmenu")){
     let stat = new Status("del")
-    stat.Show("Fetching Deletion Reasons...", "indigo", true, false)
+    stat.Show("Fetching reasons...", "indigo", true, false)
 
     let reasons;
     for(let id of reasonIds()){

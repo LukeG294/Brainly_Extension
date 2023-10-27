@@ -13,7 +13,7 @@ export default async function deleteWithout429(
     itemSuccessFn?: (element) => void
 ){
   let stat = new Status("del");
-  stat.Show("Removing Content...", "blue", true, false)
+  stat.Show("Removing content...", "blue", true, false)
   async function deletefromId(id: string, fail?){
     if(type === "tasks"){
       let qObj = new Question()
@@ -51,6 +51,6 @@ export default async function deleteWithout429(
       await new Promise(resolve => setTimeout(resolve, 2000));
     }
     stat.Close()
-    Notify.Flash(`Content removed successfully`, "success")
+    Notify.Flash(`Content removed successfully!`, "success")
   }
 }

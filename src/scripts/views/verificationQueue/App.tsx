@@ -31,7 +31,7 @@ export default function App() {
             <div className="content">
                 <div className="menu">
                     
-                    <Button type='solid' className={"outerButtonSwitcher"} onClick={() => verificationSwitcherHandler(setItems)}> <Dropdown name={"Verification"} links={[{'label':'Verification','url':'repl-this-verify'},{'label':'Unverification','url':'repl-this-unverify'}]}></Dropdown></Button>
+                    <Button type='solid' className={"outerButtonSwitcher"} onClick={() => verificationSwitcherHandler(setItems)}> <Dropdown name={"Verification"} links={[{'label':'Verification','url':'repl-this-verify'},{'label':'Unverification (soon)','url':'repl-this-unverify'}]}></Dropdown></Button>
                 </div>
                 <Flex className="container">
                     <div className="flash-messages-container"></div>

@@ -8,7 +8,7 @@ export function macc_d(presets) {
         <div class="modal_accdel">
             <h1 class="sg-text-bit--gray-secondary sg-headline sg-headline--xlarge sg-headline--extra-bold" style = "color:#323c45;">User Management</h1>
             <div class = "modal_close"><div class="sg-toplayer__close" role="button" tabindex="0"><div class="sg-icon sg-icon--icon-gray-50 sg-icon--x24"><svg class="sg-icon__svg" role="img" aria-labelledby="title-close-zvtc08" focusable="false"><title id="title-close-zvtc08">close</title><use xlink:href="#icon-close" aria-hidden="true"></use></svg></div></div></div>
-            <textarea placeholder="${Extension.instructions.onePerLine}" class=" profile-links sg-textarea sg-textarea--tall"></textarea>
+            <textarea placeholder="Paste profile links here, one per line." class=" profile-links sg-textarea sg-textarea--tall"></textarea>
                 ${
                     Form.RadioGroup({
                         ClassName: ["presets"],
@@ -21,9 +21,9 @@ export function macc_d(presets) {
                         }
                     }).outerHTML
                 }
-            <textarea placeholder="Message to send or permission string (ex. 1,2,3). Tip: use {user} to replace with the username and {new} to send a separate message." class="deletion-reason sg-textarea sg-textarea--tall"></textarea>
+            <textarea placeholder="Permissions: Permission string (ex. 1,2,3).\nMessage Sender: message to send.\nDeletion: Reason for deletion." class="deletion-reason sg-textarea sg-textarea--tall"></textarea>
           
-            <button class="sg-button sg-button--m sg-button--solid-light add-user"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Give Extension Permission</span></button>
+            <button class="sg-button sg-button--m sg-button--solid-light add-user"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Set Extension Permission</span></button>
             <button class="sg-button sg-button--m sg-button--solid-light remove-user"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Remove Extension Permission</span></button>
             <button class="sg-button sg-button--m sg-button--solid-light send-message"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Send Message</span></button>
             <button class="sg-button sg-button--m sg-button--solid-light delete-acc"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Delete Account</span></button>

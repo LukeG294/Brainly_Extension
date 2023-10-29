@@ -65,7 +65,6 @@ export async function approveAnswer(id, answerId, button){
   let list = {RequesterId, RequesterName, HandlerId, HandlerName, HandledTime, QuestionSubject, QuestionLink, RejectApprove, AnswerID}
   log_action(list)
   UpdateCount()
-  
 }
 
 

@@ -74,7 +74,8 @@ export async function mass_accdel(){
             let regexString = new RegExp(`https:\/\/brainly\.com\/profile\/.*-.*`)
             if (regexString.test(element)) {
                 let uid = String(element).split("/")[4].split("-")[1]
-                let uname = String(element).split("/")[4].split("-")[0]
+                let unameJSON = await fetch("https://brainly.com/api/28/api_user_profiles/get_by_id/"+uid).then(data => data.json())
+                let uname = unameJSON.data.nick
                 let perms = (<HTMLInputElement>document.querySelector(".deletion-reason")).value
                 chrome.runtime.sendMessage({ data: {"id":uid,"username":uname, "permissions":perms}, message:"add_user" }, function () {});
                

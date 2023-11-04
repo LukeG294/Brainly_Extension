@@ -103,20 +103,17 @@ export async function verificationSwitcherHandler(fn){
     document.querySelectorAll('.sg-dropdown')[0].children[0].innerText = unverifyElement.innerText
 
     let unStat = new Label("unfetch");
-    unStat.Show("This queue is currently turned off.", "blue", true, false);
+    unStat.Show("This queue is currently inactive.", "red", true, false);
    // let toRender = await get_next_page_unverify('0')
-    unStat.Close();
+   // unStat.Close();
     
  //  console.log(toRender)
-   // fn(toRender);
+   //fn(toRender);
     await new Promise(f => setTimeout(f, 100))
-    document.querySelectorAll('.actions').forEach(element => {
-      //@ts-expect-error
-      element.style.visibility = 'hidden'
-    });
+    
     document.querySelectorAll('.item').forEach(element => {
-      
-      //element.style.border = '2px solid rgb(156, 232, 194)'
+      //@ts-ignore
+      element.style.border = '2px solid rgb(156, 232, 194)'
     });
     
   })

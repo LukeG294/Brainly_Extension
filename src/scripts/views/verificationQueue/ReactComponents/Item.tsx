@@ -78,9 +78,9 @@ export default function Item({ content, thanks, rating, created, ansdata, faunad
                 />
             </div>
             <div className="options">
-                <div className="user" user-nick={requesterName} user-id={requesterId}>
+                <a className="user" user-nick={requesterName} user-id={requesterId} title={requesterName} href={`/profile/${requesterName}-${requesterId}`} target={"_blank"}>
                     <Avatar imgSrc={av} />
-                </div>
+                </a>
                 <div className="actions">
                 
                 <div className="ignoreRequest"> 

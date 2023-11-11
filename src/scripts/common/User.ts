@@ -39,6 +39,29 @@ export default new class User{
         })
         return searchRes
     }
+    async SearchID(id:string){
+        
+        let data = await fetch(`https://brainly.com/api/28/api_user_profiles/get_by_id/${id}`).then(data => data.json())
+       
+        let userImg;
+        
+        if(!data.data.avatars){
+            userImg = `<div class="sg-avatar__image sg-avatar__image--icon"><div aria-hidden="true" class="sg-icon sg-icon--icon-gray-40 sg-icon--x32 sg-avatar__icon"><svg class="sg-icon__svg" role="img" aria-labelledby="title-profile-692g3" focusable="false"><text id="title-profile-692g3" hidden="">profile</text><use xlink:href="#icon-profile" aria-hidden="true"></use></svg></div></div>`
+        }else{
+            userImg = `<img src = ${data.data.avatars["64"]}></img>`
+        }
+        let thisUser = {
+            name: data.data.nick,
+            link: `https://brainly.com/profile/${data.data.nick}-${data.data.id}`,
+            rank: "",  
+            pfp: userImg
+        }
+        
+     
+        
+        return thisUser
+    }
+   
     async Warnings(user:string){
         let warn_arr = [];
         let txt = await fetch(`https://${Extension.marketConfigs.siteName}.${Extension.marketConfigs.siteEnding}/users/view_user_warns/` + user).then(data => data.text());

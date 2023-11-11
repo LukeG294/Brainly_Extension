@@ -21,7 +21,7 @@ export function macc_d(presets) {
                         }
                     }).outerHTML
                 }
-            <textarea placeholder="Permissions: Permission string (ex. 1,2,3).\nMessage Sender: message to send.\nDeletion: Reason for deletion." class="deletion-reason sg-textarea sg-textarea--tall"></textarea>
+            <textarea placeholder="Permissions, deletion reason, or message." class="deletion-reason sg-textarea sg-textarea--tall"></textarea>
           
             <button class="sg-button sg-button--m sg-button--solid-light add-user"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Set Extension Permission</span></button>
             <button class="sg-button sg-button--m sg-button--solid-light remove-user"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Remove Extension Permission</span></button>
@@ -49,6 +49,7 @@ export function mmContentModal() {
             </div>
             <button class="sg-button sg-button--m sg-button--solid-light confirm-questions"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Confirm Questions</span></button>
             <button class="sg-button sg-button--m sg-button--solid-light delete-questions"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Remove Questions</span></button>
+            <button class="sg-button sg-button--m sg-button--solid-light fetch-details"><div class="spinner-container"><div class="sg-spinner sg-spinner--gray-900 sg-spinner--xsmall"></div></div><span class="sg-button__text">Fetch Details</span></button>
             <div class="warnpts" style='width: 600px;'>
           </div>
         </div>

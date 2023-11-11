@@ -33,7 +33,7 @@ export async function mass_accdel(){
     for (const [key, value] of Object.entries(firebase_presets)) {
         items_array.push(value)
     }
-    console.log(items_array)
+    
     document.querySelector("body").insertAdjacentHTML("afterbegin", macc_d(items_array));
     document.querySelector(".modal_close").addEventListener("click", function(){document.querySelector(".modal_back").remove()})
     
@@ -198,14 +198,70 @@ export function md_content(){
                 })
 
                 document.querySelector(".delete-questions").addEventListener("click",async function(){
-                    let arr = (<HTMLInputElement>document.querySelector(".profile-links")).value.split("\n").map(item => {return parseQuestionLink(item)});
-                    insertDelMenu(
-                        document.querySelector(".warnpts"),
-                        "tasks",
-                        () => { return arr },
-                        () => { return arr },
-                        false
-                    )
+                    if (document.querySelectorAll(".delmenu")[0]){
+                        if (document.querySelectorAll(".delmenu")[0].classList.contains("show")){
+                            document.querySelectorAll(".delmenu")[0].classList.remove("show")
+                        } else {
+                            document.querySelectorAll(".delmenu")[0].classList.add("show")
+                        }
+                    } else {
+                        let arr = (<HTMLInputElement>document.querySelector(".profile-links")).value.split("\n").map(item => {return parseQuestionLink(item)});
+                        insertDelMenu(
+                            document.querySelector(".warnpts"),
+                            "tasks",
+                            () => { return arr },
+                            () => { return arr },
+                            false
+                        )
+                    }
+                })
+                document.querySelector(".fetch-details").addEventListener("click",async function(){
+                    let arr = (<HTMLInputElement>document.querySelector(".profile-links")).value.split("\n").map(item => {{return parseQuestionLink(item)}});
+                    let csvData = 'Question ID,Deleted,Answer Count,Answer ID,Answerer ID,Best Rank,Approved,Answer ID,Answerer 2 ID,Best Rank, Approved\n'
+                    for (let index = 0; index < arr.length; index++) {
+                        const delay = ms => new Promise(res => setTimeout(res, ms));
+                        //await delay(300)
+                        let data = await fetch(`https://brainly.com/api/28/api_tasks/main_view/${arr[index]}?accept=application/json`).then(data => data.json())
+                        
+                        let nestedData = data.data
+                        console.log(data)
+                        if (nestedData.responses.length === 0){
+                            csvData+=`${arr[index]},${nestedData.task.settings.is_deleted},0\n`
+                        } else if (nestedData.responses.length === 1){
+                            let firstApproved = null
+                            if (nestedData.responses[0].approved.approver){
+                                firstApproved = true
+                            } else {
+                                firstApproved = false
+                            }
+                            let firstRank = data.users_data.find(element => element["id"] === nestedData.responses[0].user_id).ranks.names[0]
+                            csvData+=`${arr[index]},${nestedData.task.settings.is_deleted},1,${nestedData.responses[0].id},${nestedData.responses[0].user_id},${firstRank},${firstApproved}\n`
+                        } else if (nestedData.responses.length === 2){
+                            let firstApproved = null
+                            let secondApproved = null
+                            if (nestedData.responses[0].approved.approver){
+                                firstApproved = true
+                            } else {
+                                firstApproved = false
+                            }
+                            if (nestedData.responses[1].approved.approver){
+                                secondApproved = true
+                            } else {
+                                secondApproved = false
+                            }
+                            let firstRank = data.users_data.find(element => element["id"] === nestedData.responses[0].user_id).ranks.names[0]
+                            let secondRank = data.users_data.find(element => element["id"] === nestedData.responses[1].user_id).ranks.names[0]
+                            csvData+=`${arr[index]},${nestedData.task.settings.is_deleted},2,${nestedData.responses[0].id},${nestedData.responses[0].user_id},${firstRank},${firstApproved},${nestedData.responses[1].id},${nestedData.responses[1].user_id},${secondRank},${secondApproved}\n`
+                        }
+                        
+                    
+                    }
+                    let anchor = document.createElement('a');
+                    anchor.href = 'data:text/csv;charset=utf-8,' + encodeURI(csvData);
+                    anchor.target = '_blank';
+                    anchor.download = 'Questions.csv';
+                    anchor.click();
+                    
                 })
                 
             }
